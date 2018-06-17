@@ -41,7 +41,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
 	void EnterCustormerACK()
 	{
-		SceneChanger.LoadScene ("Main", PageLogin.Instance.cgBoards [(int)PageLogin.Instance.curBoard].gameObject);
+		SceneChanger.LoadScene ("Main", PageBase.Instance.curBoardObj ());
 	}
 
 	void OrderACK()

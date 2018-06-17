@@ -59,7 +59,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         switch (status)
         {
 		case NETWORK_EVENT.connected:			
-			PageLogin.Instance.SuccessConnect ();
+			((PageLogin)PageBase.Instance).SuccessConnect ();
 			break;
         case NETWORK_EVENT.disconnected:
             break;

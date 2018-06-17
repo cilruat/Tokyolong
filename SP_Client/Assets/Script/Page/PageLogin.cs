@@ -4,30 +4,24 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-public class PageLogin : SingletonMonobehaviour<PageLogin> {
-
-    public enum EBoard : int
-    {
-        eLogin = 0,
-        eSelectCount,
-        eSelectPerson,
-        eReadMe,
-        eViewWait,
-    }
+public class PageLogin : PageBase {
 
 	public InputField inputTable;
 	public Text txtSuccess;
 	public GameObject objLoginBox;
     public CanvasGroup[] cgBoards;
 
-	public EBoard curBoard = EBoard.eLogin;
-
 	string tableNo = "";
     byte howMany = 0;
     ECustomerType eType = ECustomerType.MAN;
 
-	void Awake()
+	protected override void Awake ()
 	{
+		base.boards = this.cgBoards;
+		base.Awake ();
+		base.acFinal = _EnterCustomer;
+		base.acFinalIdx = 4;
+
 		if (PlayerPrefs.HasKey ("set_table") == false)
 			inputTable.gameObject.SetActive (true);
 		else
@@ -83,23 +77,5 @@ public class PageLogin : SingletonMonobehaviour<PageLogin> {
     {
         eType = (ECustomerType)type;
         OnNext();
-    }
-
-    public void OnChangeBoard(bool isNext)
-    {
-        int cur = (int)curBoard;
-        EBoard change = isNext ? curBoard + 1 : curBoard - 1;
-
-		UnityEvent ue = null;
-		if (change == EBoard.eViewWait) {
-			ue = new UnityEvent ();
-			ue.AddListener (_EnterCustomer);
-		}
-
-		Info.AnimateChangeObj(cgBoards[cur], cgBoards[(int)change], ue);
-        curBoard = change;
-    }
-
-    public void OnPrev() { OnChangeBoard(false); }
-    public void OnNext() { OnChangeBoard(true); }
+    }		   
 }

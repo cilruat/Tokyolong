@@ -10,6 +10,11 @@ public enum ECustomerType : byte
     COUPLE,
 }
 
+public enum EMenuType : byte
+{
+	
+}
+
 public class Info : MonoBehaviour {
 
 	public static void AnimateChangeObj(CanvasGroup cur, CanvasGroup next, UnityEvent nextCallback = null)
