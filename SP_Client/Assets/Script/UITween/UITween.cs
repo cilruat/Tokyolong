@@ -194,6 +194,14 @@ public abstract class UITween : MonoBehaviour
 		}
 	}
 
+    public void StopTween()
+    {
+        if (leanTween == null)
+            return;
+
+        LeanTween.cancel(leanTween.id); 
+    }
+
 	protected virtual void Tween ()
 	{
 		leanTween = LeanTween.value(0f, 1f, isTweenGroup ? 0f : param.duration);
