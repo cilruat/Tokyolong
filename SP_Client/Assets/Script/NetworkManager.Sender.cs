@@ -30,4 +30,12 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
         send(msg);
 	}
+
+	public void Order_REQ(string order)
+	{
+		CPacket msg = CPacket.create((short)PROTOCOL.ORDER_REQ);
+		msg.push (order);
+
+		send (msg);
+	}
 }

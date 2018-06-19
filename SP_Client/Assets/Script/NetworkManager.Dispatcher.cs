@@ -18,6 +18,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		case PROTOCOL.FAILED_NOT_NUMBER:	Failed (protocol_id);		break;
 		case PROTOCOL.LOGIN_ACK:			LoginACK (msg);				break;
 		case PROTOCOL.ENTER_CUSTOMER_ACK:	EnterCustormerACK ();		break;
+		case PROTOCOL.ORDER_ACK:			OrderACK ();				break;
 		}
 	}
 
