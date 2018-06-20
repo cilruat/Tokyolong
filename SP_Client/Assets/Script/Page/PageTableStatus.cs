@@ -51,6 +51,7 @@ public class PageTableStatus : PageBase {
 
         floors[floor].gameObject.SetActive(true);
         curViewFloor = (EFloor)floor;
+        OnDetailClose();
 
         StartCoroutine(ViewTableSpot());
     }
