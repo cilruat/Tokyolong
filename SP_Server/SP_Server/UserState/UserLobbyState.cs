@@ -41,7 +41,7 @@ namespace SP_Server.UserState
                             owner.admin = true;
                             tableNum = 10000;
 
-                            Frm.adminUser = owner;
+                            Frm.adminUser = owner;                            
                         }
                         else
                         {
@@ -65,6 +65,10 @@ namespace SP_Server.UserState
                         byte customerType = msg.pop_byte();
 
                         send_msg = CPacket.create((short)PROTOCOL.ENTER_CUSTOMER_ACK);                        
+                        break;
+                    case PROTOCOL.ORDER_REQ:
+
+                        send_msg = CPacket.create((short)PROTOCOL.ORDER_ACK);
                         break;
                     default:
                         break;

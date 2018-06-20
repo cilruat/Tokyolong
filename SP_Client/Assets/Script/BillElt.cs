@@ -15,10 +15,15 @@ public class BillElt : MonoBehaviour {
 
 	public void SetInfo(EMenuDetail eType)
 	{
+		SetInfo (eType, 1);
+	}
+
+	public void SetInfo(EMenuDetail eType, int value)
+	{
 		this.eType = eType;
 		txtName.text = Info.MenuName (eType);
 
-		++value;
+		this.value = value;
 		txtVal.text = value.ToString ();
 
 		_RefreshPrice ();
@@ -46,6 +51,7 @@ public class BillElt : MonoBehaviour {
 		((PageOrder)PageBase.Instance).bill.RemoveElt (eType);
 	}
 
+	public int GetCount() {	return value; }
 	public int GetPrice() { return price; }
 	public EMenuDetail MenuDetailType() { return eType; }
 }

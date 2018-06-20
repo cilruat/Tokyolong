@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Bill : SingletonMonobehaviour<Bill> {
+public class Bill : MonoBehaviour {
 
 	public GameObject prefab;
 	public GameObject objEmpty;
@@ -40,7 +40,7 @@ public class Bill : SingletonMonobehaviour<Bill> {
 			CalcTotalPrice ();
 		}			
 
-		if (objEmpty.activeSelf)
+		if (objEmpty != null && objEmpty.activeSelf)
 			objEmpty.SetActive (false);
 	}
 
@@ -91,18 +91,82 @@ public class Bill : SingletonMonobehaviour<Bill> {
 
 		listElt.Clear ();
 
-		if (objEmpty.activeSelf == false)
+		if (objEmpty != null && objEmpty.activeSelf == false)
 			objEmpty.SetActive (true);
+
+		CalcTotalPrice ();
+	}
+
+	public void CopyBill(List<BillElt> list)
+	{
+		_Clear ();
+
+		for (int i = 0; i < list.Count; i++) {
+			GameObject obj = Instantiate (prefab) as GameObject;
+			obj.SetActive (true);
+
+			Transform tr = obj.transform;
+			tr.SetParent (rtScroll);
+			tr.InitTransform ();
+
+			BillElt elt = obj.GetComponent<BillElt> ();
+			elt.SetInfo (list [i].MenuDetailType (), list [i].GetCount ());
+			listElt.Add (elt);
+		}
+
+		CalcTotalPrice ();
 	}
 
 	public void OnOrder()
 	{
-		UIManager.Instance.Show (eUI.eBillSending);
+		if (listElt.Count == 0) {
+			SystemMessage.Instance.Add ("주문내역이 없습니다");
+			return;
+		}
+
+		GameObject obj = UIManager.Instance.Show (eUI.eBillSending);
+		Bill sendBill = obj.GetComponentInChildren<Bill> ();
+		sendBill.CopyBill (listElt);
+
+		CountDown countDown = obj.GetComponentInChildren<CountDown> ();
+		countDown.Set (3, () => FinishOrder ());
 	}
 
 	public void FinishOrder()
 	{
 		NetworkManager.Instance.Order_REQ ("");
 		_Clear ();
+	}
+
+	public void CompleteOrder()
+	{
+		_OrderState (false);
+		StartCoroutine (_DelayedBillSending ());
+	}
+
+	void _OrderState(bool complete)
+	{
+		GameObject obj = UIManager.Instance.GetCurUI ();
+		if (obj == null)
+			return;
+
+		Transform child = obj.transform.Find ("BtnCancle");
+		child.gameObject.SetActive (complete ? true : false);
+
+		child = obj.transform.Find ("DescComplete");
+		if (complete)
+			child.gameObject.SetActive (false);
+		else {
+			UITweenAlpha.Start (child.gameObject, 0f, 1f, TWParam.New (.4f).Curve (TWCurve.CurveLevel2));
+			UITweenScale.Start (child.gameObject, 1.2f, 1f, TWParam.New (.3f).Curve (TWCurve.Bounce));
+		}
+	}
+
+	IEnumerator _DelayedBillSending()
+	{
+		yield return new WaitForSeconds (.8f);
+
+		_OrderState (true);
+		UIManager.Instance.Hide (eUI.eBillSending);
 	}
 }

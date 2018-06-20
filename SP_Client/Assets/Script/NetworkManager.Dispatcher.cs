@@ -47,6 +47,6 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
 	void OrderACK()
 	{
-		SystemMessage.Instance.Add ("주문이 완료되었습니다");
+		((PageOrder)PageBase.Instance).bill.CompleteOrder ();
 	}
 }
