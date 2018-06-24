@@ -10,14 +10,16 @@ public class ChatTableElt : MonoBehaviour
     public Text textTableNo;
     public GameObject objNew;
 
-    public void AddNewChat()
+	int tableNo = -1;
+
+	public void SetTableElt(int tableNo)
     {
         if (objNew.activeSelf == false)
             objNew.gameObject.SetActive(true);
 
-
-
-    }
+		this.tableNo = tableNo;
+		textTableNo.text = "No. <size='30'>" + tableNo.ToString () + "</size>";
+	}
 
     public void OnSelect()
     {

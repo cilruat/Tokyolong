@@ -30,7 +30,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 	void Awake () 
 	{
 		collect();
-		Hide_All ();
+//		Hide_All ();
 
         DontDestroyOnLoad(this);
 	}

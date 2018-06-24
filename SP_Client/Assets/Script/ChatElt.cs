@@ -25,6 +25,8 @@ public class ChatElt : MonoBehaviour {
     const float paddingTop = 5f;
     const float paddingBottom = 5f;
 
+	const float ELT_MIN_HEIGHT = 30f;
+
 //	// 0: you ,  1: me
 //	public Text tableNo;
 //	public Text[] time;
@@ -32,7 +34,7 @@ public class ChatElt : MonoBehaviour {
 //	public GameObject objYou;
 //	public GameObject objMe;
 
-    public void SetChat(int person, int tableNo, int personCount, int time, string msg)
+    public void SetChatElt(int person, int tableNo, int personCount, int time, string msg)
 	{
         for (int i = 0; i < chatPersons.Length; i++)
             chatPersons[i].rtPerson.gameObject.SetActive(i == person);
@@ -46,9 +48,25 @@ public class ChatElt : MonoBehaviour {
         current.textTime.text = time.ToString();
         current.textChatMsg.text = msg;
         current.fitter.SetLayoutHorizontal();
-        current.fitter.SetLayoutVertical();
+		current.fitter.SetLayoutVertical ();
 
+		RectTransform rtChatMsg = current.textChatMsg.GetComponent<RectTransform> ();
+		float chatWidth = rtChatMsg.rect.width;
+		float chatHeight = rtChatMsg.rect.height;
 
+		chatWidth += paddingLeft + paddingRight;
+		chatHeight += paddingTop + paddingBottom;
 
+		chatHeight = Mathf.Max (ELT_MIN_HEIGHT, chatWidth);
+
+		current.rtChat.SetSizeWithCurrentAnchors (RectTransform.Axis.Horizontal, chatWidth);
+		current.rtChat.SetSizeWithCurrentAnchors (RectTransform.Axis.Vertical, chatHeight);
+
+		RectTransform rtTableNo = current.textTableNo.GetComponent<RectTransform> ();
+
+		float eltHeight = rtTableNo.rect.height + current.rtChat.rect.height;
+
+		RectTransform rtElt = GetComponent<RectTransform> ();
+		rtElt.SetSizeWithCurrentAnchors (RectTransform.Axis.Vertical, eltHeight);
 	}
 }
