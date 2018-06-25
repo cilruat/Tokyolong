@@ -12,6 +12,15 @@ public class ChatBoard : MonoBehaviour
 
 	List<ChatElt> listChat = new List<ChatElt>();
 
+    public void RemoveAllChat()
+    {
+        for(int i = listChat.Count-1; i >= 0; i--)
+        {
+            Destroy(listChat[i].gameObject);
+            listChat.RemoveAt(i);
+        }
+    }
+
     public void AddChatElt(byte person, int customer, int tableNo, byte personCount, int time, string msg)
 	{
 		ChatElt elt = CreateChatElt ();

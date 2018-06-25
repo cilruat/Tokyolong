@@ -19,8 +19,9 @@ public class UIChat : MonoBehaviour
 
 	Dictionary<int, ChatTableElt> dictChatTable = new Dictionary<int, ChatTableElt>();
 
-    void Start()
+    void OnEnable()
     {
+        chatBoard.RemoveAllChat();
         byte person = (byte)0;
         int customer = 2;
         int tableNo = 10;
@@ -48,4 +49,9 @@ public class UIChat : MonoBehaviour
 
 		return newElt;
 	}
+
+    public void HideChat()
+    {
+        UIManager.Instance.Hide(eUI.eChat);
+    }
 }
