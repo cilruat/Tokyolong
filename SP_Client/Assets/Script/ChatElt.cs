@@ -9,7 +9,7 @@ public class ChatElt : MonoBehaviour {
     public class ChatPerson
     {
         public RectTransform rtPerson;
-        public RawImage imgPerson;
+        public RawImage imgCustomer;
         public Text textCount;
         public Text textTableNo;
         public Text textTime;
@@ -19,6 +19,8 @@ public class ChatElt : MonoBehaviour {
     }
 
     public ChatPerson[] chatPersons;
+    public Texture[] imgCustomer;
+
 
     const float paddingLeft = 22f;
     const float paddingRight = 5f;
@@ -34,14 +36,13 @@ public class ChatElt : MonoBehaviour {
 //	public GameObject objYou;
 //	public GameObject objMe;
 
-    public void SetChatElt(int person, int tableNo, int personCount, int time, string msg)
+    public void SetChatElt(byte person, int customer, int tableNo, byte personCount, int time, string msg)
 	{
         for (int i = 0; i < chatPersons.Length; i++)
             chatPersons[i].rtPerson.gameObject.SetActive(i == person);
 
         ChatPerson current = chatPersons[person];
-
-//        current.imgPerson.sprite = 
+        current.imgCustomer.texture = imgCustomer[customer];
 
         current.textTableNo.text = "No. <size='20'>" + tableNo.ToString() + "</size>";
         current.textCount.text = personCount.ToString() + "명";
@@ -57,7 +58,7 @@ public class ChatElt : MonoBehaviour {
 		chatWidth += paddingLeft + paddingRight;
 		chatHeight += paddingTop + paddingBottom;
 
-		chatHeight = Mathf.Max (ELT_MIN_HEIGHT, chatWidth);
+        chatHeight = Mathf.Max (ELT_MIN_HEIGHT, chatHeight);
 
 		current.rtChat.SetSizeWithCurrentAnchors (RectTransform.Axis.Horizontal, chatWidth);
 		current.rtChat.SetSizeWithCurrentAnchors (RectTransform.Axis.Vertical, chatHeight);

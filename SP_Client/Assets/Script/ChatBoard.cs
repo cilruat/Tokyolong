@@ -12,10 +12,10 @@ public class ChatBoard : MonoBehaviour
 
 	List<ChatElt> listChat = new List<ChatElt>();
 
-	public void AddChatElt(int person, int tableNo, int personCount, int time, string msg)
+    public void AddChatElt(byte person, int customer, int tableNo, byte personCount, int time, string msg)
 	{
 		ChatElt elt = CreateChatElt ();
-		elt.SetChatElt (person, tableNo, personCount, time, msg);
+        elt.SetChatElt (person, customer, tableNo, personCount, time, msg);
 		listChat.Add (elt);
 	}
 

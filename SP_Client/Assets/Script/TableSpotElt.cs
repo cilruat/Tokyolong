@@ -7,10 +7,10 @@ public class TableSpotElt : MonoBehaviour
 {
     public enum ESpotType
     {
-        eMy = 0,
-        eMan = 1,
-        eWoman = 2,
-        eCouple = 3,
+        eMan = 0,
+        eWoman = 1,
+        eCouple = 2,
+        eMy = 3,
     }
 
     public RawImage iconSpot;

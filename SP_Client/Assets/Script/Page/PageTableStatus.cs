@@ -23,6 +23,8 @@ public class PageTableStatus : PageBase {
     public RectTransform rtDetail;
     public RectTransform rtArrow;
 
+    public Texture[] imgCustomerSpot;
+
     EFloor curViewFloor = EFloor.Floor1;
     int curViewFloorIdx { get { return (int)curViewFloor; } }
 
@@ -38,6 +40,15 @@ public class PageTableStatus : PageBase {
     void Start()
     {
         StartCoroutine(ViewTableSpot());
+    }
+
+    void Update()
+    {
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            UIManager.Instance.Show(eUI.eChat);
+        }
     }
 
     public void OnSelectFloor(int floor)
