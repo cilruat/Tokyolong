@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using FreeNet;
+using LitJson;
 
 namespace SP_Server.UserState
 {
@@ -31,17 +32,17 @@ namespace SP_Server.UserState
                         stackFrame.GetFileLineNumber().ToString() });
 
                 CPacket send_msg = null;
+                CPacket admin_msg = null;
+                byte tableNo = 0;
                 switch (protocol)
                 {
                     case PROTOCOL.LOGIN_REQ:
                         int tableNum = 0;
                         string pop_string = msg.pop_string();
                         if (pop_string == "admin")
-                        {
-                            owner.admin = true;
+                        {                            
                             tableNum = 10000;
-
-                            Frm.adminUser = owner;                            
+                            Frm.SetAdminUser(owner);
                         }
                         else
                         {
@@ -52,6 +53,11 @@ namespace SP_Server.UserState
                             }
 
                             tableNum = int.Parse(pop_string);
+
+                            // Admin Send packet
+                            admin_msg = CPacket.create((short)PROTOCOL.LOGIN_NOT);
+                            admin_msg.push(tableNum);                            
+                            Frm.GetAdminUser().send(admin_msg);
                         }                            
 
                         owner.tableNum = tableNum;
@@ -60,15 +66,44 @@ namespace SP_Server.UserState
                         send_msg.push(pop_string);
 
                         break;
+                    case PROTOCOL.LOGOUT_REQ:
+                        tableNo = msg.pop_byte();
+
+                        send_msg = CPacket.create((short)PROTOCOL.LOGOUT_ACK);
+                        send_msg.push(tableNo);
+
+                        break;
                     case PROTOCOL.ENTER_CUSTOMER_REQ:
-                        byte enterNum = msg.pop_byte();
+                        tableNo = msg.pop_byte();
+                        byte peopleCnt = msg.pop_byte();
                         byte customerType = msg.pop_byte();
 
-                        send_msg = CPacket.create((short)PROTOCOL.ENTER_CUSTOMER_ACK);                        
+                        // 유저 리스트에 정보 입력하기
+                        // work
+
+                        send_msg = CPacket.create((short)PROTOCOL.ENTER_CUSTOMER_ACK);
+                        break;
+                    case PROTOCOL.WAITER_CALL_REQ:
+                        tableNo = msg.pop_byte();
+
+                        // Admin Send packet
+                        admin_msg = CPacket.create((short)PROTOCOL.WAITER_CALL_NOT);
+                        admin_msg.push(tableNo);                        
+                        Frm.GetAdminUser().send(admin_msg);
+
+                        send_msg = CPacket.create((short)PROTOCOL.WAITER_CALL_ACK);                        
                         break;
                     case PROTOCOL.ORDER_REQ:
+                        tableNo = msg.pop_byte();
+                        string order = msg.pop_string();
 
-                        send_msg = CPacket.create((short)PROTOCOL.ORDER_ACK);
+                        // Admin Send packet
+                        admin_msg = CPacket.create((short)PROTOCOL.ORDER_NOT);
+                        admin_msg.push(tableNo);
+                        admin_msg.push(order);
+                        Frm.GetAdminUser().send(admin_msg);
+
+                        send_msg = CPacket.create((short)PROTOCOL.ORDER_ACK);                        
                         break;
                     default:
                         break;

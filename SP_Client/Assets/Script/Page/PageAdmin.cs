@@ -13,7 +13,9 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 	public GameObject prefabTable;
 	public GameObject prefabOrder;
 	public GameObject prefabMusic;
+	public GameObject objTableBoardCover;
 
+	UITween tweenUrgency = null;
 	List<TableElt> listTable = new List<TableElt>();
 	List<OrderElt> listOrder = new List<OrderElt>();
 	List<MusicElt> listMusic = new List<MusicElt>();
@@ -37,12 +39,78 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 		}
 	}
 
-	public void SetOrder(bool isOrder, string packing)
+	public void SetLogin(int tableNo)
+	{
+		for (int i = 0; i < listTable.Count; i++) {
+			if (listTable [i].GetTableNo () != tableNo)
+				continue;
+			
+			listTable [i].Login ();
+			break;
+		}
+	}
+
+	public void SetLogout(int tableNo)
+	{
+		// 주문 테이블에서도 해당 테이블 주문 지우기
+		StopUrgency (tableNo);
+
+		for (int i = 0; i < listTable.Count; i++) {
+			if (listTable [i].GetTableNo () != tableNo)
+				continue;
+
+			listTable [i].Logout ();
+			break;
+		}			
+	}
+
+	public void Urgency(int tableNo)
+	{
+		for (int i = 0; i < listTable.Count; i++) {
+			if (listTable [i].GetTableNo () != tableNo)
+				continue;
+
+			listTable [i].Urgency ();
+			break;
+		}
+
+		if (tweenUrgency == null)
+			tweenUrgency = UITweenAlpha.Start (objTableBoardCover, .25f, 1f, TWParam.New (.8f).Curve (TWCurve.Linear).Loop (TWLoop.PingPong));
+	}
+
+	public void StopUrgency(int tableNo)
+	{		
+		for (int i = 0; i < listTable.Count; i++) {
+			if (listTable [i].GetTableNo () != tableNo)
+				continue;
+
+			listTable [i].StopUrgency ();
+			break;
+		}
+
+		bool NoStop = false;
+		for (int i = 0; i < listTable.Count; i++) {
+			if (listTable [i].GetUrgency () == false)
+				continue;
+			
+			NoStop = true;
+			break;
+		}
+
+		if (NoStop == false && tweenUrgency != null) {
+			tweenUrgency.StopTween ();
+			tweenUrgency = null;
+			objTableBoardCover.SetActive (false);
+		}
+	}
+
+	public void SetOrder(bool isOrder, byte tableNo, string packing)
 	{
 		GameObject prefab = isOrder ? prefabOrder : prefabMusic;
 		RectTransform rtScroll = isOrder ? rtScrollOrder : rtScrollMusic;
 
 		GameObject obj = Instantiate (prefab) as GameObject;
+		obj.SetActive (true);
 
 		Transform tr = obj.transform;
 		tr.SetParent (rtScroll);
@@ -50,7 +118,7 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 
 		if (isOrder) {
 			OrderElt elt = obj.GetComponent<OrderElt> ();
-			elt.SetInfo (listOrder.Count, packing);
+			elt.SetInfo (listOrder.Count, tableNo, packing);
 			listOrder.Add (elt);
 		} else {
 			MusicElt elt = obj.GetComponent<MusicElt> ();
@@ -87,18 +155,39 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 				Destroy (child.gameObject);
 			break;
 		}
-	}
+	}		
 
 	void Update()
 	{
-		if (Input.GetKeyDown (KeyCode.Keypad0)) {
-			int rand = Random.Range (1, listTable.Count);
-			listTable [rand].Login ();
-		}
-
 		if (Input.GetKeyDown (KeyCode.Keypad1)) {
 			int rand = Random.Range (1, listTable.Count);
-			listTable [rand].Urgency ();
+			SetLogin (1);
+			Urgency (1);
+		}
+
+		if (Input.GetKeyDown (KeyCode.Keypad2))
+		{
+			int rand = Random.Range (1, listTable.Count);
+			SetLogin (2);
+			Urgency (2);
+		}
+
+		if (Input.GetKeyDown (KeyCode.Keypad3))
+		{
+			int rand = Random.Range (1, listTable.Count);
+			StopUrgency (1);
+		}
+
+		if (Input.GetKeyDown (KeyCode.Keypad4))
+		{
+			int rand = Random.Range (1, listTable.Count);
+			StopUrgency (2);
 		}
 	}
+
+	public void Test()
+	{
+		SystemMessage.Instance.Add ("주문 들어옴");
+	}
+
 }

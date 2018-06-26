@@ -16,9 +16,11 @@ namespace SP_Server
         
         CUserToken token;                
         Dictionary<USER_STATE_TYPE, IUserState> user_states;
-
-        public bool admin { get; set; }
+        
+        bool IsAdmin { get { return tableNum == 10000; } }
         public int tableNum { get; set; }
+        public byte peopleCnt { get; set; }
+        public byte customerType { get; set; }        
 
         public GameRoom battle_room { get; private set; }
         public Player player { get; private set; }
@@ -26,8 +28,7 @@ namespace SP_Server
         public Frm mainFrm { get; private set; }
 
         public User(CUserToken token, Frm frm)
-        {
-            this.admin = false;
+        {            
             this.tableNum = -1;
 
             this.token = token;
@@ -65,7 +66,7 @@ namespace SP_Server
                 this.mainFrm.BeginInvoke(this.mainFrm.WriteLogInstance,
                     new object[] { "[table Num : " + tableNum.ToString() + "] client Disconnected!!",
                         stackFrame.GetMethod().Name, stackFrame.GetFileName(),
-                        stackFrame.GetFileLineNumber().ToString() });
+                        stackFrame.GetFileLineNumber().ToString() });               
             }
             catch (System.Exception e)
             {
@@ -73,9 +74,17 @@ namespace SP_Server
                     new object[] { "TCPServer Log Error : " + e.ToString(),
                         stackFrame.GetMethod().Name, stackFrame.GetFileName(),
                         stackFrame.GetFileLineNumber().ToString() });                
+            }                        
+
+            // Admin Send packet
+            if(IsAdmin == false)
+            {
+                CPacket admin_msg = CPacket.create((short)PROTOCOL.LOGOUT_NOT);
+                admin_msg.push((byte)tableNum);
+                Frm.GetAdminUser().send(admin_msg);
             }            
-            
-            mainFrm.remove_user(this);            
+
+            mainFrm.remove_user(this);
 
             if (this.battle_room != null)
                 this.battle_room.on_player_removed(this.player);

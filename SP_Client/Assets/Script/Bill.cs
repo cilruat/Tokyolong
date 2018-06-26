@@ -2,8 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
+using LitJson;
 
 public class Bill : MonoBehaviour {
+
+	class SendMenu
+	{
+		public int menu;
+		public int cnt;
+
+		public SendMenu(int menu, int cnt)
+		{
+			this.menu = menu;
+			this.cnt = cnt;
+		}
+	}
 
 	public GameObject prefab;
 	public GameObject objEmpty;
@@ -134,7 +148,17 @@ public class Bill : MonoBehaviour {
 
 	public void FinishOrder()
 	{
-		NetworkManager.Instance.Order_REQ ("");
+		List<SendMenu> list = new List<SendMenu> ();
+		for (int i = 0; i < listElt.Count; i++) {
+			int menu = (int)listElt [i].MenuDetailType ();
+			int cnt = listElt [i].GetCount ();
+			SendMenu send = new SendMenu (menu, cnt);
+			list.Add (send);
+		}
+
+		JsonData json = JsonMapper.ToJson (list);
+		NetworkManager.Instance.Order_REQ (json.ToString ());
+
 		_Clear ();
 	}
 

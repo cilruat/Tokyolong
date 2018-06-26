@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 using FreeNet;
 
 namespace SP_Server.UserState
-{    
+{
     public enum USER_STATE_TYPE
     {
         LOBBY,
         PLAY
-    }
+    }    
 
     interface IUserState
     {
