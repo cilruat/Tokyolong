@@ -20,7 +20,7 @@ public class ChatElt : MonoBehaviour {
     public ChatPerson[] chatPersons;
     public Texture[] imgCustomer;
 
-    const float paddingLeft = 22f;
+    const float paddingLeft = 30f;
     const float paddingRight = 5f;
     const float paddingTop = 5f;
     const float paddingBottom = 5f;
