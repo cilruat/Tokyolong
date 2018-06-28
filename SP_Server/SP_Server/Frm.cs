@@ -28,11 +28,9 @@ namespace SP_Server
         protected bool m_bStartClose = false;
 
         CNetworkService service = null;
-        private static User adminUser;
 
         // 유저 리스트
-        public static User GetAdminUser() { return adminUser; }        
-        public static void SetAdminUser(User value) { adminUser = value; }
+        public static User adminUser { get; set; }
         List<User> listUser;
         
         public Frm()
@@ -96,9 +94,9 @@ namespace SP_Server
             switch (str)
             {
                 case "print_user_list":
-                    WriteLog("[" + GetAdminUser().tableNum + "]" + GetAdminUser().tableNum.ToString());
+                    WriteLog("[" + adminUser.admin + "]" + adminUser.tableNum.ToString());
                     for (int i = 0; i < listUser.Count; i++)
-                        WriteLog("[" + listUser[i].tableNum + "]" + listUser[i].tableNum.ToString());
+                        WriteLog("[" + listUser[i].admin + "]" + listUser[i].tableNum.ToString());
                     break;
                 default:
                     MessageBox.Show("아직 기능없어잉~ ㅋㅋ");

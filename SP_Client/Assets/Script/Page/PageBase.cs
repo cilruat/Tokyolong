@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class PageBase : SingletonMonobehaviour<PageBase> {
 
 	protected UnityAction acFinal;
-	protected int acFinalIdx = -1;
+	protected int acFinalIdx = 0;
 
 	protected CanvasGroup[] boards;
 	protected int curBoardIdx = 0;
@@ -15,11 +15,9 @@ public class PageBase : SingletonMonobehaviour<PageBase> {
 	{
 		UITweenAlpha.Start (gameObject, 0f, 1f, TWParam.New (1f).Curve (TWCurve.CurveLevel2));
 
-		if (boards != null) {
-			for (int i = 0; i < boards.Length; i++) {
-				boards [i].alpha = i == 0 ? 1f : 0f;
-				boards [i].blocksRaycasts = i == 0;
-			}
+		for (int i = 0; i < boards.Length; i++) {
+			boards [i].alpha = i == 0 ? 1f : 0f;
+			boards [i].blocksRaycasts = i == 0;
 		}
 	}		
 
