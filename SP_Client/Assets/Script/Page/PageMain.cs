@@ -29,7 +29,8 @@ public class PageMain : PageBase {
 			SceneChanger.LoadScene ("Order", gameObject);
 
 		switch (e) {
-		case EMenu.eChat:			
+		case EMenu.eChat:
+			SceneChanger.LoadScene ("TableStatus", gameObject);
 			break;
 		case EMenu.eOrder:			
 			SceneChanger.LoadScene ("Order", gameObject);
@@ -39,14 +40,17 @@ public class PageMain : PageBase {
 		case EMenu.eService:		
 			SceneChanger.LoadScene ("Service", gameObject);
 			break;
-		case EMenu.eShowChat:			
+		case EMenu.eShowChat:
+			UIManager.Instance.Show (eUI.eChat);
 			break;
 		case EMenu.eCall:			
 			NetworkManager.Instance.WaiterCall_REQ ();
 			break;
-		case EMenu.eBill:			
+		case EMenu.eBill:
+			UIManager.Instance.Show (eUI.eBillDetail);
 			break;
-		case EMenu.eTableSet:			
+		case EMenu.eTableSet:
+			UIManager.Instance.Show (eUI.eTableSetting);
 			break;
 		}
 	}		

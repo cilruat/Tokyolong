@@ -10,10 +10,14 @@ public class OrderElt : MonoBehaviour {
 	public Text order;
 
 	int id = -1;
+	byte tableNo = 0;
+	string packing = "";
 
 	public void SetInfo(int id, byte tableNo, string packing)
 	{
 		this.id = id;
+		this.tableNo = tableNo;
+		this.packing = packing;
 
 		table.text = tableNo.ToString ();
 
@@ -36,7 +40,9 @@ public class OrderElt : MonoBehaviour {
 
 	public void OnDetail()
 	{
+		PageAdmin.Instance.ShowOrderDetail (tableNo, id, packing);
 	}
 
 	public int GetID() { return id; }
+	public byte GetTableNo() { return tableNo; }
 }

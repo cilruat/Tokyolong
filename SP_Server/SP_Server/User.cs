@@ -20,12 +20,13 @@ namespace SP_Server
         bool IsAdmin { get { return tableNum == 10000; } }
         public int tableNum { get; set; }
         public byte peopleCnt { get; set; }
-        public byte customerType { get; set; }        
+        public byte customerType { get; set; }
+        Dictionary<int, int> orderTable = new Dictionary<int, int>();   // key: menu, value: count
 
         public GameRoom battle_room { get; private set; }
         public Player player { get; private set; }
 
-        public Frm mainFrm { get; private set; }
+        public Frm mainFrm { get; private set; }        
 
         public User(CUserToken token, Frm frm)
         {            
@@ -100,5 +101,15 @@ namespace SP_Server
 
             this.token.send(new ArraySegment<byte>(clone, 0, msg.position));
         }
+
+        public void SetOrder(int menu, int cnt)
+        {
+            if (orderTable.ContainsKey(menu))
+                orderTable[menu] += cnt;
+            else
+                orderTable.Add(menu, cnt);
+        }
+
+        public void ClearOrder() { orderTable.Clear(); }
     }
 }

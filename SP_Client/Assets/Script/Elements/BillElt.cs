@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class BillElt : MonoBehaviour {
 
@@ -43,7 +44,9 @@ public class BillElt : MonoBehaviour {
 	{
 		price = Info.MenuPrice (eType) * value;
 		txtPrice.text = Info.MakeMoneyString (price);
-		((PageOrder)PageBase.Instance).bill.CalcTotalPrice ();
+
+		if (SceneManager.GetActiveScene ().name != "Admin")
+			((PageOrder)PageBase.Instance).bill.CalcTotalPrice ();
 	}
 
 	public void OnDelete()

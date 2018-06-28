@@ -34,9 +34,12 @@ public class PageLogin : PageBase {
 	}
 
 	void _Connect()
-	{		
-		txtSuccess.text = "서버에 접속중입니다";
-		NetworkManager.Instance.connect ();
+	{
+		if (NetworkManager.Instance.is_connected() == false) {
+			txtSuccess.text = "서버에 접속중입니다";
+			NetworkManager.Instance.connect ();
+		} else
+			_ShowLoginBox ();
 	}
 
     void _EnterCustomer()
@@ -47,10 +50,14 @@ public class PageLogin : PageBase {
 	public void SuccessConnect()
 	{
 		txtSuccess.text = "정상적으로 서버에 접속하였습니다\n" + "테이블 넘버: " + tableNo;
+		_ShowLoginBox ();
+	}	
 
+	void _ShowLoginBox()
+	{
 		UITweenAlpha.Start (txtSuccess.gameObject, 0f, TWParam.New (1f, 1f).Curve (TWCurve.CurveLevel2));
 		UITweenAlpha.Start (objLoginBox, 1f, TWParam.New (1f, 1.5f).Curve (TWCurve.CurveLevel2));
-	}		
+	}
 
 	public void OnLogin()
 	{

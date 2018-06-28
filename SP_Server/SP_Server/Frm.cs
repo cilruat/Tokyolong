@@ -33,8 +33,10 @@ namespace SP_Server
         // 유저 리스트
         public static User GetAdminUser() { return adminUser; }        
         public static void SetAdminUser(User value) { adminUser = value; }
-        List<User> listUser;
-        
+        private List<User> listUser;
+
+        public List<User> ListUser { get => listUser; set => listUser = value; }
+
         public Frm()
         {
             WriteLogInstance = new DelegateWriteLog(this.WriteLog);
@@ -56,7 +58,7 @@ namespace SP_Server
         {
             WriteLog("!!!!------ Server Start ------!!!");
 
-            listUser = new List<User>();            
+            ListUser = new List<User>();            
 
             service = new CNetworkService(true);
             service.session_created_callback += on_session_created;
@@ -67,9 +69,9 @@ namespace SP_Server
         void on_session_created(CUserToken token)
         {            
             User user = new User(token, this);
-            lock(listUser)
+            lock(ListUser)
             {
-                listUser.Add(user);
+                ListUser.Add(user);
             }
 
             WriteLog("[connect cnt: {0}] any client Connected!!", get_concurrent_user_count().ToString());
@@ -77,15 +79,15 @@ namespace SP_Server
 
         public void remove_user(User user)
         {
-            lock(listUser)
+            lock(ListUser)
             {
-                listUser.Remove(user);
+                ListUser.Remove(user);
             }
         }
 
         public int get_concurrent_user_count()
         {
-            return listUser.Count;
+            return ListUser.Count;
         }        
 
         private void OnBtnSend(object sender, EventArgs e)
@@ -97,8 +99,8 @@ namespace SP_Server
             {
                 case "print_user_list":
                     WriteLog("[" + GetAdminUser().tableNum + "]" + GetAdminUser().tableNum.ToString());
-                    for (int i = 0; i < listUser.Count; i++)
-                        WriteLog("[" + listUser[i].tableNum + "]" + listUser[i].tableNum.ToString());
+                    for (int i = 0; i < ListUser.Count; i++)
+                        WriteLog("[" + ListUser[i].tableNum + "]" + ListUser[i].tableNum.ToString());
                     break;
                 default:
                     MessageBox.Show("아직 기능없어잉~ ㅋㅋ");
