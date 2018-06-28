@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 
 	const int TABLE_NUM = 30;
+	const int MAX_ID = 1000;
 
 	public RectTransform rtScrollTable;
 	public RectTransform rtScrollOrder;
@@ -14,11 +15,17 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 	public GameObject prefabOrder;
 	public GameObject prefabMusic;
 	public GameObject objTableBoardCover;
+	public GameObject objTableMenu;
+	public GameObject objBillConfirm;
+	public GameObject objOrderDetail;
 
 	UITween tweenUrgency = null;
 	List<TableElt> listTable = new List<TableElt>();
 	List<OrderElt> listOrder = new List<OrderElt>();
 	List<MusicElt> listMusic = new List<MusicElt>();
+
+	int orderID = 0;
+	int musicID = 0;
 
 	void Awake()
 	{
@@ -52,7 +59,18 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 
 	public void SetLogout(int tableNo)
 	{
-		// 주문 테이블에서도 해당 테이블 주문 지우기
+		// 주문 내역에서도 해당 테이블 주문 지우기
+		for (int i = 0; i < listOrder.Count; i++) {
+			if (listOrder [i].GetTableNo () != tableNo)
+				continue;
+
+			int id = listOrder [i].GetID ();
+			RemoveElt (true, id);
+			--i;
+		}
+
+		// 신청곡 내역에서도 해당 테이블 신청곡 지우기
+
 		StopUrgency (tableNo);
 
 		for (int i = 0; i < listTable.Count; i++) {
@@ -61,7 +79,10 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 
 			listTable [i].Logout ();
 			break;
-		}			
+		}
+
+		if (objBillConfirm.activeSelf)
+			objBillConfirm.SetActive (false);
 	}
 
 	public void Urgency(int tableNo)
@@ -117,13 +138,29 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 		tr.InitTransform ();
 
 		if (isOrder) {
+			for (int i = 0; i < listTable.Count; i++) {
+				if (listTable [i].GetTableNo () != tableNo)
+					continue;
+
+				listTable [i].SetOrder (packing);
+				break;
+			}
+
 			OrderElt elt = obj.GetComponent<OrderElt> ();
-			elt.SetInfo (listOrder.Count, tableNo, packing);
+			elt.SetInfo (orderID, tableNo, packing);
 			listOrder.Add (elt);
+
+			++orderID;
+			if (orderID > MAX_ID)
+				orderID = 0;
 		} else {
 			MusicElt elt = obj.GetComponent<MusicElt> ();
-			elt.SetInfo (listMusic.Count, packing);
+			elt.SetInfo (musicID, packing);
 			listMusic.Add (elt);
+
+			++musicID;
+			if (musicID > MAX_ID)
+				musicID = 0;
 		}
 	}
 
@@ -152,10 +189,28 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 
 			Transform child = rtScroll.GetChild (i);
 			if (child)
-				Destroy (child.gameObject);
+				DestroyImmediate (child.gameObject);
 			break;
 		}
 	}		
+
+	public void ShowTableMenu(byte tableNo, List<KeyValuePair<EMenuDetail,int>> list)
+	{
+		objTableMenu.SetActive (true);
+		AdminTableMenu.Instance.SetInfo (tableNo, list);
+	}
+
+	public void ShowBillConfirm(byte tableNo, List<KeyValuePair<EMenuDetail,int>> list)
+	{
+		objBillConfirm.SetActive (true);
+		AdminBillConfirm.Instance.SetInfo (tableNo, list);
+	}
+
+	public void ShowOrderDetail(byte tableNo, int id, string packing)
+	{
+		objOrderDetail.SetActive (true);
+		AdminOrderDetail.Instance.SetInfo (tableNo, id, packing);
+	}
 
 	void Update()
 	{
@@ -183,11 +238,5 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 			int rand = Random.Range (1, listTable.Count);
 			StopUrgency (2);
 		}
-	}
-
-	public void Test()
-	{
-		SystemMessage.Instance.Add ("주문 들어옴");
-	}
-
+	}		
 }

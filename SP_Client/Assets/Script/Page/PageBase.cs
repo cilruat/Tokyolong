@@ -45,6 +45,12 @@ public class PageBase : SingletonMonobehaviour<PageBase> {
 		SceneChanger.LoadScene ("Main", boards [0].gameObject);
 	}
 
-	public GameObject curBoardObj() { return boards [curBoardIdx].gameObject; }
+	public GameObject curBoardObj() 
+	{ 
+		GameObject obj = gameObject;
+		if (boards != null)
+			obj = boards [curBoardIdx].gameObject;
+		return obj;
+	}
 
 }

@@ -57,7 +57,11 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 	void LogoutNOT(CPacket msg)
 	{
 		byte tableNo = msg.pop_byte ();
-		PageAdmin.Instance.SetLogout ((int)tableNo);
+
+		if (SceneManager.GetActiveScene ().name == "Admin")
+			PageAdmin.Instance.SetLogout ((int)tableNo);
+		else
+			SceneChanger.LoadScene ("Login", PageBase.Instance.curBoardObj ());
 	}
 
 	void EnterCustormerACK()

@@ -22,6 +22,14 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		send (msg);
 	}
 
+	public void Logout_REQ(byte table_no)
+	{
+		CPacket msg = CPacket.create ((short)PROTOCOL.LOGOUT_REQ);
+		msg.push (table_no);
+
+		send (msg);
+	}
+
 	public void EnterCostomer_REQ(byte howMany, byte type)
 	{
         CPacket msg = CPacket.create((short)PROTOCOL.ENTER_CUSTOMER_REQ);

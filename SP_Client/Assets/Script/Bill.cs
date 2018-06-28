@@ -131,6 +131,26 @@ public class Bill : MonoBehaviour {
 		CalcTotalPrice ();
 	}
 
+	public void CopyBill(List<KeyValuePair<EMenuDetail, int>> list)
+	{
+		_Clear ();
+
+		for (int i = 0; i < list.Count; i++) {
+			GameObject obj = Instantiate (prefab) as GameObject;
+			obj.SetActive (true);
+
+			Transform tr = obj.transform;
+			tr.SetParent (rtScroll);
+			tr.InitTransform ();
+
+			BillElt elt = obj.GetComponent<BillElt> ();
+			elt.SetInfo (list [i].Key, list [i].Value);
+			listElt.Add (elt);
+		}
+
+		CalcTotalPrice ();
+	}
+
 	public void OnOrder()
 	{
 		if (listElt.Count == 0) {
