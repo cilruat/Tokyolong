@@ -27,6 +27,8 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 	public GameObject objShadow;
 	public List<UI> listUI;
 
+    public GameObject objChatAlarm;
+
 	eUI curUI = eUI.eNone;
 	Dictionary<eUI, GameObject> dicObject = new Dictionary<eUI, GameObject> ();
 
@@ -84,4 +86,39 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 
 		return dicObject [curUI];
 	}
+
+    Coroutine chatAlarmRoutine = null;
+    public void ShowChat()
+    {
+        if (chatAlarmRoutine != null)
+        {
+            StopCoroutine(chatAlarmRoutine);
+            UITweenPosY.Start(objChatAlarm, 60f, -80f, TWParam.New(.5f).Curve(TWCurve.CurveLevel4).Speed(TWSpeed.Faster));
+            chatAlarmRoutine = null;
+        }
+
+        Show(eUI.eChat);
+    }
+
+    public void ShowChatAlarm()
+    {
+        chatAlarmRoutine = StartCoroutine(_ShowChatAlarm());
+    }
+
+    IEnumerator _ShowChatAlarm()
+    {
+        UITween tween = UITweenPosY.Start(objChatAlarm, -80f, 60f, TWParam.New(.5f).Curve(TWCurve.CurveLevel4).Speed(TWSpeed.Slower));
+
+        while (tween.IsTweening())
+            yield return null;
+
+        yield return new WaitForSeconds(2f);
+
+        tween = UITweenPosY.Start(objChatAlarm, 60f, -80f, TWParam.New(.5f).Curve(TWCurve.CurveLevel4).Speed(TWSpeed.Faster));
+
+        while (tween.IsTweening())
+            yield return null;
+        
+        chatAlarmRoutine = null;
+    }
 }

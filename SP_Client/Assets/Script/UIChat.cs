@@ -22,18 +22,13 @@ public class UIChat : MonoBehaviour
     void OnEnable()
     {
         chatBoard.RemoveAllChat();
-        byte person = (byte)0;
-        int customer = 2;
-        int tableNo = 10;
-        byte personCount = 2;
-        int time = 0;
-        string msg = "안녕하세요 \n 더 이상 네버 고잉 다운 입니다. ㅎㅎㅎㅎ";
-
-        chatBoard.AddChatElt(person, customer, tableNo, personCount, time, msg);
     }
 
 	public void AddTableChat(int tableNo)
 	{
+        if (dictChatTable.ContainsKey(tableNo))
+            return;
+
 		ChatTableElt elt = CreateChatTableElt ();
 		elt.SetTableElt (tableNo);
 		dictChatTable.Add (tableNo, elt);
@@ -44,6 +39,7 @@ public class UIChat : MonoBehaviour
 		GameObject newObj = Instantiate (tableElt.gameObject) as GameObject;
 		newObj.transform.SetParent (srTable.content);
 		newObj.transform.InitTransform ();
+        newObj.gameObject.SetActive(true);
 
 		ChatTableElt newElt = newObj.GetComponent<ChatTableElt> ();
 

@@ -11,6 +11,14 @@ public class PageTableStatus : PageBase {
         Floor2,
     }
 
+    public enum ETableDetail
+    {
+        Like = 0,
+        Chat,
+        Gift,
+        Battle,
+    }
+
     const int FLOOR_MAX_TABLE_1 = 7;
     const int FLOOR_MAX_TABLE_2 = 8;
 
@@ -31,24 +39,23 @@ public class PageTableStatus : PageBase {
     int startTableIdx { get { return curViewFloor == EFloor.Floor1 ? 0 : FLOOR_MAX_TABLE_1; } }
     int endTableIdx { get { return curViewFloor == EFloor.Floor1 ? FLOOR_MAX_TABLE_1 : FLOOR_MAX_TABLE_1 + FLOOR_MAX_TABLE_2; } }
 
+    int selectTableSpot = -1;
+
     protected override void Awake ()
 	{
         this.boards = cgBoards;
 		base.Awake ();
+
+        for (int i = 0; i < tableSpots.Count; i++)
+        {
+            int ranCustomer = Random.Range(0, 4);
+            tableSpots[i].SetTableSpot((byte)ranCustomer, i + 1);
+        }
 	}
 
     void Start()
     {
         StartCoroutine(ViewTableSpot());
-    }
-
-    void Update()
-    {
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            UIManager.Instance.Show(eUI.eChat);
-        }
     }
 
     public void OnSelectFloor(int floor)
@@ -64,6 +71,7 @@ public class PageTableStatus : PageBase {
         curViewFloor = (EFloor)floor;
         OnDetailClose();
 
+        StopAllCoroutines();
         StartCoroutine(ViewTableSpot());
     }
 
@@ -74,6 +82,8 @@ public class PageTableStatus : PageBase {
             detailDisableTween.StopTween();
             detailDisableTween = null;
         }
+
+        selectTableSpot = i;
 
         RectTransform rtTableSpot = tableSpots[i].GetComponent<RectTransform>();
         float anchorX = (rtTableSpot.anchoredPosition.x + (rtFloor.rect.width * .5f)) / rtFloor.rect.width;
@@ -137,5 +147,29 @@ public class PageTableStatus : PageBase {
 
         UITweenPosY.Start(rtDetail.gameObject, rtDetail.anchoredPosition.y, rtDetail.anchoredPosition.y + 20f, TWParam.New(.5f).Curve(TWCurve.CurveLevel4).Speed(TWSpeed.Slower));
         detailDisableTween = UITweenAlpha.Start(rtDetail.gameObject, 1f, 0f, TWParam.New(.5f).Curve(TWCurve.Linear).Speed(TWSpeed.Slower).DisableOnFinish());
+    }
+
+    public void OnSelectDetail(int i)
+    {
+        if (selectTableSpot == -1)
+        {
+            SystemMessage.Instance.Add ("대상 테이블을 선택해 주세요");
+            return;
+        }
+
+        ETableDetail detailType = (ETableDetail)i;
+        switch (detailType)
+        {
+            case ETableDetail.Like:
+            case ETableDetail.Gift:
+            case ETableDetail.Battle:
+                SystemMessage.Instance.Add ("현재 기능은 미구현 상태입니다");
+                break;
+            case ETableDetail.Chat:
+                GameObject obj = UIManager.Instance.Show(eUI.eChat);
+                UIChat uiChat = obj.GetComponent<UIChat>();
+                uiChat.AddTableChat(tableSpots[selectTableSpot].TableNo);
+                break;
+        }
     }
 }

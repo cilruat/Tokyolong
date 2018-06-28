@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class ChatBoard : MonoBehaviour 
 {
+    public RectTransform rtSrChat;
 	public ScrollRect srChat;
 	public ChatElt chatElt;	
 
@@ -22,11 +23,13 @@ public class ChatBoard : MonoBehaviour
         }
     }
 
-    public void AddChatElt(byte person, int customer, int tableNo, byte personCount, int time, string msg)
+    public void AddChatElt(byte person, byte customer, int tableNo, byte personCount, string time, string msg)
 	{
 		ChatElt elt = CreateChatElt ();
         elt.SetChatElt (person, customer, tableNo, personCount, time, msg);
 		listChat.Add (elt);
+
+        ResizeScroll();
 	}
 
 	ChatElt CreateChatElt()
@@ -41,6 +44,20 @@ public class ChatBoard : MonoBehaviour
 		return newElt;
 	}
 
+    void ResizeScroll()
+    {
+        float totalHeight = 0f;
+        for (int i = 0; i < listChat.Count; i++)
+            totalHeight += listChat[i].eltHeight;
+
+        totalHeight += 5f * (float)(Mathf.Max(0, listChat.Count - 1));
+
+        srChat.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, totalHeight);
+
+        float scPosY = Mathf.Max(0f, (totalHeight - rtSrChat.rect.height));
+        srChat.content.anchoredPosition = new Vector2(0f, scPosY);
+    }
+
 	public void OnChatSend()
 	{
 		if (input.text == string.Empty)
@@ -49,10 +66,14 @@ public class ChatBoard : MonoBehaviour
 		//REQ Send~
 		//AddChatElt(myPerson, myTableNo, myPerson, currentTime, input.text);
         byte person = (byte)1;
-        int customer = 1;
+        byte customer = 0;
         int tableNo = 5;
         byte personCount = 1;
-        int time = 0;
+        string tt = System.DateTime.Now.ToString("tt");
+        string hh = System.DateTime.Now.ToString("hh");
+        string mm = System.DateTime.Now.ToString("mm");
+        string time = tt + "/" + hh + "/" + mm;
+
         string msg = input.text;
 
         AddChatElt(person, customer, tableNo, personCount, time, msg);

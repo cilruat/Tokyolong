@@ -20,6 +20,8 @@ public class ChatElt : MonoBehaviour {
     public ChatPerson[] chatPersons;
     public Texture[] imgCustomer;
 
+    [System.NonSerialized]public float eltHeight;
+
     const float paddingLeft = 30f;
     const float paddingRight = 5f;
     const float paddingTop = 5f;
@@ -28,17 +30,25 @@ public class ChatElt : MonoBehaviour {
     const float ELT_MIN_WIDTH = 200f;
 	const float ELT_MIN_HEIGHT = 30f;
 
-    public void SetChatElt(byte person, int customer, int tableNo, byte personCount, int time, string msg)
+    public void SetChatElt(byte person, byte customer, int tableNo, byte personCount, string time, string msg)
 	{
         for (int i = 0; i < chatPersons.Length; i++)
             chatPersons[i].rtPerson.gameObject.SetActive(i == person);
 
         ChatPerson current = chatPersons[person];
         current.imgCustomer.texture = imgCustomer[customer];
+        current.imgCustomer.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, customer != 2 ? 35f : 70f);
 
         current.textTableNo.text = "No. <size='20'>" + tableNo.ToString() + "</size>";
         current.textCount.text = personCount.ToString() + "명";
-        current.textTime.text = time.ToString();
+
+        string[] times = time.Split('/');
+        string sendTT = times[0] == "AM" ? "오전" : "오후";
+        string sendHH = times[1].ToString().StartsWith("0") ? times[1].ToString().Substring(1) : times[1].ToString();
+        string sendMM = times[2].ToString();
+        string sendTime = sendTT + " " + sendHH + ":" + sendMM;
+
+        current.textTime.text = sendTime;
         current.textChatMsg.text = msg;
 
 		RectTransform rtChatMsg = current.textChatMsg.GetComponent<RectTransform> ();
@@ -56,7 +66,7 @@ public class ChatElt : MonoBehaviour {
 
 		RectTransform rtTableNo = current.textTableNo.GetComponent<RectTransform> ();
 
-		float eltHeight = rtTableNo.rect.height + current.rtChat.rect.height;
+        this.eltHeight = rtTableNo.rect.height + current.rtChat.rect.height;
 
 		RectTransform rtElt = GetComponent<RectTransform> ();
 		rtElt.SetSizeWithCurrentAnchors (RectTransform.Axis.Vertical, eltHeight);
