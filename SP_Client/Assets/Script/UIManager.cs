@@ -11,6 +11,8 @@ public enum eUI
 	eBillSending,
 	eMusicRequest,
 	eWaiting,
+
+	eNone = 100,
 }
 
 public class UIManager : SingletonMonobehaviour<UIManager> {
@@ -25,6 +27,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 	public GameObject objShadow;
 	public List<UI> listUI;
 
+	eUI curUI = eUI.eNone;
 	Dictionary<eUI, GameObject> dicObject = new Dictionary<eUI, GameObject> ();
 
 	void Awake () 
@@ -43,19 +46,28 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 
 	public GameObject Show(eUI page)
 	{
-		objShadow.SetActive (true);
+		if (page != eUI.eWaiting) {
+			curUI = page;
+			objShadow.SetActive (true);
+		}
+
 		dicObject [page].SetActive (true);
 		return dicObject [page];
 	}
 
 	public void Hide(eUI page)
-	{	
-		objShadow.SetActive (false);	
+	{
+		if (page != eUI.eWaiting) {
+			curUI = eUI.eNone;
+			objShadow.SetActive (false);
+		}
+		
 		dicObject [page].SetActive (false);
 	}
 		
 	public void Hide_All()
 	{
+		objShadow.SetActive (false);
 		foreach (KeyValuePair<eUI, GameObject> pair in dicObject)
 			pair.Value.SetActive (false);
 	}
@@ -63,5 +75,13 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 	public bool IsActive(eUI page)
 	{
 		return dicObject [page].activeSelf;
-	}		
+	}
+
+	public GameObject GetCurUI()
+	{
+		if (curUI == eUI.eNone)
+			return null;
+
+		return dicObject [curUI];
+	}
 }
