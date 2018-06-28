@@ -25,27 +25,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 	public void EnterCostomer_REQ(byte howMany, byte type)
 	{
         CPacket msg = CPacket.create((short)PROTOCOL.ENTER_CUSTOMER_REQ);
-		msg.push (Info.TableNum);
         msg.push(howMany);
         msg.push(type);
 
         send(msg);
-	}
-
-	public void WaiterCall_REQ ()
-	{
-		CPacket msg = CPacket.create((short)PROTOCOL.WAITER_CALL_REQ);
-		msg.push (Info.TableNum);
-
-		send (msg);
-	}
-
-	public void Order_REQ(string order)
-	{
-		CPacket msg = CPacket.create((short)PROTOCOL.ORDER_REQ);
-		msg.push (Info.TableNum);
-		msg.push (order);
-
-		send (msg);
 	}
 }

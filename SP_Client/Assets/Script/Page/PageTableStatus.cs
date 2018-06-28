@@ -62,7 +62,6 @@ public class PageTableStatus : PageBase {
 
         floors[floor].gameObject.SetActive(true);
         curViewFloor = (EFloor)floor;
-        OnDetailClose();
 
         StartCoroutine(ViewTableSpot());
     }
@@ -118,7 +117,7 @@ public class PageTableStatus : PageBase {
     {
         for (int i = startTableIdx; i < endTableIdx; i++)
         {
-            UITweenPosY.Start(tableSpots[i].iconSpot.gameObject, 20f, 30f, TWParam.New(1f).Curve(TWCurve.Back).Speed(TWSpeed.Slower));
+            UITween posYTween = UITweenPosY.Start(tableSpots[i].iconSpot.gameObject, 20f, 30f, TWParam.New(1f).Curve(TWCurve.Back).Speed(TWSpeed.Slower));
             UITweenAlpha.Start(tableSpots[i].iconSpot.gameObject, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.Back).Speed(TWSpeed.Slower));
             yield return new WaitForSeconds(.15f);
         }

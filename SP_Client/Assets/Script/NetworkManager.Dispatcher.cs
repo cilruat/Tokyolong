@@ -17,14 +17,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		{
 		case PROTOCOL.FAILED_NOT_NUMBER:	Failed (protocol_id);		break;
 		case PROTOCOL.LOGIN_ACK:			LoginACK (msg);				break;
-		case PROTOCOL.LOGIN_NOT:			LoginNOT (msg);				break;
-		case PROTOCOL.LOGOUT_ACK:			LogoutNOT (msg);			break;
-		case PROTOCOL.LOGOUT_NOT:			LogoutNOT (msg);			break;
 		case PROTOCOL.ENTER_CUSTOMER_ACK:	EnterCustormerACK ();		break;
-		case PROTOCOL.WAITER_CALL_ACK:		WaiterCallACK ();			break;
-		case PROTOCOL.WAITER_CALL_NOT:		WaiterCallNOT (msg);			break;
-		case PROTOCOL.ORDER_ACK:			OrderACK ();				break;
-		case PROTOCOL.ORDER_NOT:			OrderNOT (msg);				break;
 		}
 	}
 
@@ -39,25 +32,11 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 	void LoginACK(CPacket msg)
 	{
 		string pop_string = msg.pop_string ();
-		if (pop_string == "admin")
-			SceneChanger.LoadScene ("Admin", PageBase.Instance.curBoardObj ());
-		else {
-			byte no = byte.Parse (pop_string);
-			Info.SetTableNum (no);
-			PageLogin.Instance.OnNext ();
-		}
-	}
-
-	void LoginNOT(CPacket msg)
-	{
-		byte tableNo = msg.pop_byte ();
-		PageAdmin.Instance.SetLogin ((int)tableNo);
-	}
-
-	void LogoutNOT(CPacket msg)
-	{
-		byte tableNo = msg.pop_byte ();
-		PageAdmin.Instance.SetLogout ((int)tableNo);
+        if (pop_string == "admin")
+        {
+        }
+        else
+            PageLogin.Instance.OnNext();
 	}
 
 	void EnterCustormerACK()
@@ -65,26 +44,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		SceneChanger.LoadScene ("Main", PageBase.Instance.curBoardObj ());
 	}
 
-	void WaiterCallACK()
-	{
-		SystemMessage.Instance.Add ("직원을 호출하였습니다");
-	}
-
-	void WaiterCallNOT(CPacket msg)
-	{
-		byte tableNo = msg.pop_byte ();
-		PageAdmin.Instance.Urgency ((int)tableNo);
-	}
-
 	void OrderACK()
 	{
-		((PageOrder)PageBase.Instance).bill.CompleteOrder ();
-	}
-
-	void OrderNOT(CPacket msg)
-	{
-		byte tableNo = msg.pop_byte ();
-		string order = msg.pop_string ();
-		PageAdmin.Instance.SetOrder (true, tableNo, order);
+		SystemMessage.Instance.Add ("주문이 완료되었습니다");
 	}
 }

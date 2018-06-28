@@ -16,7 +16,6 @@ namespace SP_Server
 
 		LOGIN_REQ,
 		LOGIN_ACK,
-		LOGIN_NOT,
 		ENTER_CUSTOMER_REQ,
 		ENTER_CUSTOMER_ACK,
 
@@ -28,18 +27,9 @@ namespace SP_Server
         //-------------------------------------
         // 로비 프로토콜.
         //-------------------------------------        
-		LOGOUT_REQ,
-		LOGOUT_ACK,
-		LOGOUT_NOT,
-		WAITER_CALL_REQ,
-		WAITER_CALL_ACK,
-		WAITER_CALL_NOT,
 		ORDER_REQ,
 		ORDER_ACK,
-		ORDER_NOT,
-		REQUEST_MUSIC_REQ,
-		REQUEST_MUSIC_ACK,
-		REQUEST_MUSIC_NOT,
+
         //-------------------------------------
         // 게임 프로토콜.
         //-------------------------------------        
