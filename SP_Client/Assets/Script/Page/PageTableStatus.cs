@@ -49,7 +49,7 @@ public class PageTableStatus : PageBase {
         for (int i = 0; i < tableSpots.Count; i++)
         {
             int ranCustomer = Random.Range(0, 4);
-            tableSpots[i].SetTableSpot((byte)ranCustomer, i + 1);
+            tableSpots[i].SetTableSpot((byte)ranCustomer);
         }
 	}
 
@@ -168,7 +168,7 @@ public class PageTableStatus : PageBase {
             case ETableDetail.Chat:
                 GameObject obj = UIManager.Instance.Show(eUI.eChat);
                 UIChat uiChat = obj.GetComponent<UIChat>();
-                uiChat.AddTableChat(tableSpots[selectTableSpot].TableNo);
+                uiChat.AddTableChat(tableSpots[selectTableSpot].tableNo);
                 break;
         }
     }

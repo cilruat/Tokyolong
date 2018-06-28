@@ -13,17 +13,15 @@ public class TableSpotElt : MonoBehaviour
         eMy = 3,
     }
 
+    public int tableNo;
     public RawImage iconSpot;
     public Text textNum;
 
     byte customer = 3;
-    int tableNo = -1;
-    public int TableNo { get { return tableNo; } }
 
-    public void SetTableSpot(byte customer, int tableNo)
+    public void SetTableSpot(byte customer)
     {
         this.customer = customer;
-        this.tableNo = tableNo;
 
         textNum.text = tableNo.ToString() + "번";
     }

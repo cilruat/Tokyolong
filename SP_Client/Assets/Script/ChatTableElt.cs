@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class ChatTableElt : MonoBehaviour 
 {
+    public UIChat uiChat;
+
     public Button btn;
     public Image imgSelect;
     public Text textTableNo;
