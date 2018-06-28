@@ -22,17 +22,20 @@ public class PageLogin : PageBase {
 		base.acFinal = _EnterCustomer;
 		base.acFinalIdx = 4;
 
-		if (PlayerPrefs.HasKey ("set_table") == false)
-			inputTable.gameObject.SetActive (true);
+		Debug.Log (Application.dataPath);
+
+		string path = Application.dataPath + @"\tableNo.txt";
+		tableNo = System.IO.File.ReadAllText (path);
+
+		if (string.IsNullOrEmpty(tableNo))
+			txtSuccess.text = "텍스트 파일을 읽어오지 못했습니다";
 		else
 			_Connect ();
 	}
 
 	void _Connect()
-	{
-		tableNo = PlayerPrefs.GetString ("set_table");
+	{		
 		txtSuccess.text = "서버에 접속중입니다";
-
 		NetworkManager.Instance.connect ();
 	}
 
@@ -43,18 +46,10 @@ public class PageLogin : PageBase {
 
 	public void SuccessConnect()
 	{
-		txtSuccess.text = "정상적으로 서버에 접속하였습니다";
+		txtSuccess.text = "정상적으로 서버에 접속하였습니다\n" + "테이블 넘버: " + tableNo;
 
 		UITweenAlpha.Start (txtSuccess.gameObject, 0f, TWParam.New (1f, 1f).Curve (TWCurve.CurveLevel2));
 		UITweenAlpha.Start (objLoginBox, 1f, TWParam.New (1f, 1.5f).Curve (TWCurve.CurveLevel2));
-	}
-
-	public void OnInputTable()
-	{		
-		PlayerPrefs.SetString ("set_table", inputTable.text);
-		inputTable.gameObject.SetActive (false);
-
-		_Connect ();
 	}		
 
 	public void OnLogin()
