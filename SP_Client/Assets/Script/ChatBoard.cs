@@ -23,7 +23,7 @@ public class ChatBoard : MonoBehaviour
         }
     }
 
-    public void AddChatElt(byte person, byte customer, int tableNo, byte personCount, string time, string msg)
+	public void AddChatElt(byte person, byte customer, byte tableNo, byte personCount, string time, string msg)
 	{
 		ChatElt elt = CreateChatElt ();
         elt.SetChatElt (person, customer, tableNo, personCount, time, msg);
@@ -63,20 +63,8 @@ public class ChatBoard : MonoBehaviour
 		if (input.text == string.Empty)
 			return;
 
-		//REQ Send~
-		//AddChatElt(myPerson, myTableNo, myPerson, currentTime, input.text);
-        byte person = (byte)1;
-        byte customer = 0;
-        int tableNo = 5;
-        byte personCount = 1;
-        string tt = System.DateTime.Now.ToString("tt");
-        string hh = System.DateTime.Now.ToString("hh");
-        string mm = System.DateTime.Now.ToString("mm");
-        string time = tt + "/" + hh + "/" + mm;
+//		NetworkManager.Instance.Chat_REQ()
 
-        string msg = input.text;
-
-        AddChatElt(person, customer, tableNo, personCount, time, msg);
         input.text = string.Empty;
 	}
 

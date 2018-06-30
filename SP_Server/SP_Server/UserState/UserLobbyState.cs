@@ -63,7 +63,7 @@ namespace SP_Server.UserState
                         owner.tableNum = tableNum;                        
 
                         send_msg = CPacket.create((short)PROTOCOL.LOGIN_ACK);
-                        send_msg.push(pop_string);                        
+                        send_msg.push(pop_string);    
 
                         break;
                     case PROTOCOL.LOGOUT_REQ:
@@ -97,7 +97,32 @@ namespace SP_Server.UserState
                         owner.peopleCnt = peopleCnt;
                         owner.customerType = customerType;
 
+                        owner.info = new UserInfo((byte)owner.tableNum, peopleCnt, customerType);
+
+                        List<UserInfo> listUserInfo = new List<UserInfo>();
+                        // 접속된 유저들에게 현재 접속 유저 정보 전송
+                        for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
+                        {
+                            User user = owner.mainFrm.ListUser[i];
+                            listUserInfo.Add(user.info);
+
+                            if (user.tableNum == tableNo)
+                                continue;
+
+                            other_msg = CPacket.create((short)PROTOCOL.ENTER_CUSTOMER_NOT);
+                            JsonData loginUser = JsonMapper.ToJson(owner.info);
+                            other_msg.push(loginUser.ToString());
+                            user.send(other_msg);
+                        }
+
                         send_msg = CPacket.create((short)PROTOCOL.ENTER_CUSTOMER_ACK);
+                        send_msg.push(peopleCnt);
+                        send_msg.push(customerType);
+
+                        listUserInfo.Add(new UserInfo((byte)5, (byte)5, (byte)1));
+
+                        JsonData listUerJson = JsonMapper.ToJson(listUserInfo);
+                        send_msg.push(listUerJson.ToString());
                         break;
                     case PROTOCOL.WAITER_CALL_REQ:
                         tableNo = msg.pop_byte();
@@ -152,9 +177,7 @@ namespace SP_Server.UserState
                                 continue;
 
                             other_msg = CPacket.create((short)PROTOCOL.CHAT_NOT);
-                            other_msg.push(other.customerType);
-                            other_msg.push(other.tableNum);
-                            other_msg.push(other.peopleCnt);                            
+                            other_msg.push(other.tableNum);                            
                             other_msg.push(makeTime);
                             other_msg.push(chat);
                             other.send(other_msg);

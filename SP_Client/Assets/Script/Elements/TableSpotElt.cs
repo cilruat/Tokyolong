@@ -13,16 +13,14 @@ public class TableSpotElt : MonoBehaviour
         eMy = 3,
     }
 
-    public int tableNo;
+	public byte tableNo;
     public RawImage iconSpot;
     public Text textNum;
 
-    byte customer = 3;
-
+	public Texture[] imgSpots = new Texture[System.Enum.GetValues(typeof(ESpotType)).Length];
     public void SetTableSpot(byte customer)
     {
-        this.customer = customer;
-
-        textNum.text = tableNo.ToString() + "번";
+		iconSpot.texture = imgSpots [customer];
+		textNum.text = tableNo.ToString() + "번";
     }
 }

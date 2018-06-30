@@ -20,7 +20,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		case PROTOCOL.LOGIN_NOT:			LoginNOT (msg);				break;
 		case PROTOCOL.LOGOUT_ACK:			LogoutNOT (msg);			break;
 		case PROTOCOL.LOGOUT_NOT:			LogoutNOT (msg);			break;
-		case PROTOCOL.ENTER_CUSTOMER_ACK:	EnterCustormerACK ();		break;
+		case PROTOCOL.ENTER_CUSTOMER_ACK:	EnterCustormerACK (msg);	break;
+		case PROTOCOL.ENTER_CUSTOMER_NOT:	EnterCustormerNOT (msg);	break;
 		case PROTOCOL.WAITER_CALL_ACK:		WaiterCallACK ();			break;
 		case PROTOCOL.WAITER_CALL_NOT:		WaiterCallNOT (msg);		break;
 		case PROTOCOL.ORDER_ACK:			OrderACK ();				break;
@@ -45,11 +46,6 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 			SceneChanger.LoadScene ("Admin", PageBase.Instance.curBoardObj ());
 		else {
 			byte no = byte.Parse (pop_string);
-            byte cnt = msg.pop_byte();
-            byte type = msg.pop_byte();
-            Info.TableNum = no;
-            Info.PersonCnt = cnt;
-            Info.ECustomer = (ECustomerType)type;
 			PageLogin.Instance.OnNext ();
 		}
 	}
@@ -70,9 +66,21 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 			SceneChanger.LoadScene ("Login", PageBase.Instance.curBoardObj ());
 	}
 
-	void EnterCustormerACK()
+	void EnterCustormerACK(CPacket msg)
 	{
+		Info.PersonCnt = msg.pop_byte ();
+		Info.ECustomer = (ECustomerType)msg.pop_byte ();
+
+		string packing = msg.pop_string ();
+		Info.SetOtherUser (packing);
+
 		SceneChanger.LoadScene ("Main", PageBase.Instance.curBoardObj ());
+	}
+
+	void EnterCustormerNOT(CPacket msg)
+	{
+		string packing = msg.pop_string ();
+		Info.SetOtherUser (packing);
 	}
 
 	void WaiterCallACK()
@@ -112,15 +120,17 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     {
         if (UIManager.Instance.IsActive(eUI.eChat))
         {
-            byte customer = msg.pop_byte();
-            byte tableNo = msg.pop_byte();
-            byte personCnt = msg.pop_byte();
+			byte tableNo = msg.pop_byte ();
+			UserInfo userInfo = Info.GetUser (tableNo);
+
+			byte customer = userInfo.customerType;
+			byte personCnt = userInfo.peopleCnt;
             string time = msg.pop_string();
             string chat = msg.pop_string();
 
             GameObject obj = UIManager.Instance.GetCurUI();
             UIChat uiChat = obj.GetComponent<UIChat>();
-            uiChat.chatBoard.AddChatElt(0, customer, tableNo, personCnt, time, chat);
+			uiChat.chatBoard.AddChatElt(0, customer, tableNo, personCnt, time, chat);
         }
         else
             UIManager.Instance.ShowChatAlarm();        

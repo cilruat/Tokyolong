@@ -30,7 +30,7 @@ public class ChatElt : MonoBehaviour {
     const float ELT_MIN_WIDTH = 200f;
 	const float ELT_MIN_HEIGHT = 30f;
 
-    public void SetChatElt(byte person, byte customer, int tableNo, byte personCount, string time, string msg)
+    public void SetChatElt(byte person, byte customer, byte tableNo, byte personCount, string time, string msg)
 	{
         for (int i = 0; i < chatPersons.Length; i++)
             chatPersons[i].rtPerson.gameObject.SetActive(i == person);

@@ -44,8 +44,8 @@ public class PageLogin : PageBase {
 
     void _EnterCustomer()
     {
-        NetworkManager.Instance.EnterCostomer_REQ(howMany, (byte)eType);
-    }		
+        NetworkManager.Instance. EnterCostomer_REQ(howMany, (byte)eType);
+    }
 
 	public void SuccessConnect()
 	{

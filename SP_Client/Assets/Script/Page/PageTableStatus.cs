@@ -46,11 +46,9 @@ public class PageTableStatus : PageBase {
         this.boards = cgBoards;
 		base.Awake ();
 
-        for (int i = 0; i < tableSpots.Count; i++)
-        {
-            int ranCustomer = Random.Range(0, 4);
-            tableSpots[i].SetTableSpot((byte)ranCustomer);
-        }
+		for (int i = 0; i < tableSpots.Count; i++) {
+			tableSpots [i].gameObject.SetActive (false);
+		}
 	}
 
     void Start()
@@ -128,6 +126,15 @@ public class PageTableStatus : PageBase {
     {
         for (int i = startTableIdx; i < endTableIdx; i++)
         {
+			TableSpotElt elt = tableSpots [i];
+			UserInfo info = Info.GetUser (elt.tableNo);
+			elt.gameObject.SetActive (info != null);
+			if (info == null)
+				continue;
+
+			byte customer = info.tableNo != Info.TableNum ? info.customerType : (byte)TableSpotElt.ESpotType.eMy;
+			elt.SetTableSpot (customer);
+
             UITweenPosY.Start(tableSpots[i].iconSpot.gameObject, 20f, 30f, TWParam.New(1f).Curve(TWCurve.Back).Speed(TWSpeed.Slower));
             UITweenAlpha.Start(tableSpots[i].iconSpot.gameObject, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.Back).Speed(TWSpeed.Slower));
             yield return new WaitForSeconds(.15f);

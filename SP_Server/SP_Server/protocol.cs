@@ -19,6 +19,7 @@ namespace SP_Server
 		LOGIN_NOT,
 		ENTER_CUSTOMER_REQ,
 		ENTER_CUSTOMER_ACK,
+		ENTER_CUSTOMER_NOT,
 
 		//-------------------------------------
 		// 실패 프로토콜.

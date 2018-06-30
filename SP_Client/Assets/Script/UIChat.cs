@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class ChatTable
 {
     public int tableID;
-    public List<string> msg;
 }
 
 public class UIChat : MonoBehaviour 
@@ -18,11 +17,6 @@ public class UIChat : MonoBehaviour
 	public RectTransform rtChatEmpty;
 
 	Dictionary<int, ChatTableElt> dictChatTable = new Dictionary<int, ChatTableElt>();
-
-    void OnEnable()
-    {
-        chatBoard.RemoveAllChat();
-    }
 
 	public void AddTableChat(int tableNo)
 	{

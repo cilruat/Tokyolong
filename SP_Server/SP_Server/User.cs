@@ -10,6 +10,20 @@ namespace SP_Server
 {
     using UserState;
 
+    public class UserInfo
+    {
+        public int tableNum { get; set; }
+        public byte peopleCnt { get; set; }
+        public byte customerType { get; set; }
+
+        public UserInfo(byte tableNum, byte peopleCnt, byte customerType)
+        {
+            this.tableNum = tableNum;
+            this.peopleCnt = peopleCnt;
+            this.customerType = customerType;
+        }
+    }
+
     public class User : IPeer
     {
         IUserState current_user_state;
@@ -21,6 +35,7 @@ namespace SP_Server
         public int tableNum { get; set; }
         public byte peopleCnt { get; set; }
         public byte customerType { get; set; }
+        public UserInfo info;
         Dictionary<int, int> orderTable = new Dictionary<int, int>();   // key: menu, value: count
 
         public GameRoom battle_room { get; private set; }
