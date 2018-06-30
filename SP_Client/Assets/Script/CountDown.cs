@@ -8,6 +8,7 @@ public class CountDown : MonoBehaviour {
 
 	Text count;
 	int sec = 0;
+    float elapsed = 0f;
 	UnityAction callback = null;
 
 	void Awake()
@@ -28,7 +29,7 @@ public class CountDown : MonoBehaviour {
 
 		float timeToStart = Time.timeSinceLevelLoad;
 		while (true) {
-			float elapsed = Time.timeSinceLevelLoad - timeToStart;
+			elapsed = Time.timeSinceLevelLoad - timeToStart;
 			int remain = Mathf.CeilToInt (Mathf.Max (0f, sec - elapsed));
 
 			string str = remain.ToString ();
@@ -48,4 +49,6 @@ public class CountDown : MonoBehaviour {
 			callback = null;
 		}
 	}
+
+    public float GetElapsed() { return elapsed; }
 }
