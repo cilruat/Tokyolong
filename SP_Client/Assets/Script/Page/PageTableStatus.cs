@@ -45,10 +45,6 @@ public class PageTableStatus : PageBase {
 	{
         this.boards = cgBoards;
 		base.Awake ();
-
-		for (int i = 0; i < tableSpots.Count; i++) {
-			tableSpots [i].gameObject.SetActive (false);
-		}
 	}
 
     void Start()
@@ -75,6 +71,18 @@ public class PageTableStatus : PageBase {
 
     public void OnSelectSpot(int i)
     {
+        if (tableSpots[i].tableNo == Info.TableNum)
+        {
+            SystemMessage.Instance.Add("현재 테이블입니다");
+            return;
+        }
+
+        if (tableSpots[i].IsNone)
+        {
+            SystemMessage.Instance.Add("아직 입석하지 않은 테이블 입니다");
+            return;
+        }
+
         if (detailDisableTween != null)
         {
             detailDisableTween.StopTween();
@@ -128,15 +136,8 @@ public class PageTableStatus : PageBase {
         {
 			TableSpotElt elt = tableSpots [i];
 			UserInfo info = Info.GetUser (elt.tableNo);
-			elt.gameObject.SetActive (info != null);
-			if (info == null)
-				continue;
-
-			byte customer = info.tableNo != Info.TableNum ? info.customerType : (byte)TableSpotElt.ESpotType.eMy;
-			elt.SetTableSpot (customer);
-
-            UITweenPosY.Start(tableSpots[i].iconSpot.gameObject, 20f, 30f, TWParam.New(1f).Curve(TWCurve.Back).Speed(TWSpeed.Slower));
-            UITweenAlpha.Start(tableSpots[i].iconSpot.gameObject, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.Back).Speed(TWSpeed.Slower));
+            byte customer = info != null ? info.customerType : (byte)TableSpotElt.ESpotType.eNone;
+            elt.SetTableSpot (customer);
             yield return new WaitForSeconds(.15f);
         }
 

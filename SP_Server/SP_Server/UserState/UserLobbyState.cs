@@ -100,13 +100,17 @@ namespace SP_Server.UserState
                         owner.info = new UserInfo((byte)owner.tableNum, peopleCnt, customerType);
 
                         List<UserInfo> listUserInfo = new List<UserInfo>();
+                        listUserInfo.Add(owner.info);
                         // 접속된 유저들에게 현재 접속 유저 정보 전송
                         for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
                         {
                             User user = owner.mainFrm.ListUser[i];
+                            if (user.tableNum == 10000 || user.info == null)
+                                continue;
+
                             listUserInfo.Add(user.info);
 
-                            if (user.tableNum == tableNo)
+                            if (user.info.tableNum == owner.info.tableNum)
                                 continue;
 
                             other_msg = CPacket.create((short)PROTOCOL.ENTER_CUSTOMER_NOT);
@@ -118,8 +122,6 @@ namespace SP_Server.UserState
                         send_msg = CPacket.create((short)PROTOCOL.ENTER_CUSTOMER_ACK);
                         send_msg.push(peopleCnt);
                         send_msg.push(customerType);
-
-                        listUserInfo.Add(new UserInfo((byte)5, (byte)5, (byte)1));
 
                         JsonData listUerJson = JsonMapper.ToJson(listUserInfo);
                         send_msg.push(listUerJson.ToString());

@@ -12,9 +12,9 @@ namespace SP_Server
 
     public class UserInfo
     {
-        public int tableNum { get; set; }
-        public byte peopleCnt { get; set; }
-        public byte customerType { get; set; }
+        public int tableNum;
+        public byte peopleCnt;
+        public byte customerType;
 
         public UserInfo(byte tableNum, byte peopleCnt, byte customerType)
         {
@@ -35,7 +35,7 @@ namespace SP_Server
         public int tableNum { get; set; }
         public byte peopleCnt { get; set; }
         public byte customerType { get; set; }
-        public UserInfo info;
+        public UserInfo info = null;
         Dictionary<int, int> orderTable = new Dictionary<int, int>();   // key: menu, value: count
 
         public GameRoom battle_room { get; private set; }

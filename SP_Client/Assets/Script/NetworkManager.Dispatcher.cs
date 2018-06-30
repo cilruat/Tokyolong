@@ -45,7 +45,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		if (pop_string == "admin")
 			SceneChanger.LoadScene ("Admin", PageBase.Instance.curBoardObj ());
 		else {
-			byte no = byte.Parse (pop_string);
+            Info.TableNum = byte.Parse (pop_string);
 			PageLogin.Instance.OnNext ();
 		}
 	}
@@ -72,7 +72,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		Info.ECustomer = (ECustomerType)msg.pop_byte ();
 
 		string packing = msg.pop_string ();
-		Info.SetOtherUser (packing);
+        Info.SetLoginedOtherUser (packing);
 
 		SceneChanger.LoadScene ("Main", PageBase.Instance.curBoardObj ());
 	}
@@ -80,7 +80,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 	void EnterCustormerNOT(CPacket msg)
 	{
 		string packing = msg.pop_string ();
-		Info.SetOtherUser (packing);
+        Info.AddOtherLoginUser (packing);
 	}
 
 	void WaiterCallACK()
