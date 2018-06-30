@@ -40,6 +40,9 @@ namespace SP_Server
 		REQUEST_MUSIC_REQ,
 		REQUEST_MUSIC_ACK,
 		REQUEST_MUSIC_NOT,
+        CHAT_REQ,
+        CHAT_ACK,
+        CHAT_NOT,
         //-------------------------------------
         // 게임 프로토콜.
         //-------------------------------------        

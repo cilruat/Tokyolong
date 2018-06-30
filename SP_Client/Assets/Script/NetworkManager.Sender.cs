@@ -56,4 +56,12 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
 		send (msg);
 	}
+
+    public void Chat_REQ(byte otherTableNo, string chat)
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.CHAT_REQ);
+        msg.push(Info.TableNum);
+        msg.push(otherTableNo);
+        msg.push(chat);
+    }
 }

@@ -22,9 +22,11 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		case PROTOCOL.LOGOUT_NOT:			LogoutNOT (msg);			break;
 		case PROTOCOL.ENTER_CUSTOMER_ACK:	EnterCustormerACK ();		break;
 		case PROTOCOL.WAITER_CALL_ACK:		WaiterCallACK ();			break;
-		case PROTOCOL.WAITER_CALL_NOT:		WaiterCallNOT (msg);			break;
+		case PROTOCOL.WAITER_CALL_NOT:		WaiterCallNOT (msg);		break;
 		case PROTOCOL.ORDER_ACK:			OrderACK ();				break;
 		case PROTOCOL.ORDER_NOT:			OrderNOT (msg);				break;
+        case PROTOCOL.CHAT_ACK:             ChatACK(msg);               break;
+        case PROTOCOL.CHAT_NOT:             ChatNOT(msg);               break;
 		}
 	}
 
@@ -43,7 +45,11 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 			SceneChanger.LoadScene ("Admin", PageBase.Instance.curBoardObj ());
 		else {
 			byte no = byte.Parse (pop_string);
-			Info.SetTableNum (no);
+            byte cnt = msg.pop_byte();
+            byte type = msg.pop_byte();
+            Info.TableNum = no;
+            Info.PersonCnt = cnt;
+            Info.ECustomer = (ECustomerType)type;
 			PageLogin.Instance.OnNext ();
 		}
 	}
@@ -91,4 +97,32 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		string order = msg.pop_string ();
 		PageAdmin.Instance.SetOrder (true, tableNo, order);
 	}
+
+    void ChatACK(CPacket msg)
+    {              
+        string time = msg.pop_string();
+        string chat = msg.pop_string();
+
+        GameObject obj = UIManager.Instance.GetCurUI();
+        UIChat uiChat = obj.GetComponent<UIChat>();
+        uiChat.chatBoard.AddChatElt(1, (byte)Info.ECustomer, Info.TableNum, Info.PersonCnt, time, chat);
+    }
+
+    void ChatNOT(CPacket msg)
+    {
+        if (UIManager.Instance.IsActive(eUI.eChat))
+        {
+            byte customer = msg.pop_byte();
+            byte tableNo = msg.pop_byte();
+            byte personCnt = msg.pop_byte();
+            string time = msg.pop_string();
+            string chat = msg.pop_string();
+
+            GameObject obj = UIManager.Instance.GetCurUI();
+            UIChat uiChat = obj.GetComponent<UIChat>();
+            uiChat.chatBoard.AddChatElt(0, customer, tableNo, personCnt, time, chat);
+        }
+        else
+            UIManager.Instance.ShowChatAlarm();        
+    }
 }

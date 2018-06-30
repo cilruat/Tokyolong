@@ -5,9 +5,9 @@ using UnityEngine.Events;
 
 public partial class Info : MonoBehaviour {
 
-	static byte tableNo = 0;
-	public static byte TableNum { get{ return tableNo; } }
-	public static void SetTableNum(byte no) { tableNo = no; }
+    public static byte TableNum = 0;
+    public static byte PersonCnt = 0;
+    public static ECustomerType ECustomer = ECustomerType.MAN;
 
 	public static void AnimateChangeObj(CanvasGroup cur, CanvasGroup next, UnityEvent nextCallback = null)
     {

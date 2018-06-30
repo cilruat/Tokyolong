@@ -37,7 +37,7 @@ namespace SP_Server.UserState
                 switch (protocol)
                 {
                     case PROTOCOL.LOGIN_REQ:
-                        int tableNum = 0;
+                        int tableNum = 0;                        
                         string pop_string = msg.pop_string();
                         if (pop_string == "admin")
                         {                            
@@ -60,10 +60,10 @@ namespace SP_Server.UserState
                             Frm.GetAdminUser().send(other_msg);
                         }                            
 
-                        owner.tableNum = tableNum;
+                        owner.tableNum = tableNum;                        
 
                         send_msg = CPacket.create((short)PROTOCOL.LOGIN_ACK);
-                        send_msg.push(pop_string);
+                        send_msg.push(pop_string);                        
 
                         break;
                     case PROTOCOL.LOGOUT_REQ:
@@ -124,7 +124,7 @@ namespace SP_Server.UserState
                             int cnt = int.Parse(json2);
 
                             owner.SetOrder(menu, cnt);
-                        }
+                        }                        
 
                         // Admin Send packet
                         other_msg = CPacket.create((short)PROTOCOL.ORDER_NOT);
@@ -133,6 +133,38 @@ namespace SP_Server.UserState
                         Frm.GetAdminUser().send(other_msg);
 
                         send_msg = CPacket.create((short)PROTOCOL.ORDER_ACK);                        
+                        break;
+                    case PROTOCOL.CHAT_REQ:
+                        tableNo = msg.pop_byte();
+                        byte otherTableNo = msg.pop_byte();
+                        string chat = msg.pop_string();
+
+                        string tt = DateTime.Now.ToString("tt");
+                        string hh = DateTime.Now.ToString("hh");
+                        string mm = DateTime.Now.ToString("mm");
+                        string makeTime = tt + "/" + hh + "/" + mm;
+
+                        // 상대방 유저에게 채팅 보내기
+                        for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
+                        {
+                            User other = owner.mainFrm.ListUser[i];
+                            if (other.tableNum != tableNo)
+                                continue;
+
+                            other_msg = CPacket.create((short)PROTOCOL.CHAT_NOT);
+                            other_msg.push(other.customerType);
+                            other_msg.push(other.tableNum);
+                            other_msg.push(other.peopleCnt);                            
+                            other_msg.push(makeTime);
+                            other_msg.push(chat);
+                            other.send(other_msg);
+                            break;
+                        }
+
+                        send_msg = CPacket.create((short)PROTOCOL.CHAT_ACK);
+                        send_msg.push(makeTime);
+                        send_msg.push(chat);
+
                         break;
                     default:
                         break;
