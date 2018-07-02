@@ -175,11 +175,11 @@ namespace SP_Server.UserState
                         for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
                         {
                             User other = owner.mainFrm.ListUser[i];
-                            if (other.tableNum != tableNo)
+                            if (other.tableNum != otherTableNo)
                                 continue;
 
                             other_msg = CPacket.create((short)PROTOCOL.CHAT_NOT);
-                            other_msg.push(other.tableNum);                            
+                            other_msg.push(tableNo);                            
                             other_msg.push(makeTime);
                             other_msg.push(chat);
                             other.send(other_msg);
@@ -187,6 +187,7 @@ namespace SP_Server.UserState
                         }
 
                         send_msg = CPacket.create((short)PROTOCOL.CHAT_ACK);
+                        send_msg.push(otherTableNo);
                         send_msg.push(makeTime);
                         send_msg.push(chat);
 

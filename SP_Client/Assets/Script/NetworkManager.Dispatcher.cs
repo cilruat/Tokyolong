@@ -60,6 +60,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 	{
 		byte tableNo = msg.pop_byte ();
 
+        Info.SetLogoutOtherUser(tableNo);
+
 		if (SceneManager.GetActiveScene ().name == "Admin")
 			PageAdmin.Instance.SetLogout ((int)tableNo);
 		else
@@ -108,29 +110,32 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
     void ChatACK(CPacket msg)
     {              
+        byte otherTableNo = msg.pop_byte();
         string time = msg.pop_string();
         string chat = msg.pop_string();
+        UserChat newChat = new UserChat(1, time, chat);
 
+        Info.AddUserChatInfo(otherTableNo, newChat, false);
         GameObject obj = UIManager.Instance.GetCurUI();
         UIChat uiChat = obj.GetComponent<UIChat>();
-        uiChat.chatBoard.AddChatElt(1, (byte)Info.ECustomer, Info.TableNum, Info.PersonCnt, time, chat);
+        uiChat.chatBoard.AddChatElt(Info.myInfo, newChat);
     }
 
     void ChatNOT(CPacket msg)
     {
+        byte otherTableNo = msg.pop_byte ();
+        string time = msg.pop_string();
+        string chat = msg.pop_string();
+        UserChat newChat = new UserChat(0, time, chat);
+
+        bool isActive = UIManager.Instance.IsActive(eUI.eChat);
+        Info.AddUserChatInfo(otherTableNo, newChat, !isActive);
+
         if (UIManager.Instance.IsActive(eUI.eChat))
         {
-			byte tableNo = msg.pop_byte ();
-			UserInfo userInfo = Info.GetUser (tableNo);
-
-			byte customer = userInfo.customerType;
-			byte personCnt = userInfo.peopleCnt;
-            string time = msg.pop_string();
-            string chat = msg.pop_string();
-
             GameObject obj = UIManager.Instance.GetCurUI();
             UIChat uiChat = obj.GetComponent<UIChat>();
-			uiChat.chatBoard.AddChatElt(0, customer, tableNo, personCnt, time, chat);
+            uiChat.chatBoard.AddChatElt(Info.GetUser(otherTableNo), newChat);
         }
         else
             UIManager.Instance.ShowChatAlarm();        

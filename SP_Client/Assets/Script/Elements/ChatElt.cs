@@ -30,26 +30,26 @@ public class ChatElt : MonoBehaviour {
     const float ELT_MIN_WIDTH = 200f;
 	const float ELT_MIN_HEIGHT = 30f;
 
-    public void SetChatElt(byte person, byte customer, byte tableNo, byte personCount, string time, string msg)
+    public void SetChatElt(UserInfo info, UserChat chat)
 	{
         for (int i = 0; i < chatPersons.Length; i++)
-            chatPersons[i].rtPerson.gameObject.SetActive(i == person);
+            chatPersons[i].rtPerson.gameObject.SetActive(i == chat.person);
 
-        ChatPerson current = chatPersons[person];
-        current.imgCustomer.texture = imgCustomer[customer];
-        current.imgCustomer.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, customer != 2 ? 35f : 70f);
+        ChatPerson current = chatPersons[chat.person];
+        current.imgCustomer.texture = imgCustomer[info.customerType];
+        current.imgCustomer.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, info.customerType != 2 ? 35f : 70f);
 
-        current.textTableNo.text = "No. <size='20'>" + tableNo.ToString() + "</size>";
-        current.textCount.text = personCount.ToString() + "명";
+        current.textTableNo.text = "No. <size='20'>" + info.tableNo.ToString() + "</size>";
+        current.textCount.text = info.peopleCnt.ToString() + "명";
 
-        string[] times = time.Split('/');
+        string[] times = chat.time.Split('/');
         string sendTT = times[0] == "AM" ? "오전" : "오후";
         string sendHH = times[1].ToString().StartsWith("0") ? times[1].ToString().Substring(1) : times[1].ToString();
         string sendMM = times[2].ToString();
         string sendTime = sendTT + " " + sendHH + ":" + sendMM;
 
         current.textTime.text = sendTime;
-        current.textChatMsg.text = msg;
+        current.textChatMsg.text = chat.chat;
 
 		RectTransform rtChatMsg = current.textChatMsg.GetComponent<RectTransform> ();
         float chatWidth = Mathf.Min(ELT_MIN_WIDTH, current.textChatMsg.preferredWidth);

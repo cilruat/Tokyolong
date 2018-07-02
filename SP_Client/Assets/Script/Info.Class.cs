@@ -18,10 +18,50 @@ public class UserInfo
 		this.customerType = customerType;
 	}
 }
+
+public class UserChatInfo
+{
+    public UserInfo info = null;
+    public List<UserChat> listChat = new List<UserChat>();
+    public bool isNew = false;
+
+    public UserChatInfo(UserInfo info)
+    {
+        this.info = info;
+    }
+
+    public void AddChat(UserChat chat) { listChat.Add(chat); }
+    public void AddChat(byte person, string time, string chat) { listChat.Add(new UserChat(person, time, chat)); }
+}
+
+public class UserChat
+{
+    public byte person;
+    public string time;
+    public string chat;
+
+    public UserChat(byte person, string time, string chat)
+    {
+        this.person = person;
+        this.time = time;
+        this.chat = chat;
+    }
+}
     
 public partial class Info : MonoBehaviour 
 {
-	static Dictionary<byte, UserInfo> dictUsers = new Dictionary<byte, UserInfo>(); // key : TableNo, value : userInfo
+    public static UserInfo myInfo = null;
+	public static Dictionary<byte, UserInfo> dictUserInfo = new Dictionary<byte, UserInfo>(); // key : TableNo, value : UserInfo
+    public static Dictionary<byte, UserChatInfo> dictUserChatInfo = new Dictionary<byte, UserChatInfo>(); // key : TableNo, value : UserChatInfo
+
+    // About User
+    public static UserInfo GetUser(byte tableNo)
+    {
+        if (dictUserInfo.ContainsKey (tableNo))
+            return dictUserInfo [tableNo];
+        else
+            return null;
+    }
 
     public static void AddOtherLoginUser(string packing)
     {
@@ -34,10 +74,10 @@ public partial class Info : MonoBehaviour
         byte peopleCnt = byte.Parse(json2);
         byte customerType = byte.Parse(json3);
 
-        if (dictUsers.ContainsKey (tableNo) == false)
-            dictUsers.Add (tableNo, new UserInfo (tableNo, peopleCnt, customerType));
+        if (dictUserInfo.ContainsKey (tableNo) == false)
+            dictUserInfo.Add (tableNo, new UserInfo (tableNo, peopleCnt, customerType));
         else
-            dictUsers [tableNo] = new UserInfo (tableNo, peopleCnt, customerType);
+            dictUserInfo [tableNo] = new UserInfo (tableNo, peopleCnt, customerType);
     }
 
 	public static void SetLoginedOtherUser(string packing)
@@ -53,18 +93,48 @@ public partial class Info : MonoBehaviour
             byte peopleCnt = byte.Parse(json2);
             byte customerType = byte.Parse(json3);
 
-			if (dictUsers.ContainsKey (tableNo) == false)
-				dictUsers.Add (tableNo, new UserInfo (tableNo, peopleCnt, customerType));
+            if (dictUserInfo.ContainsKey (tableNo) == false)
+                dictUserInfo.Add (tableNo, new UserInfo (tableNo, peopleCnt, customerType));
 			else
-				dictUsers [tableNo] = new UserInfo (tableNo, peopleCnt, customerType);
+                dictUserInfo [tableNo] = new UserInfo (tableNo, peopleCnt, customerType);
+
+            if (Info.TableNum == tableNo)
+                Info.myInfo = dictUserInfo[tableNo];
 		}
 	}
 
-	public static UserInfo GetUser(byte tableNo)
-	{
-		if (dictUsers.ContainsKey (tableNo))
-			return dictUsers [tableNo];
-		else
-			return null;
-	}
+    public static void SetLogoutOtherUser(byte tableNo)
+    {
+        if (dictUserInfo.ContainsKey(tableNo) == false)
+            return;
+
+        dictUserInfo.Remove(tableNo);
+
+        if (dictUserChatInfo.ContainsKey(tableNo) == false)
+            return;
+        
+        dictUserChatInfo.Remove(tableNo);
+    }
+
+    // About Chat..
+    public static UserChatInfo GetUserChat(byte tableNo)
+    {
+        if (dictUserChatInfo.ContainsKey(tableNo))
+            return dictUserChatInfo[tableNo];
+        else
+            return null;
+    }
+
+    public static void AddUserChatInfo(byte tableNo, UserChat chat, bool isNew)
+    {
+        if (dictUserChatInfo.ContainsKey(tableNo) == false)
+            dictUserChatInfo.Add(tableNo, new UserChatInfo(GetUser(tableNo)));
+
+        if (chat == null)
+            return;
+
+        UserChatInfo chatInfo = dictUserChatInfo[tableNo];
+        chatInfo.isNew = isNew;
+        chatInfo.AddChat(chat);
+    }
 }

@@ -3,11 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ChatTable
-{
-    public int tableID;
-}
-
 public class UIChat : MonoBehaviour 
 {
 	public ScrollRect srTable;
@@ -16,17 +11,65 @@ public class UIChat : MonoBehaviour
     public ChatBoard chatBoard;
 	public RectTransform rtChatEmpty;
 
-	Dictionary<int, ChatTableElt> dictChatTable = new Dictionary<int, ChatTableElt>();
+    public InputField input;
+    public RectTransform rtInput;
 
-	public void AddTableChat(int tableNo)
+    Dictionary<byte, ChatTableElt> dictChatTable = new Dictionary<byte, ChatTableElt>();
+
+    byte selectTableNo = byte.MaxValue;
+
+    public void ShowChatTable()
+    {
+        foreach (KeyValuePair<byte, UserChatInfo> pair in Info.dictUserChatInfo)
+        {
+            bool isCreate = dictChatTable.ContainsKey(pair.Key) == false;
+            if (isCreate)   
+                AddTableChat(pair.Key);
+            else 
+                dictChatTable[pair.Key].OnNewActive(pair.Value.isNew);
+        }
+
+        if (chatBoard.gameObject.activeSelf)
+            chatBoard.gameObject.SetActive(false);
+
+        if (rtChatEmpty.gameObject.activeSelf == false)
+            chatBoard.gameObject.SetActive(true);
+    }
+
+    public void SelectTable(byte tableNo)
+    {
+        if (dictChatTable.ContainsKey(selectTableNo))
+            dictChatTable[selectTableNo].OnSelected(false);
+
+        if (chatBoard.gameObject.activeSelf == false)
+            chatBoard.gameObject.SetActive(true);
+
+        if (rtChatEmpty.gameObject.activeSelf)
+            chatBoard.gameObject.SetActive(false);
+
+        selectTableNo = tableNo;
+        dictChatTable[selectTableNo].OnSelected(true);
+        chatBoard.SetChat(Info.GetUserChat(tableNo));
+    }
+
+    void AddTableChat(byte tableNo)
 	{
-        if (dictChatTable.ContainsKey(tableNo))
-            return;
-
 		ChatTableElt elt = CreateChatTableElt ();
 		elt.SetTableElt (tableNo);
 		dictChatTable.Add (tableNo, elt);
+
+        Info.AddUserChatInfo(tableNo, null, false);
 	}
+
+    public void SelectAddTableChat(byte tableNo)
+    {
+        ShowChatTable();
+
+        if (Info.GetUserChat(tableNo) == null)
+            AddTableChat(tableNo);
+
+        SelectTable(tableNo);
+    }
 
 	ChatTableElt CreateChatTableElt()
 	{
@@ -40,8 +83,29 @@ public class UIChat : MonoBehaviour
 		return newElt;
 	}
 
-    public void HideChat()
+    public void OnChatSend()
     {
-        UIManager.Instance.Hide(eUI.eChat);
+        if (input.text == string.Empty)
+            return;
+
+        string chat = input.text;
+        NetworkManager.Instance.Chat_REQ(selectTableNo, chat);
+        input.text = string.Empty;
+    }
+
+    const char LINE_CUTTER = '\n';
+    const int MAX_LINE = 3;
+    const float INPUT_MIN_HEIGHT = 30f;
+    float textPaddingTop = 3f;
+    float textPAddingBottom = 3f;
+
+    public void OnValueChanged()
+    {
+        string[] lines = input.text.Split(LINE_CUTTER);
+        if (lines.Length > MAX_LINE)
+            return;
+
+        float totalHeight = input.preferredHeight + textPaddingTop + textPAddingBottom;
+        rtInput.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Mathf.Max(INPUT_MIN_HEIGHT, totalHeight));
     }
 }

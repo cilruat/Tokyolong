@@ -12,12 +12,11 @@ public class ChatTableElt : MonoBehaviour
     public Text textTableNo;
     public GameObject objNew;
 
-	int tableNo = -1;
+    byte tableNo;
 
-	public void SetTableElt(int tableNo)
+	public void SetTableElt(byte tableNo)
     {
-        if (objNew.activeSelf == false)
-            objNew.gameObject.SetActive(true);
+        OnNewActive(true);
 
 		this.tableNo = tableNo;
 		textTableNo.text = "No. <size='30'>" + tableNo.ToString () + "</size>";
@@ -25,7 +24,20 @@ public class ChatTableElt : MonoBehaviour
 
     public void OnSelect()
     {
-        if (objNew.activeSelf)
-            objNew.gameObject.SetActive(false);
+        OnNewActive(false);
+        uiChat.SelectTable(this.tableNo);
+    }
+
+    public void OnSelected(bool isSelected)
+    {
+        imgSelect.gameObject.SetActive(isSelected);
+    }
+
+    public void OnNewActive(bool isActive)
+    {
+        if (objNew.gameObject.activeSelf == isActive)
+            return;
+
+        objNew.gameObject.SetActive(isActive);
     }
 }

@@ -63,5 +63,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         msg.push(Info.TableNum);
         msg.push(otherTableNo);
         msg.push(chat);
+
+        send(msg);
     }
 }

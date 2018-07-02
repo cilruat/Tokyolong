@@ -93,11 +93,12 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
         if (chatAlarmRoutine != null)
         {
             StopCoroutine(chatAlarmRoutine);
-            UITweenPosY.Start(objChatAlarm, 60f, -80f, TWParam.New(.5f).Curve(TWCurve.CurveLevel4).Speed(TWSpeed.Faster));
+            UITweenPosY.Start(objChatAlarm, 60f, -100f, TWParam.New(.5f).Curve(TWCurve.CurveLevel4).Speed(TWSpeed.Faster));
             chatAlarmRoutine = null;
         }
 
-        Show(eUI.eChat);
+        UIChat uiChat = Show(eUI.eChat).GetComponent<UIChat>();
+        uiChat.ShowChatTable();
     }
 
     public void ShowChatAlarm()
@@ -114,7 +115,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 
         yield return new WaitForSeconds(2f);
 
-        tween = UITweenPosY.Start(objChatAlarm, 60f, -80f, TWParam.New(.5f).Curve(TWCurve.CurveLevel4).Speed(TWSpeed.Faster));
+        tween = UITweenPosY.Start(objChatAlarm, 60f, -100f, TWParam.New(.5f).Curve(TWCurve.CurveLevel4).Speed(TWSpeed.Faster));
 
         while (tween.IsTweening())
             yield return null;

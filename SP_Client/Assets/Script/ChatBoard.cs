@@ -9,10 +9,9 @@ public class ChatBoard : MonoBehaviour
 	public ScrollRect srChat;
 	public ChatElt chatElt;	
 
-	public InputField input;
-    public RectTransform rtInput;
-
 	List<ChatElt> listChat = new List<ChatElt>();
+
+    UserChatInfo userChatInfo = null;
 
     public void RemoveAllChat()
     {
@@ -23,10 +22,25 @@ public class ChatBoard : MonoBehaviour
         }
     }
 
-	public void AddChatElt(byte person, byte customer, byte tableNo, byte personCount, string time, string msg)
+    public void SetChat(UserChatInfo chatInfo)
+    {
+        RemoveAllChat();
+        this.userChatInfo = chatInfo;
+
+        if (this.userChatInfo == null)
+            return;
+
+        for (int i = 0; i < this.userChatInfo.listChat.Count; i++)
+        {
+            UserChat chat = this.userChatInfo.listChat[i];
+            AddChatElt(chatInfo.info, chat);
+        }
+    }
+
+    public void AddChatElt(UserInfo userInfo, UserChat chat)
 	{
 		ChatElt elt = CreateChatElt ();
-        elt.SetChatElt (person, customer, tableNo, personCount, time, msg);
+        elt.SetChatElt (userInfo, chat);
 		listChat.Add (elt);
 
         ResizeScroll();
@@ -56,31 +70,5 @@ public class ChatBoard : MonoBehaviour
 
         float scPosY = Mathf.Max(0f, (totalHeight - rtSrChat.rect.height));
         srChat.content.anchoredPosition = new Vector2(0f, scPosY);
-    }
-
-	public void OnChatSend()
-	{
-		if (input.text == string.Empty)
-			return;
-
-//		NetworkManager.Instance.Chat_REQ()
-
-        input.text = string.Empty;
-	}
-
-    const char LINE_CUTTER = '\n';
-    const int MAX_LINE = 3;
-    const float INPUT_MIN_HEIGHT = 30f;
-    float textPaddingTop = 3f;
-    float textPAddingBottom = 3f;
-
-    public void OnValueChanged()
-    {
-        string[] lines = input.text.Split(LINE_CUTTER);
-        if (lines.Length > MAX_LINE)
-            return;
-
-        float totalHeight = input.preferredHeight + textPaddingTop + textPAddingBottom;
-        rtInput.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Mathf.Max(INPUT_MIN_HEIGHT, totalHeight));
     }
 }

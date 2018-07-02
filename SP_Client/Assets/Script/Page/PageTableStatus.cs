@@ -176,7 +176,8 @@ public class PageTableStatus : PageBase {
             case ETableDetail.Chat:
                 GameObject obj = UIManager.Instance.Show(eUI.eChat);
                 UIChat uiChat = obj.GetComponent<UIChat>();
-                uiChat.AddTableChat(tableSpots[selectTableSpot].tableNo);
+                byte tableNo = tableSpots[selectTableSpot].tableNo;
+                uiChat.SelectAddTableChat(tableNo);
                 break;
         }
     }
