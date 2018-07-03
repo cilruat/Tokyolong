@@ -5,6 +5,8 @@ using UnityEngine.Events;
 
 public class PageBase : SingletonMonobehaviour<PageBase> {
 
+	public bool startFirstBoard = true;
+
 	protected UnityAction acFinal;
 	protected int acFinalIdx = -1;
 
@@ -14,6 +16,9 @@ public class PageBase : SingletonMonobehaviour<PageBase> {
 	protected virtual void Awake()
 	{
 		UITweenAlpha.Start (gameObject, 0f, 1f, TWParam.New (1f).Curve (TWCurve.CurveLevel2));
+
+		if (startFirstBoard == false)
+			return;
 
 		if (boards != null) {
 			for (int i = 0; i < boards.Length; i++) {
