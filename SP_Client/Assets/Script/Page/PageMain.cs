@@ -35,7 +35,8 @@ public class PageMain : PageBase {
 		case EMenu.eOrder:			
 			SceneChanger.LoadScene ("Order", gameObject);
 			break;
-		case EMenu.eGame:			
+		case EMenu.eGame:		
+            SceneChanger.LoadScene ("Game", gameObject);
 			break;
 		case EMenu.eService:		
 			SceneChanger.LoadScene ("Service", gameObject);
