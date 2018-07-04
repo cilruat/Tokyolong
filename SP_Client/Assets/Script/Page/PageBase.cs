@@ -15,6 +15,7 @@ public class PageBase : SingletonMonobehaviour<PageBase> {
 
 	protected virtual void Awake()
 	{
+		Application.runInBackground = true;
 		UITweenAlpha.Start (gameObject, 0f, 1f, TWParam.New (1f).Curve (TWCurve.CurveLevel2));
 
 		if (startFirstBoard == false)
