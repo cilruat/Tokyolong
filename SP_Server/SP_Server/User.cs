@@ -16,6 +16,13 @@ namespace SP_Server
         public byte peopleCnt;
         public byte customerType;
 
+        public UserInfo()
+        {
+            this.tableNum = -1;
+            this.peopleCnt = 0;
+            this.customerType = 0;
+        }
+
         public UserInfo(byte tableNum, byte peopleCnt, byte customerType)
         {
             this.tableNum = tableNum;
@@ -32,11 +39,11 @@ namespace SP_Server
         Dictionary<USER_STATE_TYPE, IUserState> user_states;
         
         bool IsAdmin { get { return tableNum == 10000; } }
-        public int tableNum { get; set; }
-        public byte peopleCnt { get; set; }
-        public byte customerType { get; set; }
-        public UserInfo info = null;
-        Dictionary<int, int> orderTable = new Dictionary<int, int>();   // key: menu, value: count
+        public int tableNum { get { return info.tableNum; } set { info.tableNum = value; } }
+        public byte peopleCnt { get { return info.peopleCnt; } set { info.peopleCnt = value; } }
+        public byte customerType { get { return info.customerType; } set { info.customerType = value; } }
+        public UserInfo info = new UserInfo();
+        public Dictionary<int, int> orderTable = new Dictionary<int, int>();   // key: menu, value: count
 
         public GameRoom battle_room { get; private set; }
         public Player player { get; private set; }
@@ -125,6 +132,10 @@ namespace SP_Server
                 orderTable.Add(menu, cnt);
         }
 
-        public void ClearOrder() { orderTable.Clear(); }
+        public void ClearOrder()
+        {
+            info = new UserInfo();
+            orderTable.Clear();
+        }
     }
 }

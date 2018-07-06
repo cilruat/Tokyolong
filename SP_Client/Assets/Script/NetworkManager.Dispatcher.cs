@@ -28,6 +28,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		case PROTOCOL.ORDER_NOT:			OrderNOT (msg);				break;
         case PROTOCOL.CHAT_ACK:             ChatACK(msg);               break;
         case PROTOCOL.CHAT_NOT:             ChatNOT(msg);               break;
+        case PROTOCOL.ORDER_DETAIL_ACK:     OrderDetailACK(msg);        break;
 		}
 	}
 
@@ -139,5 +140,17 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         }
         else
             UIManager.Instance.ShowChatAlarm();        
+    }
+
+    void OrderDetailACK(CPacket msg)
+    {
+        string packingMenu = msg.pop_string();
+        string packingCnt = msg.pop_string();
+        if (UIManager.Instance.IsActive(eUI.eBillDetail))
+            return;
+        
+        GameObject obj = UIManager.Instance.Show(eUI.eBillDetail);
+        UIBillDetail uiBillDetail = obj.GetComponent<UIBillDetail>();
+        uiBillDetail.SetBill(packingMenu, packingCnt);
     }
 }

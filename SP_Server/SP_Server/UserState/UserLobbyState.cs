@@ -105,7 +105,7 @@ namespace SP_Server.UserState
                         for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
                         {
                             User user = owner.mainFrm.ListUser[i];
-                            if (user.tableNum == 10000 || user.info == null)
+                            if (user.tableNum == 10000 || user.tableNum <= 0 ||user.info == null)
                                 continue;
 
                             listUserInfo.Add(user.info);
@@ -191,6 +191,17 @@ namespace SP_Server.UserState
                         send_msg.push(makeTime);
                         send_msg.push(chat);
 
+                        break;
+                    case PROTOCOL.ORDER_DETAIL_REQ:
+                        send_msg = CPacket.create((short)PROTOCOL.ORDER_DETAIL_ACK);
+                        List<int> menus = new List<int>(owner.orderTable.Keys);
+                        List<int> cnts = new List<int>(owner.orderTable.Values);
+
+                        JsonData orderMenus = JsonMapper.ToJson(menus);
+                        JsonData orderCnt = JsonMapper.ToJson(cnts);
+
+                        send_msg.push(orderMenus.ToString());
+                        send_msg.push(orderCnt.ToString());
                         break;
                     default:
                         break;

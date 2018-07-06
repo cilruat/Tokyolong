@@ -27,13 +27,15 @@ public class UIChat : MonoBehaviour
                 AddTableChat(pair.Key);
             else 
                 dictChatTable[pair.Key].OnNewActive(pair.Value.isNew);
+
+            dictChatTable[pair.Key].OnSelected(false);
         }
 
         if (chatBoard.gameObject.activeSelf)
             chatBoard.gameObject.SetActive(false);
 
         if (rtChatEmpty.gameObject.activeSelf == false)
-            chatBoard.gameObject.SetActive(true);
+            rtChatEmpty.gameObject.SetActive(true);
     }
 
     public void SelectTable(byte tableNo)
@@ -45,7 +47,7 @@ public class UIChat : MonoBehaviour
             chatBoard.gameObject.SetActive(true);
 
         if (rtChatEmpty.gameObject.activeSelf)
-            chatBoard.gameObject.SetActive(false);
+            rtChatEmpty.gameObject.SetActive(false);
 
         selectTableNo = tableNo;
         dictChatTable[selectTableNo].OnSelected(true);

@@ -45,8 +45,11 @@ public class BillElt : MonoBehaviour {
 		price = Info.MenuPrice (eType) * value;
 		txtPrice.text = Info.MakeMoneyString (price);
 
-		if (SceneManager.GetActiveScene ().name != "Admin")
-			((PageOrder)PageBase.Instance).bill.CalcTotalPrice ();
+        if (SceneManager.GetActiveScene().name != "Admin")
+        {
+            if(PageBase.Instance.GetType() == typeof(PageOrder))
+                ((PageOrder)PageBase.Instance).bill.CalcTotalPrice();
+        }
 	}
 
 	public void OnDelete()

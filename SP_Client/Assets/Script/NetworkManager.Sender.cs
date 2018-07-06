@@ -66,4 +66,10 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
         send(msg);
     }
+
+    public void Order_Detail_REQ()
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.ORDER_DETAIL_REQ);
+        send(msg);
+    }
 }

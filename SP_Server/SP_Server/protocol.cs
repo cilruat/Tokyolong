@@ -44,6 +44,8 @@ namespace SP_Server
         CHAT_REQ,
         CHAT_ACK,
         CHAT_NOT,
+        ORDER_DETAIL_REQ,
+        ORDER_DETAIL_ACK,
         //-------------------------------------
         // 게임 프로토콜.
         //-------------------------------------        

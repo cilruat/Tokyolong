@@ -47,8 +47,8 @@ public class PageMain : PageBase {
 		case EMenu.eCall:			
 			NetworkManager.Instance.WaiterCall_REQ ();
 			break;
-		case EMenu.eBill:
-			UIManager.Instance.Show (eUI.eBillDetail);
+        case EMenu.eBill:
+            NetworkManager.Instance.Order_Detail_REQ();
 			break;
 		case EMenu.eTableSet:
 			UIManager.Instance.Show (eUI.eTableSetting);

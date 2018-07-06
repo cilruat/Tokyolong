@@ -46,6 +46,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 			dicObject.Add (listUI [i].ui, listUI [i].obj);
 	}		
 
+    public void Show(int pageIdx) { Show((eUI)pageIdx); }
 	public GameObject Show(eUI page)
 	{
 		if (page != eUI.eWaiting) {
@@ -57,6 +58,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 		return dicObject [page];
 	}
 
+    public void Hide(int pageIdx) { Hide((eUI)pageIdx); }
 	public void Hide(eUI page)
 	{
 		if (page != eUI.eWaiting) {
@@ -96,6 +98,9 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
             UITweenPosY.Start(objChatAlarm, 60f, -100f, TWParam.New(.5f).Curve(TWCurve.CurveLevel4).Speed(TWSpeed.Faster));
             chatAlarmRoutine = null;
         }
+
+        if (curUI != eUI.eNone && curUI != eUI.eChat)
+            Hide(curUI);
 
         UIChat uiChat = Show(eUI.eChat).GetComponent<UIChat>();
         uiChat.ShowChatTable();

@@ -26,6 +26,9 @@ public class Bill : MonoBehaviour {
 
 	List<BillElt> listElt = new List<BillElt>();
 
+    int billTotalPrice = 0;
+    public int BillTotalPrice { get { return billTotalPrice; } }
+
 	public void SetMenu(EMenuDetail eType)
 	{
 		int findIdx = -1;
@@ -64,6 +67,7 @@ public class Bill : MonoBehaviour {
 		for (int i = 0; i < listElt.Count; i++)
 			total += listElt [i].GetPrice ();
 
+        billTotalPrice = total;
 		totalPrice.text = Info.MakeMoneyString (total);
 	}
 
@@ -128,6 +132,9 @@ public class Bill : MonoBehaviour {
 			listElt.Add (elt);
 		}
 
+        if (objEmpty != null)
+            objEmpty.SetActive(list.Count <= 0);
+        
 		CalcTotalPrice ();
 	}
 
@@ -147,6 +154,9 @@ public class Bill : MonoBehaviour {
 			elt.SetInfo (list [i].Key, list [i].Value);
 			listElt.Add (elt);
 		}
+
+        if (objEmpty != null)
+            objEmpty.SetActive(list.Count <= 0);
 
 		CalcTotalPrice ();
 	}
