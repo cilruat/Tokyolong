@@ -46,6 +46,9 @@ namespace SP_Server
         CHAT_NOT,
         ORDER_DETAIL_REQ,
         ORDER_DETAIL_ACK,
+		GAME_DISCOUNT_REQ,
+		GAME_DISCOUNT_ACK,
+		GAME_DISCOUNT_NOT,
         //-------------------------------------
         // 게임 프로토콜.
         //-------------------------------------        

@@ -8,7 +8,10 @@ public partial class Info : MonoBehaviour {
     public static byte TableNum = 0;
     public static byte PersonCnt = 0;
     public static ECustomerType ECustomer = ECustomerType.MAN;
-	public static byte GamePlayCnt = 2;
+
+	// Game Info
+	public static byte GamePlayCnt = 1;
+	public static short GameDiscountWon = 0;
 
 	public static void AnimateChangeObj(CanvasGroup cur, CanvasGroup next, UnityEvent nextCallback = null)
     {

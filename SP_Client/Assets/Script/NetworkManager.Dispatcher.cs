@@ -29,6 +29,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         case PROTOCOL.CHAT_ACK:             ChatACK(msg);               break;
         case PROTOCOL.CHAT_NOT:             ChatNOT(msg);               break;
         case PROTOCOL.ORDER_DETAIL_ACK:     OrderDetailACK(msg);        break;
+		case PROTOCOL.GAME_DISCOUNT_ACK:	GameDiscountACK (msg);		break;
+		case PROTOCOL.GAME_DISCOUNT_NOT:	GameDiscountNOT (msg);		break;
 		}
 	}
 
@@ -153,4 +155,17 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         UIBillDetail uiBillDetail = obj.GetComponent<UIBillDetail>();
         uiBillDetail.SetBill(packingMenu, packingCnt);
     }
+
+	void GameDiscountACK(CPacket msg)
+	{
+		Info.GameDiscountWon = -1;
+		PageTokyoLive.Instance.ReturnHome ();
+	}
+
+	void GameDiscountNOT(CPacket msg)
+	{
+		byte tableNo = msg.pop_byte ();
+		short discount = msg.pop_int16 ();
+		PageAdmin.Instance.SetOrder (tableNo, discount);
+	}
 }

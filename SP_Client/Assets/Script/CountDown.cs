@@ -16,10 +16,12 @@ public class CountDown : MonoBehaviour {
 		count = GetComponent<Text> ();
 	}
 
-	public void Set(int sec, UnityAction callback)
+	public void Set(int sec, UnityAction callback = null)
 	{
 		this.sec = sec;
 		this.callback = callback;
+
+		StopAllCoroutines ();
 		StartCoroutine (_CountDown ());
 	}
 

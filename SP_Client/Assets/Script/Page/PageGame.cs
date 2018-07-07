@@ -13,7 +13,7 @@ public enum ESlotType
 
 public class PageGame : PageBase {
 
-	enum EDiscount
+	public enum EDiscount
 	{
 		e500won,
 		e1000won
@@ -72,7 +72,6 @@ public class PageGame : PageBase {
 	public CountDown[] countDown;
 
 	bool isStopEnable = false;
-	int curDiscount = -1;
 	int curGameType = -1;
 	int curGame = -1;
 
@@ -81,6 +80,7 @@ public class PageGame : PageBase {
 		base.boards = cgBoards;
 		base.Awake ();
 		_RefreshPlayCnt ();
+		Info.GameDiscountWon = -1;
 	}
 
 	IEnumerator _StartSlot()
@@ -92,7 +92,7 @@ public class PageGame : PageBase {
 			switch (i) {
 			case 0:		
 				stopIdx = UnityEngine.Random.Range (0, 2);
-				curDiscount = stopIdx;
+				Info.GameDiscountWon = (short)stopIdx;
 				break;
 			case 1:		
 				stopIdx = UnityEngine.Random.Range (0, 4);
@@ -164,10 +164,10 @@ public class PageGame : PageBase {
 			randRange = Enum.GetValues (typeof(EBoardGame)).Length;
 			rtElts = rtBoardGames;
 		} else if (curGameType == (int)EGameType.eWinWaiter) {
-			if (curDiscount == (int)EDiscount.e500won) {
+			if (Info.GameDiscountWon == (int)EDiscount.e500won) {
 				randRange = Enum.GetValues (typeof(EWaiterEasyGame)).Length;
 				rtElts = rtWinWaiterEasyGames;
-			} else if (curDiscount == (int)EDiscount.e1000won) {
+			} else if (Info.GameDiscountWon == (int)EDiscount.e1000won) {
 				randRange = Enum.GetValues (typeof(EWaiterHardGame)).Length;
 				rtElts = rtWinWaiterHardGames;
 			}

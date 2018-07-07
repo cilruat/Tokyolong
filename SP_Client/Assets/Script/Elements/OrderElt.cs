@@ -8,6 +8,7 @@ public class OrderElt : MonoBehaviour {
 
 	public Text table;
 	public Text order;
+	public GameObject objDetail;
 
 	int id = -1;
 	byte tableNo = 0;
@@ -36,6 +37,24 @@ public class OrderElt : MonoBehaviour {
 		}
 
 		order.text = desc;
+		objDetail.SetActive (true);
+	}
+
+	public void SetInfo(int id, byte tableNo, short discount)
+	{
+		this.id = id;
+		this.tableNo = tableNo;
+
+		table.text = tableNo.ToString ();
+
+		string desc = "";
+		if (discount == (short)PageGame.EDiscount.e500won)
+			desc = "-500원 할인";
+		else if (discount == (short)PageGame.EDiscount.e1000won)
+			desc = "-1000원 할인";
+
+		order.text = "게임 성공 (" + desc + ")";
+		objDetail.SetActive (false);
 	}
 
 	public void OnDetail()

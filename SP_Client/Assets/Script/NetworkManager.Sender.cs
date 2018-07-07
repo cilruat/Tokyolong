@@ -72,4 +72,11 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         CPacket msg = CPacket.create((short)PROTOCOL.ORDER_DETAIL_REQ);
         send(msg);
     }
+
+	public void Game_Discount_REQ(short discount)
+	{
+		CPacket msg = CPacket.create((short)PROTOCOL.GAME_DISCOUNT_REQ);
+		msg.push (Info.TableNum);
+		msg.push (discount);
+	}
 }

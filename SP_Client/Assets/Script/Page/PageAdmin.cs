@@ -164,6 +164,32 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 		}
 	}
 
+	public void SetOrder(byte tableNo, short discount)
+	{
+		GameObject obj = Instantiate (prefabOrder) as GameObject;
+		obj.SetActive (true);
+
+		Transform tr = obj.transform;
+		tr.SetParent (rtScrollOrder);
+		tr.InitTransform ();
+
+		for (int i = 0; i < listTable.Count; i++) {
+			if (listTable [i].GetTableNo () != tableNo)
+				continue;
+
+			listTable [i].SetOrder (discount);
+			break;
+		}
+
+		OrderElt elt = obj.GetComponent<OrderElt> ();
+		elt.SetInfo (orderID, tableNo, discount);
+		listOrder.Add (elt);
+
+		++orderID;
+		if (orderID > MAX_ID)
+			orderID = 0;
+	}
+
 	public void RemoveElt(bool isOrder, int id)
 	{
 		int findIdx = -1;

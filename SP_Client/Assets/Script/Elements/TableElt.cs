@@ -16,6 +16,7 @@ public class TableElt : MonoBehaviour {
 	UITween tweenUrgency;
 
 	Dictionary<EMenuDetail, int> dictOrder = new Dictionary<EMenuDetail, int>();
+	List<short> listDiscount = new List<short>();
 
 	public void SetTable(int num)
 	{
@@ -34,6 +35,11 @@ public class TableElt : MonoBehaviour {
 			int cnt = int.Parse (json2);
 			_SetOrder (eType, cnt);
 		}
+	}
+
+	public void SetOrder(short discount)
+	{
+		listDiscount.Add (discount);
 	}
 
 	void _SetOrder(EMenuDetail eMenu, int cnt)

@@ -203,6 +203,18 @@ namespace SP_Server.UserState
                         send_msg.push(orderMenus.ToString());
                         send_msg.push(orderCnt.ToString());
                         break;
+                    case PROTOCOL.GAME_DISCOUNT_REQ:
+                        tableNo = msg.pop_byte();
+                        short discount = msg.pop_int16();
+
+                        // Admin Send packet
+                        other_msg = CPacket.create((short)PROTOCOL.GAME_DISCOUNT_NOT);
+                        other_msg.push(tableNo);
+                        other_msg.push(discount);
+                        Frm.GetAdminUser().send(other_msg);
+
+                        send_msg = CPacket.create((short)PROTOCOL.GAME_DISCOUNT_ACK);
+                        break;
                     default:
                         break;
                 }
