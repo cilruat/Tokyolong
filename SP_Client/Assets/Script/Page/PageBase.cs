@@ -16,11 +16,12 @@ public class PageBase : SingletonMonobehaviour<PageBase> {
 	protected virtual void Awake()
 	{
 		Application.runInBackground = true;
-		UITweenAlpha.Start (gameObject, 0f, 1f, TWParam.New (1f).Curve (TWCurve.CurveLevel2));
+		//UITweenAlpha.Start (gameObject, 0f, 1f, TWParam.New (1f).Curve (TWCurve.CurveLevel2));
 
 		if (startFirstBoard == false)
 			return;
 
+        UITweenAlpha.Start (curBoardObj(), 0f, 1f, TWParam.New (1f).Curve (TWCurve.CurveLevel2));
 		if (boards != null) {
 			for (int i = 0; i < boards.Length; i++) {
 				boards [i].alpha = i == 0 ? 1f : 0f;

@@ -12,12 +12,6 @@ public interface IMessageReceiver
 
 public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 {
-    [SerializeField]
-    string server_ip = "";
-
-    [SerializeField]
-    string server_port = "";
-
     Queue<CPacket> sending_queue;
     CFreeNetUnityService freenet;
 	public IMessageReceiver message_receiver;
@@ -34,14 +28,14 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         DontDestroyOnLoad(this);
 	}
 
-    public void connect()
+    public void connect(string ip, string port)
     {
         // 이전에 보내지 못한 패킷은 모두 버린다.
         this.sending_queue.Clear();
 
         if (!this.freenet.is_connected())
         {
-            this.freenet.connect(this.server_ip, int.Parse(this.server_port));
+            this.freenet.connect(ip, int.Parse(port));
         }
     }
 

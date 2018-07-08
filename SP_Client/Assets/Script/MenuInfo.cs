@@ -6,12 +6,18 @@ using UnityEngine.UI;
 public class MenuInfo : MonoBehaviour {
 
 	public EMenuDetail eMenu;
-	public Text name;
-	public Text price;
+	Text title;
+	Text price;
 
 	void Awake()
-	{		
-		name.text = Info.MenuName (eMenu);
+	{
+        Transform child = transform.Find("Desc");
+        title = child.GetComponent<Text>();
+
+        child = transform.Find("Price");
+        price = child.GetComponent<Text>();
+
+        title.text = Info.MenuName (eMenu);
 		price.text = Info.MakeMoneyString (Info.MenuPrice (eMenu));
 	}
 }

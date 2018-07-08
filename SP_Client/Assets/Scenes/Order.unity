@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1994,8 +1994,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eMenu: 6
-  name: {fileID: 1094338458}
-  price: {fileID: 52117737}
 --- !u!1 &244470409
 GameObject:
   m_ObjectHideFlags: 0
@@ -2821,8 +2819,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eMenu: 2
-  name: {fileID: 861947519}
-  price: {fileID: 1848421003}
 --- !u!1 &458703700
 GameObject:
   m_ObjectHideFlags: 0
@@ -3460,8 +3456,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eMenu: 3
-  name: {fileID: 2018182664}
-  price: {fileID: 990470593}
 --- !u!1 &568470220
 GameObject:
   m_ObjectHideFlags: 0
@@ -4932,7 +4926,8 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 775320192}
   m_Father: {fileID: 1915278366}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4973,6 +4968,73 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 762868106}
+--- !u!1 &775320191
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 775320192}
+  - component: {fileID: 775320194}
+  - component: {fileID: 775320193}
+  m_Layer: 5
+  m_Name: Star
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &775320192
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 775320191}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 762868107}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 50}
+  m_SizeDelta: {x: 0, y: -100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &775320193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 775320191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Texture: {fileID: 2800000, guid: 5bb01ead0b56b6641a161570949da1fc, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!222 &775320194
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 775320191}
 --- !u!1 &794644794
 GameObject:
   m_ObjectHideFlags: 0
@@ -5198,8 +5260,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eMenu: 0
-  name: {fileID: 1728876083}
-  price: {fileID: 1240287944}
 --- !u!1 &813364691
 GameObject:
   m_ObjectHideFlags: 0
@@ -6642,8 +6702,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eMenu: 2
-  name: {fileID: 486821749}
-  price: {fileID: 813364694}
 --- !u!1 &1094338455
 GameObject:
   m_ObjectHideFlags: 0
@@ -8439,8 +8497,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eMenu: 3
-  name: {fileID: 1210503609}
-  price: {fileID: 938070246}
 --- !u!1 &1374016798
 GameObject:
   m_ObjectHideFlags: 0
@@ -9336,8 +9392,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eMenu: 7
-  name: {fileID: 1835403255}
-  price: {fileID: 1733692}
 --- !u!1 &1619534069
 GameObject:
   m_ObjectHideFlags: 0
@@ -10691,7 +10745,6 @@ GameObject:
   - component: {fileID: 1915278365}
   - component: {fileID: 1915278364}
   - component: {fileID: 1915278363}
-  - component: {fileID: 1915278368}
   - component: {fileID: 1915278367}
   m_Layer: 5
   m_Name: PageOrder
@@ -10790,6 +10843,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87dfab35d26304e46ace4300d10e82d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startFirstBoard: 1
   detailTitle: {fileID: 1390822015}
   detailSubDesc: {fileID: 794644796}
   cgBoards:
@@ -10824,17 +10878,6 @@ MonoBehaviour:
     obj: {fileID: 1509721758}
     tg: {fileID: 721232042}
   bill: {fileID: 1479455702}
---- !u!225 &1915278368
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1915278362}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!1 &1931975553
 GameObject:
   m_ObjectHideFlags: 0
@@ -10986,8 +11029,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eMenu: 5
-  name: {fileID: 1851520966}
-  price: {fileID: 740041885}
 --- !u!1 &1933467060
 GameObject:
   m_ObjectHideFlags: 0
@@ -11295,8 +11336,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eMenu: 1
-  name: {fileID: 1374016801}
-  price: {fileID: 601451302}
 --- !u!1 &1977117305
 GameObject:
   m_ObjectHideFlags: 0
@@ -11928,8 +11967,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eMenu: 4
-  name: {fileID: 1767222965}
-  price: {fileID: 1686232057}
 --- !u!1 &2120410203
 GameObject:
   m_ObjectHideFlags: 0
