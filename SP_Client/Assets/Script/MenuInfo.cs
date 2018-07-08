@@ -6,12 +6,12 @@ using UnityEngine.UI;
 public class MenuInfo : MonoBehaviour {
 
 	public EMenuDetail eMenu;
-	public Text name;
+	public Text title;
 	public Text price;
 
 	void Awake()
 	{		
-		name.text = Info.MenuName (eMenu);
+        title.text = Info.MenuName (eMenu);
 		price.text = Info.MakeMoneyString (Info.MenuPrice (eMenu));
 	}
 }

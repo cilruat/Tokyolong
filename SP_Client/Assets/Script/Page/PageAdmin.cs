@@ -240,29 +240,5 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 
 	void Update()
 	{
-		if (Input.GetKeyDown (KeyCode.Keypad1)) {
-			int rand = Random.Range (1, listTable.Count);
-			SetLogin (1);
-			Urgency (1);
-		}
-
-		if (Input.GetKeyDown (KeyCode.Keypad2))
-		{
-			int rand = Random.Range (1, listTable.Count);
-			SetLogin (2);
-			Urgency (2);
-		}
-
-		if (Input.GetKeyDown (KeyCode.Keypad3))
-		{
-			int rand = Random.Range (1, listTable.Count);
-			StopUrgency (1);
-		}
-
-		if (Input.GetKeyDown (KeyCode.Keypad4))
-		{
-			int rand = Random.Range (1, listTable.Count);
-			StopUrgency (2);
-		}
 	}		
 }

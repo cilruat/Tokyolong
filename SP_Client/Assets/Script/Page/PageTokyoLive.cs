@@ -34,8 +34,7 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 
 	bool showTime = false;
 	bool nextQuestion = false;
-
-	int firstRand = -1;
+    	
 	int curStage = 1;
     int answer1 = 0;
     int answer2 = 0;
@@ -47,7 +46,7 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 
         string path = Application.dataPath;
         int lastIdx = path.LastIndexOf(@"/");
-        path = path.Substring(0, lastIdx) + @"\TokyoLive_QuestionBook.csv";
+        path = path.Substring(0, lastIdx) + @"\Info\TokyoLive_QuestionBook.csv";
 
         data = CSVReader.Read(path);
 
