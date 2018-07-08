@@ -53,7 +53,7 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
         _RandQuestion(ref question1, ref answer1);
         _RandQuestion(ref question2, ref answer2);
 
-		_Init ();
+		_Init ();              
     }
 
 	void Update()
@@ -96,7 +96,7 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
     IEnumerator Start()
     {
         yield return new WaitForSeconds(.5f);
-        UITweenAlpha.Start(gameObject, 0f, 1f, TWParam.New(1f).Curve(TWCurve.CurveLevel2));
+        UITweenAlpha.Start(objBoard, 0f, 1f, TWParam.New(1f).Curve(TWCurve.CurveLevel2));
 
         yield return new WaitForSeconds(.5f);
 

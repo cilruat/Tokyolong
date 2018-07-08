@@ -16,43 +16,26 @@ public class PageMain : PageBase {
 		eTableSet,
 	}
 
+    public CanvasGroup[] cgBoard;
+
 	protected override void Awake ()
 	{
+        base.boards = cgBoard;
 		base.Awake ();
 	}
 
 	public void OnClickMenu(int idx)
 	{
 		EMenu e = (EMenu)idx;
-
-		if (e == EMenu.eOrder)
-			SceneChanger.LoadScene ("Order", gameObject);
-
 		switch (e) {
-		case EMenu.eChat:
-			SceneChanger.LoadScene ("TableStatus", gameObject);
-			break;
-		case EMenu.eOrder:			
-			SceneChanger.LoadScene ("Order", gameObject);
-			break;
-		case EMenu.eGame:		
-            SceneChanger.LoadScene ("Game", gameObject);
-			break;
-		case EMenu.eService:		
-			SceneChanger.LoadScene ("Service", gameObject);
-			break;
-		case EMenu.eShowChat:
-			UIManager.Instance.Show (eUI.eChat);
-			break;
-		case EMenu.eCall:			
-			NetworkManager.Instance.WaiterCall_REQ ();
-			break;
-        case EMenu.eBill:
-            NetworkManager.Instance.Order_Detail_REQ();
-			break;
-		case EMenu.eTableSet:
-			UIManager.Instance.Show (eUI.eTableSetting);
-			break;
+            case EMenu.eChat:       SceneChanger.LoadScene("TableStatus", curBoardObj());   break;
+            case EMenu.eOrder:      SceneChanger.LoadScene ("Order", curBoardObj());        break;
+            case EMenu.eGame:		SceneChanger.LoadScene ("Game", curBoardObj());         break;
+            case EMenu.eService:	SceneChanger.LoadScene ("Service", curBoardObj());		break;
+            case EMenu.eShowChat:   UIManager.Instance.Show(eUI.eChat);                     break;
+		    case EMenu.eCall:		NetworkManager.Instance.WaiterCall_REQ ();  		    break;
+            case EMenu.eBill:       NetworkManager.Instance.Order_Detail_REQ(); 		    break;
+		    case EMenu.eTableSet:   UIManager.Instance.Show (eUI.eTableSetting);		    break;
 		}
 	}		
 }

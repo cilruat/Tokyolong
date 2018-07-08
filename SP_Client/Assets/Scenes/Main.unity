@@ -2029,7 +2029,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 175.2, y: -119.77999}
+  m_AnchoredPosition: {x: 175.2, y: -119.78}
   m_SizeDelta: {x: 132.3, y: 62.667}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &984077792
@@ -2405,8 +2405,8 @@ RectTransform:
   - {fileID: 209305225}
   - {fileID: 941990666}
   - {fileID: 59795753}
-  m_Father: {fileID: 1915278366}
-  m_RootOrder: 3
+  m_Father: {fileID: 1766759605}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2661,8 +2661,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 50.025}
-  m_SizeDelta: {x: 0, y: -99.95}
+  m_AnchoredPosition: {x: 0, y: 50}
+  m_SizeDelta: {x: 0, y: -100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1339531676
 MonoBehaviour:
@@ -3298,7 +3298,7 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1627432755}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3311,8 +3311,8 @@ RectTransform:
   - {fileID: 996324203}
   - {fileID: 1339929767}
   - {fileID: 556832510}
-  m_Father: {fileID: 1915278366}
-  m_RootOrder: 2
+  m_Father: {fileID: 1766759605}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -3461,6 +3461,60 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1743562583}
+--- !u!1 &1766759604
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1766759605}
+  - component: {fileID: 1766759607}
+  - component: {fileID: 1766759606}
+  m_Layer: 5
+  m_Name: Board
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1766759605
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1766759604}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1627432756}
+  - {fileID: 1213923698}
+  m_Father: {fileID: 1915278366}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &1766759606
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1766759604}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!222 &1766759607
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1766759604}
 --- !u!1 &1829349554
 GameObject:
   m_ObjectHideFlags: 0
@@ -3793,7 +3847,6 @@ GameObject:
   - component: {fileID: 1915278365}
   - component: {fileID: 1915278364}
   - component: {fileID: 1915278363}
-  - component: {fileID: 1915278367}
   - component: {fileID: 1915278368}
   m_Layer: 5
   m_Name: PageMain
@@ -3871,8 +3924,7 @@ RectTransform:
   m_Children:
   - {fileID: 2140829885}
   - {fileID: 762868107}
-  - {fileID: 1627432756}
-  - {fileID: 1213923698}
+  - {fileID: 1766759605}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3881,17 +3933,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!225 &1915278367
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1915278362}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!114 &1915278368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3904,6 +3945,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startFirstBoard: 1
+  cgBoard:
+  - {fileID: 1766759606}
 --- !u!1 &1926434163
 GameObject:
   m_ObjectHideFlags: 0
