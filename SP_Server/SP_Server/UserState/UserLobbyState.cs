@@ -161,6 +161,24 @@ namespace SP_Server.UserState
 
                         send_msg = CPacket.create((short)PROTOCOL.ORDER_ACK);                        
                         break;
+                    case PROTOCOL.REQUEST_MUSIC_REQ:
+                        string requestMusicPacking = msg.pop_string();
+
+                        JsonData reqMusicJson = JsonMapper.ToObject(requestMusicPacking);
+                        byte reqTableNo = byte.Parse(reqMusicJson["tableNo"].ToString());
+                        string reqMusicTitle = reqMusicJson["title"].ToString();
+                        string reqMusicSinger = reqMusicJson["singer"].ToString();
+                        
+                        owner.mainFrm.listRequestMusic.Add(new RequestMusic(reqTableNo, reqMusicTitle, reqMusicSinger));
+
+                        other_msg = CPacket.create((short)PROTOCOL.REQUEST_MUSIC_NOT);
+                        other_msg.push(requestMusicPacking);
+                        Frm.GetAdminUser().send(other_msg);
+
+                        send_msg = CPacket.create((short)PROTOCOL.REQUEST_MUSIC_ACK);
+                        send_msg.push(requestMusicPacking);
+
+                        break;
                     case PROTOCOL.CHAT_REQ:
                         tableNo = msg.pop_byte();
                         byte otherTableNo = msg.pop_byte();

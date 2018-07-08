@@ -31,6 +31,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         case PROTOCOL.ORDER_DETAIL_ACK:     OrderDetailACK(msg);        break;
 		case PROTOCOL.GAME_DISCOUNT_ACK:	GameDiscountACK (msg);		break;
 		case PROTOCOL.GAME_DISCOUNT_NOT:	GameDiscountNOT (msg);		break;
+		case PROTOCOL.REQUEST_MUSIC_ACK:	RequestMusicACK (msg);		break;
+		case PROTOCOL.REQUEST_MUSIC_NOT:	RequestMusicNOT (msg); 		break;
+		case PROTOCOL.REQUEST_MUSIC_LIST_ACK: RequestMusicListACK (msg); break;
 		}
 	}
 
@@ -167,5 +170,29 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		byte tableNo = msg.pop_byte ();
 		short discount = msg.pop_int16 ();
 		PageAdmin.Instance.SetOrder (tableNo, discount);
+	}
+
+	void RequestMusicACK(CPacket msg)
+	{
+		string packing = msg.pop_string ();
+		if (UIManager.Instance.IsActive (eUI.eMusicRequest)) 
+		{
+			GameObject obj = UIManager.Instance.GetUI (eUI.eMusicRequest);
+			UIMusicRequest mr = obj.GetComponent<UIMusicRequest> ();
+			mr.SetMusicList (packing);
+		}
+	}
+
+	void RequestMusicNOT(CPacket msg)
+	{
+		
+	}
+
+	void RequestMusicListACK(CPacket msg)
+	{
+		string packing = msg.pop_string ();
+		GameObject obj = UIManager.Instance.Show (eUI.eMusicRequest);
+		UIMusicRequest mr = obj.GetComponent<UIMusicRequest> ();
+		mr.SetMusicList (packing);
 	}
 }

@@ -49,9 +49,8 @@ namespace SP_Server
 		GAME_DISCOUNT_REQ,
 		GAME_DISCOUNT_ACK,
 		GAME_DISCOUNT_NOT,
-        MUSIC_REQUEST_REQ,
-        MUSIC_REQUEST_ACK,
-        MUSIC_REQUEST_NOT,
+		REQUEST_MUSIC_LIST_REQ,
+		REQUEST_MUSIC_LIST_ACK,
         //-------------------------------------
         // 게임 프로토콜.
         //-------------------------------------        

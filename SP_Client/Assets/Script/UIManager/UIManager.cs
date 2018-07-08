@@ -81,6 +81,11 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 		return dicObject [page].activeSelf;
 	}
 
+	public GameObject GetUI(eUI page)
+	{
+		return dicObject [page];
+	}
+
 	public GameObject GetCurUI()
 	{
 		if (curUI == eUI.eNone)

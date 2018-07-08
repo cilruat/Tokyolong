@@ -36,6 +36,8 @@ namespace SP_Server
         private List<User> listUser;
 
         public List<User> ListUser { get => listUser; set => listUser = value; }
+        public Dictionary<int, List<SendMenu>> dictUserMenu = new Dictionary<int, List<SendMenu>>();
+        public List<RequestMusic> listRequestMusic = new List<RequestMusic>();
 
         public Frm()
         {

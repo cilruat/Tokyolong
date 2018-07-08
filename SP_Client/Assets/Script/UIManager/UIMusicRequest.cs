@@ -4,6 +4,27 @@ using UnityEngine;
 using UnityEngine.UI;
 using LitJson;
 
+public class RequestMusicInfo
+{
+	public byte tableNo;
+	public string title;
+	public string singer;
+
+	public RequestMusicInfo()
+	{
+		this.tableNo = 0;
+		this.title = string.Empty;
+		this.singer = string.Empty;
+	}
+
+	public RequestMusicInfo(byte tableNo, string title, string singer)
+	{
+		this.tableNo = tableNo;
+		this.title = title;
+		this.singer = singer;
+	}
+}
+
 public class UIMusicRequest : MonoBehaviour 
 {
     public ScrollRect srBoard;
@@ -21,10 +42,16 @@ public class UIMusicRequest : MonoBehaviour
     {
         JsonData json = JsonMapper.ToObject (packing);
         for (int i = 0; i < json.Count; i++)
-        {          
-            string json1 = json[i]["menu"].ToString();
-            string json2 = json[i]["cnt"].ToString();
-        }
+        {
+            string json1 = json[i]["tableNo"].ToString();
+            string json2 = json[i]["title"].ToString();
+			string json3 = json[i]["singer"].ToString();
+
+			byte tableNo = byte.Parse (json1);
+
+			MusicElt elt = CreateMusicElt ();
+			elt.SetInfo (i+1, new RequestMusicInfo(tableNo, json2, json3));
+		}
     }
 
     MusicElt CreateMusicElt()
