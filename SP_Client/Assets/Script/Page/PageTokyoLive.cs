@@ -7,9 +7,10 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
    
 	public Text txtDesc;
     public Text txtQuesiton;
-    public Text[] txtChoice;
-    public Image[] imgChoice;
+    public Text[] txtChoice;    
 	public Image[] imgCheck;
+	public GameObject[] objChoice;
+	public GameObject[] objSelect;
 
     public CountDown countDown;
     public Image imgTime;
@@ -52,6 +53,8 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 
         _RandQuestion(ref question1, ref answer1);
         _RandQuestion(ref question2, ref answer2);
+
+		_Init ();
     }
 
 	void Update()
@@ -78,20 +81,17 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 		selectAnswer = 0;
 
 		txtDesc.text = "";
-		txtDesc.color = Color.black;
+		Color descColor = txtDesc.color;
+		txtDesc.color = new Color (descColor.r, descColor.g, descColor.b, 1f);
 		txtDesc.gameObject.SetActive (true);
 
-		for (int i = 0; i < txtChoice.Length; i++)
+		for (int i = 0; i < 3; i++)
+		{
 			txtChoice [i].text = "";
-
-		for (int i = 0; i < imgChoice.Length; i++) {
-			float c = (float)220f / (float)255f;
-			imgChoice [i].color = new Color (c, c, c, 1f);
-			imgChoice [i].gameObject.SetActive (false);
-		}
-
-		for (int i = 0; i < imgCheck.Length; i++)
+			objSelect [i].SetActive (false);
+			objChoice [i].SetActive (false);
 			imgCheck [i].fillAmount = 0f;
+		}			
 	}
 
     IEnumerator Start()
@@ -143,11 +143,11 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 
 		txtQuesiton.text = question[0];
 
-		for (int i = 0; i < imgChoice.Length; i++)
+		for (int i = 0; i < objChoice.Length; i++)
 		{
 			txtChoice[i].text = question[i + 1];
 			float delay = i * .2f;
-			UITweenAlpha.Start(imgChoice[i].gameObject, 0f, 1f, TWParam.New(.8f, delay).Curve(TWCurve.CurveLevel2));
+			UITweenAlpha.Start(objChoice[i], 0f, 1f, TWParam.New(.8f, delay).Curve(TWCurve.CurveLevel2));
 		}
 
 		objTime.SetActive(true);
@@ -200,7 +200,7 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 			yield return null;
 		}
 
-		yield return new WaitForSeconds (.2f);
+		yield return new WaitForSeconds (.75f);
 
 		bool right = answer == selectAnswer;
 
@@ -221,11 +221,14 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 	{		
 		if (curStage == 2 && right) {
 			yield return StartCoroutine (_ShowPrevDesc (desc [2]));
+			yield return new WaitForSeconds (.5f);
 			objSendServer.SetActive (true);
-		} else {
-			yield return StartCoroutine (_ShowPrevDesc (desc [3]));
+
 			yield return new WaitForSeconds (1f);
 			NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+		} else {
+			yield return StartCoroutine (_ShowPrevDesc (desc [3]));
+			ReturnHome ();
 		}
 
 		yield break;
@@ -238,11 +241,16 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 
 	public void OnSelect(int answer)
 	{
-		countDown.Set (LIMIT_TIME_SELECT, () => _ShowAnswer ());
+		if (showTime == false)
+			return;
 
-		int idx = answer - 1;
-		imgChoice [idx].color = Color.yellow;
+		if (selectAnswer == 0)
+			countDown.Set (LIMIT_TIME_SELECT, () => _ShowAnswer ());
 
+		if (selectAnswer > 0)
+			objSelect [selectAnswer - 1].SetActive (false);
+
+		objSelect [answer - 1].SetActive (true);
 		selectAnswer = answer;
 	}
 }
