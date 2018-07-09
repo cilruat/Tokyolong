@@ -86,4 +86,22 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		CPacket msg = CPacket.create ((short)PROTOCOL.REQUEST_MUSIC_LIST_REQ);
 		send (msg);
 	}
+
+    public void Request_Music_REQ(string title, string singer)
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.REQUEST_MUSIC_REQ);
+        msg.push(Info.TableNum);
+        msg.push(title);
+        msg.push(singer);
+
+        send(msg);
+    }
+
+    public void Request_Music_Remove_REQ(int removeMusicID)
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.REQUEST_MUSIC_REMOVE_REQ);
+        msg.push(removeMusicID);
+
+        send(msg);
+    }
 }

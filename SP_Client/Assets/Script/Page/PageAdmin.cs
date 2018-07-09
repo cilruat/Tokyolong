@@ -25,7 +25,6 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 	List<MusicElt> listMusic = new List<MusicElt>();
 
 	int orderID = 0;
-	int musicID = 0;
 
 	void Awake()
 	{
@@ -127,41 +126,29 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 
 	public void SetOrder(bool isOrder, byte tableNo, string packing)
 	{
-		GameObject prefab = isOrder ? prefabOrder : prefabMusic;
-		RectTransform rtScroll = isOrder ? rtScrollOrder : rtScrollMusic;
-
-		GameObject obj = Instantiate (prefab) as GameObject;
+        GameObject obj = Instantiate (prefabOrder) as GameObject;
 		obj.SetActive (true);
 
 		Transform tr = obj.transform;
-		tr.SetParent (rtScroll);
+        tr.SetParent (rtScrollOrder);
 		tr.InitTransform ();
 
-		if (isOrder) {
-			for (int i = 0; i < listTable.Count; i++) {
-				if (listTable [i].GetTableNo () != tableNo)
-					continue;
+        for (int i = 0; i < listTable.Count; i++)
+        {
+            if (listTable[i].GetTableNo() != tableNo)
+                continue;
 
-				listTable [i].SetOrder (packing);
-				break;
-			}
+            listTable[i].SetOrder(packing);
+            break;
+        }
 
-			OrderElt elt = obj.GetComponent<OrderElt> ();
-			elt.SetInfo (orderID, tableNo, packing);
-			listOrder.Add (elt);
+        OrderElt elt = obj.GetComponent<OrderElt>();
+        elt.SetInfo(orderID, tableNo, packing);
+        listOrder.Add(elt);
 
-			++orderID;
-			if (orderID > MAX_ID)
-				orderID = 0;
-		} else {
-			MusicElt elt = obj.GetComponent<MusicElt> ();
-			elt.SetInfo (musicID, packing);
-			listMusic.Add (elt);
-
-			++musicID;
-			if (musicID > MAX_ID)
-				musicID = 0;
-		}
+        ++orderID;
+        if (orderID > MAX_ID)
+            orderID = 0;
 	}
 
 	public void SetOrder(byte tableNo, short discount)
@@ -189,6 +176,38 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 		if (orderID > MAX_ID)
 			orderID = 0;
 	}
+
+    public void SetRequestMusic(string packing)
+    {
+        GameObject obj = Instantiate (prefabMusic) as GameObject;
+        obj.SetActive (true);
+
+        Transform tr = obj.transform;
+        tr.SetParent (rtScrollMusic);
+        tr.InitTransform ();
+
+        MusicElt elt = obj.GetComponent<MusicElt> ();
+        elt.SetInfo (packing);
+        listMusic.Add (elt);
+    }
+
+    public void RemoveRequestMusic(int id)
+    {
+        int removeIdx = -1;
+        for (int i = 0; i < listMusic.Count; i++)
+        {
+            if (id != listMusic[i].GetID())
+                continue;
+
+            removeIdx = i;
+        }
+
+        if (removeIdx == -1)
+            return;
+
+        DestroyImmediate(listMusic[removeIdx].gameObject);
+        listMusic.RemoveAt(removeIdx);
+    }
 
 	public void RemoveElt(bool isOrder, int id)
 	{

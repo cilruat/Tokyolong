@@ -6,45 +6,58 @@ using LitJson;
 
 public class MusicElt : MonoBehaviour 
 {
-    public Text priority;
+    public Text textPriority;
 	public Text title;
 	public Text singer;
 	public Text table;
 
-	int id = -1;
+    RequestMusicInfo info = null;
+    public int GetID() { return info.id; }
 
-	public void SetInfo(int id, RequestMusicInfo info)
+    public void SetInfo(string packing)
+    {
+        JsonData reqMusicJson = JsonMapper.ToObject(packing);
+        int reqID = int.Parse(reqMusicJson["id"].ToString());
+        byte reqTableNo = byte.Parse(reqMusicJson["tableNo"].ToString());
+        string reqMusicTitle = reqMusicJson["title"].ToString();
+        string reqMusicSinger = reqMusicJson["singer"].ToString();
+
+        SetInfo(new RequestMusicInfo(reqID, reqTableNo, reqMusicTitle, reqMusicSinger));
+    }
+
+    public void SetInfo(RequestMusicInfo info)
+    {
+        this.info = info;
+        table.text = string.Format("{0:D2}", info.tableNo);
+        title.text = info.title;
+        singer.text = info.singer;
+    }
+
+    public void SetInfo(int priority, string packing)
+    {
+        JsonData reqMusicJson = JsonMapper.ToObject(packing);
+        int reqID = int.Parse(reqMusicJson["id"].ToString());
+        byte reqTableNo = byte.Parse(reqMusicJson["tableNo"].ToString());
+        string reqMusicTitle = reqMusicJson["title"].ToString();
+        string reqMusicSinger = reqMusicJson["singer"].ToString();
+
+        SetInfo(priority, new RequestMusicInfo(reqID, reqTableNo, reqMusicTitle, reqMusicSinger));
+    }
+
+    public void SetInfo(int priority, RequestMusicInfo info)
 	{
-		this.id = id;
-		if (priority != null)
-			priority.text = string.Format("{00}", id.ToString());
+        this.info = info;
+
+        if (textPriority != null)
+            textPriority.text = string.Format("{0:D2}", priority);
 		
-		table.text = string.Format("{00}", info.tableNo.ToString());
+        table.text = string.Format("{0:D2}", info.tableNo);
 		title.text = info.title;
 		singer.text = info.singer;
 	}
 
-	public void SetInfo(int id, string packing)
-	{
-		this.id = id;
-
-        if (priority != null)
-            priority.text = string.Format("{00}", id.ToString());
-
-		JsonData reqMusicJson = JsonMapper.ToObject(packing);
-		byte reqTableNo = byte.Parse(reqMusicJson["tableNo"].ToString());
-		string reqMusicTitle = reqMusicJson["title"].ToString();
-		string reqMusicSinger = reqMusicJson["singer"].ToString();
-
-		table.text = string.Format("{00}", reqTableNo.ToString());
-		title.text = reqMusicTitle;
-		singer.text = reqMusicSinger;
-	}
-
 	public void OnDelete()
 	{
-		PageAdmin.Instance.RemoveElt (false, id);
+        NetworkManager.Instance.Request_Music_Remove_REQ(info.id);
 	}
-
-	public int GetID() { return id; }
 }

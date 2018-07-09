@@ -38,9 +38,6 @@ namespace SP_Server
 		ORDER_REQ,
 		ORDER_ACK,
 		ORDER_NOT,
-		REQUEST_MUSIC_REQ,
-		REQUEST_MUSIC_ACK,
-		REQUEST_MUSIC_NOT,
         CHAT_REQ,
         CHAT_ACK,
         CHAT_NOT,
@@ -51,6 +48,11 @@ namespace SP_Server
 		GAME_DISCOUNT_NOT,
 		REQUEST_MUSIC_LIST_REQ,
 		REQUEST_MUSIC_LIST_ACK,
+        REQUEST_MUSIC_REQ,
+        REQUEST_MUSIC_ACK,
+        REQUEST_MUSIC_NOT,
+        REQUEST_MUSIC_REMOVE_REQ,
+        REQUEST_MUSIC_REMOVE_ACK,
         //-------------------------------------
         // 게임 프로토콜.
         //-------------------------------------        

@@ -34,6 +34,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		case PROTOCOL.REQUEST_MUSIC_ACK:	RequestMusicACK (msg);		break;
 		case PROTOCOL.REQUEST_MUSIC_NOT:	RequestMusicNOT (msg); 		break;
 		case PROTOCOL.REQUEST_MUSIC_LIST_ACK: RequestMusicListACK (msg); break;
+        case PROTOCOL.REQUEST_MUSIC_REMOVE_ACK: RequestMusicRemoveACK(msg); break;
 		}
 	}
 
@@ -172,27 +173,35 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		PageAdmin.Instance.SetOrder (tableNo, discount);
 	}
 
-	void RequestMusicACK(CPacket msg)
-	{
-		string packing = msg.pop_string ();
-		if (UIManager.Instance.IsActive (eUI.eMusicRequest)) 
-		{
-			GameObject obj = UIManager.Instance.GetUI (eUI.eMusicRequest);
-			UIMusicRequest mr = obj.GetComponent<UIMusicRequest> ();
-			mr.SetMusicList (packing);
-		}
-	}
-
-	void RequestMusicNOT(CPacket msg)
-	{
-		
-	}
-
 	void RequestMusicListACK(CPacket msg)
 	{
 		string packing = msg.pop_string ();
 		GameObject obj = UIManager.Instance.Show (eUI.eMusicRequest);
 		UIMusicRequest mr = obj.GetComponent<UIMusicRequest> ();
-		mr.SetMusicList (packing);
+        mr.SetAddMusicList (packing);
 	}
+
+    void RequestMusicACK(CPacket msg)
+    {
+        int priority = msg.pop_int32();
+        string packing = msg.pop_string ();
+        if (UIManager.Instance.IsActive (eUI.eMusicRequest)) 
+        {
+            GameObject obj = UIManager.Instance.GetUI (eUI.eMusicRequest);
+            UIMusicRequest mr = obj.GetComponent<UIMusicRequest> ();
+            mr.SetAddMusic (priority, packing);
+        }
+    }
+
+    void RequestMusicNOT(CPacket msg)
+    {
+        string packing = msg.pop_string();
+        PageAdmin.Instance.SetRequestMusic(packing);
+    }
+
+    void RequestMusicRemoveACK(CPacket msg)
+    {
+        int removeReqMusicID = msg.pop_int32();
+        PageAdmin.Instance.RemoveRequestMusic(removeReqMusicID);
+    }
 }

@@ -37,6 +37,8 @@ namespace SP_Server
 
         public List<User> ListUser { get => listUser; set => listUser = value; }
         public Dictionary<int, List<SendMenu>> dictUserMenu = new Dictionary<int, List<SendMenu>>();
+
+        int musicID = -1;
         public List<RequestMusic> listRequestMusic = new List<RequestMusic>();
 
         public Frm()
@@ -216,6 +218,32 @@ namespace SP_Server
         public void ReqClose()
         {            
             this.Close();
+        }
+
+        public RequestMusic AddRequestMusic(int tableNo, string title, string singer)
+        {
+            ++musicID;
+            RequestMusic reqMusic = new RequestMusic(musicID, tableNo, title, singer);
+            listRequestMusic.Add(reqMusic);
+
+            return reqMusic;
+        }
+
+        public void DeleteRequestMusic(int id)
+        {
+            int deleteIdx = -1;
+            for (int i = 0; i <listRequestMusic.Count; i++)
+            {
+                if (id != listRequestMusic[i].id)
+                    continue;
+
+                deleteIdx = i;
+            }
+
+            if (deleteIdx == -1)
+                return;
+
+            listRequestMusic.RemoveAt(deleteIdx);
         }
     }
 }

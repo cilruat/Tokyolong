@@ -161,24 +161,6 @@ namespace SP_Server.UserState
 
                         send_msg = CPacket.create((short)PROTOCOL.ORDER_ACK);                        
                         break;
-                    case PROTOCOL.REQUEST_MUSIC_REQ:
-                        string requestMusicPacking = msg.pop_string();
-
-                        JsonData reqMusicJson = JsonMapper.ToObject(requestMusicPacking);
-                        byte reqTableNo = byte.Parse(reqMusicJson["tableNo"].ToString());
-                        string reqMusicTitle = reqMusicJson["title"].ToString();
-                        string reqMusicSinger = reqMusicJson["singer"].ToString();
-                        
-                        owner.mainFrm.listRequestMusic.Add(new RequestMusic(reqTableNo, reqMusicTitle, reqMusicSinger));
-
-                        other_msg = CPacket.create((short)PROTOCOL.REQUEST_MUSIC_NOT);
-                        other_msg.push(requestMusicPacking);
-                        Frm.GetAdminUser().send(other_msg);
-
-                        send_msg = CPacket.create((short)PROTOCOL.REQUEST_MUSIC_ACK);
-                        send_msg.push(requestMusicPacking);
-
-                        break;
                     case PROTOCOL.CHAT_REQ:
                         tableNo = msg.pop_byte();
                         byte otherTableNo = msg.pop_byte();
@@ -232,6 +214,44 @@ namespace SP_Server.UserState
                         Frm.GetAdminUser().send(other_msg);
 
                         send_msg = CPacket.create((short)PROTOCOL.GAME_DISCOUNT_ACK);
+                        break;
+                    case PROTOCOL.REQUEST_MUSIC_LIST_REQ:
+
+                        //string reqMusicListPacking = string.Empty;
+                        //if (owner.mainFrm.listRequestMusic.Count > 0)
+                       // {
+                            JsonData listRequestMusicJson = JsonMapper.ToJson(owner.mainFrm.listRequestMusic);
+                           // reqMusicListPacking = listRequestMusicJson.ToString();
+                       // }
+
+                        send_msg = CPacket.create((short)PROTOCOL.REQUEST_MUSIC_LIST_ACK);
+                        send_msg.push(listRequestMusicJson.ToString());
+                        break;
+                    case PROTOCOL.REQUEST_MUSIC_REQ:
+
+                        byte reqTableNo = msg.pop_byte();
+                        string reqTitle = msg.pop_string();
+                        string reqSinger = msg.pop_string();
+
+                        RequestMusic reqMusic = owner.mainFrm.AddRequestMusic(reqTableNo, reqTitle, reqSinger);
+                        JsonData reqMusicJson = JsonMapper.ToJson(reqMusic);
+
+                        other_msg = CPacket.create((short)PROTOCOL.REQUEST_MUSIC_NOT);
+
+                        other_msg.push(reqMusicJson.ToString());
+                        Frm.GetAdminUser().send(other_msg);
+
+                        send_msg = CPacket.create((short)PROTOCOL.REQUEST_MUSIC_ACK);
+                        send_msg.push(owner.mainFrm.listRequestMusic.Count);
+                        send_msg.push(reqMusicJson.ToString());
+
+                        break;
+                    case PROTOCOL.REQUEST_MUSIC_REMOVE_REQ:
+                        int removeReqMusicID = msg.pop_int32();
+                        owner.mainFrm.DeleteRequestMusic(removeReqMusicID);
+
+                        send_msg = CPacket.create((short)PROTOCOL.REQUEST_MUSIC_REMOVE_ACK);
+                        send_msg.push(removeReqMusicID);
                         break;
                     default:
                         break;
