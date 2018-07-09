@@ -35,6 +35,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		case PROTOCOL.REQUEST_MUSIC_NOT:	RequestMusicNOT (msg); 		break;
 		case PROTOCOL.REQUEST_MUSIC_LIST_ACK: RequestMusicListACK (msg); break;
         case PROTOCOL.REQUEST_MUSIC_REMOVE_ACK: RequestMusicRemoveACK(msg); break;
+        case PROTOCOL.REQUEST_MUSIC_REMOVE_NOT: RequestMusicRemoveNOT(msg); break;
 		}
 	}
 
@@ -177,20 +178,17 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 	{
 		string packing = msg.pop_string ();
 		GameObject obj = UIManager.Instance.Show (eUI.eMusicRequest);
-		UIMusicRequest mr = obj.GetComponent<UIMusicRequest> ();
-        mr.SetAddMusicList (packing);
+        UIRequestMusic uiReqMusic = obj.GetComponent<UIRequestMusic> ();
+        uiReqMusic.SetAddMusicList (packing);
 	}
 
     void RequestMusicACK(CPacket msg)
     {
         int priority = msg.pop_int32();
         string packing = msg.pop_string ();
-        if (UIManager.Instance.IsActive (eUI.eMusicRequest)) 
-        {
-            GameObject obj = UIManager.Instance.GetUI (eUI.eMusicRequest);
-            UIMusicRequest mr = obj.GetComponent<UIMusicRequest> ();
-            mr.SetAddMusic (priority, packing);
-        }
+        GameObject obj = UIManager.Instance.GetUI (eUI.eMusicRequest);
+        UIRequestMusic uiReqMusic = obj.GetComponent<UIRequestMusic> ();
+        uiReqMusic.SetAddMusic (priority, packing);
     }
 
     void RequestMusicNOT(CPacket msg)
@@ -203,5 +201,16 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     {
         int removeReqMusicID = msg.pop_int32();
         PageAdmin.Instance.RemoveRequestMusic(removeReqMusicID);
+    }
+
+    void RequestMusicRemoveNOT(CPacket msg)
+    {
+        if (UIManager.Instance.IsActive(eUI.eMusicRequest) == false)
+            return;
+
+        int removeReqMusicID = msg.pop_int32();
+        GameObject obj = UIManager.Instance.GetUI(eUI.eMusicRequest);
+        UIRequestMusic uiReqMusic = obj.GetComponent<UIRequestMusic> ();
+        uiReqMusic.RemoveRequestMusic(removeReqMusicID);
     }
 }

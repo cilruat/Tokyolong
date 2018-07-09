@@ -39,7 +39,7 @@ namespace SP_Server
         public Dictionary<int, List<SendMenu>> dictUserMenu = new Dictionary<int, List<SendMenu>>();
 
         int musicID = -1;
-        public List<RequestMusic> listRequestMusic = new List<RequestMusic>();
+        public List<RequestMusicInfo> listReqMusicInfo = new List<RequestMusicInfo>();
 
         public Frm()
         {
@@ -220,30 +220,43 @@ namespace SP_Server
             this.Close();
         }
 
-        public RequestMusic AddRequestMusic(int tableNo, string title, string singer)
+        public RequestMusicInfo AddRequestMusic(int tableNo, string title, string singer)
         {
             ++musicID;
-            RequestMusic reqMusic = new RequestMusic(musicID, tableNo, title, singer);
-            listRequestMusic.Add(reqMusic);
+            RequestMusicInfo reqMusic = new RequestMusicInfo(musicID, tableNo, title, singer);
+            listReqMusicInfo.Add(reqMusic);
 
             return reqMusic;
         }
 
-        public void DeleteRequestMusic(int id)
+        public void RemoveRequestMusicInfo(int id)
         {
-            int deleteIdx = -1;
-            for (int i = 0; i <listRequestMusic.Count; i++)
+            if (listReqMusicInfo.Count <= 0)
             {
-                if (id != listRequestMusic[i].id)
+                WriteLog("No listings stored on the Server.");
+                return;
+            }
+
+            int deleteIdx = -1;
+            for (int i = 0; i <listReqMusicInfo.Count; i++)
+            {
+                if (id != listReqMusicInfo[i].id)
                     continue;
 
                 deleteIdx = i;
             }
 
             if (deleteIdx == -1)
+            {
+                WriteLog("RequestMusicInfo Not Remove Because Not Find ID");
                 return;
+            }
 
-            listRequestMusic.RemoveAt(deleteIdx);
+            listReqMusicInfo.RemoveAt(deleteIdx);
+
+            // 리스트가 없음으로 아이디 부여 초기화
+            if (listReqMusicInfo.Count <= 0)
+                musicID = -1;
         }
     }
 }

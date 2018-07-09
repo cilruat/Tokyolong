@@ -28,12 +28,12 @@ public class RequestMusicInfo
 	}
 }
 
-public class UIMusicRequest : MonoBehaviour 
+public class UIRequestMusic : MonoBehaviour 
 {
     public ScrollRect srBoard;
     public MusicElt elt;
 
-    public GameObject objRequest;
+    public MusicRequestor requestor;
 
     List<MusicElt> elts = new List<MusicElt>();
 
@@ -41,6 +41,9 @@ public class UIMusicRequest : MonoBehaviour
     {
         if (elt.gameObject.activeSelf)
             elt.gameObject.SetActive(false);
+
+        if (requestor.gameObject.activeSelf)
+            requestor.gameObject.SetActive(false);
     }
 
     public void SetAddMusicList(string packing)
@@ -63,15 +66,8 @@ public class UIMusicRequest : MonoBehaviour
 
     public void SetAddMusic(int priority, string packing)
     {
-        JsonData json = JsonMapper.ToObject(packing);
-
-        int id = int.Parse(json["tableNo"].ToString());
-        byte tableNo = byte.Parse(json["tableNo"].ToString());
-        string title = json["title"].ToString();
-        string singer = json["singer"].ToString();
-
         MusicElt elt = CreateMusicElt();
-        elt.SetInfo(priority, new RequestMusicInfo(id, tableNo, title, singer));
+        elt.SetInfo(priority, packing);
         elts.Add(elt);
     }
 
@@ -89,6 +85,27 @@ public class UIMusicRequest : MonoBehaviour
         return newElt;
     }
 
+    public void RemoveRequestMusic(int removeID)
+    {
+        int removeIdx = -1;
+        for (int i = 0; i < elts.Count; i++)
+        {
+            if (removeID != elts[i].GetID())
+                continue;
+
+            removeIdx = i;
+        }
+
+        if (removeIdx == -1)
+            return;
+
+        DestroyImmediate(elts[removeIdx].gameObject);
+        elts.RemoveAt(removeIdx);
+
+        for (int i = removeIdx; i < elts.Count; i++)
+            elts[i].SetPriority(i+1);
+    }
+
     void _Clear()
     {
         if (elts.Count > 0)
@@ -103,6 +120,6 @@ public class UIMusicRequest : MonoBehaviour
 
     public void OnShowRequest()
     {
-        objRequest.SetActive(true);
+        requestor.gameObject.SetActive(true);
     }
 }

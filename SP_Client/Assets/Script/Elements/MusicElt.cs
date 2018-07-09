@@ -56,6 +56,14 @@ public class MusicElt : MonoBehaviour
 		singer.text = info.singer;
 	}
 
+    public void SetPriority(int priority)
+    {
+        if (textPriority == null)
+            return;
+
+        textPriority.text = string.Format("{0:D2}", priority);
+    }
+
 	public void OnDelete()
 	{
         NetworkManager.Instance.Request_Music_Remove_REQ(info.id);

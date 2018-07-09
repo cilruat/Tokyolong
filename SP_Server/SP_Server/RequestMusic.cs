@@ -2,14 +2,14 @@
 using System.Collections;
 using System.Linq;
 
-public class RequestMusic
+public class RequestMusicInfo
 {
     public int id;
     public int tableNo;
     public string title;
     public string singer;
 
-    public RequestMusic()
+    public RequestMusicInfo()
     {
         this.id = -1;
         this.tableNo = -1;
@@ -17,7 +17,7 @@ public class RequestMusic
         this.singer = string.Empty;
     }
 
-    public RequestMusic(int id, int tableNo, string title, string singer)
+    public RequestMusicInfo(int id, int tableNo, string title, string singer)
     {
         this.id = id;
         this.tableNo = tableNo;

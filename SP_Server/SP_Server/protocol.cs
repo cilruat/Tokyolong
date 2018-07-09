@@ -53,6 +53,7 @@ namespace SP_Server
         REQUEST_MUSIC_NOT,
         REQUEST_MUSIC_REMOVE_REQ,
         REQUEST_MUSIC_REMOVE_ACK,
+        REQUEST_MUSIC_REMOVE_NOT,
         //-------------------------------------
         // 게임 프로토콜.
         //-------------------------------------        
