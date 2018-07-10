@@ -182,7 +182,7 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 		grid.enabled = false;
 
 		start = true;
-		//countDown.Set (LIMIT_TIME, () => StartCoroutine (_FailEndGame ()));
+		countDown.Set (LIMIT_TIME, () => StartCoroutine (_FailEndGame ()));
 	}
 
 	void _ClopClip(Texture tex)
