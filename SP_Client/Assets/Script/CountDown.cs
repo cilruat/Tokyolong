@@ -6,6 +6,8 @@ using UnityEngine.Events;
 
 public class CountDown : MonoBehaviour {
 
+	public bool isShowZero = false;
+
 	Text count;
 	int sec = 0;
     float elapsed = 0f;
@@ -44,7 +46,8 @@ public class CountDown : MonoBehaviour {
 			yield return null;
 		}
 
-		count.text = "";
+		if (isShowZero == false)
+			count.text = "";
 
 		if (callback != null) {
 			callback ();
@@ -52,5 +55,6 @@ public class CountDown : MonoBehaviour {
 		}
 	}
 
+	public void Stop() { StopAllCoroutines (); }
     public float GetElapsed() { return elapsed; }
 }

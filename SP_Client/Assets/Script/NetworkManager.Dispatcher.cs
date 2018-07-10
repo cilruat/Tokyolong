@@ -164,7 +164,11 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 	void GameDiscountACK(CPacket msg)
 	{
 		Info.GameDiscountWon = -1;
-		PageTokyoLive.Instance.ReturnHome ();
+
+		if (SceneManager.GetActiveScene ().name == "TokyoLive")
+			PageTokyoLive.Instance.ReturnHome ();
+		else if (SceneManager.GetActiveScene ().name == "PicturePuzzle")
+			PagePicturePuzzle.Instance.ReturnHome ();
 	}
 
 	void GameDiscountNOT(CPacket msg)
