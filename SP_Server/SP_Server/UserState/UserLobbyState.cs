@@ -140,21 +140,10 @@ namespace SP_Server.UserState
                         tableNo = msg.pop_byte();
                         string order = msg.pop_string();
 
-                        // 주문 정보에 입력
-                        JsonData json = JsonMapper.ToObject(order);
-                        for (int i = 0; i < json.Count; i++)
-                        {
-                            string json1 = json[i]["menu"].ToString();
-                            string json2 = json[i]["cnt"].ToString();
-
-                            int menu = int.Parse(json1);
-                            int cnt = int.Parse(json2);
-
-                            owner.SetOrder(menu, cnt);
-                        }                        
-
                         // Admin Send packet
                         other_msg = CPacket.create((short)PROTOCOL.ORDER_NOT);
+                        owner.mainFrm.OrderID++;
+                        other_msg.push(owner.mainFrm.OrderID);
                         other_msg.push(tableNo);
                         other_msg.push(order);
                         Frm.GetAdminUser().send(other_msg);
@@ -193,15 +182,13 @@ namespace SP_Server.UserState
 
                         break;
                     case PROTOCOL.ORDER_DETAIL_REQ:
+                        tableNo = msg.pop_byte();
+
+                        List<SendMenu> listSendMenu = owner.mainFrm.GetOrder((int)tableNo);
+                        JsonData listSendMenuJson = JsonMapper.ToJson(listSendMenu);
+
                         send_msg = CPacket.create((short)PROTOCOL.ORDER_DETAIL_ACK);
-                        List<int> menus = new List<int>(owner.orderTable.Keys);
-                        List<int> cnts = new List<int>(owner.orderTable.Values);
-
-                        JsonData orderMenus = JsonMapper.ToJson(menus);
-                        JsonData orderCnt = JsonMapper.ToJson(cnts);
-
-                        send_msg.push(orderMenus.ToString());
-                        send_msg.push(orderCnt.ToString());
+                        send_msg.push(listSendMenuJson.ToString());
                         break;
                     case PROTOCOL.GAME_DISCOUNT_REQ:
 
@@ -264,6 +251,42 @@ namespace SP_Server.UserState
                         send_msg = CPacket.create((short)PROTOCOL.REQUEST_MUSIC_REMOVE_ACK);
                         send_msg.push(removeReqMusicID);
 
+                        break;
+                    case PROTOCOL.ORDER_CONFIRM_REQ:
+                        int reqOrderId = msg.pop_int32();
+                        byte reqOrderTableNo = msg.pop_byte();
+                        string reqOrderList = msg.pop_string();
+                        JsonData reqOrderJson = JsonMapper.ToObject(reqOrderList);
+                        for (int i = 0; i < reqOrderJson.Count; i++)
+                        {
+                            int reqSendMenu = int.Parse(reqOrderJson[i]["menu"].ToString());
+                            int reqSendCnt = int.Parse(reqOrderJson[i]["cnt"].ToString());
+
+                            owner.mainFrm.SetOrder((int)reqOrderTableNo, new SendMenu(reqSendMenu, reqSendCnt));
+                        }
+
+                        for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
+                        {
+                            User other = owner.mainFrm.ListUser[i];
+                            if (other.tableNum != reqOrderTableNo)
+                                continue;
+
+                            other_msg = CPacket.create((short)PROTOCOL.ORDER_CONFIRM_NOT);
+                            other.send(other_msg);
+                            break;
+                        }
+
+                        send_msg = CPacket.create((short)PROTOCOL.ORDER_CONFIRM_ACK);
+                        send_msg.push(reqOrderId);
+                        break;
+                    case PROTOCOL.TABLE_ORDER_CONFIRM_REQ:
+                        tableNo = msg.pop_byte();
+                        List<SendMenu> tableOrderMenuList = owner.mainFrm.GetOrder((int)tableNo);
+                        JsonData tableOrderConfirJson = JsonMapper.ToJson(tableOrderMenuList);
+
+                        send_msg = CPacket.create((short)PROTOCOL.TABLE_ORDER_CONFIRM_ACK);
+                        send_msg.push(tableNo);
+                        send_msg.push(tableOrderConfirJson.ToString());
                         break;
                     default:
                         break;

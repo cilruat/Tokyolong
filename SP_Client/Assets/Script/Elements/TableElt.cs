@@ -15,7 +15,6 @@ public class TableElt : MonoBehaviour {
 	byte tableNo = 0;
 	UITween tweenUrgency;
 
-	Dictionary<EMenuDetail, int> dictOrder = new Dictionary<EMenuDetail, int>();
 	List<short> listDiscount = new List<short>();
 
 	public void SetTable(int num)
@@ -24,30 +23,9 @@ public class TableElt : MonoBehaviour {
 		tableNum.text = num.ToString ();
 	}
 
-	public void SetOrder(string packing)
-	{
-		JsonData json = JsonMapper.ToObject (packing);
-		for (int i = 0; i < json.Count; i++) {
-			string json1 = json [i] ["menu"].ToString ();
-			string json2 = json [i] ["cnt"].ToString ();
-
-			EMenuDetail eType = (EMenuDetail)int.Parse (json1);
-			int cnt = int.Parse (json2);
-			_SetOrder (eType, cnt);
-		}
-	}
-
 	public void SetOrder(short discount)
 	{
 		listDiscount.Add (discount);
-	}
-
-	void _SetOrder(EMenuDetail eMenu, int cnt)
-	{
-		if (dictOrder.ContainsKey (eMenu))
-			dictOrder [eMenu] += cnt;
-		else
-			dictOrder.Add (eMenu, cnt);
 	}
 		
 	public void Login()
@@ -59,7 +37,6 @@ public class TableElt : MonoBehaviour {
 	public void Logout()
 	{		
 		isLogin = false;
-		dictOrder.Clear ();
 		objCover.SetActive (false);
 		StopUrgency ();
 	}
@@ -98,11 +75,7 @@ public class TableElt : MonoBehaviour {
 		if (isLogin == false)
 			return;
 
-		List<KeyValuePair<EMenuDetail,int>> list = new List<KeyValuePair<EMenuDetail, int>> ();
-		foreach (KeyValuePair<EMenuDetail, int> pair in dictOrder)
-			list.Add (pair);
-
-		PageAdmin.Instance.ShowTableMenu (tableNo, list);
+		PageAdmin.Instance.ShowTableMenu (tableNo);
 	}
 		
 	public byte GetTableNo() { return this.tableNo; }

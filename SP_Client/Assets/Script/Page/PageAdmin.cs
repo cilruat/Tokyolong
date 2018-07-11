@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using LitJson;
 
 public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 
@@ -124,7 +125,7 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 		}
 	}
 
-	public void SetOrder(bool isOrder, byte tableNo, string packing)
+	public void SetOrder(int orderID, byte tableNo, string packing)
 	{
         GameObject obj = Instantiate (prefabOrder) as GameObject;
 		obj.SetActive (true);
@@ -133,22 +134,9 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
         tr.SetParent (rtScrollOrder);
 		tr.InitTransform ();
 
-        for (int i = 0; i < listTable.Count; i++)
-        {
-            if (listTable[i].GetTableNo() != tableNo)
-                continue;
-
-            listTable[i].SetOrder(packing);
-            break;
-        }
-
         OrderElt elt = obj.GetComponent<OrderElt>();
         elt.SetInfo(orderID, tableNo, packing);
         listOrder.Add(elt);
-
-        ++orderID;
-        if (orderID > MAX_ID)
-            orderID = 0;
 	}
 
 	public void SetOrder(byte tableNo, short discount)
@@ -237,13 +225,29 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 				DestroyImmediate (child.gameObject);
 			break;
 		}
-	}		
+	}
 
-	public void ShowTableMenu(byte tableNo, List<KeyValuePair<EMenuDetail,int>> list)
+	public void ShowTableMenu(byte tableNo)
 	{
 		objTableMenu.SetActive (true);
-		AdminTableMenu.Instance.SetInfo (tableNo, list);
+		AdminTableMenu.Instance.SetInfo (tableNo);
 	}
+
+    public void ShowBillConfirm(byte tableNo, string packing)
+    {
+        List<KeyValuePair<EMenuDetail, int>> listOrder = new List<KeyValuePair<EMenuDetail, int>>(); 
+        JsonData json = JsonMapper.ToObject(packing);
+        for (int i = 0; i < json.Count; i++)
+        {
+            int menu = int.Parse(json[i]["menu"].ToString());
+            int cnt = int.Parse(json[i]["cnt"].ToString());
+
+            EMenuDetail eType = (EMenuDetail)menu;
+            listOrder.Add(new KeyValuePair<EMenuDetail, int>(eType, cnt));
+        }
+
+        ShowBillConfirm(tableNo, listOrder);
+    }
 
 	public void ShowBillConfirm(byte tableNo, List<KeyValuePair<EMenuDetail,int>> list)
 	{
@@ -251,11 +255,15 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 		AdminBillConfirm.Instance.SetInfo (tableNo, list);
 	}
 
-	public void ShowOrderDetail(byte tableNo, int id, string packing)
+    public void ShowOrderDetail(RequestOrderMenu reqOrder)
 	{
+        if (reqOrder == null)
+            return;
+
 		objOrderDetail.SetActive (true);
-		AdminOrderDetail.Instance.SetInfo (tableNo, id, packing);
+        AdminOrderDetail.Instance.SetInfo (reqOrder);
 	}
+
 
 	void Update()
 	{

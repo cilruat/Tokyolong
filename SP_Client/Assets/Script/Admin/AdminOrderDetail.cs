@@ -10,35 +10,28 @@ public class AdminOrderDetail : SingletonMonobehaviour<AdminOrderDetail> {
 	public GameObject objPrefab;
 	public RectTransform rtScroll;
 
-	int id = -1;
+    RequestOrderMenu reqOrder = null;
 
-	public void SetInfo(byte tableNo, int id, string packing)
+    public void SetInfo(RequestOrderMenu reqOrder)
 	{
 		_Clear ();
 
-		this.id = id;
-		table.text = tableNo.ToString () + "번 테이블";
+        this.reqOrder = reqOrder;
+        table.text = reqOrder.tableNo.ToString () + "번 테이블";
 
-		JsonData json = JsonMapper.ToObject (packing);
-		for (int i = 0; i < json.Count; i++) {			
-			string json1 = json [i] ["menu"].ToString ();
-			string json2 = json [i] ["cnt"].ToString ();
+        for (int i = 0; i < reqOrder.list.Count; i++)
+        {
+            EMenuDetail eType = (EMenuDetail) this.reqOrder.list[i].menu;
 
-			EMenuDetail eType = (EMenuDetail)int.Parse (json1);
-			int cnt = int.Parse (json2);
-
-			string menu = Info.MenuName (eType) + " " + cnt.ToString ();
-
-			GameObject objElt = Instantiate (objPrefab) as GameObject;
-
-			Transform tr = objElt.transform;
-			tr.SetParent (rtScroll);
-			tr.InitTransform ();
-			objElt.SetActive (true);
-
-			Text desc = tr.Find ("Desc").GetComponent<Text> ();
-			desc.text = menu;
-		}
+            string menu = Info.MenuName (eType) + " " +  this.reqOrder.list[i].cnt.ToString ();
+            GameObject objElt = Instantiate (objPrefab) as GameObject;
+            Transform tr = objElt.transform;
+            tr.SetParent (rtScroll);
+            tr.InitTransform ();
+            objElt.SetActive (true);
+            Text desc = tr.Find ("Desc").GetComponent<Text> ();
+            desc.text = menu;
+        }
 	}
 
 	void _Clear()
@@ -52,10 +45,8 @@ public class AdminOrderDetail : SingletonMonobehaviour<AdminOrderDetail> {
 
 	public void OnConfirm()
 	{
-		_Clear ();
-
-		PageAdmin.Instance.RemoveElt (true, id);
-		OnClose ();
+        JsonData json = JsonMapper.ToJson(reqOrder.list);
+        NetworkManager.Instance.Order_Confirm_REQ(reqOrder.id, reqOrder.tableNo, json.ToString());
 	}
 
 	public void OnClose() {	gameObject.SetActive (false); }

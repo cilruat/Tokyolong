@@ -10,31 +10,34 @@ public class OrderElt : MonoBehaviour {
 	public Text order;
 	public GameObject objDetail;
 
+    RequestOrderMenu reqOrder = null;
+
 	int id = -1;
 	byte tableNo = 0;
-	string packing = "";
 
 	public void SetInfo(int id, byte tableNo, string packing)
 	{
-		this.id = id;
-		this.tableNo = tableNo;
-		this.packing = packing;
-
 		table.text = tableNo.ToString ();
 
-		string desc = "";
+        List<SendMenu> listSendMenu = new List<SendMenu>();
+        string desc = "";
 		JsonData json = JsonMapper.ToObject (packing);
-		for (int i = 0; i < json.Count; i++) {
-			string json1 = json [i] ["menu"].ToString ();
-			string json2 = json [i] ["cnt"].ToString ();
+		for (int i = 0; i < json.Count; i++) 
+        {
+            int menu = int.Parse(json [i] ["menu"].ToString ());
+            int cnt =  int.Parse(json [i] ["cnt"].ToString ());
+            listSendMenu.Add(new SendMenu(menu, cnt));
 
-			EMenuDetail eType = (EMenuDetail)int.Parse (json1);
-			int cnt = int.Parse (json2);
+            EMenuDetail eType = (EMenuDetail)menu;
 
 			desc += Info.MenuName (eType) + " " + cnt.ToString ();
 			if (i < json.Count - 1)
 				desc += ", ";
 		}
+
+        reqOrder = new RequestOrderMenu(id, tableNo, listSendMenu);
+
+        this.id = reqOrder.id;
 
 		order.text = desc;
 		objDetail.SetActive (true);
@@ -59,7 +62,7 @@ public class OrderElt : MonoBehaviour {
 
 	public void OnDetail()
 	{
-		PageAdmin.Instance.ShowOrderDetail (tableNo, id, packing);
+        PageAdmin.Instance.ShowOrderDetail (reqOrder);
 	}
 
 	public int GetID() { return id; }

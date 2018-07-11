@@ -13,6 +13,10 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 			UIManager.Instance.Hide (eUI.eWaiting);
 
 		PROTOCOL protocol_id = (PROTOCOL)msg.pop_protocol_id ();
+        #if UNITY_EDITOR
+        Debug.Log(protocol_id.ToString());
+        #endif
+
 		switch (protocol_id)
 		{
 		case PROTOCOL.FAILED_NOT_NUMBER:	Failed (protocol_id);		break;
@@ -36,6 +40,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		case PROTOCOL.REQUEST_MUSIC_LIST_ACK: RequestMusicListACK (msg); break;
         case PROTOCOL.REQUEST_MUSIC_REMOVE_ACK: RequestMusicRemoveACK(msg); break;
         case PROTOCOL.REQUEST_MUSIC_REMOVE_NOT: RequestMusicRemoveNOT(msg); break;
+        case PROTOCOL.ORDER_CONFIRM_ACK:    OrderConfirmACK(msg);       break;
+        case PROTOCOL.ORDER_CONFIRM_NOT:    OrderConfirmNOT(msg);       break;
+        case PROTOCOL.TABLE_ORDER_CONFIRM_ACK: TableOrderConfirmACK(msg); break;
 		}
 	}
 
@@ -111,9 +118,11 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
 	void OrderNOT(CPacket msg)
 	{
+        int orderId = msg.pop_int32();
 		byte tableNo = msg.pop_byte ();
 		string order = msg.pop_string ();
-		PageAdmin.Instance.SetOrder (true, tableNo, order);
+
+        PageAdmin.Instance.SetOrder (orderId, tableNo, order);
 	}
 
     void ChatACK(CPacket msg)
@@ -151,14 +160,13 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
     void OrderDetailACK(CPacket msg)
     {
-        string packingMenu = msg.pop_string();
-        string packingCnt = msg.pop_string();
+        string packing = msg.pop_string();
         if (UIManager.Instance.IsActive(eUI.eBillDetail))
             return;
         
         GameObject obj = UIManager.Instance.Show(eUI.eBillDetail);
         UIBillDetail uiBillDetail = obj.GetComponent<UIBillDetail>();
-        uiBillDetail.SetBill(packingMenu, packingCnt);
+        uiBillDetail.SetBill(packing);
     }
 
 	void GameDiscountACK(CPacket msg)
@@ -216,5 +224,25 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         GameObject obj = UIManager.Instance.GetUI(eUI.eMusicRequest);
         UIRequestMusic uiReqMusic = obj.GetComponent<UIRequestMusic> ();
         uiReqMusic.RemoveRequestMusic(removeReqMusicID);
+    }
+
+    void OrderConfirmACK(CPacket msg)
+    {
+        int removeId = msg.pop_int32();
+        PageAdmin.Instance.RemoveElt(true, removeId);
+        AdminOrderDetail.Instance.OnClose();
+    }
+
+    void OrderConfirmNOT(CPacket msg)
+    {
+        UIManager.Instance.ShowOrderAlarm();
+    }
+
+    void TableOrderConfirmACK(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+        string packing = msg.pop_string();
+        AdminTableMenu.Instance.OnClose();
+        PageAdmin.Instance.ShowBillConfirm (tableNo, packing);
     }
 }

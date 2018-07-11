@@ -11,6 +11,10 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		if (UIManager.Instance.IsActive (eUI.eWaiting) == false)
 			UIManager.Instance.Show (eUI.eWaiting);
 
+        #if UNITY_EDITOR
+        Debug.Log(((PROTOCOL)msg.protocol_id).ToString());
+        #endif
+
 		this.sending_queue.Enqueue(msg);
 	}
 
@@ -70,6 +74,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     public void Order_Detail_REQ()
     {
         CPacket msg = CPacket.create((short)PROTOCOL.ORDER_DETAIL_REQ);
+        msg.push(Info.TableNum);
+
         send(msg);
     }
 
@@ -101,6 +107,24 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     {
         CPacket msg = CPacket.create((short)PROTOCOL.REQUEST_MUSIC_REMOVE_REQ);
         msg.push(removeMusicID);
+
+        send(msg);
+    }
+
+    public void Order_Confirm_REQ(int id, byte tableNo, string listPacking)
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.ORDER_CONFIRM_REQ);
+        msg.push(id);
+        msg.push(tableNo);
+        msg.push(listPacking);
+
+        send(msg);
+    }
+
+    public void Table_Order_Confirm_REQ(byte tableNo)
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.TABLE_ORDER_CONFIRM_REQ);
+        msg.push(tableNo);
 
         send(msg);
     }

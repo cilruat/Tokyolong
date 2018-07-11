@@ -36,6 +36,9 @@ namespace SP_Server
         private List<User> listUser;
 
         public List<User> ListUser { get => listUser; set => listUser = value; }
+
+        int orderID = -1;
+        public int OrderID { get { return orderID; } set { orderID = value; } }
         public Dictionary<int, List<SendMenu>> dictUserMenu = new Dictionary<int, List<SendMenu>>();
 
         int musicID = -1;
@@ -257,6 +260,39 @@ namespace SP_Server
             // 리스트가 없음으로 아이디 부여 초기화
             if (listReqMusicInfo.Count <= 0)
                 musicID = -1;
+        }
+
+        public void SetOrder(int tableNo, SendMenu sendMenu)
+        {
+            if (dictUserMenu.ContainsKey(tableNo) == false)
+                dictUserMenu.Add(tableNo, new List<SendMenu>());
+
+            List<SendMenu> listSendMenu = dictUserMenu[tableNo];
+
+            int containIdx = -1;
+            for (int i = 0; i < listSendMenu.Count; i++)
+            {
+                if(listSendMenu[i].menu == sendMenu.menu)
+                {
+                    containIdx = i;
+                    break;
+                }
+            }
+
+            if (containIdx == -1)
+                listSendMenu.Add(sendMenu);
+            else
+                listSendMenu[containIdx].cnt += sendMenu.cnt;
+        }
+
+        public List<SendMenu> GetOrder(int tableNo)
+        {
+            List<SendMenu> listSendMenu = new List<SendMenu>();
+
+            if (dictUserMenu.ContainsKey(tableNo))
+                listSendMenu = dictUserMenu[tableNo];
+
+            return listSendMenu;
         }
     }
 }

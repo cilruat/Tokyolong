@@ -54,6 +54,11 @@ namespace SP_Server
         REQUEST_MUSIC_REMOVE_REQ,
         REQUEST_MUSIC_REMOVE_ACK,
         REQUEST_MUSIC_REMOVE_NOT,
+        ORDER_CONFIRM_REQ,
+        ORDER_CONFIRM_ACK,
+        ORDER_CONFIRM_NOT,
+        TABLE_ORDER_CONFIRM_REQ,
+        TABLE_ORDER_CONFIRM_ACK,
         //-------------------------------------
         // 게임 프로토콜.
         //-------------------------------------        

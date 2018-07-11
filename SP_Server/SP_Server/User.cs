@@ -43,7 +43,6 @@ namespace SP_Server
         public byte peopleCnt { get { return info.peopleCnt; } set { info.peopleCnt = value; } }
         public byte customerType { get { return info.customerType; } set { info.customerType = value; } }
         public UserInfo info = new UserInfo();
-        public Dictionary<int, int> orderTable = new Dictionary<int, int>();   // key: menu, value: count
 
         public GameRoom battle_room { get; private set; }
         public Player player { get; private set; }
@@ -124,18 +123,9 @@ namespace SP_Server
             this.token.send(new ArraySegment<byte>(clone, 0, msg.position));
         }
 
-        public void SetOrder(int menu, int cnt)
-        {
-            if (orderTable.ContainsKey(menu))
-                orderTable[menu] += cnt;
-            else
-                orderTable.Add(menu, cnt);
-        }
-
         public void ClearOrder()
         {
             info = new UserInfo();
-            orderTable.Clear();
         }
     }
 }

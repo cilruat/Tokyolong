@@ -1814,7 +1814,7 @@ GameObject:
   - component: {fileID: 222736171131337762}
   - component: {fileID: 114919756441053904}
   m_Layer: 5
-  m_Name: Chat
+  m_Name: Ballon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2090,10 +2090,11 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224690633008821616}
+  - component: {fileID: 114037569093467744}
   - component: {fileID: 114418434094507748}
   - component: {fileID: 114893504412548396}
   m_Layer: 5
-  m_Name: ChatAlarm
+  m_Name: UIAlarm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3568,6 +3569,19 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &114037569093467744
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1583697367395332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3821fbc9dbeaa1c4984bbeb6c61e125b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textAlarm: {fileID: 114788597971447654}
+  btn: {fileID: 114893504412548396}
 --- !u!114 &114040010390726416
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7138,6 +7152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76ca202388d9a6d49a3ab6cc5117a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isShowZero: 0
 --- !u!114 &114510173956410744
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8029,7 +8044,7 @@ MonoBehaviour:
     obj: {fileID: 1884811525597302}
   - ui: 5
     obj: {fileID: 1480916216234240}
-  objChatAlarm: {fileID: 1583697367395332}
+  uiAlarm: {fileID: 114037569093467744}
 --- !u!114 &114616046946677198
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10020,18 +10035,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114613691187077832}
-        m_MethodName: ShowChat
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114894280175087176

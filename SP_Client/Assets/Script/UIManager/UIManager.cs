@@ -27,7 +27,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 	public GameObject objShadow;
 	public List<UI> listUI;
 
-    public GameObject objChatAlarm;
+    public UIAlarm uiAlarm;
 
 	eUI curUI = eUI.eNone;
 	Dictionary<eUI, GameObject> dicObject = new Dictionary<eUI, GameObject> ();
@@ -94,15 +94,18 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 		return dicObject [curUI];
 	}
 
-    Coroutine chatAlarmRoutine = null;
-    public void ShowChat()
+    public void ShowChatAlarm()
     {
-        if (chatAlarmRoutine != null)
-        {
-            StopCoroutine(chatAlarmRoutine);
-            UITweenPosY.Start(objChatAlarm, 60f, -100f, TWParam.New(.5f).Curve(TWCurve.CurveLevel4).Speed(TWSpeed.Faster));
-            chatAlarmRoutine = null;
-        }
+        uiAlarm.ShowAlarm("채팅이\n도착 하였습니다", _ShowChat);
+    }
+    public void ShowOrderAlarm()
+    {
+        uiAlarm.ShowAlarm("주문이\n접수 되었습니다", _ShowBillDetail);
+    }
+
+    void _ShowChat()
+    {
+        uiAlarm.HideAlarm();
 
         if (curUI != eUI.eNone && curUI != eUI.eChat)
             Hide(curUI);
@@ -111,25 +114,13 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
         uiChat.ShowChatTable();
     }
 
-    public void ShowChatAlarm()
+    void _ShowBillDetail()
     {
-        chatAlarmRoutine = StartCoroutine(_ShowChatAlarm());
-    }
+        uiAlarm.HideAlarm();
 
-    IEnumerator _ShowChatAlarm()
-    {
-        UITween tween = UITweenPosY.Start(objChatAlarm, -80f, 60f, TWParam.New(.5f).Curve(TWCurve.CurveLevel4).Speed(TWSpeed.Slower));
+        if (curUI != eUI.eNone && curUI != eUI.eBillDetail)
+            Hide(curUI);
 
-        while (tween.IsTweening())
-            yield return null;
-
-        yield return new WaitForSeconds(2f);
-
-        tween = UITweenPosY.Start(objChatAlarm, 60f, -100f, TWParam.New(.5f).Curve(TWCurve.CurveLevel4).Speed(TWSpeed.Faster));
-
-        while (tween.IsTweening())
-            yield return null;
-        
-        chatAlarmRoutine = null;
+        NetworkManager.Instance.Order_Detail_REQ();
     }
 }

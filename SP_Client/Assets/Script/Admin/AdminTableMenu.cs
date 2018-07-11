@@ -8,13 +8,8 @@ public class AdminTableMenu : SingletonMonobehaviour<AdminTableMenu> {
 	public Text table;
 
 	byte tableNo = 0;
-	List<KeyValuePair<EMenuDetail,int>> list = new List<KeyValuePair<EMenuDetail, int>> ();
-
-	public void SetInfo (byte tableNo, List<KeyValuePair<EMenuDetail,int>> list)
+	public void SetInfo (byte tableNo)
 	{
-		this.list.Clear ();
-
-		this.list = list;
 		this.tableNo = tableNo;
 		table.text = tableNo.ToString () + "번 테이블";
 	}
@@ -27,8 +22,7 @@ public class AdminTableMenu : SingletonMonobehaviour<AdminTableMenu> {
 
 	public void OnBillConfirm()
 	{
-		PageAdmin.Instance.ShowBillConfirm (tableNo, list);
-		OnClose ();
+        NetworkManager.Instance.Table_Order_Confirm_REQ(tableNo);
 	}
 
 	public void OnClose() {	gameObject.SetActive (false); }

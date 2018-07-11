@@ -14,20 +14,19 @@ public class UIBillDetail : MonoBehaviour
     int peopleCount = 0;
     int totalPrice = 0;
 
-    public void SetBill(string packingMenu, string packingCnt)
+    public void SetBill(string packing)
     {
         peopleCount = (int)Info.myInfo.peopleCnt;
 
         List<KeyValuePair<EMenuDetail, int>> listOrder = new List<KeyValuePair<EMenuDetail, int>>(); 
-        JsonData jsonMenu = JsonMapper.ToObject (packingMenu);
-        JsonData jsonCnt = JsonMapper.ToObject (packingCnt);
+        JsonData json = JsonMapper.ToObject (packing);
 
-        for (int i = 0; i < jsonMenu.Count; i++) {
-            string json1 = jsonMenu[i].ToString();
-            string json2 = jsonCnt[i].ToString();
+        for (int i = 0; i < json.Count; i++) 
+        {
+            int menu = int.Parse(json[i]["menu"].ToString());
+            int cnt = int.Parse(json[i]["cnt"].ToString());
 
-            EMenuDetail eType = (EMenuDetail)int.Parse (json1);
-            int cnt = int.Parse (json2);
+            EMenuDetail eType = (EMenuDetail)menu;
             listOrder.Add(new KeyValuePair<EMenuDetail, int>(eType, cnt));
         }
 
