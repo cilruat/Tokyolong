@@ -22,7 +22,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		case PROTOCOL.FAILED_NOT_NUMBER:	Failed (protocol_id);		break;
 		case PROTOCOL.LOGIN_ACK:			LoginACK (msg);				break;
 		case PROTOCOL.LOGIN_NOT:			LoginNOT (msg);				break;
-		case PROTOCOL.LOGOUT_ACK:			LogoutNOT (msg);			break;
+        case PROTOCOL.LOGOUT_ACK:			LogoutACK (msg);			break;
 		case PROTOCOL.LOGOUT_NOT:			LogoutNOT (msg);			break;
 		case PROTOCOL.ENTER_CUSTOMER_ACK:	EnterCustormerACK (msg);	break;
 		case PROTOCOL.ENTER_CUSTOMER_NOT:	EnterCustormerNOT (msg);	break;
@@ -71,16 +71,25 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		PageAdmin.Instance.SetLogin ((int)tableNo);
 	}
 
+    //Admin In 
+    void LogoutACK(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte ();
+        PageAdmin.Instance.SetLogout ((int)tableNo);
+    }
+
+    //Other Users 
 	void LogoutNOT(CPacket msg)
 	{
 		byte tableNo = msg.pop_byte ();
 
-        Info.SetLogoutOtherUser(tableNo);
-
-		if (SceneManager.GetActiveScene ().name == "Admin")
-			PageAdmin.Instance.SetLogout ((int)tableNo);
-		else
-			SceneChanger.LoadScene ("Login", PageBase.Instance.curBoardObj ());
+        if (tableNo == Info.TableNum)
+        {
+            Info.Init();
+            SceneChanger.LoadScene ("Login", PageBase.Instance.curBoardObj ());
+        }
+        else
+            Info.SetLogoutOtherUser(tableNo);
 	}
 
 	void EnterCustormerACK(CPacket msg)
@@ -212,7 +221,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     void RequestMusicRemoveACK(CPacket msg)
     {
         int removeReqMusicID = msg.pop_int32();
-        PageAdmin.Instance.RemoveRequestMusic(removeReqMusicID);
+        PageAdmin.Instance.RemoveElt(false, removeReqMusicID);
     }
 
     void RequestMusicRemoveNOT(CPacket msg)

@@ -294,5 +294,30 @@ namespace SP_Server
 
             return listSendMenu;
         }
+
+        public void RemoveUserData(int tableNo)
+        {
+            if (dictUserMenu.ContainsKey(tableNo) == false)
+                dictUserMenu.Remove(tableNo);
+
+            for (int i = listReqMusicInfo.Count -1; i >= 0; i--)
+            {
+                if (listReqMusicInfo[i].tableNo != tableNo)
+                    continue;
+
+                listReqMusicInfo.RemoveAt(i);
+            }
+
+            int removeUserIdx = -1;
+            for (int i = 0; i < listUser.Count; i++)
+            {
+                if (listUser[i].tableNum != tableNo)
+                    continue;
+
+                removeUserIdx = i;
+            }
+
+            listUser.RemoveAt(removeUserIdx);
+        }
     }
 }

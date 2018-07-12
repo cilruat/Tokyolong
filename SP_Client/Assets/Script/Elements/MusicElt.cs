@@ -13,6 +13,7 @@ public class MusicElt : MonoBehaviour
 
     RequestMusicInfo info = null;
     public int GetID() { return info.id; }
+    public byte GetTableNo() { return info.tableNo; }
 
     public void SetInfo(string packing)
     {

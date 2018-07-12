@@ -70,6 +70,15 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 		}
 
 		// 신청곡 내역에서도 해당 테이블 신청곡 지우기
+        for (int i = 0; i < listMusic.Count; i++) {
+            if (listMusic [i].GetTableNo () != tableNo)
+                continue;
+
+            int id = listMusic [i].GetID ();
+            RemoveElt (false, id);
+            --i;
+        }
+
 
 		StopUrgency (tableNo);
 
@@ -81,7 +90,7 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 			break;
 		}
 
-		if (objBillConfirm.activeSelf)
+		if (objBillConfirm.activeSelf)  
 			objBillConfirm.SetActive (false);
 	}
 
@@ -177,24 +186,6 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
         MusicElt elt = obj.GetComponent<MusicElt> ();
         elt.SetInfo (packing);
         listMusic.Add (elt);
-    }
-
-    public void RemoveRequestMusic(int id)
-    {
-        int removeIdx = -1;
-        for (int i = 0; i < listMusic.Count; i++)
-        {
-            if (id != listMusic[i].GetID())
-                continue;
-
-            removeIdx = i;
-        }
-
-        if (removeIdx == -1)
-            return;
-
-        DestroyImmediate(listMusic[removeIdx].gameObject);
-        listMusic.RemoveAt(removeIdx);
     }
 
 	public void RemoveElt(bool isOrder, int id)

@@ -38,6 +38,7 @@ public class OrderElt : MonoBehaviour {
         reqOrder = new RequestOrderMenu(id, tableNo, listSendMenu);
 
         this.id = reqOrder.id;
+        this.tableNo = reqOrder.tableNo;
 
 		order.text = desc;
 		objDetail.SetActive (true);

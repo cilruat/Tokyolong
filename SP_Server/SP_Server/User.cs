@@ -38,7 +38,7 @@ namespace SP_Server
         CUserToken token;                
         Dictionary<USER_STATE_TYPE, IUserState> user_states;
         
-        bool IsAdmin { get { return tableNum == 10000; } }
+        public bool IsAdmin { get { return tableNum == 10000; } }
         public int tableNum { get { return info.tableNum; } set { info.tableNum = value; } }
         public byte peopleCnt { get { return info.peopleCnt; } set { info.peopleCnt = value; } }
         public byte customerType { get { return info.customerType; } set { info.customerType = value; } }
@@ -62,6 +62,11 @@ namespace SP_Server
             this.user_states.Add(USER_STATE_TYPE.LOBBY, new UserLobbyState(this));
             this.user_states.Add(USER_STATE_TYPE.PLAY, new UserPlayState(this));
             change_state(USER_STATE_TYPE.LOBBY);
+        }
+
+        public void Init()
+        {
+            this.info = new UserInfo();
         }
 
         public void change_state(USER_STATE_TYPE state)
@@ -121,11 +126,6 @@ namespace SP_Server
             Array.Copy(msg.buffer, clone, msg.position);
 
             this.token.send(new ArraySegment<byte>(clone, 0, msg.position));
-        }
-
-        public void ClearOrder()
-        {
-            info = new UserInfo();
         }
     }
 }

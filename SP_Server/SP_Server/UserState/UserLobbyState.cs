@@ -73,16 +73,15 @@ namespace SP_Server.UserState
                         for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
                         {
                             User user = owner.mainFrm.ListUser[i];
-                            if (user.tableNum != tableNo)
+                            if (user.IsAdmin)
                                 continue;
-
-                            user.ClearOrder();
 
                             other_msg = CPacket.create((short)PROTOCOL.LOGOUT_NOT);
                             other_msg.push(tableNo);
                             user.send(other_msg);
-                            break;
                         }
+
+                        owner.mainFrm.RemoveUserData((int)tableNo);
 
                         send_msg = CPacket.create((short)PROTOCOL.LOGOUT_ACK);
                         send_msg.push(tableNo);

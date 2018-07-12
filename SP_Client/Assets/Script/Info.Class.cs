@@ -54,6 +54,19 @@ public partial class Info : MonoBehaviour
 	public static Dictionary<byte, UserInfo> dictUserInfo = new Dictionary<byte, UserInfo>(); // key : TableNo, value : UserInfo
     public static Dictionary<byte, UserChatInfo> dictUserChatInfo = new Dictionary<byte, UserChatInfo>(); // key : TableNo, value : UserChatInfo
 
+    public static void Init()
+    {
+        TableNum = 0;
+        PersonCnt = 0;
+        ECustomer = ECustomerType.MAN;
+        GamePlayCnt = 1;
+        GameDiscountWon = 0;
+
+        myInfo = null;
+        dictUserInfo.Clear();
+        dictUserChatInfo.Clear();
+    }
+
     // About User
     public static UserInfo GetUser(byte tableNo)
     {
