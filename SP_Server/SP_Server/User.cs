@@ -106,11 +106,12 @@ namespace SP_Server
             // Admin Send packet
             if(IsAdmin == false)
             {
-                CPacket admin_msg = CPacket.create((short)PROTOCOL.LOGOUT_NOT);
+                CPacket admin_msg = CPacket.create((short)PROTOCOL.LOGOUT_ACK);
                 admin_msg.push((byte)tableNum);
                 Frm.GetAdminUser().send(admin_msg);
-            }            
+            }
 
+            mainFrm.RemoveUserData(this.tableNum);
             mainFrm.remove_user(this);
 
             if (this.battle_room != null)

@@ -297,7 +297,7 @@ namespace SP_Server
 
         public void RemoveUserData(int tableNo)
         {
-            if (dictUserMenu.ContainsKey(tableNo) == false)
+            if (dictUserMenu.ContainsKey(tableNo))
                 dictUserMenu.Remove(tableNo);
 
             for (int i = listReqMusicInfo.Count -1; i >= 0; i--)
@@ -308,16 +308,19 @@ namespace SP_Server
                 listReqMusicInfo.RemoveAt(i);
             }
 
-            int removeUserIdx = -1;
+            int findIdx = -1;
             for (int i = 0; i < listUser.Count; i++)
             {
                 if (listUser[i].tableNum != tableNo)
                     continue;
 
-                removeUserIdx = i;
+                findIdx = i;
             }
 
-            listUser.RemoveAt(removeUserIdx);
+            if (findIdx == -1)
+                return;
+
+            listUser[findIdx].info = new UserInfo();
         }
     }
 }

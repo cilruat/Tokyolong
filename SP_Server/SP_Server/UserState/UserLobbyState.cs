@@ -104,7 +104,9 @@ namespace SP_Server.UserState
                         for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
                         {
                             User user = owner.mainFrm.ListUser[i];
-                            if (user.tableNum == 10000 || user.tableNum <= 0 ||user.info == null)
+                            if (user.tableNum == 10000 || 
+                                user.tableNum <= 0 || 
+                                user.info == null)
                                 continue;
 
                             listUserInfo.Add(user.info);

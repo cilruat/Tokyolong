@@ -85,6 +85,15 @@ public class UIChat : MonoBehaviour
 		return newElt;
 	}
 
+    public void RemoveChatTableElt(byte tableNo)
+    {
+        if (dictChatTable.ContainsKey(tableNo) == false)
+            return;
+
+        Destroy(dictChatTable[tableNo].gameObject);
+        dictChatTable.Remove(tableNo);
+    }
+
     public void OnChatSend()
     {
         if (input.text == string.Empty)

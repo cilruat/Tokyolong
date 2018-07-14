@@ -127,6 +127,16 @@ public partial class Info : MonoBehaviour
             return;
         
         dictUserChatInfo.Remove(tableNo);
+
+        GameObject objUIChat = UIManager.Instance.GetUI(eUI.eChat);
+        UIChat uiChat = objUIChat.GetComponent<UIChat>();
+        if (uiChat == null)
+        {
+            Debug.Log("UIChat Null..");
+            return;
+        }
+
+        uiChat.RemoveChatTableElt(tableNo);
     }
 
     // About Chat..

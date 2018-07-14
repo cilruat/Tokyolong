@@ -22,12 +22,13 @@ public class ChatElt : MonoBehaviour {
 
     [System.NonSerialized]public float eltHeight;
 
-    const float paddingLeft = 30f;
-    const float paddingRight = 5f;
-    const float paddingTop = 5f;
-    const float paddingBottom = 5f;
+    const float paddingLeft = 15f;
+    const float paddingRight = 6f;
+    const float paddingTop = 4f;
+    const float paddingBottom = 4f;
 
-    const float ELT_MIN_WIDTH = 200f;
+    const float ELT_MIN_WIDTH = 50f;
+    const float ELT_MAX_WIDTH = 200f;
 	const float ELT_MIN_HEIGHT = 30f;
 
     public void SetChatElt(UserInfo info, UserChat chat)
@@ -52,7 +53,7 @@ public class ChatElt : MonoBehaviour {
         current.textChatMsg.text = chat.chat;
 
 		RectTransform rtChatMsg = current.textChatMsg.GetComponent<RectTransform> ();
-        float chatWidth = Mathf.Min(ELT_MIN_WIDTH, current.textChatMsg.preferredWidth);
+        float chatWidth = Mathf.Max(ELT_MIN_WIDTH, Mathf.Min(ELT_MAX_WIDTH, current.textChatMsg.preferredWidth));
         rtChatMsg.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, chatWidth);
 
         float chatHeight = Mathf.Max (ELT_MIN_HEIGHT, current.textChatMsg.preferredHeight);
