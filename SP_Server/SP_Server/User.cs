@@ -37,7 +37,9 @@ namespace SP_Server
         
         CUserToken token;                
         Dictionary<USER_STATE_TYPE, IUserState> user_states;
-        
+
+        public readonly DB db = null;
+
         public bool IsAdmin { get { return tableNum == 10000; } }
         public int tableNum { get { return info.tableNum; } set { info.tableNum = value; } }
         public byte peopleCnt { get { return info.peopleCnt; } set { info.peopleCnt = value; } }
@@ -55,6 +57,8 @@ namespace SP_Server
 
             this.token = token;
             this.token.set_peer(this);
+
+            this.db = new DB(this);
 
             this.mainFrm = frm;
 

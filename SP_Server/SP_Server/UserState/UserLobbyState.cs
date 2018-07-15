@@ -37,10 +37,10 @@ namespace SP_Server.UserState
                 switch (protocol)
                 {
                     case PROTOCOL.LOGIN_REQ:
-                        int tableNum = 0;                        
+                        int tableNum = 0;
                         string pop_string = msg.pop_string();
                         if (pop_string == "admin")
-                        {                            
+                        {
                             tableNum = 10000;
                             Frm.SetAdminUser(owner);
                         }
@@ -55,12 +55,21 @@ namespace SP_Server.UserState
                             tableNum = int.Parse(pop_string);
 
                             // Admin Send packet
-                            other_msg = CPacket.create((short)PROTOCOL.LOGIN_NOT);
-                            other_msg.push(tableNum);                            
-                            Frm.GetAdminUser().send(other_msg);
-                        }                            
+                            if(Frm.GetAdminUser() != null)
+                            {
+                                other_msg = CPacket.create((short)PROTOCOL.LOGIN_NOT);
+                                other_msg.push(tableNum);
+                                Frm.GetAdminUser().send(other_msg);
+                            }                            
+                        }
 
-                        owner.tableNum = tableNum;                        
+                        owner.tableNum = tableNum;
+
+                        if (owner.db.Login(tableNum) == false)
+                        {
+                            send_msg = CPacket.create((short)PROTOCOL.FAILED_DB);
+                            break;
+                        }
 
                         send_msg = CPacket.create((short)PROTOCOL.LOGIN_ACK);
                         send_msg.push(pop_string);    
@@ -302,6 +311,8 @@ namespace SP_Server.UserState
                         stackFrame.GetMethod().Name, stackFrame.GetFileName(),
                         stackFrame.GetFileLineNumber().ToString() });
             }
+
+            owner.db.Close();
         }
 
         void send(CPacket msg)

@@ -23,9 +23,9 @@ namespace SP_Server
         protected bool m_bAutoScroll = true;        
 
         protected FileStream m_sFileStream;
-        protected StreamWriter m_sStreamWrite;                        
+        protected StreamWriter m_sStreamWrite;        
 
-        protected bool m_bStartClose = false;
+        protected bool m_bStartClose = false;        
 
         CNetworkService service = null;
         private static User adminUser;
@@ -81,7 +81,7 @@ namespace SP_Server
                 ListUser.Add(user);
             }
 
-            WriteLog("[connect cnt: {0}] any client Connected!!", get_concurrent_user_count().ToString());
+            //WriteLog("[connect cnt: {0}] any client Connected!!", get_concurrent_user_count().ToString());
         }
 
         public void remove_user(User user)
@@ -105,10 +105,12 @@ namespace SP_Server
             switch (str)
             {
                 case "print_user_list":
-                    WriteLog("[" + GetAdminUser().tableNum + "]" + GetAdminUser().tableNum.ToString());
+                    if(adminUser != null)
+                        WriteLog("[TableNo: " + adminUser.tableNum + "]");
+
                     for (int i = 0; i < ListUser.Count; i++)
-                        WriteLog("[" + ListUser[i].tableNum + "]" + ListUser[i].tableNum.ToString());
-                    break;
+                        WriteLog("[TableNo: " + ListUser[i].tableNum + "]");
+                    break;                
                 default:
                     MessageBox.Show("아직 기능없어잉~ ㅋㅋ");
                     break;
@@ -155,7 +157,14 @@ namespace SP_Server
             listViewItem.SubItems.Add(strFile);
             listViewItem.SubItems.Add(Convert.ToString(DateTime.Now));
 
-            this.listviewLog.Items.Add(listViewItem);
+            try
+            {
+                this.listviewLog.Items.Add(listViewItem);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
             
             {
                 strDesc = strDesc.Replace(",", ".");  // , 는 csv에서 구분문자이므로 못 사용하게 막음
