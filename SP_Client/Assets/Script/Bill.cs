@@ -208,7 +208,7 @@ public class Bill : MonoBehaviour {
 		}
 
 		JsonData json = JsonMapper.ToJson (list);
-		NetworkManager.Instance.Order_REQ (json.ToString ());
+        NetworkManager.Instance.Order_REQ (json.ToString ());
 
 		_Clear ();
 	}

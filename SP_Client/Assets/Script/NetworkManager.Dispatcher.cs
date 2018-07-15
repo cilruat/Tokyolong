@@ -37,12 +37,14 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		case PROTOCOL.GAME_DISCOUNT_NOT:	GameDiscountNOT (msg);		break;
 		case PROTOCOL.REQUEST_MUSIC_ACK:	RequestMusicACK (msg);		break;
 		case PROTOCOL.REQUEST_MUSIC_NOT:	RequestMusicNOT (msg); 		break;
-		case PROTOCOL.REQUEST_MUSIC_LIST_ACK: RequestMusicListACK (msg); break;
+		case PROTOCOL.REQUEST_MUSIC_LIST_ACK: RequestMusicListACK (msg);    break;
         case PROTOCOL.REQUEST_MUSIC_REMOVE_ACK: RequestMusicRemoveACK(msg); break;
         case PROTOCOL.REQUEST_MUSIC_REMOVE_NOT: RequestMusicRemoveNOT(msg); break;
-        case PROTOCOL.ORDER_CONFIRM_ACK:    OrderConfirmACK(msg);       break;
-        case PROTOCOL.ORDER_CONFIRM_NOT:    OrderConfirmNOT(msg);       break;
-        case PROTOCOL.TABLE_ORDER_CONFIRM_ACK: TableOrderConfirmACK(msg); break;
+        case PROTOCOL.ORDER_CONFIRM_ACK:        OrderConfirmACK(msg);       break;
+        case PROTOCOL.ORDER_CONFIRM_NOT:        OrderConfirmNOT(msg);       break;
+        case PROTOCOL.TABLE_ORDER_CONFIRM_ACK:  TableOrderConfirmACK(msg);  break;
+        case PROTOCOL.TABLE_ORDER_INPUT_ACK:    TableOrderInputACK(msg);    break;
+        case PROTOCOL.TABLE_ORDER_INPUT_NOT:    TableOrderInputNOT(msg);    break;
 		}
 	}
 
@@ -253,5 +255,15 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         string packing = msg.pop_string();
         AdminTableMenu.Instance.OnClose();
         PageAdmin.Instance.ShowBillConfirm (tableNo, packing);
+    }
+
+    void TableOrderInputACK(CPacket msg)
+    {
+        AdminTableOrderInput.Instance.OnCompleteTableOrderInput();
+    }
+
+    void TableOrderInputNOT(CPacket msg)
+    {
+        UIManager.Instance.ShowOrderAlarm();
     }
 }

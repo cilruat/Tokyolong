@@ -37,6 +37,18 @@ public enum EMenuDetail : int
 
 public partial class Info : MonoBehaviour {
 
+    public static Dictionary<EMenuType, List<EMenuDetail>> dictStaticMenu = new Dictionary<EMenuType, List<EMenuDetail>>()
+    {
+        { EMenuType.eParch,     new List<EMenuDetail>() { EMenuDetail.eNakgiBBokum } },
+        { EMenuType.eFruit,     new List<EMenuDetail>() { EMenuDetail.eGawilModum } },
+        { EMenuType.eFried,     new List<EMenuDetail>() { EMenuDetail.eSaeuTuikim } },
+        { EMenuType.eSoup,      new List<EMenuDetail>() { EMenuDetail.eNagasaki } },
+        { EMenuType.eSpecial,   new List<EMenuDetail>() { EMenuDetail.eKrimSpageti } },
+        { EMenuType.eCook,      new List<EMenuDetail>() { EMenuDetail.eGonggiBob } },
+        { EMenuType.eAlcohol,   new List<EMenuDetail>() { EMenuDetail.eSoju } },
+        { EMenuType.eDrink,     new List<EMenuDetail>() { EMenuDetail.eCola } },
+    };
+
 	public static void MenuTitle(EMenuType eType, ref string title, ref string subDesc)
 	{		
 		switch (eType) {

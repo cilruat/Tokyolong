@@ -59,6 +59,9 @@ namespace SP_Server
         ORDER_CONFIRM_NOT,
         TABLE_ORDER_CONFIRM_REQ,
         TABLE_ORDER_CONFIRM_ACK,
+        TABLE_ORDER_INPUT_REQ,
+        TABLE_ORDER_INPUT_ACK,
+        TABLE_ORDER_INPUT_NOT,
         //-------------------------------------
         // 게임 프로토콜.
         //-------------------------------------        

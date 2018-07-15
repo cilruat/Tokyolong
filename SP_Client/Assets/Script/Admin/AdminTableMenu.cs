@@ -25,5 +25,11 @@ public class AdminTableMenu : SingletonMonobehaviour<AdminTableMenu> {
         NetworkManager.Instance.Table_Order_Confirm_REQ(tableNo);
 	}
 
+    public void OnTableOrder()
+    {
+        PageAdmin.Instance.ShowTableOrder(tableNo);
+        OnClose();
+    }
+
 	public void OnClose() {	gameObject.SetActive (false); }
 }

@@ -19,6 +19,7 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 	public GameObject objTableMenu;
 	public GameObject objBillConfirm;
 	public GameObject objOrderDetail;
+    public GameObject objTableOrder;
 
 	UITween tweenUrgency = null;
 	List<TableElt> listTable = new List<TableElt>();
@@ -255,6 +256,11 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
         AdminOrderDetail.Instance.SetInfo (reqOrder);
 	}
 
+    public void ShowTableOrder(byte tableNo)
+    {
+        objTableOrder.SetActive (true);
+        AdminTableOrderInput.Instance.SetTable(tableNo);
+    }
 
 	void Update()
 	{
