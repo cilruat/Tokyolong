@@ -9,6 +9,7 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 	const int TABLE_NUM = 30;
 	const int MAX_ID = 1000;
 
+	public GameObject page;
 	public RectTransform rtScrollTable;
 	public RectTransform rtScrollOrder;
 	public RectTransform rtScrollMusic;

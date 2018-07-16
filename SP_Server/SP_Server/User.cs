@@ -58,7 +58,7 @@ namespace SP_Server
             this.token = token;
             this.token.set_peer(this);
 
-            this.db = new DB(this);
+            // this.db = new DB(this);
 
             this.mainFrm = frm;
 

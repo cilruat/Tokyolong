@@ -7,7 +7,7 @@ namespace SP_Server
 {
     public class DB
     {
-        readonly private User m_user = null;
+        /*readonly private User m_user = null;
         protected SqlConnection m_cnnDB;
 
         public DB(User user)
@@ -66,6 +66,6 @@ namespace SP_Server
             }
 
             return true;
-        }
+        }*/
     }
 }

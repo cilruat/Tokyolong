@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public partial class Info : MonoBehaviour {
 
@@ -27,5 +28,10 @@ public partial class Info : MonoBehaviour {
 	public static string MakeMoneyString(int price)
 	{
 		return "￦ " + price.ToString ("N0");
+	}
+
+	public static bool isCheckScene(string scene)
+	{
+		return SceneManager.GetActiveScene ().name == scene;
 	}
 }

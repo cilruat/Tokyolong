@@ -63,16 +63,10 @@ namespace SP_Server.UserState
                             }                            
                         }
 
-                        owner.tableNum = tableNum;
-
-                        if (owner.db.Login(tableNum) == false)
-                        {
-                            send_msg = CPacket.create((short)PROTOCOL.FAILED_DB);
-                            break;
-                        }
+                        owner.tableNum = tableNum;                        
 
                         send_msg = CPacket.create((short)PROTOCOL.LOGIN_ACK);
-                        send_msg.push(pop_string);    
+                        send_msg.push(pop_string);  
 
                         break;
                     case PROTOCOL.LOGOUT_REQ:
@@ -140,9 +134,12 @@ namespace SP_Server.UserState
                         tableNo = msg.pop_byte();
 
                         // Admin Send packet
-                        other_msg = CPacket.create((short)PROTOCOL.WAITER_CALL_NOT);
-                        other_msg.push(tableNo);                        
-                        Frm.GetAdminUser().send(other_msg);
+                        if (Frm.GetAdminUser() != null)
+                        {
+                            other_msg = CPacket.create((short)PROTOCOL.WAITER_CALL_NOT);
+                            other_msg.push(tableNo);
+                            Frm.GetAdminUser().send(other_msg);
+                        }
 
                         send_msg = CPacket.create((short)PROTOCOL.WAITER_CALL_ACK);                        
                         break;
@@ -151,12 +148,15 @@ namespace SP_Server.UserState
                         string order = msg.pop_string();
 
                         // Admin Send packet
-                        other_msg = CPacket.create((short)PROTOCOL.ORDER_NOT);
-                        owner.mainFrm.OrderID++;
-                        other_msg.push(owner.mainFrm.OrderID);
-                        other_msg.push(tableNo);
-                        other_msg.push(order);
-                        Frm.GetAdminUser().send(other_msg);
+                        if (Frm.GetAdminUser() != null)
+                        {
+                            other_msg = CPacket.create((short)PROTOCOL.ORDER_NOT);
+                            owner.mainFrm.OrderID++;
+                            other_msg.push(owner.mainFrm.OrderID);
+                            other_msg.push(tableNo);
+                            other_msg.push(order);
+                            Frm.GetAdminUser().send(other_msg);
+                        }
 
                         send_msg = CPacket.create((short)PROTOCOL.ORDER_ACK);                        
                         break;
@@ -206,10 +206,13 @@ namespace SP_Server.UserState
                         short discount = msg.pop_int16();
 
                         // Admin Send packet
-                        other_msg = CPacket.create((short)PROTOCOL.GAME_DISCOUNT_NOT);
-                        other_msg.push(tableNo);
-                        other_msg.push(discount);
-                        Frm.GetAdminUser().send(other_msg);
+                        if (Frm.GetAdminUser() != null)
+                        {
+                            other_msg = CPacket.create((short)PROTOCOL.GAME_DISCOUNT_NOT);
+                            other_msg.push(tableNo);
+                            other_msg.push(discount);
+                            Frm.GetAdminUser().send(other_msg);
+                        }
 
                         send_msg = CPacket.create((short)PROTOCOL.GAME_DISCOUNT_ACK);
 
@@ -232,9 +235,12 @@ namespace SP_Server.UserState
                         JsonData reqMusicJson = JsonMapper.ToJson(reqMusicInfo);
 
                         // 관리자에게 전달
-                        other_msg = CPacket.create((short)PROTOCOL.REQUEST_MUSIC_NOT);
-                        other_msg.push(reqMusicJson.ToString());
-                        Frm.GetAdminUser().send(other_msg);
+                        if (Frm.GetAdminUser() != null)
+                        {
+                            other_msg = CPacket.create((short)PROTOCOL.REQUEST_MUSIC_NOT);
+                            other_msg.push(reqMusicJson.ToString());
+                            Frm.GetAdminUser().send(other_msg);
+                        }
 
                         send_msg = CPacket.create((short)PROTOCOL.REQUEST_MUSIC_ACK);
                         send_msg.push(owner.mainFrm.listReqMusicInfo.Count);
@@ -312,7 +318,7 @@ namespace SP_Server.UserState
                         stackFrame.GetFileLineNumber().ToString() });
             }
 
-            owner.db.Close();
+            //owner.db.Close();
         }
 
         void send(CPacket msg)

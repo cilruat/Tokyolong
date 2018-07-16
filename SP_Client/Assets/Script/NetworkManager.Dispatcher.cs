@@ -182,9 +182,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 	{
 		Info.GameDiscountWon = -1;
 
-		if (SceneManager.GetActiveScene ().name == "TokyoLive")
+		if (Info.isCheckScene ("TokyoLive"))
 			PageTokyoLive.Instance.ReturnHome ();
-		else if (SceneManager.GetActiveScene ().name == "PicturePuzzle")
+		else if (Info.isCheckScene ("PicturePuzzle"))
 			PagePicturePuzzle.Instance.ReturnHome ();
 	}
 

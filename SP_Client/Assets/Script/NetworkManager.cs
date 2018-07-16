@@ -55,7 +55,12 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		case NETWORK_EVENT.connected:			
 			((PageLogin)PageBase.Instance).SuccessConnect ();
 			break;
-        case NETWORK_EVENT.disconnected:
+		case NETWORK_EVENT.disconnected:
+			GameObject obj = PageBase.Instance.curBoardObj ();
+			if (Info.isCheckScene ("Admin"))
+				obj = PageAdmin.Instance.page;
+
+			SceneChanger.LoadScene ("Login", obj);
             break;
         }
     }		   
@@ -63,9 +68,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     void Update()
     {
         if (!this.freenet.is_connected())
-        {
             return;
-        }
 
         while (this.sending_queue.Count > 0)
         {
@@ -77,9 +80,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     public bool is_connected()
     {
         if (this.freenet == null)
-        {
             return false;
-        }
 
         return this.freenet.is_connected();
     }

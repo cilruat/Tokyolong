@@ -25,8 +25,6 @@ public class PageLogin : PageBase {
 		base.acFinal = _EnterCustomer;
 		base.acFinalIdx = 4;
 
-		Debug.Log (Application.dataPath);
-
         string path = Application.dataPath;
         int lastIdx = path.LastIndexOf(@"/");
         path = path.Substring(0, lastIdx) + @"\Info\tableNo.txt";
@@ -46,41 +44,43 @@ public class PageLogin : PageBase {
             IP = serverInfo[0];
             PORT = serverInfo[1];
 
-            _Connect ();
+			_ShowLoginBox ();
         }
 	}
 
-	void _Connect()
-	{
-		if (NetworkManager.Instance.is_connected() == false) {
-			txtSuccess.text = "서버에 접속중입니다";
-            NetworkManager.Instance.connect (IP, PORT);
-		} else
-			_ShowLoginBox ();
+	void _ShowLoginBox()
+	{		
+		UITweenAlpha.Start (objLoginBox, 1f, TWParam.New (1f).Curve (TWCurve.CurveLevel2));
 	}
 
     void _EnterCustomer()
     {
         NetworkManager.Instance. EnterCostomer_REQ(howMany, (byte)eType);
-    }
-
-	public void SuccessConnect()
-	{
-		txtSuccess.text = "정상적으로 서버에 접속하였습니다\n" + "테이블 넘버: " + tableNo;
-		_ShowLoginBox ();
-	}	
-
-	void _ShowLoginBox()
-	{
-		UITweenAlpha.Start (txtSuccess.gameObject, 0f, TWParam.New (1f, 1f).Curve (TWCurve.CurveLevel2));
-		UITweenAlpha.Start (objLoginBox, 1f, TWParam.New (1f, 1.5f).Curve (TWCurve.CurveLevel2));
-	}
+    }		
 
 	public void OnLogin()
 	{
+		if (NetworkManager.Instance.is_connected() == false) {			
+			NetworkManager.Instance.connect (IP, PORT);
+			return;
+		}
+	}
+
+	public void SuccessConnect()
+	{
+		string desc = "정상적으로 서버에 접속하였습니다\n" + "테이블 넘버: " + tableNo;
+		SystemMessage.Instance.Add (desc);
+
+		StartCoroutine (_SendLoginREQ ());
+	}
+
+	IEnumerator _SendLoginREQ()
+	{
+		yield return new WaitForSeconds (.5f);
+
 		if (string.IsNullOrEmpty (tableNo) == true) {
 			SystemMessage.Instance.Add ("테이블 넘버가 셋팅되지 않았습니다");
-			return;
+			yield break;
 		}
 
 		NetworkManager.Instance.Login_REQ (tableNo);
