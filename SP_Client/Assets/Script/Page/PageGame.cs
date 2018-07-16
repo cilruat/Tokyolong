@@ -11,59 +11,15 @@ public enum ESlotType
 	eGame,
 }
 
-public class PageGame : PageBase {
-
-	public enum EDiscount
-	{
-		e500won,
-		e1000won
-	}
-
-	public enum EGameType
-	{
-		eWinWaiter,
-		eTokyoLive,
-		eBrainSurvival,
-		eBoardGame
-	}
-
-	enum EWaiterEasyGame
-	{
-		eRockPaperScissors,
-		eSniffling,
-		eFrontBack,
-		eLieDetector
-	}
-
-	enum EWaiterHardGame
-	{
-		e369,
-		eSpeakingWords,
-		Chopsticks,
-		Dice,
-		TraditionalPlay
-	}
-
-	enum EBrainSurvival
-	{
-		eLadderRiding,
-		eFindNumber
-	}
-
-	enum EBoardGame
-	{
-		PunchKing,
-		HammerKing,
-		CrocodileRoulette,
-		TurnPlate,
-		RussianRoulette
-	}
+public partial class PageGame : PageBase {
 		
 	public CanvasGroup[] cgBoards;
 	public Text[] txtPlayCnt;
 	public GameObject[] objStartDesc;
 	public GameObject objCallMessage;
 	public GameObject objGameLoading;
+	public RectTransform[] rtDiscount;
+	public RectTransform[] rtGameTypes;
 	public RectTransform[] rtWinWaiterEasyGames;
 	public RectTransform[] rtWinWaiterHardGames;
 	public RectTransform[] rtBrainSurvival;
@@ -79,8 +35,14 @@ public class PageGame : PageBase {
 	{
 		base.boards = cgBoards;
 		base.Awake ();
-		_RefreshPlayCnt ();
+
 		Info.GameDiscountWon = -1;
+	}
+
+	void Start()
+	{
+		_RefreshList ();
+		_RefreshPlayCnt ();
 	}
 
 	IEnumerator _StartSlot()
@@ -124,7 +86,15 @@ public class PageGame : PageBase {
 
 	void _SetActiveAllRtElts(bool active)
 	{
-		RectTransform[] rt = _AllRtElts ();
+		RectTransform[] rt = rtDiscount;
+		for (int i = 0; i < rt.Length; i++)
+			rt [i].gameObject.SetActive (active);
+
+		rt = rtGameTypes;
+		for (int i = 0; i < rt.Length; i++)
+			rt [i].gameObject.SetActive (active);
+
+		rt = _AllRtElts ();
 		for (int i = 0; i < rt.Length; i++)
 			rt [i].gameObject.SetActive (active);
 	}
@@ -284,11 +254,11 @@ public class PageGame : PageBase {
 			sceneName = "TokyoLive";
 			if (curGameType == (int)EGameType.eBrainSurvival) {
 				switch ((EBrainSurvival)curGame) {
-				case EBrainSurvival.eLadderRiding:
-					sceneName = "LadderRiding";
+				case EBrainSurvival.ePicturePuzzle:
+					sceneName = "PicturePuzzle";
 					break;
-				case EBrainSurvival.eFindNumber:
-					sceneName = "FindNumber";
+				case EBrainSurvival.ePairCards:
+					sceneName = "PairCards";
 					break;
 				}
 			}
@@ -302,8 +272,14 @@ public class PageGame : PageBase {
 			objCallMessage.SetActive (false);
 
 			_SetActiveAllRtElts (false);
+			_SetUnfinishGame ((EGameType)curGameType, curGame, (EDiscount)Info.GameDiscountWon);
+
+			Info.GameDiscountWon = -1;
 			OnPrev ();
 		}
+
+		curGameType = -1;
+		curGame = -1;
 	}
 
 	public EGameType SelectGameType() { return (EGameType)curGameType; }

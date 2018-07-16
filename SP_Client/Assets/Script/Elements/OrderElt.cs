@@ -52,9 +52,9 @@ public class OrderElt : MonoBehaviour {
 		table.text = tableNo.ToString ();
 
 		string desc = "";
-		if (discount == (short)PageGame.EDiscount.e500won)
+		if (discount == (short)EDiscount.e500won)
 			desc = "-500원 할인";
-		else if (discount == (short)PageGame.EDiscount.e1000won)
+		else if (discount == (short)EDiscount.e1000won)
 			desc = "-1000원 할인";
 
 		order.text = "게임 성공 (" + desc + ")";
