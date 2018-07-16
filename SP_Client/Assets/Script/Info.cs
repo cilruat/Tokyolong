@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public partial class Info : MonoBehaviour {
 
@@ -10,8 +11,8 @@ public partial class Info : MonoBehaviour {
     public static ECustomerType ECustomer = ECustomerType.MAN;
 
 	// Game Info
-	public static byte GamePlayCnt = 1;
-	public static short GameDiscountWon = 0;
+	public static byte GamePlayCnt = 5;
+	public static short GameDiscountWon = -1;
 
 	public static void AnimateChangeObj(CanvasGroup cur, CanvasGroup next, UnityEvent nextCallback = null)
     {
@@ -27,5 +28,10 @@ public partial class Info : MonoBehaviour {
 	public static string MakeMoneyString(int price)
 	{
 		return "￦ " + price.ToString ("N0");
+	}
+
+	public static bool isCheckScene(string scene)
+	{
+		return SceneManager.GetActiveScene ().name == scene;
 	}
 }

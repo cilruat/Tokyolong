@@ -9,6 +9,9 @@ public enum ECustomerType : byte
 	COUPLE,
 }
 
+/// <summary>
+/// menu
+/// </summary>
 public enum EMenuType : int
 {
 	eNone = -1,
@@ -33,6 +36,55 @@ public enum EMenuDetail : int
 	eGonggiBob = 5,
 	eSoju,
 	eCola,
+}
+
+/// <summary>
+/// game
+/// </summary>
+public enum EDiscount
+{
+	e500won,
+	e1000won
+}
+
+public enum EGameType
+{
+	eWinWaiter,
+	eTokyoLive,
+	eBrainSurvival,
+	eBoardGame
+}
+
+public enum EWaiterEasyGame
+{
+	eRockPaperScissors,
+	eSniffling,
+	eFrontBack,
+	eLieDetector
+}
+
+public enum EWaiterHardGame
+{
+	e369,
+	eSpeakingWords,
+	Chopsticks,
+	Dice,
+	TraditionalPlay
+}
+
+public enum EBrainSurvival
+{
+	ePicturePuzzle,
+	ePairCards
+}
+
+public enum EBoardGame
+{
+	PunchKing,
+	HammerKing,
+	CrocodileRoulette,
+	TurnPlate,
+	RussianRoulette
 }
 
 public partial class Info : MonoBehaviour {
@@ -94,5 +146,52 @@ public partial class Info : MonoBehaviour {
 		case EMenuDetail.eCola:				price = 2000;		break;
 		}
 		return price;
+	}
+
+	public static string GameTitle(EGameType eType)
+	{
+		string title = "";
+		switch (eType) {
+		case EGameType.eWinWaiter:		title = "직원을 이겨라";		break;
+		case EGameType.eTokyoLive:		title = "도쿄라이브";			break;
+		case EGameType.eBrainSurvival:		title = "브레인서바이벌";	break;
+		case EGameType.eBoardGame:		title = "이거실화?보드게임";	break;
+		}
+		return title;
+	}
+
+	public static string GameName(EGameType eType, int game, EDiscount eDis)
+	{
+		string name = "";
+		switch (eType) {
+		case EGameType.eWinWaiter:
+			if (eDis == EDiscount.e500won) {
+				switch ((EWaiterEasyGame)game) {
+				case EWaiterEasyGame.eRockPaperScissors:	name = "가위바위보";	break;
+				case EWaiterEasyGame.eSniffling:			name = "홀짝";			break;
+				case EWaiterEasyGame.eFrontBack:			name = "앞뒤";			break;
+				case EWaiterEasyGame.eLieDetector:			name = "거짓말탐지기";	break;
+				}
+			} else if (eDis == EDiscount.e1000won) {
+				switch ((EWaiterHardGame)game) {
+				case EWaiterHardGame.e369:				name = "369";					break;
+				case EWaiterHardGame.eSpeakingWords:	name = "탕수육";				break;
+				case EWaiterHardGame.Chopsticks:		name = "젓가락 뽑기";			break;
+				case EWaiterHardGame.Dice:				name = "주사위 합이 10이상";	break;
+				case EWaiterHardGame.TraditionalPlay:	name = "모&윷을 뽑아라";		break;
+				}
+			}
+			break;
+		case EGameType.eBoardGame:
+			switch ((EBoardGame)game) {
+			case EBoardGame.PunchKing:			name = "펀치킹";				break;
+			case EBoardGame.HammerKing:			name = "해머킹";				break;
+			case EBoardGame.CrocodileRoulette:	name = "악어룰렛";				break;
+			case EBoardGame.TurnPlate:			name = "돌려 돌려 돌림판!";		break;
+			case EBoardGame.RussianRoulette:	name = "러시안 룰렛";			break;
+			}
+			break;
+		}
+		return name;
 	}
 }

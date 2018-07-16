@@ -59,7 +59,7 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 	}
 
     const int EASY_MODE = 3;
-    const int HARD_MODE = 5;
+    const int HARD_MODE = 4;
     const int LIMIT_TIME = 60;
 
 	public Text txtCountDown;
