@@ -291,7 +291,12 @@ namespace SP_Server
             if (containIdx == -1)
                 listSendMenu.Add(sendMenu);
             else
+            {
+
                 listSendMenu[containIdx].cnt += sendMenu.cnt;
+                if(listSendMenu[containIdx].cnt <= 0)
+                    listSendMenu.RemoveAt(containIdx);
+            }
         }
 
         public List<SendMenu> GetOrder(int tableNo)

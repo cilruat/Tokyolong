@@ -4,26 +4,23 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class BillElt : MonoBehaviour {
+public class BillConfirmElt : MonoBehaviour {
 
 	public Text txtName;
 	public Text txtVal;
 	public Text txtPrice;
 
 	EMenuDetail eType;
+    int oriValue = 0;
 	int value = 0;
 	int price = 0;
-
-	public void SetInfo(EMenuDetail eType)
-	{
-		SetInfo (eType, 1);
-	}
 
 	public void SetInfo(EMenuDetail eType, int value)
 	{
 		this.eType = eType;
 		txtName.text = Info.MenuName (eType);
 
+        this.oriValue = value;
 		this.value = value;
 		txtVal.text = value.ToString ();
 
@@ -32,11 +29,8 @@ public class BillElt : MonoBehaviour {
 
 	public void OnChangeValue(bool isAdd)
 	{
-		value = isAdd ? value + 1 : value - 1;
-		if (value < 1)
-			value = 1;
-
-		txtVal.text = value.ToString ();
+        value = Mathf.Max(0, isAdd ? value + 1 : value - 1);
+        txtVal.text = value.ToString ();
 		_RefreshPrice ();
 	}
 
@@ -45,16 +39,13 @@ public class BillElt : MonoBehaviour {
 		price = Info.MenuPrice (eType) * value;
 		txtPrice.text = Info.MakeMoneyString (price);
 
-        if (Info.isCheckScene("Admin") == false)
-        {
-            if (PageBase.Instance.GetType() == typeof(PageOrder))
-                ((PageOrder)PageBase.Instance).bill.CalcTotalPrice();
-        }
+        AdminBillConfirm.Instance.MenuChange(eType, value, oriValue);
 	}
 
 	public void OnDelete()
 	{
-		((PageOrder)PageBase.Instance).bill.RemoveElt (eType);
+        value = 0;
+        _RefreshPrice();
 	}
 
 	public int GetCount() {	return value; }

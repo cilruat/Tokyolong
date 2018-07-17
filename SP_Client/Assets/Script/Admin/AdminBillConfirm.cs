@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class AdminBillConfirm : SingletonMonobehaviour<AdminBillConfirm> {
 
 	public Text table;
-	public Bill bill;
+	public AdminBill bill;
+    public AdminBillConfirmChange billChange;
+    public GameObject objComplete;
 
 	byte tableNo = 0;
 
@@ -15,6 +17,7 @@ public class AdminBillConfirm : SingletonMonobehaviour<AdminBillConfirm> {
 		this.tableNo = tableNo;
 		table.text = tableNo.ToString () + "번 테이블";
 		bill.CopyBill (list);
+        billChange.SetTable(tableNo);
 	}
 
 	public void OnLogout()
@@ -22,5 +25,34 @@ public class AdminBillConfirm : SingletonMonobehaviour<AdminBillConfirm> {
 		NetworkManager.Instance.Logout_REQ(tableNo);
 	}
 
-	public void OnClose() {	gameObject.SetActive (false); }
+    public void MenuChange(EMenuDetail type, int value, int oriValue)
+    {
+        bill.CalcTotalPrice();
+        billChange.SetMenu(type, value, oriValue);
+    }
+
+    [System.NonSerialized]public bool waitComplete = false;
+    public void OnCompleteTableOrderInput()
+    {
+        UITweenAlpha.Start (objComplete.gameObject, 0f, 1f, TWParam.New (.4f).Curve (TWCurve.CurveLevel2));
+        UITweenScale.Start (objComplete.gameObject, 1.2f, 1f, TWParam.New (.3f).Curve (TWCurve.Bounce));
+        StartCoroutine(_DelayComplete());
+    }
+
+    IEnumerator _DelayComplete()
+    {
+        yield return new WaitForSeconds (1f);
+
+        waitComplete = false;
+        objComplete.SetActive(false);
+        OnClose();
+    }
+
+    public void OnClose() 
+    {
+        if (waitComplete)
+            return;
+
+        gameObject.SetActive (false); 
+    }
 }

@@ -259,7 +259,11 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
     void TableOrderInputACK(CPacket msg)
     {
-        AdminTableOrderInput.Instance.OnCompleteTableOrderInput();
+        if(PageAdmin.Instance.objTableOrder.activeSelf)
+            AdminTableOrderInput.Instance.OnCompleteTableOrderInput();
+
+        if(PageAdmin.Instance.objBillConfirm.activeSelf)
+            AdminBillConfirm.Instance.OnCompleteTableOrderInput();
     }
 
     void TableOrderInputNOT(CPacket msg)
