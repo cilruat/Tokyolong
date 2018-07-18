@@ -105,10 +105,6 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 
     void _Init()
     {
-        ////////////////
-        Info.GameDiscountWon = (short)(UnityEngine.Random.Range(0, 2) == 0 ? EASY_MODE : HARD_MODE);
-        ////////////////
-
 		start = false;
 		end = false;
 
@@ -119,7 +115,7 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 				Destroy (child.gameObject);
 		}
 
-        mode = Info.GameDiscountWon;
+		mode = Info.GameDiscountWon == 0 ? EASY_MODE : HARD_MODE;
         array = new int[mode, mode];
 
 		float cellSize = img.rectTransform.rect.height / (float)mode;

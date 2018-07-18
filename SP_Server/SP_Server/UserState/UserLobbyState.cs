@@ -147,6 +147,9 @@ namespace SP_Server.UserState
                         tableNo = msg.pop_byte();
                         string order = msg.pop_string();
 
+                        ++Frm.JACKPOT_GAME_CNT;
+                        ++owner.gameInfo.gameCnt;                        
+
                         // Admin Send packet
                         if (Frm.GetAdminUser() != null)
                         {
@@ -158,7 +161,8 @@ namespace SP_Server.UserState
                             Frm.GetAdminUser().send(other_msg);
                         }
 
-                        send_msg = CPacket.create((short)PROTOCOL.ORDER_ACK);                        
+                        send_msg = CPacket.create((short)PROTOCOL.ORDER_ACK);
+                        send_msg.push(owner.gameInfo.gameCnt);
                         break;
                     case PROTOCOL.CHAT_REQ:
                         tableNo = msg.pop_byte();
@@ -328,6 +332,45 @@ namespace SP_Server.UserState
                         }
 
                         send_msg = CPacket.create((short)PROTOCOL.TABLE_ORDER_INPUT_ACK);
+                        break;
+                    case PROTOCOL.SLOT_START_REQ:
+                        bool isJackpot = Frm.JACKPOT_GAME_CNT == Frm.JACKPOT_GAME_CATCH;
+                        if (isJackpot)
+                            Frm.JACKPOT_GAME_CNT = 0;
+
+                        byte jackpot = (byte)(isJackpot ? 1 : 0);
+                        --owner.gameInfo.gameCnt;
+
+                        send_msg = CPacket.create((short)PROTOCOL.SLOT_START_ACK);
+                        send_msg.push(jackpot);
+                        send_msg.push(owner.gameInfo.gameCnt);
+                        break;
+                    case PROTOCOL.REPORT_OFFLINE_GAME_REQ:
+                        tableNo = msg.pop_byte();
+                        byte byJackpot = msg.pop_byte();
+                        byte gameType = msg.pop_byte();
+                        byte gameKind = msg.pop_byte();
+                        byte gameDiscount = msg.pop_byte();
+
+                        ++owner.unfinishGameID;
+                        Unfinish unfinish = new Unfinish(owner.unfinishGameID, gameType, gameKind, gameDiscount);
+                        owner.gameInfo.listUnfinish.Add(unfinish);
+
+                        // Admin Send packet
+                        if (byJackpot == 1 && Frm.GetAdminUser() != null)
+                        {
+                            other_msg = CPacket.create((short)PROTOCOL.REPORT_OFFLINE_GAME_NOT);
+                            other_msg.push(tableNo);                            
+                            Frm.GetAdminUser().send(other_msg);
+                        }
+
+                        send_msg = CPacket.create((short)PROTOCOL.REPORT_OFFLINE_GAME_ACK);
+                        break;
+                    case PROTOCOL.UNFINISH_GAME_LIST_REQ:
+                        JsonData listUnfinishJson = JsonMapper.ToJson(owner.gameInfo.listUnfinish);
+
+                        send_msg = CPacket.create((short)PROTOCOL.UNFINISH_GAME_LIST_ACK);
+                        send_msg.push(listUnfinishJson.ToString());
                         break;
                     default:
                         break;

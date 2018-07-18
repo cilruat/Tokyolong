@@ -44,6 +44,10 @@ namespace SP_Server
         int musicID = -1;
         public List<RequestMusicInfo> listReqMusicInfo = new List<RequestMusicInfo>();
 
+        // 게임 정보
+        public static int JACKPOT_GAME_CNT = 0;
+        public static int JACKPOT_GAME_CATCH = 10;
+
         public Frm()
         {
             WriteLogInstance = new DelegateWriteLog(this.WriteLog);

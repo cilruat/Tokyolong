@@ -14,7 +14,7 @@ namespace SP_Server
     {
         public int tableNum;
         public byte peopleCnt;
-        public byte customerType;
+        public byte customerType;        
 
         public UserInfo()
         {
@@ -31,6 +31,8 @@ namespace SP_Server
         }
     }
 
+    
+
     public class User : IPeer
     {
         IUserState current_user_state;
@@ -45,6 +47,9 @@ namespace SP_Server
         public byte peopleCnt { get { return info.peopleCnt; } set { info.peopleCnt = value; } }
         public byte customerType { get { return info.customerType; } set { info.customerType = value; } }
         public UserInfo info = new UserInfo();
+
+        public int unfinishGameID = -1;
+        public GameInfo gameInfo = new GameInfo();
 
         public GameRoom battle_room { get; private set; }
         public Player player { get; private set; }

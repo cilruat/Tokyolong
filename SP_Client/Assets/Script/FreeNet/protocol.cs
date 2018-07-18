@@ -63,6 +63,16 @@ namespace SP_Server
         TABLE_ORDER_INPUT_REQ,
         TABLE_ORDER_INPUT_ACK,
         TABLE_ORDER_INPUT_NOT,
+		SLOT_START_REQ,
+		SLOT_START_ACK,
+		REPORT_OFFLINE_GAME_REQ,
+		REPORT_OFFLINE_GAME_ACK,
+		REPORT_OFFLINE_GAME_NOT,
+		UNFINISH_GAME_LIST_REQ,
+		UNFINISH_GAME_LIST_ACK,
+		UNFINISH_GAME_CONFIRM_REQ,
+		UNFINISH_GAME_CONFIRM_ACK,
+
         //-------------------------------------
         // 게임 프로토콜.
         //-------------------------------------        

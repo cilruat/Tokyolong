@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using LitJson;
 
 public enum ESlotType
 {
@@ -27,6 +28,7 @@ public partial class PageGame : PageBase {
 	public List<SlotMachineElt> listSlotMachine = new List<SlotMachineElt>();
 	public CountDown[] countDown;
 
+	bool isJackpot = false;
 	bool isStopEnable = false;
 	int curGameType = -1;
 	int curGame = -1;
@@ -41,7 +43,7 @@ public partial class PageGame : PageBase {
 
 	void Start()
 	{
-		_RefreshList ();
+		NetworkManager.Instance.UnfinishGamelist_REQ ();
 		_RefreshPlayCnt ();
 	}
 
@@ -100,7 +102,7 @@ public partial class PageGame : PageBase {
 	}
 
 	public void OnStart()
-	{
+	{		
 		if (Info.GamePlayCnt <= 0) {
 			SystemMessage.Instance.Add ("게임을 시작할 수 없습니다\n주문을 먼저 해주세요~");
 			return;
@@ -110,15 +112,19 @@ public partial class PageGame : PageBase {
 			SystemMessage.Instance.Add ("이미 슬롯이 동작중입니다");
 			return;
 		}
-		
+
+		NetworkManager.Instance.SlotStart_REQ ();
+	}
+
+	public void FinishStart(bool isJackpot)
+	{
+		this.isJackpot = isJackpot;
+
 		for (int i = 0; i < objStartDesc.Length; i++)
 			objStartDesc [i].SetActive (false);
-		StartCoroutine (_StartSlot ());
 
-		if (Info.GamePlayCnt > 0) {
-			Info.GamePlayCnt -= 1;
-			_RefreshPlayCnt ();
-		}
+		StartCoroutine (_StartSlot ());
+		_RefreshPlayCnt ();
 	}
 
 	IEnumerator _StopSlot()
@@ -129,8 +135,7 @@ public partial class PageGame : PageBase {
 		if (curGameType == (int)EGameType.eBrainSurvival) {
 			randRange = Enum.GetValues (typeof(EBrainSurvival)).Length;
 			rtElts = rtBrainSurvival;
-		}
-		if (curGameType == (int)EGameType.eBoardGame) {
+		} else if (curGameType == (int)EGameType.eBoardGame) {
 			randRange = Enum.GetValues (typeof(EBoardGame)).Length;
 			rtElts = rtBoardGames;
 		} else if (curGameType == (int)EGameType.eWinWaiter) {
@@ -152,7 +157,7 @@ public partial class PageGame : PageBase {
 				listSlotMachine [i].SetElts (rtElts);
 			}
 				
-			listSlotMachine [i].StopSlot ();
+			listSlotMachine [i].StopSlot (isJackpot);
 			yield return new WaitForSeconds (.1f);
 		}			
 	}
@@ -240,6 +245,8 @@ public partial class PageGame : PageBase {
 		else {
 			countIdx = 1;
 			objCallMessage.SetActive (true);
+
+			NetworkManager.Instance.ReportOfflineGame_REQ (isJackpot, (byte)curGameType, (byte)curGame, (byte)Info.GameDiscountWon);
 		}
 		
 		countDown[countIdx].Set (3, () => _FinishShowPopup ());
@@ -272,7 +279,6 @@ public partial class PageGame : PageBase {
 			objCallMessage.SetActive (false);
 
 			_SetActiveAllRtElts (false);
-			_SetUnfinishGame ((EGameType)curGameType, curGame, (EDiscount)Info.GameDiscountWon);
 
 			Info.GameDiscountWon = -1;
 			OnPrev ();
@@ -280,6 +286,7 @@ public partial class PageGame : PageBase {
 
 		curGameType = -1;
 		curGame = -1;
+		isJackpot = false;
 	}
 
 	public EGameType SelectGameType() { return (EGameType)curGameType; }

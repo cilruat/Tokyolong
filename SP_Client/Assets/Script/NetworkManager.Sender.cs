@@ -137,4 +137,30 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
         send(msg);
     }
+
+	public void SlotStart_REQ()
+	{
+		CPacket msg = CPacket.create((short)PROTOCOL.SLOT_START_REQ);
+		send (msg);
+	}
+
+	public void ReportOfflineGame_REQ(bool isJackpot, byte gameType, byte gameKind, byte discount)
+	{
+		byte jackpot = (byte)(isJackpot ? 1 : 0);
+
+		CPacket msg = CPacket.create((short)PROTOCOL.REPORT_OFFLINE_GAME_REQ);
+		msg.push (Info.TableNum);
+		msg.push (jackpot);
+		msg.push (gameType);
+		msg.push (gameKind);
+		msg.push (discount);
+
+		send (msg);
+	}
+
+	public void UnfinishGamelist_REQ()
+	{
+		CPacket msg = CPacket.create((short)PROTOCOL.UNFINISH_GAME_LIST_REQ);
+		send (msg);
+	}
 }
