@@ -11,6 +11,7 @@ public class SlotMachineElt : MonoBehaviour {
 	public ESlotType eType;
 	public RawImage imgFrame;
 	public RectTransform[] rtElts;
+	public CanvasGroup cgJackpot;
 
 	bool isAllAnimating = false;
 	bool isStopAnimating = false;
@@ -100,24 +101,33 @@ public class SlotMachineElt : MonoBehaviour {
 		return Mathf.SmoothStep (-1, 1, .5f + (time * .5f / fullTime));
 	}
 
-	IEnumerator _StopAni()
+	IEnumerator _StopAni(bool isJackpot)
 	{
 		isStopAnimating = true;
 
-		for (int i = 0; i < rtElts.Length; i++)
-			rtElts [i].gameObject.SetActive (i == stopIdx);
+		if (rtElts != null) {
+			for (int i = 0; i < rtElts.Length; i++)
+				rtElts [i].gameObject.SetActive (i == stopIdx && isJackpot == false);
+		}
+
+		cgJackpot.gameObject.SetActive (isJackpot);
 
 		float during = .5f;
 		for (float t = 0; t < during; t += Time.fixedDeltaTime) {
-			Vector2 pos = Vector2.Lerp (
-				new Vector2 (0f, 100f),
-				Vector2.zero, 
-				_DynamicTime (t, during));
-			
-			rtElts [stopIdx].anchoredPosition = pos;
+			if (isJackpot) {
+				float a = Mathf.Lerp (0f, 1f, _DynamicTime (t, during));
+				cgJackpot.alpha = a;
+			} else {
+				Vector2 pos = Vector2.Lerp (
+					             new Vector2 (0f, 100f),
+					             Vector2.zero, 
+					             _DynamicTime (t, during));
 
-			if (pos.y <= 0f)
-				break;
+				rtElts [stopIdx].anchoredPosition = pos;
+
+				if (pos.y <= 0f)
+					break;
+			}				
 
 			yield return null;
 		}			
@@ -136,13 +146,13 @@ public class SlotMachineElt : MonoBehaviour {
 			page.ShowPopup ();
 	}
 
-	public void StopSlot() 
+	public void StopSlot(bool isJackpot) 
 	{
-		if (rtElts == null || rtElts.Length == 0)
+		if (isJackpot == false && (rtElts == null || rtElts.Length == 0))
 			return;
 		
 		startRoll = false;
-		StartCoroutine (_StopAni ());
+		StartCoroutine (_StopAni (isJackpot));
 	}
 
 	public void SetStopIdx(int stopIdx) { this.stopIdx = stopIdx; }

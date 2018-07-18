@@ -8,22 +8,15 @@ public class GameElt : MonoBehaviour {
 	public Text txtTitle;
 	public Text txtName;
 
-	EGameType eType = EGameType.eWinWaiter;
-	int game = -1;
-	EDiscount eDis = EDiscount.e500won;
+	int id = -1;
 
-
-	public void SetInfo(EGameType eType, int game, EDiscount eDis)
+	public void SetInfo(int id, EGameType eType, int game, EDiscount eDis)
 	{
-		this.eType = eType;
-		this.game = game;
-		this.eDis = eDis;
+		this.id = id;
 
 		txtTitle.text = Info.GameTitle (eType);
 		txtName.text = Info.GameName (eType, game, eDis);
 	}
 
-	public EGameType GameType() { return eType; }
-	public int Game() {	return game; }
-	public EDiscount Discount() { return eDis; }
+	public int GetID() { return id; }
 }

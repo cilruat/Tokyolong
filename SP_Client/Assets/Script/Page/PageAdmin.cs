@@ -235,6 +235,19 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
         AdminTableOrderInput.Instance.SetTable(tableNo);
     }
 
+	public void ShowJackpot(byte tableNo)
+	{
+	}
+
+	public void OnUnfinishGameList()
+	{
+		NetworkManager.Instance.UnfinishGamelist_REQ ();
+	}
+
+	public void SHowUnfinishGameList(string packing)
+	{
+	}
+
 	void Update()
 	{
 	}		

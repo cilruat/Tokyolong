@@ -28,7 +28,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		case PROTOCOL.ENTER_CUSTOMER_NOT:	EnterCustormerNOT (msg);	break;
 		case PROTOCOL.WAITER_CALL_ACK:		WaiterCallACK ();			break;
 		case PROTOCOL.WAITER_CALL_NOT:		WaiterCallNOT (msg);		break;
-		case PROTOCOL.ORDER_ACK:			OrderACK ();				break;
+		case PROTOCOL.ORDER_ACK:			OrderACK (msg);				break;
 		case PROTOCOL.ORDER_NOT:			OrderNOT (msg);				break;
         case PROTOCOL.CHAT_ACK:             ChatACK(msg);               break;
         case PROTOCOL.CHAT_NOT:             ChatNOT(msg);               break;
@@ -45,6 +45,10 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         case PROTOCOL.TABLE_ORDER_CONFIRM_ACK:  TableOrderConfirmACK(msg);  break;
         case PROTOCOL.TABLE_ORDER_INPUT_ACK:    TableOrderInputACK(msg);    break;
         case PROTOCOL.TABLE_ORDER_INPUT_NOT:    TableOrderInputNOT(msg);    break;
+		case PROTOCOL.SLOT_START_ACK:			SlotStartACK (msg);			break;
+		case PROTOCOL.REPORT_OFFLINE_GAME_ACK:	ReportOfflineGame_ACK ();	break;
+		case PROTOCOL.REPORT_OFFLINE_GAME_NOT:	ReportOfflineGame_NOT (msg);	break;
+		case PROTOCOL.UNFINISH_GAME_LIST_ACK:	UnfinishGameListACK(msg);		break;
 		}
 	}
 
@@ -122,8 +126,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		PageAdmin.Instance.Urgency ((int)tableNo);
 	}
 
-	void OrderACK()
+	void OrderACK(CPacket msg)
 	{
+		Info.GamePlayCnt = msg.pop_byte ();
 		((PageOrder)PageBase.Instance).bill.CompleteOrder ();
 	}
 
@@ -278,4 +283,37 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     {
         UIManager.Instance.ShowOrderAlarm();
     }
+
+	void SlotStartACK(CPacket msg)
+	{
+		byte jackpot = msg.pop_byte ();
+		Info.GamePlayCnt = msg.pop_byte ();
+
+		if (Info.GamePlayCnt < 0)
+			Info.GamePlayCnt = 0;
+
+		bool isJackpot = jackpot == 1 ? true : false;
+		((PageGame)PageBase.Instance).FinishStart (isJackpot);
+	}
+
+	void ReportOfflineGame_ACK()
+	{
+		NetworkManager.Instance.UnfinishGamelist_REQ ();
+	}
+
+	void ReportOfflineGame_NOT(CPacket msg)
+	{
+		byte tableNo = msg.pop_byte ();
+		PageAdmin.Instance.ShowJackpot (tableNo);
+	}
+
+	void UnfinishGameListACK(CPacket msg)
+	{
+		string packing = msg.pop_string ();
+
+		if (Info.isCheckScene ("Admin"))
+			PageAdmin.Instance.SHowUnfinishGameList (packing);
+		else
+			((PageGame)PageBase.Instance).RefreshUnfinishList (packing);
+	}
 }

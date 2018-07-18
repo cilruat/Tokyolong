@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PageMain : PageBase {
 
@@ -18,11 +19,14 @@ public class PageMain : PageBase {
 	}
 
     public CanvasGroup[] cgBoard;
+	public Text txtPlayCnt;
 
 	protected override void Awake ()
 	{
         base.boards = cgBoard;
 		base.Awake ();
+
+		txtPlayCnt.text = Info.GamePlayCnt.ToString ();
 	}
 
 	public void OnClickMenu(int idx)

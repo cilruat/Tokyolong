@@ -11,7 +11,7 @@ public partial class Info : MonoBehaviour {
     public static ECustomerType ECustomer = ECustomerType.MAN;
 
 	// Game Info
-	public static byte GamePlayCnt = 5;
+	public static byte GamePlayCnt = 0;
 	public static short GameDiscountWon = -1;
 
 	public static void AnimateChangeObj(CanvasGroup cur, CanvasGroup next, UnityEvent nextCallback = null)

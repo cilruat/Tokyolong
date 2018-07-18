@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using LitJson;
 
 public partial class PageGame : PageBase {
 
@@ -9,7 +10,7 @@ public partial class PageGame : PageBase {
 	public ScrollRect scrollRect;
 	public GameObject objPrefab;
 
-	void _RefreshList()
+	public void RefreshUnfinishList(string packing)
 	{
 		for (int i = 0; i < rtScroll.childCount; i++) {
 			Transform child = rtScroll.GetChild (i);
@@ -17,15 +18,24 @@ public partial class PageGame : PageBase {
 				Destroy (child.gameObject);
 		}
 
-		for (int i = 0; i < Info.listUnfinishGame.Count; i++) {
-			GameElt elt = Info.listUnfinishGame [i];
-			_SetUnfinishGame (elt.GameType (), elt.Game (), elt.Discount (), false);
-		}
+		JsonData json = JsonMapper.ToObject (packing);
+		for (int i = 0; i < json.Count; i++) {
+			string parse_id = json [i] ["id"].ToString ();
+			string parse_type = json [i] ["type"].ToString ();
+			string parse_kind = json [i] ["kind"].ToString ();
+			string parse_discount = json [i] ["discount"].ToString ();
+
+			int id = int.Parse(parse_id);
+			EGameType eType = (EGameType)int.Parse (parse_type);
+			int curGame = int.Parse (parse_kind);
+			EDiscount eDis = (EDiscount)int.Parse (parse_discount);
+			_SetUnfinishGame (id, eType, curGame, eDis);
+		}			
 
 		scrollRect.horizontalNormalizedPosition = 0f;
 	}
 
-	void _SetUnfinishGame(EGameType eType, int game, EDiscount eDis, bool addList = true)
+	void _SetUnfinishGame(int id, EGameType eType, int game, EDiscount eDis)
 	{
 		GameObject obj = Instantiate (objPrefab) as GameObject;
 		obj.SetActive (true);
@@ -35,10 +45,7 @@ public partial class PageGame : PageBase {
 		tr.InitTransform ();
 
 		GameElt elt = obj.GetComponent<GameElt> ();
-		elt.SetInfo (eType, game, eDis);
-
-		if (addList)
-			Info.listUnfinishGame.Add (elt);
+		elt.SetInfo (id, eType, game, eDis);
 	}
 
 	public void RemoveUnfinish()

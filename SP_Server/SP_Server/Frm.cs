@@ -46,8 +46,10 @@ namespace SP_Server
 
         int musicID = -1;
         public List<RequestMusicInfo> listReqMusicInfo = new List<RequestMusicInfo>();
-
         public Dictionary<int, List<short>> dictUserDiscount = new Dictionary<int, List<short>>();
+        // 게임 정보
+        public static int JACKPOT_GAME_CNT = 0;
+        public static int JACKPOT_GAME_CATCH = 10;
 
         public Frm()
         {
