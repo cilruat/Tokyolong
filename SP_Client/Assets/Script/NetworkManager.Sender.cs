@@ -111,12 +111,13 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         send(msg);
     }
 
-    public void Order_Confirm_REQ(int id, byte tableNo, string listPacking)
+    public void Order_Confirm_REQ(byte type, int id, byte tableNo, string packing)
     {
         CPacket msg = CPacket.create((short)PROTOCOL.ORDER_CONFIRM_REQ);
+        msg.push(type);
         msg.push(id);
         msg.push(tableNo);
-        msg.push(listPacking);
+        msg.push(packing);
 
         send(msg);
     }

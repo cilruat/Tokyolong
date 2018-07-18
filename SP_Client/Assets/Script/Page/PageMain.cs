@@ -39,5 +39,5 @@ public class PageMain : PageBase {
 		    case EMenu.eTableSet:   UIManager.Instance.Show (eUI.eTableSetting);		    break;
             case EMenu.eRequestMusic: NetworkManager.Instance.Request_Music_List_REQ();     break;
 		}
-	}		
+	}	
 }

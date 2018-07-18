@@ -27,8 +27,6 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 	List<OrderElt> listOrder = new List<OrderElt>();
 	List<MusicElt> listMusic = new List<MusicElt>();
 
-	int orderID = 0;
-
 	void Awake()
 	{
 		for (int i = 0; i < TABLE_NUM; i++) {
@@ -136,45 +134,19 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 		}
 	}
 
-	public void SetOrder(int orderID, byte tableNo, string packing)
-	{
+    public void SetOrder(RequestOrder reqOrder)
+    {
         GameObject obj = Instantiate (prefabOrder) as GameObject;
-		obj.SetActive (true);
+        obj.SetActive (true);
 
-		Transform tr = obj.transform;
+        Transform tr = obj.transform;
         tr.SetParent (rtScrollOrder);
-		tr.InitTransform ();
+        tr.InitTransform ();
 
         OrderElt elt = obj.GetComponent<OrderElt>();
-        elt.SetInfo(orderID, tableNo, packing);
+        elt.SetInfo(reqOrder);
         listOrder.Add(elt);
-	}
-
-	public void SetOrder(byte tableNo, short discount)
-	{
-		GameObject obj = Instantiate (prefabOrder) as GameObject;
-		obj.SetActive (true);
-
-		Transform tr = obj.transform;
-		tr.SetParent (rtScrollOrder);
-		tr.InitTransform ();
-
-		for (int i = 0; i < listTable.Count; i++) {
-			if (listTable [i].GetTableNo () != tableNo)
-				continue;
-
-			listTable [i].SetOrder (discount);
-			break;
-		}
-
-		OrderElt elt = obj.GetComponent<OrderElt> ();
-		elt.SetInfo (orderID, tableNo, discount);
-		listOrder.Add (elt);
-
-		++orderID;
-		if (orderID > MAX_ID)
-			orderID = 0;
-	}
+    }
 
     public void SetRequestMusic(string packing)
     {
@@ -248,7 +220,7 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 		AdminBillConfirm.Instance.SetInfo (tableNo, list);
 	}
 
-    public void ShowOrderDetail(RequestOrderMenu reqOrder)
+    public void ShowOrderDetail(RequestOrder reqOrder)
 	{
         if (reqOrder == null)
             return;

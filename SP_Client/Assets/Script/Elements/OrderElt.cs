@@ -4,25 +4,40 @@ using UnityEngine;
 using UnityEngine.UI;
 using LitJson;
 
-public class OrderElt : MonoBehaviour {
+public enum EOrderEltType
+{
+    eNone = 0,
+    eOrder = 1,
+    eDiscount,
+}
 
+public class OrderElt : MonoBehaviour {
+    
 	public Text table;
 	public Text order;
 	public GameObject objDetail;
 
-    RequestOrderMenu reqOrder = null;
+    RequestOrder reqOrder = null;
 
-	int id = -1;
-	byte tableNo = 0;
+    public void SetInfo(RequestOrder reqOrder)
+    {
+        this.reqOrder = reqOrder;
 
-	public void SetInfo(int id, byte tableNo, string packing)
-	{
-		table.text = tableNo.ToString ();
+        table.text = this.reqOrder.tableNo.ToString ();
 
+        switch ((EOrderEltType)reqOrder.type)
+        {
+            case EOrderEltType.eOrder:      SetOrder(reqOrder.packing);     break;
+            case EOrderEltType.eDiscount:   SetDiscount(reqOrder.packing);  break;
+        }
+    }
+
+    void SetOrder(string packing)
+    {
         List<SendMenu> listSendMenu = new List<SendMenu>();
         string desc = "";
-		JsonData json = JsonMapper.ToObject (packing);
-		for (int i = 0; i < json.Count; i++) 
+        JsonData json = JsonMapper.ToObject (packing);
+        for (int i = 0; i < json.Count; i++) 
         {
             int menu = int.Parse(json [i] ["menu"].ToString ());
             int cnt =  int.Parse(json [i] ["cnt"].ToString ());
@@ -30,42 +45,39 @@ public class OrderElt : MonoBehaviour {
 
             EMenuDetail eType = (EMenuDetail)menu;
 
-			desc += Info.MenuName (eType) + " " + cnt.ToString ();
-			if (i < json.Count - 1)
-				desc += ", ";
-		}
+            desc += Info.MenuName (eType) + " " + cnt.ToString ();
+            if (i < json.Count - 1)
+                desc += ", ";
+        }
 
-        reqOrder = new RequestOrderMenu(id, tableNo, listSendMenu);
+        order.text = desc;
+        objDetail.SetActive (true);
+    }
 
-        this.id = reqOrder.id;
-        this.tableNo = reqOrder.tableNo;
+    void SetDiscount(string packing)
+    {
+        string desc = "";
+        short discount = short.Parse(packing);
+        if (discount == (short)EDiscount.e500won)
+            desc = "-500원 할인";
+        else if (discount == (short)EDiscount.e1000won)
+            desc = "-1000원 할인";
 
-		order.text = desc;
-		objDetail.SetActive (true);
-	}
-
-	public void SetInfo(int id, byte tableNo, short discount)
-	{
-		this.id = id;
-		this.tableNo = tableNo;
-
-		table.text = tableNo.ToString ();
-
-		string desc = "";
-		if (discount == (short)EDiscount.e500won)
-			desc = "-500원 할인";
-		else if (discount == (short)EDiscount.e1000won)
-			desc = "-1000원 할인";
-
-		order.text = "게임 성공 (" + desc + ")";
-		objDetail.SetActive (false);
-	}
+        order.text = "게임 성공 (" + desc + ")";
+        objDetail.SetActive (true);
+    }
 
 	public void OnDetail()
 	{
-        PageAdmin.Instance.ShowOrderDetail (reqOrder);
+        if (reqOrder == null)
+        {
+            SystemMessage.Instance.Add("요청 목록에 오류가 발생 하였습니다");
+            return;
+        }
+
+        PageAdmin.Instance.ShowOrderDetail(reqOrder);
 	}
 
-	public int GetID() { return id; }
-	public byte GetTableNo() { return tableNo; }
+    public int GetID() { return reqOrder.id; }
+    public byte GetTableNo() { return reqOrder.tableNo; }
 }

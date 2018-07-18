@@ -11,6 +11,7 @@ using System.IO;
 using System.Threading;
 using System.Diagnostics;
 using FreeNet;
+using LitJson;
 
 namespace SP_Server
 {
@@ -39,10 +40,14 @@ namespace SP_Server
 
         int orderID = -1;
         public int OrderID { get { return orderID; } set { orderID = value; } }
+        public List<RequestOrder> listRequestOrder = new List<RequestOrder>();
+
         public Dictionary<int, List<SendMenu>> dictUserMenu = new Dictionary<int, List<SendMenu>>();
 
         int musicID = -1;
         public List<RequestMusicInfo> listReqMusicInfo = new List<RequestMusicInfo>();
+
+        public Dictionary<int, List<short>> dictUserDiscount = new Dictionary<int, List<short>>();
 
         public Frm()
         {
@@ -271,6 +276,56 @@ namespace SP_Server
                 musicID = -1;
         }
 
+        public void SetRequestOrder(RequestOrder reqOrder)
+        {
+            listRequestOrder.Add(reqOrder);
+        }
+
+        public RequestOrder GetRequestOrder(int id)
+        {
+            RequestOrder reqOrder = null;
+            for(int i = 0; i < listRequestOrder.Count; i++)
+            {
+                if (listRequestOrder[i].id != id)
+                    continue;
+
+                reqOrder = listRequestOrder[i];
+                break;
+            }
+
+            return reqOrder;
+        }
+
+        public void RemoveRequestOrder(int id)
+        {
+            int findIdx = -1;
+            for (int i = 0; i < listRequestOrder.Count; i++)
+            {
+                if (listRequestOrder[i].id != id)
+                    continue;
+
+                findIdx = i;
+                break;
+            }
+
+            if (findIdx == -1)
+                return;
+
+            listRequestOrder.RemoveAt(findIdx);
+        }
+
+        public void SetOrder(int tableNo, string packing)
+        {
+            JsonData reqOrderJson = JsonMapper.ToObject(packing);
+            for (int i = 0; i < reqOrderJson.Count; i++)
+            {
+                int reqSendMenu = int.Parse(reqOrderJson[i]["menu"].ToString());
+                int reqSendCnt = int.Parse(reqOrderJson[i]["cnt"].ToString());
+
+                SetOrder(tableNo, new SendMenu(reqSendMenu, reqSendCnt));
+            }
+        }
+
         public void SetOrder(int tableNo, SendMenu sendMenu)
         {
             if (dictUserMenu.ContainsKey(tableNo) == false)
@@ -281,7 +336,7 @@ namespace SP_Server
             int containIdx = -1;
             for (int i = 0; i < listSendMenu.Count; i++)
             {
-                if(listSendMenu[i].menu == sendMenu.menu)
+                if (listSendMenu[i].menu == sendMenu.menu)
                 {
                     containIdx = i;
                     break;
@@ -294,7 +349,7 @@ namespace SP_Server
             {
 
                 listSendMenu[containIdx].cnt += sendMenu.cnt;
-                if(listSendMenu[containIdx].cnt <= 0)
+                if (listSendMenu[containIdx].cnt <= 0)
                     listSendMenu.RemoveAt(containIdx);
             }
         }
@@ -309,10 +364,26 @@ namespace SP_Server
             return listSendMenu;
         }
 
+        public void SetDiscount(int tableNo, string packing)
+        {
+            SetDiscount(tableNo, short.Parse(packing));
+        }
+
+        public void SetDiscount(int tableNo, short discount)
+        {
+            if (dictUserDiscount.ContainsKey(tableNo) == false)
+                dictUserDiscount.Add(tableNo, new List<short>());
+
+            dictUserDiscount[tableNo].Add(discount);
+        }
+
         public void RemoveUserData(int tableNo)
         {
             if (dictUserMenu.ContainsKey(tableNo))
                 dictUserMenu.Remove(tableNo);
+
+            if (dictUserDiscount.ContainsKey(tableNo))
+                dictUserDiscount.Remove(tableNo);
 
             for (int i = listReqMusicInfo.Count -1; i >= 0; i--)
             {

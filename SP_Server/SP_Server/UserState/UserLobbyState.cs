@@ -151,10 +151,16 @@ namespace SP_Server.UserState
                         if (Frm.GetAdminUser() != null)
                         {
                             other_msg = CPacket.create((short)PROTOCOL.ORDER_NOT);
+
                             owner.mainFrm.OrderID++;
-                            other_msg.push(owner.mainFrm.OrderID);
-                            other_msg.push(tableNo);
-                            other_msg.push(order);
+                            RequestOrder reqOrder = new RequestOrder((byte)ERequestOrerType.eOrder, owner.mainFrm.OrderID, tableNo, order);
+                            other_msg.push(reqOrder.type);
+                            other_msg.push(reqOrder.id);
+                            other_msg.push((byte)reqOrder.tableNo);
+                            other_msg.push(reqOrder.packing);
+
+                            owner.mainFrm.SetRequestOrder(reqOrder);
+
                             Frm.GetAdminUser().send(other_msg);
                         }
 
@@ -209,8 +215,16 @@ namespace SP_Server.UserState
                         if (Frm.GetAdminUser() != null)
                         {
                             other_msg = CPacket.create((short)PROTOCOL.GAME_DISCOUNT_NOT);
-                            other_msg.push(tableNo);
-                            other_msg.push(discount);
+
+                            owner.mainFrm.OrderID++;
+                            RequestOrder reqOrder = new RequestOrder((byte)ERequestOrerType.eDiscount, owner.mainFrm.OrderID, tableNo, Convert.ToString(discount));
+                            other_msg.push(reqOrder.type);
+                            other_msg.push(reqOrder.id);
+                            other_msg.push((byte)reqOrder.tableNo);
+                            other_msg.push(reqOrder.packing);
+
+                            owner.mainFrm.SetRequestOrder(reqOrder);
+
                             Frm.GetAdminUser().send(other_msg);
                         }
 
@@ -269,16 +283,15 @@ namespace SP_Server.UserState
 
                         break;
                     case PROTOCOL.ORDER_CONFIRM_REQ:
+                        byte reqType = msg.pop_byte();
                         int reqOrderId = msg.pop_int32();
                         byte reqOrderTableNo = msg.pop_byte();
-                        string reqOrderList = msg.pop_string();
-                        JsonData reqOrderJson = JsonMapper.ToObject(reqOrderList);
-                        for (int i = 0; i < reqOrderJson.Count; i++)
-                        {
-                            int reqSendMenu = int.Parse(reqOrderJson[i]["menu"].ToString());
-                            int reqSendCnt = int.Parse(reqOrderJson[i]["cnt"].ToString());
+                        string reqOrderPacking = msg.pop_string();
 
-                            owner.mainFrm.SetOrder((int)reqOrderTableNo, new SendMenu(reqSendMenu, reqSendCnt));
+                        switch ((ERequestOrerType)reqType)
+                        {
+                            case ERequestOrerType.eOrder:       owner.mainFrm.SetOrder((int)reqOrderTableNo, reqOrderPacking);      break;
+                            case ERequestOrerType.eDiscount:    owner.mainFrm.SetDiscount((int)reqOrderTableNo, reqOrderPacking);   break;
                         }
 
                         for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
@@ -291,6 +304,8 @@ namespace SP_Server.UserState
                             other.send(other_msg);
                             break;
                         }
+
+                        owner.mainFrm.RemoveRequestOrder(reqOrderId);
 
                         send_msg = CPacket.create((short)PROTOCOL.ORDER_CONFIRM_ACK);
                         send_msg.push(reqOrderId);

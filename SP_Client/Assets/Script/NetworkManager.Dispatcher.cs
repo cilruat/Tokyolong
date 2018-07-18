@@ -129,11 +129,14 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
 	void OrderNOT(CPacket msg)
 	{
+        byte type = msg.pop_byte();
         int orderId = msg.pop_int32();
 		byte tableNo = msg.pop_byte ();
-		string order = msg.pop_string ();
+		string packing = msg.pop_string ();
 
-        PageAdmin.Instance.SetOrder (orderId, tableNo, order);
+        RequestOrder reqOrder = new RequestOrder(type, orderId, tableNo, packing);
+
+        PageAdmin.Instance.SetOrder (reqOrder);
 	}
 
     void ChatACK(CPacket msg)
@@ -192,9 +195,14 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
 	void GameDiscountNOT(CPacket msg)
 	{
-		byte tableNo = msg.pop_byte ();
-		short discount = msg.pop_int16 ();
-		PageAdmin.Instance.SetOrder (tableNo, discount);
+        byte type = msg.pop_byte();
+        int orderId = msg.pop_int32();
+        byte tableNo = msg.pop_byte ();
+        string packing = msg.pop_string ();
+
+        RequestOrder reqOrder = new RequestOrder(type, orderId, tableNo, packing);
+
+        PageAdmin.Instance.SetOrder (reqOrder);
 	}
 
 	void RequestMusicListACK(CPacket msg)

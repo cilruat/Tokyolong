@@ -5,27 +5,6 @@ using UnityEngine.UI;
 using System.IO;
 using LitJson;
 
-public class RequestOrderMenu
-{
-    public int id;
-    public byte tableNo;
-    public List<SendMenu> list = new List<SendMenu>();
-
-    public RequestOrderMenu()
-    {
-        this.id = -1;
-        this.tableNo = 0; 
-        this.list.Clear();
-    }
-
-    public RequestOrderMenu(int id, byte tableNo, List<SendMenu> list)
-    {
-        this.id = id;
-        this.tableNo = tableNo;
-        this.list = list;
-    }
-}
-
 public class SendMenu
 {
     public int menu;

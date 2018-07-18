@@ -4,35 +4,95 @@ using UnityEngine;
 using UnityEngine.UI;
 using LitJson;
 
+public class RequestOrder
+{
+    public byte type;
+    public int id;
+    public byte tableNo;
+    public string packing;
+
+    public RequestOrder()
+    {
+        this.type = 0;
+        this.id = -1;
+        this.tableNo = 0;
+        this.packing = string.Empty;
+    }
+
+    public RequestOrder(byte type, int id, byte tableNo, string packing)
+    {
+        this.type = type;
+        this.id = id;
+        this.tableNo = tableNo;
+        this.packing = packing;
+    }
+}
+
 public class AdminOrderDetail : SingletonMonobehaviour<AdminOrderDetail> {
 
 	public Text table;
 	public GameObject objPrefab;
 	public RectTransform rtScroll;
+    public Text confrimDesc;
 
-    RequestOrderMenu reqOrder = null;
+    RequestOrder reqOrder = null;
 
-    public void SetInfo(RequestOrderMenu reqOrder)
+    public void SetInfo(RequestOrder reqOrder)
 	{
 		_Clear ();
 
         this.reqOrder = reqOrder;
         table.text = reqOrder.tableNo.ToString () + "번 테이블";
 
-        for (int i = 0; i < reqOrder.list.Count; i++)
+        switch ((EOrderEltType)reqOrder.type)
         {
-            EMenuDetail eType = (EMenuDetail) this.reqOrder.list[i].menu;
+            case EOrderEltType.eOrder:      SetOrder(reqOrder.packing);     break;
+            case EOrderEltType.eDiscount:   SetDiscount(reqOrder.packing);  break;
+        }
+	}
 
-            string menu = Info.MenuName (eType) + " " +  this.reqOrder.list[i].cnt.ToString ();
+    void SetOrder(string packing)
+    {
+        JsonData json = JsonMapper.ToObject (reqOrder.packing);
+        for (int i = 0; i < json.Count; i++) 
+        {
+            int menu = int.Parse(json [i] ["menu"].ToString ());
+            int cnt =  int.Parse(json [i] ["cnt"].ToString ());
+
+            EMenuDetail menuType = (EMenuDetail)menu;
+
+            string strMenu = Info.MenuName (menuType) + " " +  cnt.ToString ();
             GameObject objElt = Instantiate (objPrefab) as GameObject;
             Transform tr = objElt.transform;
             tr.SetParent (rtScroll);
             tr.InitTransform ();
             objElt.SetActive (true);
             Text desc = tr.Find ("Desc").GetComponent<Text> ();
-            desc.text = menu;
+            desc.text = strMenu;
         }
-	}
+
+        confrimDesc.text = "주문 내역 확인";
+    }
+
+    void SetDiscount(string packing)
+    {
+        GameObject objElt = Instantiate (objPrefab) as GameObject;
+        Transform tr = objElt.transform;
+        tr.SetParent (rtScroll);
+        tr.InitTransform ();
+        objElt.SetActive (true);
+        Text desc = tr.Find ("Desc").GetComponent<Text> ();
+
+        string strDiscount = "";
+        short discount = short.Parse(packing);
+        if (discount == (short)EDiscount.e500won)
+            strDiscount = "-500원 할인";
+        else if (discount == (short)EDiscount.e1000won)
+            strDiscount = "-1000원 할인";
+
+        desc.text = strDiscount;
+        confrimDesc.text = "할인 내역 확인";
+    }
 
 	void _Clear()
 	{
@@ -45,8 +105,7 @@ public class AdminOrderDetail : SingletonMonobehaviour<AdminOrderDetail> {
 
 	public void OnConfirm()
 	{
-        JsonData json = JsonMapper.ToJson(reqOrder.list);
-        NetworkManager.Instance.Order_Confirm_REQ(reqOrder.id, reqOrder.tableNo, json.ToString());
+        NetworkManager.Instance.Order_Confirm_REQ(reqOrder.type, reqOrder.id, reqOrder.tableNo, reqOrder.packing);
 	}
 
 	public void OnClose() {	gameObject.SetActive (false); }
