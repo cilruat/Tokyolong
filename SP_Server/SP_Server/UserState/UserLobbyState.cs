@@ -305,6 +305,7 @@ namespace SP_Server.UserState
                                 continue;
 
                             other_msg = CPacket.create((short)PROTOCOL.ORDER_CONFIRM_NOT);
+                            other_msg.push(reqType);
                             other.send(other_msg);
                             break;
                         }

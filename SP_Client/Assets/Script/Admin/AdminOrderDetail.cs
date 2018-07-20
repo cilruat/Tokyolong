@@ -44,10 +44,10 @@ public class AdminOrderDetail : SingletonMonobehaviour<AdminOrderDetail> {
         this.reqOrder = reqOrder;
         table.text = reqOrder.tableNo.ToString () + "번 테이블";
 
-        switch ((EOrderEltType)reqOrder.type)
+        switch ((ERequestOrderType)reqOrder.type)
         {
-            case EOrderEltType.eOrder:      SetOrder(reqOrder.packing);     break;
-            case EOrderEltType.eDiscount:   SetDiscount(reqOrder.packing);  break;
+            case ERequestOrderType.eOrder:      SetOrder(reqOrder.packing);     break;
+            case ERequestOrderType.eDiscount:   SetDiscount(reqOrder.packing);  break;
         }
 	}
 

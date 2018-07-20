@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using LitJson;
 
-public enum EOrderEltType
+public enum ERequestOrderType
 {
     eNone = 0,
     eOrder = 1,
@@ -25,10 +25,10 @@ public class OrderElt : MonoBehaviour {
 
         table.text = this.reqOrder.tableNo.ToString ();
 
-        switch ((EOrderEltType)reqOrder.type)
+        switch ((ERequestOrderType)reqOrder.type)
         {
-            case EOrderEltType.eOrder:      SetOrder(reqOrder.packing);     break;
-            case EOrderEltType.eDiscount:   SetDiscount(reqOrder.packing);  break;
+            case ERequestOrderType.eOrder:      SetOrder(reqOrder.packing);     break;
+            case ERequestOrderType.eDiscount:   SetDiscount(reqOrder.packing);  break;
         }
     }
 

@@ -259,7 +259,12 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
     void OrderConfirmNOT(CPacket msg)
     {
-        UIManager.Instance.ShowOrderAlarm();
+        ERequestOrderType type = (ERequestOrderType)msg.pop_byte();
+        switch (type)
+        {
+            case ERequestOrderType.eOrder:      UIManager.Instance.ShowOrderAlarm();    break;
+            case ERequestOrderType.eDiscount:   UIManager.Instance.ShowDiscountAlarm(); break;
+        }
     }
 
     void TableOrderConfirmACK(CPacket msg)

@@ -15,7 +15,9 @@ public class UIAlarm : MonoBehaviour
     {
         textAlarm.text = text;
         btn.onClick.RemoveAllListeners();
-        btn.onClick.AddListener(onCallBack);
+
+        if(onCallBack != null)
+            btn.onClick.AddListener(onCallBack);
 
         if (routine != null)
             StopCoroutine(routine);
