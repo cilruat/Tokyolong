@@ -194,4 +194,17 @@ public partial class Info : MonoBehaviour {
 		}
 		return name;
 	}
+
+    public static int GetDiscountPrice(short type) { return GetDiscountPrice((EDiscount)type); }
+    public static int GetDiscountPrice(EDiscount type)
+    {
+        int discountPrice = 0;
+        switch(type)
+        {
+            case EDiscount.e500won:discountPrice =      500;    break;
+            case EDiscount.e1000won:discountPrice =     1000;   break;
+        }
+
+        return discountPrice;
+    }
 }

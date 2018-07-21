@@ -14,12 +14,12 @@ public class UIBillDetail : MonoBehaviour
     int peopleCount = 0;
     int totalPrice = 0;
 
-    public void SetBill(string packing)
+    public void SetBill(string meuPacking, string discountPacking)
     {
         peopleCount = (int)Info.myInfo.peopleCnt;
 
         List<KeyValuePair<EMenuDetail, int>> listOrder = new List<KeyValuePair<EMenuDetail, int>>(); 
-        JsonData json = JsonMapper.ToObject (packing);
+        JsonData json = JsonMapper.ToObject (meuPacking);
 
         for (int i = 0; i < json.Count; i++) 
         {
@@ -30,7 +30,12 @@ public class UIBillDetail : MonoBehaviour
             listOrder.Add(new KeyValuePair<EMenuDetail, int>(eType, cnt));
         }
 
-        bill.CopyBill(listOrder);
+        List<short> listDiscount = new List<short>();
+        JsonData jsonDiscount = JsonMapper.ToObject(discountPacking);
+        for (int i = 0; i < jsonDiscount.Count; i++)
+            listDiscount.Add(short.Parse(jsonDiscount[i].ToString()));
+        
+        bill.CopyBill(listOrder, listDiscount);
 
         textpeopleCnt.text = peopleCount.ToString();
 

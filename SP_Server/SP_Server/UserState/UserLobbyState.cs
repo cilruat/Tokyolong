@@ -207,8 +207,12 @@ namespace SP_Server.UserState
                         List<SendMenu> listSendMenu = owner.mainFrm.GetOrder((int)tableNo);
                         JsonData listSendMenuJson = JsonMapper.ToJson(listSendMenu);
 
+                        List<short> listDiscount = owner.mainFrm.GetDiscount((int)tableNo);
+                        JsonData listDiscountJson = JsonMapper.ToJson(listDiscount);
+
                         send_msg = CPacket.create((short)PROTOCOL.ORDER_DETAIL_ACK);
                         send_msg.push(listSendMenuJson.ToString());
+                        send_msg.push(listDiscountJson.ToString());
                         break;
                     case PROTOCOL.GAME_DISCOUNT_REQ:
 
@@ -317,12 +321,16 @@ namespace SP_Server.UserState
                         break;
                     case PROTOCOL.TABLE_ORDER_CONFIRM_REQ:
                         tableNo = msg.pop_byte();
-                        List<SendMenu> tableOrderMenuList = owner.mainFrm.GetOrder((int)tableNo);
-                        JsonData tableOrderConfirJson = JsonMapper.ToJson(tableOrderMenuList);
+                        List<SendMenu> listTableOrder = owner.mainFrm.GetOrder((int)tableNo);
+                        JsonData tableOrderJson = JsonMapper.ToJson(listTableOrder);
+
+                        List<short> listTableDiscount = owner.mainFrm.GetDiscount((int)tableNo);
+                        JsonData tableDiscountJson = JsonMapper.ToJson(listTableDiscount);
 
                         send_msg = CPacket.create((short)PROTOCOL.TABLE_ORDER_CONFIRM_ACK);
                         send_msg.push(tableNo);
-                        send_msg.push(tableOrderConfirJson.ToString());
+                        send_msg.push(tableOrderJson.ToString());
+                        send_msg.push(tableDiscountJson.ToString());
                         break;
                     case PROTOCOL.TABLE_ORDER_INPUT_REQ:
                         byte targetTableNo = msg.pop_byte();

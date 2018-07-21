@@ -179,13 +179,14 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
     void OrderDetailACK(CPacket msg)
     {
-        string packing = msg.pop_string();
+        string menuPacking = msg.pop_string();
+        string discountPacking = msg.pop_string();
         if (UIManager.Instance.IsActive(eUI.eBillDetail))
             return;
         
         GameObject obj = UIManager.Instance.Show(eUI.eBillDetail);
         UIBillDetail uiBillDetail = obj.GetComponent<UIBillDetail>();
-        uiBillDetail.SetBill(packing);
+        uiBillDetail.SetBill(menuPacking, discountPacking);
     }
 
 	void GameDiscountACK(CPacket msg)
@@ -270,9 +271,10 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     void TableOrderConfirmACK(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
-        string packing = msg.pop_string();
+        string orderPacking = msg.pop_string();
+        string discountPacking = msg.pop_string();
         AdminTableMenu.Instance.OnClose();
-        PageAdmin.Instance.ShowBillConfirm (tableNo, packing);
+        PageAdmin.Instance.ShowBillConfirm (tableNo, orderPacking, discountPacking);
     }
 
     void TableOrderInputACK(CPacket msg)

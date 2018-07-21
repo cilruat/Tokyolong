@@ -21,13 +21,16 @@ public class Bill : MonoBehaviour {
     
 	public GameObject prefab;
 	public GameObject objEmpty;
-	public RectTransform rtScroll; 
+	public RectTransform rtScroll;
 	public Text totalPrice;
+    public Text textDiscountPrice;
+    public Text textCalcPrice;
 
 	List<BillElt> listElt = new List<BillElt>();
 
     int billTotalPrice = 0;
-    public int BillTotalPrice { get { return billTotalPrice; } }
+    int discountPrice = 0;
+    public int BillTotalPrice { get { return Mathf.Max(0, (billTotalPrice - discountPrice)); } }
 
 	public void SetMenu(EMenuDetail eType)
 	{
@@ -66,9 +69,16 @@ public class Bill : MonoBehaviour {
 		int total = 0;
 		for (int i = 0; i < listElt.Count; i++)
 			total += listElt [i].GetPrice ();
-
+        
         billTotalPrice = total;
-		totalPrice.text = Info.MakeMoneyString (total);
+
+        totalPrice.text = Info.MakeMoneyString (billTotalPrice);
+
+        if(textDiscountPrice != null)
+            textDiscountPrice.text = "-"+Info.MakeMoneyString(discountPrice);
+
+        if(textCalcPrice != null)
+            textCalcPrice.text = Info.MakeMoneyString(BillTotalPrice);
 	}
 
 	public void RemoveElt(EMenuDetail eType)
@@ -112,6 +122,8 @@ public class Bill : MonoBehaviour {
 		if (objEmpty != null && objEmpty.activeSelf == false)
 			objEmpty.SetActive (true);
 
+        discountPrice = 0;
+
 		CalcTotalPrice ();
 	}
 
@@ -138,7 +150,7 @@ public class Bill : MonoBehaviour {
 		CalcTotalPrice ();
 	}
 
-	public void CopyBill(List<KeyValuePair<EMenuDetail, int>> list)
+    public void CopyBill(List<KeyValuePair<EMenuDetail, int>> list, List<short> listDiscount)
 	{
 		_Clear ();
 
@@ -154,6 +166,10 @@ public class Bill : MonoBehaviour {
 			elt.SetInfo (list [i].Key, list [i].Value);
 			listElt.Add (elt);
 		}
+
+        for (int i = 0; i < listDiscount.Count; i++) {
+            discountPrice += Info.GetDiscountPrice(listDiscount[i]);
+        }
 
         if (objEmpty != null)
             objEmpty.SetActive(list.Count <= 0);

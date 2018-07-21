@@ -379,6 +379,16 @@ namespace SP_Server
             dictUserDiscount[tableNo].Add(discount);
         }
 
+        public List<short> GetDiscount(int tableNo)
+        {
+            List<short> list = new List<short>();
+
+            if (dictUserDiscount.ContainsKey(tableNo))
+                list = dictUserDiscount[tableNo];
+
+            return list;
+        }
+
         public void RemoveUserData(int tableNo)
         {
             if (dictUserMenu.ContainsKey(tableNo))

@@ -96,7 +96,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 
     public void ShowChatAlarm()     {   uiAlarm.ShowAlarm("채팅이\n도착 하였습니다", _ShowChat);  }
     public void ShowOrderAlarm()    {   uiAlarm.ShowAlarm("주문이\n접수 되었습니다", _ShowBillDetail);    }
-    public void ShowDiscountAlarm() {   uiAlarm.ShowAlarm("할인이\n접수 되었습니다", null);    }
+    public void ShowDiscountAlarm() {   uiAlarm.ShowAlarm("할인이\n접수 되었습니다", _ShowBillDetail);    }
 
     void _ShowChat()
     {

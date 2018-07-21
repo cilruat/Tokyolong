@@ -10,12 +10,15 @@ public class AdminBill : MonoBehaviour {
 	public GameObject prefab;
 	public GameObject objEmpty;
 	public RectTransform rtScroll; 
-	public Text totalPrice;
+    public Text totalPrice;
+    public Text textDiscountPrice;
+    public Text textCalcPrice;
 
     List<BillConfirmElt> listElt = new List<BillConfirmElt>();
 
     int billTotalPrice = 0;
-    public int BillTotalPrice { get { return billTotalPrice; } }
+    int discountPrice = 0;
+    public int BillTotalPrice { get { return Mathf.Max(0, (billTotalPrice - discountPrice)); } }
 
 	public void CalcTotalPrice()
 	{
@@ -25,6 +28,8 @@ public class AdminBill : MonoBehaviour {
 
         billTotalPrice = total;
 		totalPrice.text = Info.MakeMoneyString (total);
+        textDiscountPrice.text = "-"+Info.MakeMoneyString(discountPrice);
+        textCalcPrice.text = Info.MakeMoneyString(BillTotalPrice);
 	}
 
 	public void RemoveElt(EMenuDetail eType)
@@ -68,10 +73,12 @@ public class AdminBill : MonoBehaviour {
 		if (objEmpty != null && objEmpty.activeSelf == false)
 			objEmpty.SetActive (true);
 
+        discountPrice = 0;
+
 		CalcTotalPrice ();
 	}
 
-	public void CopyBill(List<KeyValuePair<EMenuDetail, int>> list)
+    public void CopyBill(List<KeyValuePair<EMenuDetail, int>> list, List<short> listDiscount)
 	{
 		_Clear ();
 
@@ -87,6 +94,10 @@ public class AdminBill : MonoBehaviour {
 			elt.SetInfo (list [i].Key, list [i].Value);
 			listElt.Add (elt);
 		}
+
+        for (int i = 0; i < listDiscount.Count; i++) {
+            discountPrice += Info.GetDiscountPrice(listDiscount[i]);
+        }
 
         if (objEmpty != null)
             objEmpty.SetActive(list.Count <= 0);

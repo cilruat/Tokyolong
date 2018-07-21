@@ -198,10 +198,10 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 		AdminTableMenu.Instance.SetInfo (tableNo);
 	}
 
-    public void ShowBillConfirm(byte tableNo, string packing)
+    public void ShowBillConfirm(byte tableNo, string orderPacking, string discountPacking)
     {
         List<KeyValuePair<EMenuDetail, int>> listOrder = new List<KeyValuePair<EMenuDetail, int>>(); 
-        JsonData json = JsonMapper.ToObject(packing);
+        JsonData json = JsonMapper.ToObject(orderPacking);
         for (int i = 0; i < json.Count; i++)
         {
             int menu = int.Parse(json[i]["menu"].ToString());
@@ -211,13 +211,18 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
             listOrder.Add(new KeyValuePair<EMenuDetail, int>(eType, cnt));
         }
 
-        ShowBillConfirm(tableNo, listOrder);
+        List<short> listDiscount = new List<short>();
+        JsonData jsonDiscount = JsonMapper.ToObject(discountPacking);
+        for (int i = 0; i < jsonDiscount.Count; i++)
+            listDiscount.Add(short.Parse(jsonDiscount[i].ToString()));
+
+        ShowBillConfirm(tableNo, listOrder, listDiscount);
     }
 
-	public void ShowBillConfirm(byte tableNo, List<KeyValuePair<EMenuDetail,int>> list)
+    public void ShowBillConfirm(byte tableNo, List<KeyValuePair<EMenuDetail,int>> listOrder, List<short> listDiscount)
 	{
 		objBillConfirm.SetActive (true);
-		AdminBillConfirm.Instance.SetInfo (tableNo, list);
+        AdminBillConfirm.Instance.SetInfo (tableNo, listOrder, listDiscount);
 	}
 
     public void ShowOrderDetail(RequestOrder reqOrder)
