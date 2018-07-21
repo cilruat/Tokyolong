@@ -20,6 +20,7 @@ public class PageMain : PageBase {
 
     public CanvasGroup[] cgBoard;
 	public Text txtPlayCnt;
+    public Text txtTableNo;
 
 	protected override void Awake ()
 	{
@@ -27,6 +28,7 @@ public class PageMain : PageBase {
 		base.Awake ();
 
 		txtPlayCnt.text = Info.GamePlayCnt.ToString ();
+        txtTableNo.text = "No."+Info.TableNum.ToString();
 	}
 
 	public void OnClickMenu(int idx)

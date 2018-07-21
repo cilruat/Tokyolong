@@ -6,8 +6,7 @@ using LitJson;
 
 public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 
-	const int TABLE_NUM = 30;
-	const int MAX_ID = 1000;
+	const int TABLE_NUM = 42;
 
 	public GameObject page;
 	public RectTransform rtScrollTable;
@@ -27,7 +26,12 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 	List<OrderElt> listOrder = new List<OrderElt>();
 	List<MusicElt> listMusic = new List<MusicElt>();
 
-	void Awake()
+    void Awake()
+    {
+        SetData(Info.adminTablePacking, Info.adminOrderPacking, Info.adminMusicPacking);
+    }
+
+	void LoadTable()
 	{
 		for (int i = 0; i < TABLE_NUM; i++) {
 			GameObject obj = Instantiate (prefabTable) as GameObject;
@@ -45,6 +49,41 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 			listTable.Add (elt);
 		}
 	}
+
+    public void SetData(string tablePacking, string orderPacking, string musicPacking)
+    {
+        LoadTable();
+
+        JsonData tableJson = JsonMapper.ToObject(tablePacking);
+        for (int i = 0; i < tableJson.Count; i++)
+            SetLogin(int.Parse(tableJson[i].ToString()));
+
+        JsonData orderJson = JsonMapper.ToObject(orderPacking);
+        for (int i = 0; i < orderJson.Count; i++)
+        {
+            byte type = byte.Parse(orderJson[i]["type"].ToString());
+            int id = byte.Parse(orderJson[i]["id"].ToString());
+            byte tableNo = byte.Parse(orderJson[i]["tableNo"].ToString());
+            string packing = orderJson[i]["packing"].ToString();
+
+            SetOrder(new RequestOrder(type, id, tableNo, packing));
+        }
+
+        JsonData musicJson = JsonMapper.ToObject(musicPacking);
+        for (int i = 0; i < musicJson.Count; i++)
+        {
+            int id = byte.Parse(musicJson[i]["id"].ToString());
+            byte tableNo = byte.Parse(musicJson[i]["tableNo"].ToString());
+            string title = musicJson[i]["title"].ToString();
+            string singer = musicJson[i]["singer"].ToString();
+
+            SetRequestMusic(new RequestMusicInfo(id, tableNo, title, singer));
+        }
+
+        Info.adminTablePacking = "";
+        Info.adminOrderPacking = "";
+        Info.adminMusicPacking = "";
+    }
 
 	public void SetLogin(int tableNo)
 	{
@@ -148,7 +187,19 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
         listOrder.Add(elt);
     }
 
+    public void SetRequestMusic(RequestMusicInfo info)
+    {
+        MusicElt elt = CreateMusicElt();
+        elt.SetInfo(info);
+    }
+
     public void SetRequestMusic(string packing)
+    {
+        MusicElt elt = CreateMusicElt();
+        elt.SetInfo(packing);
+    }
+
+    MusicElt CreateMusicElt()
     {
         GameObject obj = Instantiate (prefabMusic) as GameObject;
         obj.SetActive (true);
@@ -158,8 +209,9 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
         tr.InitTransform ();
 
         MusicElt elt = obj.GetComponent<MusicElt> ();
-        elt.SetInfo (packing);
         listMusic.Add (elt);
+
+        return elt;
     }
 
 	public void RemoveElt(bool isOrder, int id)

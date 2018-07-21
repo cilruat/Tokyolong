@@ -63,8 +63,13 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 	void LoginACK(CPacket msg)
 	{
 		string pop_string = msg.pop_string ();
-		if (pop_string == "admin")
-			SceneChanger.LoadScene ("Admin", PageBase.Instance.curBoardObj ());
+        if (pop_string == "admin")
+        {
+            Info.adminTablePacking = msg.pop_string ();
+            Info.adminOrderPacking = msg.pop_string ();
+            Info.adminMusicPacking = msg.pop_string ();
+            SceneChanger.LoadScene("Admin", PageBase.Instance.curBoardObj());
+        }
 		else {
             Info.TableNum = byte.Parse (pop_string);
 			PageLogin.Instance.OnNext ();

@@ -66,8 +66,28 @@ namespace SP_Server.UserState
                         owner.tableNum = tableNum;                        
 
                         send_msg = CPacket.create((short)PROTOCOL.LOGIN_ACK);
-                        send_msg.push(pop_string);  
+                        send_msg.push(pop_string);
+                        if (pop_string == "admin")
+                        {
+                            List<int> listUserTableNo = new List<int>();
 
+                            for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
+                            {
+                                User user = owner.mainFrm.ListUser[i];
+                                if (user.IsAdmin)
+                                    continue;
+
+                                listUserTableNo.Add(user.tableNum);
+                            }
+
+
+                            List<RequestOrder> listReqOrder = owner.mainFrm.listRequestOrder;
+                            List<RequestMusicInfo> listReqMusic = owner.mainFrm.listReqMusicInfo;
+
+                            send_msg.push((JsonMapper.ToJson(listUserTableNo)).ToString());
+                            send_msg.push((JsonMapper.ToJson(listReqOrder)).ToString());
+                            send_msg.push((JsonMapper.ToJson(listReqMusic)).ToString());
+                        }
                         break;
                     case PROTOCOL.LOGOUT_REQ:
                         tableNo = msg.pop_byte();
@@ -148,21 +168,18 @@ namespace SP_Server.UserState
                         string order = msg.pop_string();
 
                         ++Frm.JACKPOT_GAME_CNT;
-                        ++owner.gameInfo.gameCnt;                        
-
+                        ++owner.gameInfo.gameCnt;
+                        owner.mainFrm.OrderID++;
+                        RequestOrder reqOrder = new RequestOrder((byte)ERequestOrerType.eOrder, owner.mainFrm.OrderID, tableNo, order);
+                        owner.mainFrm.SetRequestOrder(reqOrder);
                         // Admin Send packet
                         if (Frm.GetAdminUser() != null)
                         {
                             other_msg = CPacket.create((short)PROTOCOL.ORDER_NOT);
-
-                            owner.mainFrm.OrderID++;
-                            RequestOrder reqOrder = new RequestOrder((byte)ERequestOrerType.eOrder, owner.mainFrm.OrderID, tableNo, order);
                             other_msg.push(reqOrder.type);
                             other_msg.push(reqOrder.id);
                             other_msg.push((byte)reqOrder.tableNo);
                             other_msg.push(reqOrder.packing);
-
-                            owner.mainFrm.SetRequestOrder(reqOrder);
 
                             Frm.GetAdminUser().send(other_msg);
                         }
@@ -219,19 +236,18 @@ namespace SP_Server.UserState
                         tableNo = msg.pop_byte();
                         short discount = msg.pop_int16();
 
+                        owner.mainFrm.OrderID++;
+                        RequestOrder reqOrderDiscount = new RequestOrder((byte)ERequestOrerType.eDiscount, owner.mainFrm.OrderID, tableNo, Convert.ToString(discount));
+                        owner.mainFrm.SetRequestOrder(reqOrderDiscount);
                         // Admin Send packet
                         if (Frm.GetAdminUser() != null)
                         {
                             other_msg = CPacket.create((short)PROTOCOL.GAME_DISCOUNT_NOT);
 
-                            owner.mainFrm.OrderID++;
-                            RequestOrder reqOrder = new RequestOrder((byte)ERequestOrerType.eDiscount, owner.mainFrm.OrderID, tableNo, Convert.ToString(discount));
-                            other_msg.push(reqOrder.type);
-                            other_msg.push(reqOrder.id);
-                            other_msg.push((byte)reqOrder.tableNo);
-                            other_msg.push(reqOrder.packing);
-
-                            owner.mainFrm.SetRequestOrder(reqOrder);
+                            other_msg.push(reqOrderDiscount.type);
+                            other_msg.push(reqOrderDiscount.id);
+                            other_msg.push((byte)reqOrderDiscount.tableNo);
+                            other_msg.push(reqOrderDiscount.packing);
 
                             Frm.GetAdminUser().send(other_msg);
                         }

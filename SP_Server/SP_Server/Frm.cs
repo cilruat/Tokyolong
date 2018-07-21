@@ -397,6 +397,14 @@ namespace SP_Server
             if (dictUserDiscount.ContainsKey(tableNo))
                 dictUserDiscount.Remove(tableNo);
 
+            for (int i = listRequestOrder.Count - 1; i >= 0; i--)
+            {
+                if (listRequestOrder[i].tableNo != tableNo)
+                    continue;
+
+                listRequestOrder.RemoveAt(i);
+            }
+
             for (int i = listReqMusicInfo.Count -1; i >= 0; i--)
             {
                 if (listReqMusicInfo[i].tableNo != tableNo)
