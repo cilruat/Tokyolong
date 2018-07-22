@@ -29,6 +29,11 @@ namespace SP_Server
             this.peopleCnt = peopleCnt;
             this.customerType = customerType;
         }
+
+        public bool IsAdmin()
+        {
+            return tableNum == 10000;
+        }
     }
 
     
@@ -120,7 +125,18 @@ namespace SP_Server
                 Frm.GetAdminUser().send(admin_msg);
             }
 
-            mainFrm.RemoveUserData(this.tableNum);
+            CPacket msg = null;
+            for (int i = 0; i < mainFrm.ListUser.Count; i++)
+            {
+                User user = mainFrm.ListUser[i];
+                if (user.IsAdmin)
+                    continue;
+
+                msg = CPacket.create((short)PROTOCOL.LOGOUT_NOT);
+                msg.push((byte)tableNum);
+                user.send(msg);
+            }
+
             mainFrm.remove_user(this);
 
             if (this.battle_room != null)

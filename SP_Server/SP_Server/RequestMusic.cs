@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Linq;
 
+[Serializable]
 public class RequestMusicInfo
 {
     public int id;

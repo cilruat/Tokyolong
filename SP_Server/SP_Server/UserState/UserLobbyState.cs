@@ -71,13 +71,13 @@ namespace SP_Server.UserState
                         {
                             List<int> listUserTableNo = new List<int>();
 
-                            for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
+                            for (int i = 0; i < owner.mainFrm.listUserInfo.Count; i++)
                             {
-                                User user = owner.mainFrm.ListUser[i];
-                                if (user.IsAdmin)
+                                UserInfo userInfo = owner.mainFrm.listUserInfo[i];
+                                if (userInfo.IsAdmin())
                                     continue;
 
-                                listUserTableNo.Add(user.tableNum);
+                                listUserTableNo.Add(userInfo.tableNum);
                             }
 
 
@@ -167,10 +167,10 @@ namespace SP_Server.UserState
                         tableNo = msg.pop_byte();
                         string order = msg.pop_string();
 
-                        ++Frm.JACKPOT_GAME_CNT;
                         ++owner.gameInfo.gameCnt;
-                        owner.mainFrm.OrderID++;
-                        RequestOrder reqOrder = new RequestOrder((byte)ERequestOrerType.eOrder, owner.mainFrm.OrderID, tableNo, order);
+                        ++owner.mainFrm.orderID;
+
+                        RequestOrder reqOrder = new RequestOrder((byte)ERequestOrerType.eOrder, owner.mainFrm.orderID, tableNo, order);
                         owner.mainFrm.SetRequestOrder(reqOrder);
                         // Admin Send packet
                         if (Frm.GetAdminUser() != null)
@@ -236,8 +236,8 @@ namespace SP_Server.UserState
                         tableNo = msg.pop_byte();
                         short discount = msg.pop_int16();
 
-                        owner.mainFrm.OrderID++;
-                        RequestOrder reqOrderDiscount = new RequestOrder((byte)ERequestOrerType.eDiscount, owner.mainFrm.OrderID, tableNo, Convert.ToString(discount));
+                        ++owner.mainFrm.orderID;
+                        RequestOrder reqOrderDiscount = new RequestOrder((byte)ERequestOrerType.eDiscount, owner.mainFrm.orderID, tableNo, Convert.ToString(discount));
                         owner.mainFrm.SetRequestOrder(reqOrderDiscount);
                         // Admin Send packet
                         if (Frm.GetAdminUser() != null)
@@ -281,7 +281,7 @@ namespace SP_Server.UserState
                         }
 
                         send_msg = CPacket.create((short)PROTOCOL.REQUEST_MUSIC_ACK);
-                        send_msg.push(owner.mainFrm.listReqMusicInfo.Count);
+                        send_msg.push(owner.mainFrm.musicID);
                         send_msg.push(reqMusicJson.ToString());
 
                         break;
@@ -374,15 +374,9 @@ namespace SP_Server.UserState
                         send_msg = CPacket.create((short)PROTOCOL.TABLE_ORDER_INPUT_ACK);
                         break;
                     case PROTOCOL.SLOT_START_REQ:
-                        bool isJackpot = Frm.JACKPOT_GAME_CNT == Frm.JACKPOT_GAME_CATCH;
-                        if (isJackpot)
-                            Frm.JACKPOT_GAME_CNT = 0;
-
-                        byte jackpot = (byte)(isJackpot ? 1 : 0);
                         --owner.gameInfo.gameCnt;
 
-                        send_msg = CPacket.create((short)PROTOCOL.SLOT_START_ACK);
-                        send_msg.push(jackpot);
+                        send_msg = CPacket.create((short)PROTOCOL.SLOT_START_ACK);                        
                         send_msg.push(owner.gameInfo.gameCnt);
                         break;
                     case PROTOCOL.REPORT_OFFLINE_GAME_REQ:

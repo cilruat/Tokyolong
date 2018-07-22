@@ -36,6 +36,7 @@
             this.colDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnSend = new System.Windows.Forms.Button();
             this.CB_AutoScroll = new System.Windows.Forms.CheckBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBox1
@@ -43,7 +44,7 @@
             this.textBox1.Location = new System.Drawing.Point(103, 361);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(339, 25);
+            this.textBox1.Size = new System.Drawing.Size(253, 25);
             this.textBox1.TabIndex = 2;
             // 
             // listviewLog
@@ -57,7 +58,7 @@
             this.listviewLog.FullRowSelect = true;
             this.listviewLog.GridLines = true;
             this.listviewLog.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.listviewLog.Location = new System.Drawing.Point(12, 13);
+            this.listviewLog.Location = new System.Drawing.Point(12, 12);
             this.listviewLog.MultiSelect = false;
             this.listviewLog.Name = "listviewLog";
             this.listviewLog.Size = new System.Drawing.Size(510, 331);
@@ -83,7 +84,7 @@
             // 
             // btnSend
             // 
-            this.btnSend.Location = new System.Drawing.Point(448, 361);
+            this.btnSend.Location = new System.Drawing.Point(362, 361);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(77, 25);
             this.btnSend.TabIndex = 6;
@@ -104,11 +105,22 @@
             this.CB_AutoScroll.UseVisualStyleBackColor = true;
             this.CB_AutoScroll.CheckedChanged += new System.EventHandler(this.CB_AutoScroll_CheckedChanged);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(445, 361);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(77, 25);
+            this.button1.TabIndex = 8;
+            this.button1.Text = "LOAD";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.OnBtnDataLoad);
+            // 
             // Frm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(534, 402);
+            this.ClientSize = new System.Drawing.Size(534, 401);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.CB_AutoScroll);
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.listviewLog);
@@ -132,6 +144,7 @@
         public System.Windows.Forms.ColumnHeader colFunc;
         public System.Windows.Forms.ColumnHeader colFile;
         public System.Windows.Forms.ColumnHeader colDate;
+        private System.Windows.Forms.Button button1;
     }
 }
 

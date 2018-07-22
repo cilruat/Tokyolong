@@ -13,6 +13,7 @@ namespace SP_Server
         eDiscount,
     }
 
+    [Serializable]
     public class RequestOrder
     {
         public byte type;
