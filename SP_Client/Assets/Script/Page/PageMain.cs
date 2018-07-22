@@ -28,7 +28,7 @@ public class PageMain : PageBase {
 		base.Awake ();
 
 		txtPlayCnt.text = Info.GamePlayCnt.ToString ();
-        txtTableNo.text = "No."+Info.TableNum.ToString();
+        txtTableNo.text = Info.TableNum.ToString();
 	}
 
 	public void OnClickMenu(int idx)

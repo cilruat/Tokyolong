@@ -94,9 +94,9 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 		return dicObject [curUI];
 	}
 
-    public void ShowChatAlarm()     {   uiAlarm.ShowAlarm("채팅이\n도착 하였습니다", _ShowChat);  }
-    public void ShowOrderAlarm()    {   uiAlarm.ShowAlarm("주문이\n접수 되었습니다", _ShowBillDetail);    }
-    public void ShowDiscountAlarm() {   uiAlarm.ShowAlarm("할인이\n접수 되었습니다", _ShowBillDetail);    }
+	public void ShowChatAlarm()     {   uiAlarm.ShowAlarm(EAlarmType.eMessage,"새로운 메세지가\n도착 했다냥~", _ShowChat);  }
+	public void ShowOrderAlarm()    {   uiAlarm.ShowAlarm(EAlarmType.eMessage,"주문이\n접수 됐다냥~", _ShowBillDetail);    }
+	public void ShowDiscountAlarm() {   uiAlarm.ShowAlarm(EAlarmType.eMessage,"할인이\n접수 됐다냥~", _ShowBillDetail);    }
 
     void _ShowChat()
     {
