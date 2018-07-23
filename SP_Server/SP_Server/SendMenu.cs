@@ -6,6 +6,7 @@ using FreeNet;
 
 namespace SP_Server
 {
+    [Serializable]
     public class SendMenu
     {
         public int menu = -1;

@@ -38,18 +38,19 @@ namespace SP_Server
 
         public List<User> ListUser { get => listUser; set => listUser = value; }
 
-        int orderID = -1;
-        public int OrderID { get { return orderID; } set { orderID = value; } }
-        public List<RequestOrder> listRequestOrder = new List<RequestOrder>();
+        /// <summary>
+        ///  저장될 정보
+        /// </summary>        
 
+        public List<UserInfo> listUserInfo = new List<UserInfo>();
         public Dictionary<int, List<SendMenu>> dictUserMenu = new Dictionary<int, List<SendMenu>>();
-
-        int musicID = -1;
-        public List<RequestMusicInfo> listReqMusicInfo = new List<RequestMusicInfo>();
         public Dictionary<int, List<short>> dictUserDiscount = new Dictionary<int, List<short>>();
-        // 게임 정보
-        public static int JACKPOT_GAME_CNT = 0;
-        public static int JACKPOT_GAME_CATCH = 10;
+
+        public int orderID = -1;
+        public List<RequestOrder> listRequestOrder = new List<RequestOrder>();        
+
+        public int musicID = -1;
+        public List<RequestMusicInfo> listReqMusicInfo = new List<RequestMusicInfo>();
 
         public Frm()
         {
@@ -117,7 +118,10 @@ namespace SP_Server
 
                     for (int i = 0; i < ListUser.Count; i++)
                         WriteLog("[TableNo: " + ListUser[i].tableNum + "]");
-                    break;                
+                    break;
+                case "save":
+                    AllDataSave();
+                    break;
                 default:
                     MessageBox.Show("아직 기능없어잉~ ㅋㅋ");
                     break;
@@ -244,6 +248,7 @@ namespace SP_Server
             ++musicID;
             RequestMusicInfo reqMusic = new RequestMusicInfo(musicID, tableNo, title, singer);
             listReqMusicInfo.Add(reqMusic);
+            DataRequestSave(false);
 
             return reqMusic;
         }
@@ -272,6 +277,7 @@ namespace SP_Server
             }
 
             listReqMusicInfo.RemoveAt(deleteIdx);
+            DataRequestSave(false);
 
             // 리스트가 없음으로 아이디 부여 초기화
             if (listReqMusicInfo.Count <= 0)
@@ -281,6 +287,7 @@ namespace SP_Server
         public void SetRequestOrder(RequestOrder reqOrder)
         {
             listRequestOrder.Add(reqOrder);
+            DataRequestSave(true);
         }
 
         public RequestOrder GetRequestOrder(int id)
@@ -314,6 +321,7 @@ namespace SP_Server
                 return;
 
             listRequestOrder.RemoveAt(findIdx);
+            DataRequestSave(true);
         }
 
         public void SetOrder(int tableNo, string packing)
@@ -354,6 +362,8 @@ namespace SP_Server
                 if (listSendMenu[containIdx].cnt <= 0)
                     listSendMenu.RemoveAt(containIdx);
             }
+
+            DataMenuSave();
         }
 
         public List<SendMenu> GetOrder(int tableNo)
@@ -377,6 +387,7 @@ namespace SP_Server
                 dictUserDiscount.Add(tableNo, new List<short>());
 
             dictUserDiscount[tableNo].Add(discount);
+            DataDiscountSave();
         }
 
         public List<short> GetDiscount(int tableNo)
@@ -420,12 +431,108 @@ namespace SP_Server
                     continue;
 
                 findIdx = i;
+                remove_user(listUser[i]);
+                break;
             }
 
             if (findIdx == -1)
                 return;
 
             listUser[findIdx].info = new UserInfo();
+            AllDataSave();            
+        }
+
+        private void OnBtnDataLoad(object sender, EventArgs e)
+        {
+            dictUserMenu.Clear();
+            dictUserDiscount.Clear();
+            listRequestOrder.Clear();
+            listReqMusicInfo.Clear();
+
+            Dictionary<int, List<SendMenu>> menus = BinarySave.Deserialize<Dictionary<int, List<SendMenu>>>("DataSave\\UserMenus.bin");
+            Dictionary<int, List<short>> discounts = BinarySave.Deserialize<Dictionary<int, List<short>>>("DataSave\\DiscountInfo.bin");
+            List<RequestOrder> orders = BinarySave.Deserialize<List<RequestOrder>>("DataSave\\RequestOrder.bin");
+            List<RequestMusicInfo> musics = BinarySave.Deserialize<List<RequestMusicInfo>>("DataSave\\RequestMusic.bin");
+
+            foreach (KeyValuePair<int, List<SendMenu>> pair in menus)
+            {
+                int tableNo = pair.Key;
+                List<SendMenu> list = new List<SendMenu>();
+
+                for (int i = 0; i < pair.Value.Count; i++)
+                {
+                    SendMenu loadMenu = pair.Value[i];
+                    SendMenu setMenu = new SendMenu(loadMenu.menu, loadMenu.cnt);
+                    list.Add(setMenu);
+                }
+
+                dictUserMenu.Add(tableNo, list);
+            }
+
+            foreach (KeyValuePair<int, List<short>> pair in discounts)
+            {
+                int tableNo = pair.Key;
+                List<short> list = new List<short>();
+
+                for (int i = 0; i < pair.Value.Count; i++)
+                {
+                    short loadDiscount = pair.Value[i];
+                    list.Add(loadDiscount);
+                }
+
+                dictUserDiscount.Add(tableNo, list);
+            }
+
+            for (int i = 0; i < orders.Count; i++)
+            {
+                RequestOrder loadOrder = orders[i];
+                RequestOrder setOrder = new RequestOrder(loadOrder.type, loadOrder.id, loadOrder.tableNo, loadOrder.packing);
+                
+                listRequestOrder.Add(setOrder);
+                orderID = loadOrder.id;
+            }
+
+            for (int i = 0; i < musics.Count; i++)
+            {
+                RequestMusicInfo loadMusic = musics[i];
+                RequestMusicInfo setMusic = new RequestMusicInfo(loadMusic.id, loadMusic.tableNo, loadMusic.title, loadMusic.singer);
+
+                listReqMusicInfo.Add(setMusic);
+                musicID = loadMusic.id;
+            }
+        }
+
+        public void DataMenuSave()
+        {
+            if (Directory.Exists("DataSave") == false)
+                Directory.CreateDirectory("DataSave");
+
+            BinarySave.Serialize(dictUserMenu, "DataSave\\UserMenus.bin");
+        }
+
+        public void DataDiscountSave()
+        {
+            if (Directory.Exists("DataSave") == false)
+                Directory.CreateDirectory("DataSave");
+
+            BinarySave.Serialize(dictUserDiscount, "DataSave\\DiscountInfo.bin");
+        }
+
+        public void DataRequestSave(bool isOrder)
+        {
+            if (Directory.Exists("DataSave") == false)
+                Directory.CreateDirectory("DataSave");
+
+            if (isOrder)    BinarySave.Serialize(listRequestOrder, "DataSave\\RequestOrder.bin");
+            else            BinarySave.Serialize(listReqMusicInfo, "DataSave\\RequestMusic.bin");
+        }        
+
+        public void AllDataSave()
+        {
+            DataMenuSave();
+            DataDiscountSave();
+            DataRequestSave(true);
+            DataRequestSave(false);            
         }
     }
 }
