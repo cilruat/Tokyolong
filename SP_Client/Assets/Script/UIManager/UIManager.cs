@@ -11,6 +11,7 @@ public enum eUI
 	eBillSending,
 	eMusicRequest,
 	eWaiting,
+    eHowToUse,
 
 	eNone = 100,
 }

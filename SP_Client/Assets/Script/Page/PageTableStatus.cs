@@ -31,12 +31,10 @@ public class PageTableStatus : PageBase {
     public RectTransform rtDetail;
     public RectTransform rtArrow;
 
-    public Texture[] imgCustomerSpot;
-
     EFloor curViewFloor = EFloor.Floor1;
     int curViewFloorIdx { get { return (int)curViewFloor; } }
 
-    int startTableIdx { get { return curViewFloor == EFloor.Floor1 ? 0 : FLOOR_MAX_TABLE_1; } }
+    int startTableIdx { get { return curViewFloor == EFloor.Floor1 ? 1 : FLOOR_MAX_TABLE_1; } }
     int endTableIdx { get { return curViewFloor == EFloor.Floor1 ? FLOOR_MAX_TABLE_1 : FLOOR_MAX_TABLE_1 + FLOOR_MAX_TABLE_2; } }
 
     int selectTableSpot = -1;
@@ -83,7 +81,7 @@ public class PageTableStatus : PageBase {
             return;
         }
 
-        if (detailDisableTween != null)
+        if (detailDisableTween != null && detailDisableTween.IsTweening())
         {
             detailDisableTween.StopTween();
             detailDisableTween = null;
@@ -126,18 +124,22 @@ public class PageTableStatus : PageBase {
         rtArrow.eulerAngles = new Vector3(0f, 0f, arrowAngle);
 
         float startX = detailPosX + (-dir * 20f);
-        UITweenPosX.Start(rtDetail.gameObject, startX, detailPosX, TWParam.New(.5f).Curve(TWCurve.CurveLevel4).Speed(TWSpeed.Slower));
-        UITweenAlpha.Start(rtDetail.gameObject, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.Linear).Speed(TWSpeed.Slower));
+        UITweenPosX.Start(rtDetail.gameObject, startX, detailPosX, TWParam.New(.3f).Curve(TWCurve.CurveLevel4).Speed(TWSpeed.Slower));
+        UITweenAlpha.Start(rtDetail.gameObject, 0f, 1f, TWParam.New(.3f).Curve(TWCurve.Linear).Speed(TWSpeed.Slower));
     }
 
     IEnumerator ViewTableSpot()
     {
-        for (int i = startTableIdx; i < endTableIdx; i++)
+        for (int i = startTableIdx; i <= endTableIdx; i++)
         {
 			TableSpotElt elt = tableSpots [i];
 			UserInfo info = Info.GetUser (elt.tableNo);
             byte customer = info != null ? info.customerType : (byte)TableSpotElt.ESpotType.eNone;
-            elt.SetTableSpot (customer);
+            elt.SetTableSpot (info);
+
+            if (info == null)
+                continue;
+
             yield return new WaitForSeconds(.15f);
         }
 
@@ -153,8 +155,8 @@ public class PageTableStatus : PageBase {
         if (rtDetail.gameObject.activeSelf == false)
             return;
 
-        UITweenPosY.Start(rtDetail.gameObject, rtDetail.anchoredPosition.y, rtDetail.anchoredPosition.y + 20f, TWParam.New(.5f).Curve(TWCurve.CurveLevel4).Speed(TWSpeed.Slower));
-        detailDisableTween = UITweenAlpha.Start(rtDetail.gameObject, 1f, 0f, TWParam.New(.5f).Curve(TWCurve.Linear).Speed(TWSpeed.Slower).DisableOnFinish());
+        UITweenPosY.Start(rtDetail.gameObject, rtDetail.anchoredPosition.y, rtDetail.anchoredPosition.y + 20f, TWParam.New(.3f).Curve(TWCurve.CurveLevel4).Speed(TWSpeed.Slower));
+        detailDisableTween = UITweenAlpha.Start(rtDetail.gameObject, 1f, 0f, TWParam.New(.3f).Curve(TWCurve.Linear).Speed(TWSpeed.Slower).DisableOnFinish());
     }
 
     public void OnSelectDetail(int i)

@@ -16,6 +16,7 @@ public class PageMain : PageBase {
 		eBill,
 		eTableSet,
         eRequestMusic,
+        eHowToUse,
 	}
 
     public CanvasGroup[] cgBoard;
@@ -44,6 +45,7 @@ public class PageMain : PageBase {
             case EMenu.eBill:       NetworkManager.Instance.Order_Detail_REQ(); 		    break;
 		    case EMenu.eTableSet:   UIManager.Instance.Show (eUI.eTableSetting);		    break;
             case EMenu.eRequestMusic: NetworkManager.Instance.Request_Music_List_REQ();     break;
+            case EMenu.eHowToUse:   UIManager.Instance.Show(eUI.eHowToUse);                 break;
 		}
 	}	
 }
