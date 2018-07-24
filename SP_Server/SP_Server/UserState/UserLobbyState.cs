@@ -168,6 +168,8 @@ namespace SP_Server.UserState
                         string order = msg.pop_string();
 
                         ++owner.gameInfo.gameCnt;
+                        owner.mainFrm.IncGameCount(tableNo, owner.gameInfo.gameCnt);
+
                         ++owner.mainFrm.orderID;
 
                         RequestOrder reqOrder = new RequestOrder((byte)ERequestOrerType.eOrder, owner.mainFrm.orderID, tableNo, order);
@@ -375,28 +377,22 @@ namespace SP_Server.UserState
                         break;
                     case PROTOCOL.SLOT_START_REQ:
                         --owner.gameInfo.gameCnt;
+                        owner.mainFrm.DecGameCount(tableNo, owner.gameInfo.gameCnt);
 
                         send_msg = CPacket.create((short)PROTOCOL.SLOT_START_ACK);                        
                         send_msg.push(owner.gameInfo.gameCnt);
                         break;
                     case PROTOCOL.REPORT_OFFLINE_GAME_REQ:
                         tableNo = msg.pop_byte();
-                        byte byJackpot = msg.pop_byte();
                         byte gameType = msg.pop_byte();
                         byte gameKind = msg.pop_byte();
                         byte gameDiscount = msg.pop_byte();
 
-                        ++owner.unfinishGameID;
-                        Unfinish unfinish = new Unfinish(owner.unfinishGameID, gameType, gameKind, gameDiscount);
+                        ++owner.gameInfo.gameID;
+                        Unfinish unfinish = new Unfinish(owner.gameInfo.gameID, gameType, gameKind, gameDiscount);
                         owner.gameInfo.listUnfinish.Add(unfinish);
 
-                        // Admin Send packet
-                        if (byJackpot == 1 && Frm.GetAdminUser() != null)
-                        {
-                            other_msg = CPacket.create((short)PROTOCOL.REPORT_OFFLINE_GAME_NOT);
-                            other_msg.push(tableNo);                            
-                            Frm.GetAdminUser().send(other_msg);
-                        }
+                        owner.mainFrm.SetUnfinishGame(tableNo, unfinish);
 
                         send_msg = CPacket.create((short)PROTOCOL.REPORT_OFFLINE_GAME_ACK);
                         break;
@@ -405,6 +401,19 @@ namespace SP_Server.UserState
 
                         send_msg = CPacket.create((short)PROTOCOL.UNFINISH_GAME_LIST_ACK);
                         send_msg.push(listUnfinishJson.ToString());
+                        break;
+                    case PROTOCOL.UNFINISH_GAME_CONFIRM_REQ:
+                        tableNo = msg.pop_byte();
+                        int id = msg.pop_int32();
+                        byte byDis = msg.pop_byte();
+
+                        bool isDiscount = byDis == 1 ? true : false;
+                        if (isDiscount)
+                        {
+                        }
+
+                        owner.mainFrm.RemoveUnfinishGame(tableNo, id);
+
                         break;
                     default:
                         break;

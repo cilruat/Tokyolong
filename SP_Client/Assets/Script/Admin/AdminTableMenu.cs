@@ -31,5 +31,10 @@ public class AdminTableMenu : SingletonMonobehaviour<AdminTableMenu> {
         OnClose();
     }
 
+	public void OnUnfinishGame()
+	{
+		NetworkManager.Instance.UnfinishGamelist_REQ ();
+	}
+
 	public void OnClose() {	gameObject.SetActive (false); }
 }

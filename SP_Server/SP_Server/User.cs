@@ -52,8 +52,7 @@ namespace SP_Server
         public byte peopleCnt { get { return info.peopleCnt; } set { info.peopleCnt = value; } }
         public byte customerType { get { return info.customerType; } set { info.customerType = value; } }
         public UserInfo info = new UserInfo();
-
-        public int unfinishGameID = -1;
+        
         public GameInfo gameInfo = new GameInfo();
 
         public GameRoom battle_room { get; private set; }

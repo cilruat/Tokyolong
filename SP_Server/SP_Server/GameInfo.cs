@@ -6,12 +6,13 @@ using FreeNet;
 
 namespace SP_Server
 {
+    [Serializable]
     public class Unfinish
     {
-        int id = -1;
-        byte type = 0;
-        byte kind = 0;
-        byte discount = 0;
+        public int id = -1;
+        public byte type = 0;
+        public byte kind = 0;
+        public byte discount = 0;
 
         public Unfinish(int id, byte type, byte kind, byte discount)
         {
@@ -22,9 +23,11 @@ namespace SP_Server
         }
     }
 
+    [Serializable]
     public class GameInfo
     {
-        public byte gameCnt = 0;
+        public int gameID = -1;
+        public int gameCnt = 0;
         public List<Unfinish> listUnfinish = new List<Unfinish>();
     }
 }

@@ -18,5 +18,10 @@ public class GameElt : MonoBehaviour {
 		txtName.text = Info.GameName (eType, game, eDis);
 	}
 
+	public void OnConfirm(bool discount)
+	{
+		NetworkManager.Instance.UnfinishGameConfirm_REQ (id, discount);
+	}
+
 	public int GetID() { return id; }
 }

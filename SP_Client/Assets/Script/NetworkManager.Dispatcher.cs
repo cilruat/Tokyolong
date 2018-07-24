@@ -46,9 +46,10 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         case PROTOCOL.TABLE_ORDER_INPUT_ACK:    TableOrderInputACK(msg);    break;
         case PROTOCOL.TABLE_ORDER_INPUT_NOT:    TableOrderInputNOT(msg);    break;
 		case PROTOCOL.SLOT_START_ACK:			SlotStartACK (msg);			break;
-		case PROTOCOL.REPORT_OFFLINE_GAME_ACK:	ReportOfflineGame_ACK ();	break;
-		case PROTOCOL.REPORT_OFFLINE_GAME_NOT:	ReportOfflineGame_NOT (msg);	break;
-		case PROTOCOL.UNFINISH_GAME_LIST_ACK:	UnfinishGameListACK(msg);		break;
+		case PROTOCOL.REPORT_OFFLINE_GAME_ACK:	ReportOfflineGameACK ();	break;
+		case PROTOCOL.UNFINISH_GAME_LIST_ACK:	UnfinishGameListACK(msg);	break;
+		case PROTOCOL.UNFINISH_GAME_CONFIRM_ACK:	UnfinishGameConfirmNOT (msg);	break;
+		case PROTOCOL.UNFINISH_GAME_CONFIRM_NOT:	UnfinishGameConfirmNOT (msg);	break;
 		}
 	}
 
@@ -298,25 +299,17 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
 	void SlotStartACK(CPacket msg)
 	{
-		byte jackpot = msg.pop_byte ();
 		Info.GamePlayCnt = msg.pop_byte ();
 
 		if (Info.GamePlayCnt < 0)
 			Info.GamePlayCnt = 0;
 
-		bool isJackpot = jackpot == 1 ? true : false;
-		((PageGame)PageBase.Instance).FinishStart (isJackpot);
+		((PageGame)PageBase.Instance).FinishStart ();
 	}
 
-	void ReportOfflineGame_ACK()
+	void ReportOfflineGameACK()
 	{
 		NetworkManager.Instance.UnfinishGamelist_REQ ();
-	}
-
-	void ReportOfflineGame_NOT(CPacket msg)
-	{
-		byte tableNo = msg.pop_byte ();
-		PageAdmin.Instance.ShowJackpot (tableNo);
 	}
 
 	void UnfinishGameListACK(CPacket msg)
@@ -324,8 +317,17 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		string packing = msg.pop_string ();
 
 		if (Info.isCheckScene ("Admin"))
-			PageAdmin.Instance.SHowUnfinishGameList (packing);
+			PageAdmin.Instance.ShowUnfinishGameList (packing);
 		else
 			((PageGame)PageBase.Instance).RefreshUnfinishList (packing);
+	}
+
+	void UnfinishGameConfirmNOT(CPacket msg)
+	{
+		int id = msg.pop_int32 ();
+		if (Info.isCheckScene ("Admin"))
+			PageAdmin.Instance.RemoveUnfinishGame (id);
+		else
+			((PageGame)PageBase.Instance).RemoveUnfinishGame (id);
 	}
 }

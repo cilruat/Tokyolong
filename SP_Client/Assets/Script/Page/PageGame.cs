@@ -28,7 +28,6 @@ public partial class PageGame : PageBase {
 	public List<SlotMachineElt> listSlotMachine = new List<SlotMachineElt>();
 	public CountDown[] countDown;
 
-	bool isJackpot = false;
 	bool isStopEnable = false;
 	int curGameType = -1;
 	int curGame = -1;
@@ -58,8 +57,10 @@ public partial class PageGame : PageBase {
 				stopIdx = UnityEngine.Random.Range (0, 2);
 				Info.GameDiscountWon = (short)stopIdx;
 				break;
-			case 1:		
-				stopIdx = UnityEngine.Random.Range (0, 4);
+			case 1:
+				float percent = UnityEngine.Random.Range (0f, 1f);
+				Debug.Log ("slot percent: " + percent);
+				stopIdx = _GetGameTypeIdx (percent);
 				curGameType = stopIdx;
 				break;
 			case 2:
@@ -73,6 +74,14 @@ public partial class PageGame : PageBase {
 		}
 
 		isStopEnable = true;
+	}
+	
+	int _GetGameTypeIdx(float percent)
+	{
+		if (percent < .4f)			return 0;
+		else if (percent < .8f)		return 3;
+		else if (percent < .9f)		return 1;
+		else						return 2;
 	}
 
 	RectTransform[] _AllRtElts()
@@ -116,10 +125,8 @@ public partial class PageGame : PageBase {
 		NetworkManager.Instance.SlotStart_REQ ();
 	}
 
-	public void FinishStart(bool isJackpot)
+	public void FinishStart()
 	{
-		this.isJackpot = isJackpot;
-
 		for (int i = 0; i < objStartDesc.Length; i++)
 			objStartDesc [i].SetActive (false);
 
@@ -157,7 +164,7 @@ public partial class PageGame : PageBase {
 				listSlotMachine [i].SetElts (rtElts);
 			}
 				
-			listSlotMachine [i].StopSlot (isJackpot);
+			listSlotMachine [i].StopSlot (false);
 			yield return new WaitForSeconds (.1f);
 		}			
 	}
@@ -246,7 +253,7 @@ public partial class PageGame : PageBase {
 			countIdx = 1;
 			objCallMessage.SetActive (true);
 
-			NetworkManager.Instance.ReportOfflineGame_REQ (isJackpot, (byte)curGameType, (byte)curGame, (byte)Info.GameDiscountWon);
+			NetworkManager.Instance.ReportOfflineGame_REQ ((byte)curGameType, (byte)curGame, (byte)Info.GameDiscountWon);
 		}
 		
 		countDown[countIdx].Set (3, () => _FinishShowPopup ());
@@ -286,7 +293,6 @@ public partial class PageGame : PageBase {
 
 		curGameType = -1;
 		curGame = -1;
-		isJackpot = false;
 	}
 
 	public EGameType SelectGameType() { return (EGameType)curGameType; }

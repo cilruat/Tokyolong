@@ -145,13 +145,10 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		send (msg);
 	}
 
-	public void ReportOfflineGame_REQ(bool isJackpot, byte gameType, byte gameKind, byte discount)
+	public void ReportOfflineGame_REQ(byte gameType, byte gameKind, byte discount)
 	{
-		byte jackpot = (byte)(isJackpot ? 1 : 0);
-
 		CPacket msg = CPacket.create((short)PROTOCOL.REPORT_OFFLINE_GAME_REQ);
 		msg.push (Info.TableNum);
-		msg.push (jackpot);
 		msg.push (gameType);
 		msg.push (gameKind);
 		msg.push (discount);
@@ -162,6 +159,18 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 	public void UnfinishGamelist_REQ()
 	{
 		CPacket msg = CPacket.create((short)PROTOCOL.UNFINISH_GAME_LIST_REQ);
+		send (msg);
+	}
+
+	public void UnfinishGameConfirm_REQ(int id, bool discount)
+	{
+		CPacket msg = CPacket.create((short)PROTOCOL.UNFINISH_GAME_CONFIRM_REQ);
+		msg.push (Info.TableNum);
+		msg.push (id);
+
+		byte byDis = discount ? (byte)1 : (byte)0;
+		msg.push (byDis);
+
 		send (msg);
 	}
 }

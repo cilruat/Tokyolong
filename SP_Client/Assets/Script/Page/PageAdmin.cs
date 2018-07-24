@@ -20,6 +20,7 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 	public GameObject objBillConfirm;
 	public GameObject objOrderDetail;
     public GameObject objTableOrder;
+	public UnfinishGameList unfinishGame;
 
 	UITween tweenUrgency = null;
 	List<TableElt> listTable = new List<TableElt>();
@@ -292,17 +293,16 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
         AdminTableOrderInput.Instance.SetTable(tableNo);
     }
 
-	public void ShowJackpot(byte tableNo)
+	public void ShowUnfinishGameList(string packing)
 	{
+		AdminTableMenu.Instance.OnClose ();
+		unfinishGame.SetInfo (packing);
+		unfinishGame.gameObject.SetActive (true);
 	}
 
-	public void OnUnfinishGameList()
+	public void RemoveUnfinishGame(int id)
 	{
-		NetworkManager.Instance.UnfinishGamelist_REQ ();
-	}
-
-	public void SHowUnfinishGameList(string packing)
-	{
+		unfinishGame.RemoveUnfinish (id);
 	}
 
 	void Update()

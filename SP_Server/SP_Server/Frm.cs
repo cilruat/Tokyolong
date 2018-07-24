@@ -45,12 +45,13 @@ namespace SP_Server
         public List<UserInfo> listUserInfo = new List<UserInfo>();
         public Dictionary<int, List<SendMenu>> dictUserMenu = new Dictionary<int, List<SendMenu>>();
         public Dictionary<int, List<short>> dictUserDiscount = new Dictionary<int, List<short>>();
+        public Dictionary<int, GameInfo> dictUnfinishGame = new Dictionary<int, GameInfo>();
 
         public int orderID = -1;
         public List<RequestOrder> listRequestOrder = new List<RequestOrder>();        
 
         public int musicID = -1;
-        public List<RequestMusicInfo> listReqMusicInfo = new List<RequestMusicInfo>();
+        public List<RequestMusicInfo> listReqMusicInfo = new List<RequestMusicInfo>();        
 
         public Frm()
         {
@@ -400,6 +401,54 @@ namespace SP_Server
             return list;
         }
 
+        public void SetUnfinishGame(int tableNo, Unfinish info)
+        {
+            if (dictUnfinishGame.ContainsKey(tableNo) == false)
+                return;
+
+            dictUnfinishGame[tableNo].listUnfinish.Add(info);
+            DataUnfinishGameSave();
+        }
+
+        public void RemoveUnfinishGame(int tableNo, int id)
+        {
+            if (dictUnfinishGame.ContainsKey(tableNo) == false)
+                return;
+
+            for (int i = 0; i < dictUnfinishGame[tableNo].listUnfinish.Count; i++)
+            {
+                Unfinish info = dictUnfinishGame[tableNo].listUnfinish[i];
+                if (info.id != id)
+                    continue;
+
+                dictUnfinishGame[tableNo].listUnfinish.RemoveAt(i);
+                break;
+            }
+
+            if (dictUnfinishGame[tableNo].listUnfinish.Count <= 0)
+                dictUnfinishGame[tableNo].gameID = -1;
+
+            DataUnfinishGameSave();
+        }
+
+        public void IncGameCount(int tableNo, int cnt)
+        {
+            if (dictUnfinishGame.ContainsKey(tableNo) == false)
+                dictUnfinishGame.Add(tableNo, new GameInfo());
+
+            dictUnfinishGame[tableNo].gameCnt = cnt;
+            DataUnfinishGameSave();
+        }
+
+        public void DecGameCount(int tableNo, int cnt)
+        {
+            if (dictUnfinishGame.ContainsKey(tableNo) == false)
+                return;
+
+            dictUnfinishGame[tableNo].gameCnt = cnt;
+            DataUnfinishGameSave();
+        }
+
         public void RemoveUserData(int tableNo)
         {
             if (dictUserMenu.ContainsKey(tableNo))
@@ -407,6 +456,9 @@ namespace SP_Server
 
             if (dictUserDiscount.ContainsKey(tableNo))
                 dictUserDiscount.Remove(tableNo);
+
+            if (dictUnfinishGame.ContainsKey(tableNo))
+                dictUnfinishGame.Remove(tableNo);
 
             for (int i = listRequestOrder.Count - 1; i >= 0; i--)
             {
@@ -518,6 +570,14 @@ namespace SP_Server
             BinarySave.Serialize(dictUserDiscount, "DataSave\\DiscountInfo.bin");
         }
 
+        public void DataUnfinishGameSave()
+        {
+            if (Directory.Exists("DataSave") == false)
+                Directory.CreateDirectory("DataSave");
+
+            BinarySave.Serialize(dictUnfinishGame, "DataSave\\UnfinishGame.bin");
+        }
+
         public void DataRequestSave(bool isOrder)
         {
             if (Directory.Exists("DataSave") == false)
@@ -531,8 +591,9 @@ namespace SP_Server
         {
             DataMenuSave();
             DataDiscountSave();
+            DataUnfinishGameSave();
             DataRequestSave(true);
-            DataRequestSave(false);            
+            DataRequestSave(false);
         }
     }
 }
