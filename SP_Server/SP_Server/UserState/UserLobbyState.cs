@@ -413,7 +413,31 @@ namespace SP_Server.UserState
                         }
 
                         owner.mainFrm.RemoveUnfinishGame(tableNo, id);
+                        break;
+                    case PROTOCOL.TABLE_DISCOUNT_INPUT_REQ:
+                        tableNo = msg.pop_byte();
+                        int discount500Cnt = msg.pop_int32();
+                        int discount1000Cnt = msg.pop_int32();
 
+                        for (int i = 0; i < discount500Cnt; i++)
+                            owner.mainFrm.SetDiscount((int)tableNo, (short)0);
+
+                        for (int i = 0; i < discount1000Cnt; i++)
+                            owner.mainFrm.SetDiscount((int)tableNo, (short)1);
+
+
+                        for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
+                        {
+                            User other = owner.mainFrm.ListUser[i];
+                            if (other.tableNum != tableNo)
+                                continue;
+
+                            other_msg = CPacket.create((short)PROTOCOL.TABLE_DISCOUNT_INPUT_NOT);
+                            other.send(other_msg);
+                            break;
+                        }
+
+                        send_msg = CPacket.create((short)PROTOCOL.TABLE_DISCOUNT_INPUT_ACK);
                         break;
                     default:
                         break;

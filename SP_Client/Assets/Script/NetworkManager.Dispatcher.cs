@@ -50,6 +50,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		case PROTOCOL.UNFINISH_GAME_LIST_ACK:	UnfinishGameListACK(msg);	break;
 		case PROTOCOL.UNFINISH_GAME_CONFIRM_ACK:	UnfinishGameConfirmNOT (msg);	break;
 		case PROTOCOL.UNFINISH_GAME_CONFIRM_NOT:	UnfinishGameConfirmNOT (msg);	break;
+        case PROTOCOL.TABLE_DISCOUNT_INPUT_ACK:     TableDiscountInputACK(msg);     break;
+        case PROTOCOL.TABLE_DISCOUNT_INPUT_NOT:     TableDiscountInputNOT(msg);     break;
 		}
 	}
 
@@ -285,7 +287,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
     void TableOrderInputACK(CPacket msg)
     {
-        if(PageAdmin.Instance.objTableOrder.activeSelf)
+        if(PageAdmin.Instance.objTableOrderInput.activeSelf)
             AdminTableOrderInput.Instance.OnCompleteTableOrderInput();
 
         if(PageAdmin.Instance.objBillConfirm.activeSelf)
@@ -330,4 +332,14 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		else
 			((PageGame)PageBase.Instance).RemoveUnfinishGame (id);
 	}
+
+    void TableDiscountInputACK(CPacket msg)
+    {
+        AdminTableDiscountInput.Instance.OnClose();
+    }
+
+    void TableDiscountInputNOT(CPacket msg)
+    {
+        UIManager.Instance.ShowDiscountAlarm();
+    }
 }

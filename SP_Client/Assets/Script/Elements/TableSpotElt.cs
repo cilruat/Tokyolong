@@ -19,7 +19,6 @@ public class TableSpotElt : MonoBehaviour
     public Text textPeopleCnt;
     public Text textNum;
 
-    byte customer = (byte)ESpotType.eNone;
     ESpotType type = ESpotType.eNone;
     public bool IsNone { get { return this.type == ESpotType.eNone; } }
 

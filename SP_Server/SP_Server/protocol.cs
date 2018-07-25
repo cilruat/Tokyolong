@@ -72,6 +72,9 @@ namespace SP_Server
 		UNFINISH_GAME_CONFIRM_REQ,
 		UNFINISH_GAME_CONFIRM_ACK,
 		UNFINISH_GAME_CONFIRM_NOT,
+        TABLE_DISCOUNT_INPUT_REQ,
+        TABLE_DISCOUNT_INPUT_ACK,
+        TABLE_DISCOUNT_INPUT_NOT,
 
         //-------------------------------------
         // 게임 프로토콜.

@@ -134,7 +134,6 @@ public class PageTableStatus : PageBase {
         {
 			TableSpotElt elt = tableSpots [i];
 			UserInfo info = Info.GetUser (elt.tableNo);
-            byte customer = info != null ? info.customerType : (byte)TableSpotElt.ESpotType.eNone;
             elt.SetTableSpot (info);
 
             if (info == null)

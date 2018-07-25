@@ -19,7 +19,8 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 	public GameObject objTableMenu;
 	public GameObject objBillConfirm;
 	public GameObject objOrderDetail;
-    public GameObject objTableOrder;
+    public GameObject objTableOrderInput;
+    public GameObject objTableDiscountInput;
 	public UnfinishGameList unfinishGame;
 
 	UITween tweenUrgency = null;
@@ -287,9 +288,9 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
         AdminOrderDetail.Instance.SetInfo (reqOrder);
 	}
 
-    public void ShowTableOrder(byte tableNo)
+    public void ShowTableOrderInput(byte tableNo)
     {
-        objTableOrder.SetActive (true);
+        objTableOrderInput.SetActive (true);
         AdminTableOrderInput.Instance.SetTable(tableNo);
     }
 
@@ -299,6 +300,12 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 		unfinishGame.SetInfo (packing);
 		unfinishGame.gameObject.SetActive (true);
 	}
+
+    public void ShowTableDiscountInput(byte tableNo)
+    {
+        objTableDiscountInput.SetActive (true);
+        AdminTableDiscountInput.Instance.SetTable(tableNo);
+    }
 
 	public void RemoveUnfinishGame(int id)
 	{

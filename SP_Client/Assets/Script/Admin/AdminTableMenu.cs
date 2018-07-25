@@ -25,9 +25,15 @@ public class AdminTableMenu : SingletonMonobehaviour<AdminTableMenu> {
         NetworkManager.Instance.Table_Order_Confirm_REQ(tableNo);
 	}
 
-    public void OnTableOrder()
+    public void OnTableOrderInput()
     {
-        PageAdmin.Instance.ShowTableOrder(tableNo);
+        PageAdmin.Instance.ShowTableOrderInput(tableNo);
+        OnClose();
+    }
+
+    public void OnTableDiscountInput()
+    {
+        PageAdmin.Instance.ShowTableDiscountInput(tableNo);
         OnClose();
     }
 
