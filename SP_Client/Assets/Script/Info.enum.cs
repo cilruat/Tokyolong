@@ -201,8 +201,8 @@ public partial class Info : MonoBehaviour {
         int discountPrice = 0;
         switch(type)
         {
-            case EDiscount.e500won:discountPrice =      500;    break;
-            case EDiscount.e1000won:discountPrice =     1000;   break;
+            case EDiscount.e500won:		discountPrice = 500;    break;
+            case EDiscount.e1000won:	discountPrice = 1000;   break;
         }
 
         return discountPrice;

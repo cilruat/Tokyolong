@@ -42,10 +42,7 @@ namespace SP_Server
         ///  저장될 정보
         /// </summary>        
 
-        public List<UserInfo> listUserInfo = new List<UserInfo>();
-        public Dictionary<int, List<SendMenu>> dictUserMenu = new Dictionary<int, List<SendMenu>>();
-        public Dictionary<int, List<short>> dictUserDiscount = new Dictionary<int, List<short>>();
-        public Dictionary<int, GameInfo> dictUnfinishGame = new Dictionary<int, GameInfo>();
+        public Dictionary<int, UserInfo> dictUserInfo = new Dictionary<int, UserInfo>();
 
         public int orderID = -1;
         public List<RequestOrder> listRequestOrder = new List<RequestOrder>();        
@@ -244,6 +241,22 @@ namespace SP_Server
             this.Close();
         }
 
+        public void AddUserInfo(int tableNo)
+        {
+            if (dictUserInfo.ContainsKey(tableNo) == false)
+                dictUserInfo.Add(tableNo, new UserInfo(tableNo));
+            else
+                dictUserInfo[tableNo] = new UserInfo(tableNo);
+        }
+
+        public void SetUserInfo(int tableNo, UserInfo info)
+        {
+            if (dictUserInfo.ContainsKey(tableNo) == false)
+                return;
+
+            dictUserInfo[tableNo] = info;
+        }
+
         public RequestMusicInfo AddRequestMusic(int tableNo, string title, string singer)
         {
             ++musicID;
@@ -339,10 +352,10 @@ namespace SP_Server
 
         public void SetOrder(int tableNo, SendMenu sendMenu)
         {
-            if (dictUserMenu.ContainsKey(tableNo) == false)
-                dictUserMenu.Add(tableNo, new List<SendMenu>());
-
-            List<SendMenu> listSendMenu = dictUserMenu[tableNo];
+            if (dictUserInfo.ContainsKey(tableNo) == false)
+                return;            
+            
+            List<SendMenu> listSendMenu = dictUserInfo[tableNo].menus;
 
             int containIdx = -1;
             for (int i = 0; i < listSendMenu.Count; i++)
@@ -364,15 +377,15 @@ namespace SP_Server
                     listSendMenu.RemoveAt(containIdx);
             }
 
-            DataMenuSave();
+            DataUserInfoSave();
         }
 
         public List<SendMenu> GetOrder(int tableNo)
         {
             List<SendMenu> listSendMenu = new List<SendMenu>();
 
-            if (dictUserMenu.ContainsKey(tableNo))
-                listSendMenu = dictUserMenu[tableNo];
+            if (dictUserInfo.ContainsKey(tableNo))
+                listSendMenu = dictUserInfo[tableNo].menus;
 
             return listSendMenu;
         }
@@ -384,81 +397,74 @@ namespace SP_Server
 
         public void SetDiscount(int tableNo, short discount)
         {
-            if (dictUserDiscount.ContainsKey(tableNo) == false)
-                dictUserDiscount.Add(tableNo, new List<short>());
+            if (dictUserInfo.ContainsKey(tableNo) == false)
+                return;
 
-            dictUserDiscount[tableNo].Add(discount);
-            DataDiscountSave();
+            dictUserInfo[tableNo].discounts.Add(discount);
+            DataUserInfoSave();
         }
 
         public List<short> GetDiscount(int tableNo)
         {
             List<short> list = new List<short>();
 
-            if (dictUserDiscount.ContainsKey(tableNo))
-                list = dictUserDiscount[tableNo];
+            if (dictUserInfo.ContainsKey(tableNo))
+                list = dictUserInfo[tableNo].discounts;
 
             return list;
         }
 
         public void SetUnfinishGame(int tableNo, Unfinish info)
         {
-            if (dictUnfinishGame.ContainsKey(tableNo) == false)
+            if (dictUserInfo.ContainsKey(tableNo) == false)
                 return;
 
-            dictUnfinishGame[tableNo].listUnfinish.Add(info);
-            DataUnfinishGameSave();
+            dictUserInfo[tableNo].gameInfo.listUnfinish.Add(info);
+            DataUserInfoSave();
         }
 
         public void RemoveUnfinishGame(int tableNo, int id)
         {
-            if (dictUnfinishGame.ContainsKey(tableNo) == false)
+            if (dictUserInfo.ContainsKey(tableNo) == false)
                 return;
 
-            for (int i = 0; i < dictUnfinishGame[tableNo].listUnfinish.Count; i++)
+            for (int i = 0; i < dictUserInfo[tableNo].gameInfo.listUnfinish.Count; i++)
             {
-                Unfinish info = dictUnfinishGame[tableNo].listUnfinish[i];
+                Unfinish info = dictUserInfo[tableNo].gameInfo.listUnfinish[i];
                 if (info.id != id)
                     continue;
 
-                dictUnfinishGame[tableNo].listUnfinish.RemoveAt(i);
+                dictUserInfo[tableNo].gameInfo.listUnfinish.RemoveAt(i);
                 break;
             }
 
-            if (dictUnfinishGame[tableNo].listUnfinish.Count <= 0)
-                dictUnfinishGame[tableNo].gameID = -1;
+            if (dictUserInfo[tableNo].gameInfo.listUnfinish.Count <= 0)
+                dictUserInfo[tableNo].gameInfo.gameID = -1;
 
-            DataUnfinishGameSave();
+            DataUserInfoSave();
         }
 
-        public void IncGameCount(int tableNo, int cnt)
+        public void RefreshGameCount(int tableNo, int cnt)
         {
-            if (dictUnfinishGame.ContainsKey(tableNo) == false)
-                dictUnfinishGame.Add(tableNo, new GameInfo());
-
-            dictUnfinishGame[tableNo].gameCnt = cnt;
-            DataUnfinishGameSave();
-        }
-
-        public void DecGameCount(int tableNo, int cnt)
-        {
-            if (dictUnfinishGame.ContainsKey(tableNo) == false)
+            if (dictUserInfo.ContainsKey(tableNo) == false)
                 return;
 
-            dictUnfinishGame[tableNo].gameCnt = cnt;
-            DataUnfinishGameSave();
+            dictUserInfo[tableNo].gameInfo.gameCnt = cnt;
+            DataUserInfoSave();
+        }
+
+        public int GetGameCount(int tableNo)
+        {
+            if (dictUserInfo.ContainsKey(tableNo) == false)
+                return 0;
+
+            return dictUserInfo[tableNo].gameInfo.gameCnt;
         }
 
         public void RemoveUserData(int tableNo)
         {
-            if (dictUserMenu.ContainsKey(tableNo))
-                dictUserMenu.Remove(tableNo);
-
-            if (dictUserDiscount.ContainsKey(tableNo))
-                dictUserDiscount.Remove(tableNo);
-
-            if (dictUnfinishGame.ContainsKey(tableNo))
-                dictUnfinishGame.Remove(tableNo);
+            if (dictUserInfo.ContainsKey(tableNo))
+                dictUserInfo.Remove(tableNo);
 
             for (int i = listRequestOrder.Count - 1; i >= 0; i--)
             {
@@ -490,50 +496,22 @@ namespace SP_Server
             if (findIdx == -1)
                 return;
 
-            listUser[findIdx].info = new UserInfo();
+            ListUser.RemoveAt(findIdx);            
             AllDataSave();            
         }
 
         private void OnBtnDataLoad(object sender, EventArgs e)
         {
-            dictUserMenu.Clear();
-            dictUserDiscount.Clear();
+            dictUserInfo.Clear();
             listRequestOrder.Clear();
             listReqMusicInfo.Clear();
 
-            Dictionary<int, List<SendMenu>> menus = BinarySave.Deserialize<Dictionary<int, List<SendMenu>>>("DataSave\\UserMenus.bin");
-            Dictionary<int, List<short>> discounts = BinarySave.Deserialize<Dictionary<int, List<short>>>("DataSave\\DiscountInfo.bin");
+            Dictionary<int, UserInfo> users = BinarySave.Deserialize<Dictionary<int, UserInfo>>("DataSave\\UserInfo.bin");
             List<RequestOrder> orders = BinarySave.Deserialize<List<RequestOrder>>("DataSave\\RequestOrder.bin");
             List<RequestMusicInfo> musics = BinarySave.Deserialize<List<RequestMusicInfo>>("DataSave\\RequestMusic.bin");
 
-            foreach (KeyValuePair<int, List<SendMenu>> pair in menus)
-            {
-                int tableNo = pair.Key;
-                List<SendMenu> list = new List<SendMenu>();
-
-                for (int i = 0; i < pair.Value.Count; i++)
-                {
-                    SendMenu loadMenu = pair.Value[i];
-                    SendMenu setMenu = new SendMenu(loadMenu.menu, loadMenu.cnt);
-                    list.Add(setMenu);
-                }
-
-                dictUserMenu.Add(tableNo, list);
-            }
-
-            foreach (KeyValuePair<int, List<short>> pair in discounts)
-            {
-                int tableNo = pair.Key;
-                List<short> list = new List<short>();
-
-                for (int i = 0; i < pair.Value.Count; i++)
-                {
-                    short loadDiscount = pair.Value[i];
-                    list.Add(loadDiscount);
-                }
-
-                dictUserDiscount.Add(tableNo, list);
-            }
+            foreach(KeyValuePair<int, UserInfo> pair in users)            
+                dictUserInfo.Add(pair.Key, pair.Value);            
 
             for (int i = 0; i < orders.Count; i++)
             {
@@ -554,29 +532,13 @@ namespace SP_Server
             }
         }
 
-        public void DataMenuSave()
+        public void DataUserInfoSave()
         {
             if (Directory.Exists("DataSave") == false)
                 Directory.CreateDirectory("DataSave");
 
-            BinarySave.Serialize(dictUserMenu, "DataSave\\UserMenus.bin");
-        }
-
-        public void DataDiscountSave()
-        {
-            if (Directory.Exists("DataSave") == false)
-                Directory.CreateDirectory("DataSave");
-
-            BinarySave.Serialize(dictUserDiscount, "DataSave\\DiscountInfo.bin");
-        }
-
-        public void DataUnfinishGameSave()
-        {
-            if (Directory.Exists("DataSave") == false)
-                Directory.CreateDirectory("DataSave");
-
-            BinarySave.Serialize(dictUnfinishGame, "DataSave\\UnfinishGame.bin");
-        }
+            BinarySave.Serialize(dictUserInfo, "DataSave\\UserInfo.bin");
+        }        
 
         public void DataRequestSave(bool isOrder)
         {
@@ -589,9 +551,7 @@ namespace SP_Server
 
         public void AllDataSave()
         {
-            DataMenuSave();
-            DataDiscountSave();
-            DataUnfinishGameSave();
+            DataUserInfoSave();
             DataRequestSave(true);
             DataRequestSave(false);
         }

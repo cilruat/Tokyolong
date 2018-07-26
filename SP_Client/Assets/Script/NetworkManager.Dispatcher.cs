@@ -75,6 +75,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         }
 		else {
             Info.TableNum = byte.Parse (pop_string);
+			Info.GamePlayCnt = (byte)msg.pop_int32 ();
 			PageLogin.Instance.OnNext ();
 		}
 	}

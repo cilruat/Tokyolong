@@ -53,6 +53,7 @@ namespace SP_Server.UserState
                             }
 
                             tableNum = int.Parse(pop_string);
+                            owner.mainFrm.AddUserInfo(tableNum);
 
                             // Admin Send packet
                             if(Frm.GetAdminUser() != null)
@@ -67,19 +68,19 @@ namespace SP_Server.UserState
 
                         send_msg = CPacket.create((short)PROTOCOL.LOGIN_ACK);
                         send_msg.push(pop_string);
+
                         if (pop_string == "admin")
                         {
                             List<int> listUserTableNo = new List<int>();
 
-                            for (int i = 0; i < owner.mainFrm.listUserInfo.Count; i++)
+                            foreach (UserInfo e in owner.mainFrm.dictUserInfo.Values)
                             {
-                                UserInfo userInfo = owner.mainFrm.listUserInfo[i];
+                                UserInfo userInfo = e;
                                 if (userInfo.IsAdmin())
                                     continue;
 
                                 listUserTableNo.Add(userInfo.tableNum);
                             }
-
 
                             List<RequestOrder> listReqOrder = owner.mainFrm.listRequestOrder;
                             List<RequestMusicInfo> listReqMusic = owner.mainFrm.listReqMusicInfo;
@@ -88,6 +89,8 @@ namespace SP_Server.UserState
                             send_msg.push((JsonMapper.ToJson(listReqOrder)).ToString());
                             send_msg.push((JsonMapper.ToJson(listReqMusic)).ToString());
                         }
+                        else
+                            send_msg.push(owner.mainFrm.GetGameCount(tableNum));
                         break;
                     case PROTOCOL.LOGOUT_REQ:
                         tableNo = msg.pop_byte();
@@ -103,7 +106,7 @@ namespace SP_Server.UserState
                             other_msg.push(tableNo);
                             user.send(other_msg);
                         }
-
+                        
                         owner.mainFrm.RemoveUserData((int)tableNo);
 
                         send_msg = CPacket.create((short)PROTOCOL.LOGOUT_ACK);
@@ -119,7 +122,8 @@ namespace SP_Server.UserState
                         owner.peopleCnt = peopleCnt;
                         owner.customerType = customerType;
 
-                        owner.info = new UserInfo((byte)owner.tableNum, peopleCnt, customerType);
+                        owner.info = new UserInfo(owner.tableNum, peopleCnt, customerType);
+                        owner.mainFrm.SetUserInfo(tableNo, owner.info);
 
                         List<UserInfo> listUserInfo = new List<UserInfo>();
                         listUserInfo.Add(owner.info);
@@ -167,8 +171,8 @@ namespace SP_Server.UserState
                         tableNo = msg.pop_byte();
                         string order = msg.pop_string();
 
-                        ++owner.gameInfo.gameCnt;
-                        owner.mainFrm.IncGameCount(tableNo, owner.gameInfo.gameCnt);
+                        ++owner.info.gameInfo.gameCnt;
+                        owner.mainFrm.RefreshGameCount(tableNo, owner.info.gameInfo.gameCnt);
 
                         ++owner.mainFrm.orderID;
 
@@ -187,7 +191,7 @@ namespace SP_Server.UserState
                         }
 
                         send_msg = CPacket.create((short)PROTOCOL.ORDER_ACK);
-                        send_msg.push(owner.gameInfo.gameCnt);
+                        send_msg.push(owner.info.gameInfo.gameCnt);
                         break;
                     case PROTOCOL.CHAT_REQ:
                         tableNo = msg.pop_byte();
@@ -376,11 +380,11 @@ namespace SP_Server.UserState
                         send_msg = CPacket.create((short)PROTOCOL.TABLE_ORDER_INPUT_ACK);
                         break;
                     case PROTOCOL.SLOT_START_REQ:
-                        --owner.gameInfo.gameCnt;
-                        owner.mainFrm.DecGameCount(tableNo, owner.gameInfo.gameCnt);
+                        --owner.info.gameInfo.gameCnt;
+                        owner.mainFrm.RefreshGameCount(tableNo, owner.info.gameInfo.gameCnt);
 
                         send_msg = CPacket.create((short)PROTOCOL.SLOT_START_ACK);                        
-                        send_msg.push(owner.gameInfo.gameCnt);
+                        send_msg.push(owner.info.gameInfo.gameCnt);
                         break;
                     case PROTOCOL.REPORT_OFFLINE_GAME_REQ:
                         tableNo = msg.pop_byte();
@@ -388,16 +392,15 @@ namespace SP_Server.UserState
                         byte gameKind = msg.pop_byte();
                         byte gameDiscount = msg.pop_byte();
 
-                        ++owner.gameInfo.gameID;
-                        Unfinish unfinish = new Unfinish(owner.gameInfo.gameID, gameType, gameKind, gameDiscount);
-                        owner.gameInfo.listUnfinish.Add(unfinish);
-
+                        ++owner.info.gameInfo.gameID;
+                        Unfinish unfinish = new Unfinish(owner.info.gameInfo.gameID, gameType, gameKind, gameDiscount);
+                        owner.info.gameInfo.listUnfinish.Add(unfinish);
                         owner.mainFrm.SetUnfinishGame(tableNo, unfinish);
 
                         send_msg = CPacket.create((short)PROTOCOL.REPORT_OFFLINE_GAME_ACK);
                         break;
                     case PROTOCOL.UNFINISH_GAME_LIST_REQ:
-                        JsonData listUnfinishJson = JsonMapper.ToJson(owner.gameInfo.listUnfinish);
+                        JsonData listUnfinishJson = JsonMapper.ToJson(owner.info.gameInfo.listUnfinish);
 
                         send_msg = CPacket.create((short)PROTOCOL.UNFINISH_GAME_LIST_ACK);
                         send_msg.push(listUnfinishJson.ToString());
@@ -405,11 +408,12 @@ namespace SP_Server.UserState
                     case PROTOCOL.UNFINISH_GAME_CONFIRM_REQ:
                         tableNo = msg.pop_byte();
                         int id = msg.pop_int32();
-                        byte byDis = msg.pop_byte();
+                        short sDis = msg.pop_int16();
 
-                        bool isDiscount = byDis == 1 ? true : false;
-                        if (isDiscount)
+                        if (sDis > -1)
                         {
+                            owner.info.discounts.Add(sDis);
+                            owner.mainFrm.SetDiscount(tableNo, sDis);
                         }
 
                         owner.mainFrm.RemoveUnfinishGame(tableNo, id);

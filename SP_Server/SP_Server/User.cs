@@ -10,24 +10,44 @@ namespace SP_Server
 {
     using UserState;
 
+    [Serializable]
     public class UserInfo
     {
         public int tableNum;
         public byte peopleCnt;
-        public byte customerType;        
+        public byte customerType;
+        public GameInfo gameInfo;
+        public List<SendMenu> menus;
+        public List<short> discounts;
 
         public UserInfo()
         {
             this.tableNum = -1;
             this.peopleCnt = 0;
             this.customerType = 0;
+            this.gameInfo = new GameInfo();
+            this.menus = new List<SendMenu>();
+            this.discounts = new List<short>();
         }
 
-        public UserInfo(byte tableNum, byte peopleCnt, byte customerType)
+        public UserInfo(int tableNum)
+        {
+            this.tableNum = tableNum;
+            this.peopleCnt = 0;
+            this.customerType = 0;
+            this.gameInfo = new GameInfo();
+            this.menus = new List<SendMenu>();
+            this.discounts = new List<short>();
+        }
+
+        public UserInfo(int tableNum, byte peopleCnt, byte customerType)
         {
             this.tableNum = tableNum;
             this.peopleCnt = peopleCnt;
             this.customerType = customerType;
+            this.gameInfo = new GameInfo();
+            this.menus = new List<SendMenu>();
+            this.discounts = new List<short>();
         }
 
         public bool IsAdmin()
@@ -52,8 +72,6 @@ namespace SP_Server
         public byte peopleCnt { get { return info.peopleCnt; } set { info.peopleCnt = value; } }
         public byte customerType { get { return info.customerType; } set { info.customerType = value; } }
         public UserInfo info = new UserInfo();
-        
-        public GameInfo gameInfo = new GameInfo();
 
         public GameRoom battle_room { get; private set; }
         public Player player { get; private set; }

@@ -162,14 +162,12 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		send (msg);
 	}
 
-	public void UnfinishGameConfirm_REQ(int id, bool discount)
+	public void UnfinishGameConfirm_REQ(int id, short discount)
 	{
 		CPacket msg = CPacket.create((short)PROTOCOL.UNFINISH_GAME_CONFIRM_REQ);
 		msg.push (Info.TableNum);
 		msg.push (id);
-
-		byte byDis = discount ? (byte)1 : (byte)0;
-		msg.push (byDis);
+		msg.push (discount);
 
 		send (msg);
 	}
