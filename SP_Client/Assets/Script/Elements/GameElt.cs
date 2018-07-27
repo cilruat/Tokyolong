@@ -8,11 +8,13 @@ public class GameElt : MonoBehaviour {
 	public Text txtTitle;
 	public Text txtName;
 
+	byte tableNo = 0;
 	int id = -1;
 	EDiscount eDis = EDiscount.e500won;
 
-	public void SetInfo(int id, EGameType eType, int game, EDiscount eDis)
+	public void SetInfo(byte tableNo, int id, EGameType eType, int game, EDiscount eDis)
 	{
+		this.tableNo = tableNo;
 		this.id = id;
 		this.eDis = eDis;
 
@@ -23,7 +25,7 @@ public class GameElt : MonoBehaviour {
 	public void OnConfirm(bool discount)
 	{
 		short sDis = discount ? (short)eDis : (short)-1;
-		NetworkManager.Instance.UnfinishGameConfirm_REQ (id, sDis);
+		NetworkManager.Instance.UnfinishGameConfirm_REQ (tableNo, id, sDis);
 	}
 
 	public int GetID() { return id; }

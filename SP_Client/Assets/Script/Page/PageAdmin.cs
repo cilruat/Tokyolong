@@ -294,10 +294,10 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
         AdminTableOrderInput.Instance.SetTable(tableNo);
     }
 
-	public void ShowUnfinishGameList(string packing)
+	public void ShowUnfinishGameList(string packing, byte tableNo)
 	{
 		AdminTableMenu.Instance.OnClose ();
-		unfinishGame.SetInfo (packing);
+		unfinishGame.SetInfo (packing, tableNo);
 		unfinishGame.gameObject.SetActive (true);
 	}
 

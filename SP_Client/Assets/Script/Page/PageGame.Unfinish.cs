@@ -8,6 +8,6 @@ public partial class PageGame : PageBase {
 
 	public UnfinishGameList unfinishGame;
 
-	public void RefreshUnfinishList(string packing) { unfinishGame.SetInfo (packing); }
+	public void RefreshUnfinishList(string packing) { unfinishGame.SetInfo (packing, Info.TableNum); }
 	public void RemoveUnfinishGame(int id) { unfinishGame.RemoveUnfinish (id); }
 }

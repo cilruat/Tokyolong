@@ -69,8 +69,6 @@ namespace SP_Server
 
         public bool IsAdmin { get { return tableNum == 10000; } }
         public int tableNum { get { return info.tableNum; } set { info.tableNum = value; } }
-        public byte peopleCnt { get { return info.peopleCnt; } set { info.peopleCnt = value; } }
-        public byte customerType { get { return info.customerType; } set { info.customerType = value; } }
         public UserInfo info = new UserInfo();
 
         public GameRoom battle_room { get; private set; }
@@ -139,7 +137,9 @@ namespace SP_Server
             {
                 CPacket admin_msg = CPacket.create((short)PROTOCOL.LOGOUT_ACK);
                 admin_msg.push((byte)tableNum);
-                Frm.GetAdminUser().send(admin_msg);
+
+                if (Frm.GetAdminUser() != null)
+                    Frm.GetAdminUser().send(admin_msg);
             }
 
             CPacket msg = null;

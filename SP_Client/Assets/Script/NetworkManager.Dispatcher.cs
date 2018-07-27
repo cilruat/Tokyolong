@@ -76,7 +76,19 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		else {
             Info.TableNum = byte.Parse (pop_string);
 			Info.GamePlayCnt = (byte)msg.pop_int32 ();
-			PageLogin.Instance.OnNext ();
+
+			int existUser = msg.pop_int32 ();
+			if (existUser == 1) {
+				Info.PersonCnt = msg.pop_byte ();
+				Info.ECustomer = (ECustomerType)msg.pop_byte ();
+
+				string packing = msg.pop_string ();
+				Info.SetLoginedOtherUser (packing);
+
+				SceneChanger.LoadScene ("Main", PageBase.Instance.curBoardObj ());
+			}
+			else
+				PageLogin.Instance.OnNext ();
 		}
 	}
 
@@ -312,15 +324,16 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
 	void ReportOfflineGameACK()
 	{
-		NetworkManager.Instance.UnfinishGamelist_REQ ();
+		NetworkManager.Instance.UnfinishGamelist_REQ (Info.TableNum);
 	}
 
 	void UnfinishGameListACK(CPacket msg)
 	{
 		string packing = msg.pop_string ();
+		byte tableNo = msg.pop_byte ();
 
 		if (Info.isCheckScene ("Admin"))
-			PageAdmin.Instance.ShowUnfinishGameList (packing);
+			PageAdmin.Instance.ShowUnfinishGameList (packing, tableNo);
 		else
 			((PageGame)PageBase.Instance).RefreshUnfinishList (packing);
 	}

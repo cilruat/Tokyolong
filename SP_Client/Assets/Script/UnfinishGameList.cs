@@ -12,7 +12,7 @@ public class UnfinishGameList : MonoBehaviour {
 
 	List<GameElt> listElt = new List<GameElt>();
 
-	public void SetInfo(string packing)
+	public void SetInfo(string packing, byte tableNo)
 	{
 		listElt.Clear ();
 		for (int i = 0; i < rtScroll.childCount; i++) {
@@ -32,13 +32,13 @@ public class UnfinishGameList : MonoBehaviour {
 			EGameType eType = (EGameType)int.Parse (parse_type);
 			int curGame = int.Parse (parse_kind);
 			EDiscount eDis = (EDiscount)int.Parse (parse_discount);
-			_SetUnfinishGame (id, eType, curGame, eDis);
+			_SetUnfinishGame (tableNo, id, eType, curGame, eDis);
 		}			
 
 		scrollRect.horizontalNormalizedPosition = 0f;
 	}
 
-	void _SetUnfinishGame(int id, EGameType eType, int game, EDiscount eDis)
+	void _SetUnfinishGame(byte tableNo, int id, EGameType eType, int game, EDiscount eDis)
 	{
 		GameObject obj = Instantiate (objPrefab) as GameObject;
 		obj.SetActive (true);
@@ -48,7 +48,7 @@ public class UnfinishGameList : MonoBehaviour {
 		tr.InitTransform ();
 
 		GameElt elt = obj.GetComponent<GameElt> ();
-		elt.SetInfo (id, eType, game, eDis);
+		elt.SetInfo (tableNo, id, eType, game, eDis);
 	}
 
 	public void RemoveUnfinish(int id)

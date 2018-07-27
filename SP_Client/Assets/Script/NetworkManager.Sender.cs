@@ -156,16 +156,18 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		send (msg);
 	}
 
-	public void UnfinishGamelist_REQ()
+	public void UnfinishGamelist_REQ(byte tableNo)
 	{
 		CPacket msg = CPacket.create((short)PROTOCOL.UNFINISH_GAME_LIST_REQ);
+		msg.push (tableNo);
+
 		send (msg);
 	}
 
-	public void UnfinishGameConfirm_REQ(int id, short discount)
+	public void UnfinishGameConfirm_REQ(byte tableNo, int id, short discount)
 	{
 		CPacket msg = CPacket.create((short)PROTOCOL.UNFINISH_GAME_CONFIRM_REQ);
-		msg.push (Info.TableNum);
+		msg.push (tableNo);
 		msg.push (id);
 		msg.push (discount);
 

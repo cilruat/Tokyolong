@@ -37,23 +37,31 @@ namespace SP_Server.UserState
                 switch (protocol)
                 {
                     case PROTOCOL.LOGIN_REQ:
+                        bool existUser = false;
                         int tableNum = 0;
-                        string pop_string = msg.pop_string();
-                        if (pop_string == "admin")
+
+                        string tableNoStr = msg.pop_string();
+                        if (tableNoStr == "admin")
                         {
                             tableNum = 10000;
                             Frm.SetAdminUser(owner);
                         }
                         else
                         {
-                            if (int.TryParse(pop_string, out tableNum) == false)
+                            if (int.TryParse(tableNoStr, out tableNum) == false)
                             {
                                 send_msg = CPacket.create((short)PROTOCOL.FAILED_NOT_NUMBER);
                                 break;
                             }
 
-                            tableNum = int.Parse(pop_string);
-                            owner.mainFrm.AddUserInfo(tableNum);
+                            tableNum = int.Parse(tableNoStr);
+
+                            UserInfo getUserInfo = null;
+                            if (owner.mainFrm.AddUserInfo(tableNum, ref getUserInfo) == false)
+                            {
+                                owner.info = getUserInfo;
+                                existUser = true;
+                            }                                
 
                             // Admin Send packet
                             if(Frm.GetAdminUser() != null)
@@ -67,9 +75,9 @@ namespace SP_Server.UserState
                         owner.tableNum = tableNum;                        
 
                         send_msg = CPacket.create((short)PROTOCOL.LOGIN_ACK);
-                        send_msg.push(pop_string);
+                        send_msg.push(tableNoStr);
 
-                        if (pop_string == "admin")
+                        if (tableNoStr == "admin")
                         {
                             List<int> listUserTableNo = new List<int>();
 
@@ -90,7 +98,42 @@ namespace SP_Server.UserState
                             send_msg.push((JsonMapper.ToJson(listReqMusic)).ToString());
                         }
                         else
+                        {                            
                             send_msg.push(owner.mainFrm.GetGameCount(tableNum));
+                            send_msg.push(existUser ? 1 : 0);
+
+                            // 유저 정보가 있는경우 추가 패킷
+                            if (existUser)
+                            {
+                                send_msg.push(owner.info.peopleCnt);
+                                send_msg.push(owner.info.customerType);
+
+                                List<UserInfo> list = new List<UserInfo>();
+                                list.Add(owner.info);
+                                // 접속된 유저들에게 현재 접속 유저 정보 전송
+                                for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
+                                {
+                                    User user = owner.mainFrm.ListUser[i];
+                                    if (user.tableNum == 10000 ||
+                                        user.tableNum <= 0 ||
+                                        user.info == null)
+                                        continue;
+
+                                    list.Add(user.info);
+
+                                    if (user.info.tableNum == owner.info.tableNum)
+                                        continue;
+
+                                    other_msg = CPacket.create((short)PROTOCOL.ENTER_CUSTOMER_NOT);
+                                    JsonData loginUser = JsonMapper.ToJson(owner.info);
+                                    other_msg.push(loginUser.ToString());
+                                    user.send(other_msg);
+                                }
+
+                                JsonData json = JsonMapper.ToJson(list);
+                                send_msg.push(json.ToString());
+                            }                            
+                        }                           
                         break;
                     case PROTOCOL.LOGOUT_REQ:
                         tableNo = msg.pop_byte();
@@ -119,9 +162,6 @@ namespace SP_Server.UserState
                         byte customerType = msg.pop_byte();
 
                         // 유저 리스트에 정보 입력하기                        
-                        owner.peopleCnt = peopleCnt;
-                        owner.customerType = customerType;
-
                         owner.info = new UserInfo(owner.tableNum, peopleCnt, customerType);
                         owner.mainFrm.SetUserInfo(tableNo, owner.info);
 
@@ -400,10 +440,14 @@ namespace SP_Server.UserState
                         send_msg = CPacket.create((short)PROTOCOL.REPORT_OFFLINE_GAME_ACK);
                         break;
                     case PROTOCOL.UNFINISH_GAME_LIST_REQ:
-                        JsonData listUnfinishJson = JsonMapper.ToJson(owner.info.gameInfo.listUnfinish);
+                        tableNo = msg.pop_byte();
+
+                        List<Unfinish> listUnfinish = owner.mainFrm.GetUnfinishList(tableNo);
+                        JsonData listUnfinishJson = JsonMapper.ToJson(listUnfinish);
 
                         send_msg = CPacket.create((short)PROTOCOL.UNFINISH_GAME_LIST_ACK);
                         send_msg.push(listUnfinishJson.ToString());
+                        send_msg.push(tableNo);
                         break;
                     case PROTOCOL.UNFINISH_GAME_CONFIRM_REQ:
                         tableNo = msg.pop_byte();
@@ -411,12 +455,24 @@ namespace SP_Server.UserState
                         short sDis = msg.pop_int16();
 
                         if (sDis > -1)
-                        {
-                            owner.info.discounts.Add(sDis);
                             owner.mainFrm.SetDiscount(tableNo, sDis);
-                        }
 
                         owner.mainFrm.RemoveUnfinishGame(tableNo, id);
+
+                        for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
+                        {
+                            User other = owner.mainFrm.ListUser[i];
+                            if (other.tableNum != tableNo)
+                                continue;
+
+                            other_msg = CPacket.create((short)PROTOCOL.UNFINISH_GAME_CONFIRM_NOT);
+                            other_msg.push(id);
+                            other.send(other_msg);
+                            break;
+                        }
+
+                        send_msg = CPacket.create((short)PROTOCOL.UNFINISH_GAME_CONFIRM_ACK);
+                        send_msg.push(id);
                         break;
                     case PROTOCOL.TABLE_DISCOUNT_INPUT_REQ:
                         tableNo = msg.pop_byte();
@@ -472,5 +528,7 @@ namespace SP_Server.UserState
 
             owner.send(msg);
         }
+
+
     }
 }

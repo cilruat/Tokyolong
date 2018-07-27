@@ -241,12 +241,18 @@ namespace SP_Server
             this.Close();
         }
 
-        public void AddUserInfo(int tableNo)
+        public bool AddUserInfo(int tableNo, ref UserInfo info)
         {
+            bool isAdd = false;
             if (dictUserInfo.ContainsKey(tableNo) == false)
+            {
                 dictUserInfo.Add(tableNo, new UserInfo(tableNo));
+                isAdd = true;
+            }
             else
-                dictUserInfo[tableNo] = new UserInfo(tableNo);
+                info = dictUserInfo[tableNo];
+
+            return isAdd;
         }
 
         public void SetUserInfo(int tableNo, UserInfo info)
@@ -398,7 +404,7 @@ namespace SP_Server
         public void SetDiscount(int tableNo, short discount)
         {
             if (dictUserInfo.ContainsKey(tableNo) == false)
-                return;
+                return;            
 
             dictUserInfo[tableNo].discounts.Add(discount);
             DataUserInfoSave();
@@ -419,8 +425,20 @@ namespace SP_Server
             if (dictUserInfo.ContainsKey(tableNo) == false)
                 return;
 
+            bool exist = dictUserInfo[tableNo].gameInfo.listUnfinish.Exists(x => x.id == info.id);
+            if (exist)
+                return;
+
             dictUserInfo[tableNo].gameInfo.listUnfinish.Add(info);
             DataUserInfoSave();
+        }
+
+        public List<Unfinish> GetUnfinishList(int tableNo)
+        {
+            if (dictUserInfo.ContainsKey(tableNo) == false)
+                return new List<Unfinish>();
+
+            return dictUserInfo[tableNo].gameInfo.listUnfinish;
         }
 
         public void RemoveUnfinishGame(int tableNo, int id)
