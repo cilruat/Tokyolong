@@ -169,11 +169,11 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
         {
             if (idx == randQuestion.Values.Count - 1)
             {
-                string s = string.Concat(obj);
+                string s = obj.ToString();
                 answer = int.Parse(s);
             }
             else
-                question[idx] = string.Concat(obj);
+                question[idx] = obj.ToString();
             ++idx;
         }
 

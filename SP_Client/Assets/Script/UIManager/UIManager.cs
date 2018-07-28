@@ -12,6 +12,7 @@ public enum eUI
 	eMusicRequest,
 	eWaiting,
     eHowToUse,
+    eShowLog,
 
 	eNone = 100,
 }
@@ -38,6 +39,8 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 		collect();
 		Hide_All ();
 
+        VLogSave.Start();
+
         DontDestroyOnLoad(this);
 	}
 
@@ -50,7 +53,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
     public void Show(int pageIdx) { Show((eUI)pageIdx); }
 	public GameObject Show(eUI page)
 	{
-		if (page != eUI.eWaiting) {
+        if (page != eUI.eWaiting && page != eUI.eShowLog) {
 			curUI = page;
 			objShadow.SetActive (true);
 		}
@@ -118,5 +121,26 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
             Hide(curUI);
 
         NetworkManager.Instance.Order_Detail_REQ();
+    }
+
+    public void ShowLog()
+    {
+        ShowLog showLog = GetUI(eUI.eShowLog).GetComponent<ShowLog>();
+        if (showLog.show == false)
+        {
+            Show(eUI.eShowLog);
+            showLog.Show();
+        }
+        else
+        {
+            showLog.Hide();
+            Hide_All();
+        }
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Keypad3))
+            UIManager.Instance.ShowLog();
     }
 }

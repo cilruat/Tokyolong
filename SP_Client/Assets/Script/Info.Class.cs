@@ -99,13 +99,9 @@ public partial class Info : MonoBehaviour
     public static void AddOtherLoginUser(string packing)
     {
         JsonData json = JsonMapper.ToObject (packing);
-        string json1 = json["tableNum"].ToString ();
-        string json2 = json["peopleCnt"].ToString ();
-        string json3 = json["customerType"].ToString ();   
-
-        byte tableNo = byte.Parse(json1);
-        byte peopleCnt = byte.Parse(json2);
-        byte customerType = byte.Parse(json3);
+        byte tableNo = byte.Parse(json["tableNum"].ToString ());
+        byte peopleCnt = byte.Parse(json["peopleCnt"].ToString ());
+        byte customerType = byte.Parse(json["customerType"].ToString ());
 
         if (dictUserInfo.ContainsKey (tableNo) == false)
             dictUserInfo.Add (tableNo, new UserInfo (tableNo, peopleCnt, customerType));

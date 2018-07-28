@@ -103,26 +103,33 @@ public class SlotMachineElt : MonoBehaviour {
 
 	IEnumerator _StopAni(bool isJackpot)
 	{
+        Debug.Log("_StopAni");
 		isStopAnimating = true;
 
 		if (rtElts != null) {
 			for (int i = 0; i < rtElts.Length; i++)
 				rtElts [i].gameObject.SetActive (i == stopIdx && isJackpot == false);
+
+            Debug.Log("rtElts != null");
 		}
 
 		cgJackpot.gameObject.SetActive (isJackpot);
 
 		float during = .5f;
-		for (float t = 0; t < during; t += Time.fixedDeltaTime) {
-			if (isJackpot) {
+		for (float t = 0; t < during; t += Time.fixedDeltaTime) 
+        {
+			if (isJackpot) 
+            {
 				float a = Mathf.Lerp (0f, 1f, _DynamicTime (t, during));
 				cgJackpot.alpha = a;
-			} else {
+			} else 
+            {
 				Vector2 pos = Vector2.Lerp (
 					             new Vector2 (0f, 100f),
 					             Vector2.zero, 
 					             _DynamicTime (t, during));
 
+                Debug.Log("pos : " + pos);
 				rtElts [stopIdx].anchoredPosition = pos;
 
 				if (pos.y <= 0f)
@@ -135,15 +142,29 @@ public class SlotMachineElt : MonoBehaviour {
 		isStopAnimating = false;
 		isAllAnimating = false;
 
+        Debug.Log("WaitForSeconds Before .1f");
+
 		yield return new WaitForSeconds (.1f);
+        Debug.Log("WaitForSeconds After .1f");
 		ShiningGraphic.Start (imgFrame);
 
+        Debug.Log("ShiningGraphic.Start (imgFrame) : " +imgFrame.gameObject.name);
+
+        Debug.Log("WaitForSeconds Before .5f");
 		yield return new WaitForSeconds (.5f);
-		if (eType == ESlotType.eGameType &&
-		    page.SelectGameType () == EGameType.eTokyoLive)
-			page.ShowPopup ();
-		else if (eType == ESlotType.eGame)
-			page.ShowPopup ();
+        Debug.Log("WaitForSeconds After .5f");
+
+        if (eType == ESlotType.eGameType &&
+            page.SelectGameType() == EGameType.eTokyoLive)
+        {
+            Debug.Log("ShowPopup eGameType  eTokyoLive");
+            page.ShowPopup();
+        }
+        else if (eType == ESlotType.eGame)
+        {
+            Debug.Log("ShowPopup eGame");
+            page.ShowPopup();
+        }
 	}
 
 	public void StopSlot(bool isJackpot) 

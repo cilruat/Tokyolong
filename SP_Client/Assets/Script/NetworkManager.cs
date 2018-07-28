@@ -78,6 +78,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
         if(Input.GetKeyDown(KeyCode.Keypad0))
             Game_Discount_REQ((short)1);
+
+//        if (Input.GetKeyDown(KeyCode.Keypad3))
+//            UIManager.Instance.ShowLog();
     }
 
     public bool is_connected()

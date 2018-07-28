@@ -49,30 +49,17 @@ public class UnfinishGameList : MonoBehaviour {
 
 		GameElt elt = obj.GetComponent<GameElt> ();
 		elt.SetInfo (tableNo, id, eType, game, eDis);
+        listElt.Add(elt);
 	}
 
 	public void RemoveUnfinish(int id)
 	{
-		int findIdx = -1;
 		for (int i = 0; i < listElt.Count; i++) {
 			if (listElt [i].GetID () != id)
 				continue;
-
-			findIdx = i;
+            
+            Destroy(listElt[i].gameObject);
 			listElt.RemoveAt (i);
-			break;
-		}
-
-		if (findIdx == -1)
-			return;
-
-		for (int i = 0; i < rtScroll.childCount; i++) {
-			if (i != findIdx)
-				continue;
-			
-			Transform child = rtScroll.GetChild (i);
-			if (child)
-				DestroyImmediate (child.gameObject);
 			break;
 		}
 	}

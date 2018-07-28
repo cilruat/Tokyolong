@@ -53,7 +53,7 @@ public partial class PageGame : PageBase {
 		for (int i = 0; i < listSlotMachine.Count; i++) {
 			int stopIdx = -1;
 			switch (i) {
-			case 0:		
+			case 0:	
 				stopIdx = UnityEngine.Random.Range (0, 2);
 				Info.GameDiscountWon = (short)stopIdx;
 				break;
@@ -62,6 +62,7 @@ public partial class PageGame : PageBase {
 				Debug.Log ("slot percent: " + percent);
 				stopIdx = _GetGameTypeIdx (percent);
 				curGameType = stopIdx;
+                Debug.Log ("curGameType : " + curGameType);
 				break;
 			case 2:
 				RectTransform[] rtElts = _AllRtElts ();
@@ -245,14 +246,18 @@ public partial class PageGame : PageBase {
 
 	public void ShowPopup()
 	{
+        Debug.Log ("ShowPopup!!!!");
 		int countIdx = 0;
-		if (curGameType == (int)EGameType.eBrainSurvival ||
-		    curGameType == (int)EGameType.eTokyoLive)
-			objGameLoading.SetActive (true);
+        if (curGameType == (int)EGameType.eBrainSurvival ||
+        curGameType == (int)EGameType.eTokyoLive)
+        {
+            Debug.Log ("objGameLoading!!!!");
+            objGameLoading.SetActive(true);
+        }
 		else {
 			countIdx = 1;
 			objCallMessage.SetActive (true);
-
+            Debug.Log ("ReportOfflineGame_REQ!!!!");
 			NetworkManager.Instance.ReportOfflineGame_REQ ((byte)curGameType, (byte)curGame, (byte)Info.GameDiscountWon);
 		}
 		
@@ -271,8 +276,9 @@ public partial class PageGame : PageBase {
 				case EBrainSurvival.ePicturePuzzle:
 					sceneName = "PicturePuzzle";
 					break;
-				case EBrainSurvival.ePairCards:
-					sceneName = "PairCards";
+                    case EBrainSurvival.ePairCards:
+                        sceneName = "PairCards";
+                        return;
 					break;
 				}
 			}

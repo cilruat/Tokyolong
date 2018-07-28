@@ -29,7 +29,6 @@ public class UIButton : MonoBehaviour,
 
 	void Awake ()
 	{
-		scalingOnTouch = false;
 		_register();
 	}
 
