@@ -98,6 +98,14 @@ namespace SP_Server
             }
         }
 
+        public void remove_user(int index)
+        {
+            lock(listUser)
+            {
+                listUser.RemoveAt(index);
+            }
+        }
+
         public int get_concurrent_user_count()
         {
             return ListUser.Count;
@@ -507,14 +515,13 @@ namespace SP_Server
                     continue;
 
                 findIdx = i;
-                remove_user(listUser[i]);
                 break;
             }
 
             if (findIdx == -1)
                 return;
 
-            ListUser.RemoveAt(findIdx);            
+            remove_user(findIdx);   
             AllDataSave();            
         }
 

@@ -34,8 +34,18 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 	eUI curUI = eUI.eNone;
 	Dictionary<eUI, GameObject> dicObject = new Dictionary<eUI, GameObject> ();
 
+    static UIManager single = null;
+
 	void Awake () 
 	{
+        if (single != null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
+        single = UIManager.Instance;
+
 		collect();
 		Hide_All ();
 
@@ -53,10 +63,19 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
     public void Show(int pageIdx) { Show((eUI)pageIdx); }
 	public GameObject Show(eUI page)
 	{
-        if (page != eUI.eWaiting && page != eUI.eShowLog) {
-			curUI = page;
-			objShadow.SetActive (true);
-		}
+        switch (page)
+        {
+            case eUI.eWaiting:
+                elapsedTime = 0f;
+                waiting = true;
+                break;
+            case eUI.eShowLog:
+                break;
+            default:
+                curUI = page;
+                objShadow.SetActive (true);
+                break;
+        }
 
 		dicObject [page].SetActive (true);
 		return dicObject [page];
@@ -65,10 +84,19 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
     public void Hide(int pageIdx) { Hide((eUI)pageIdx); }
 	public void Hide(eUI page)
 	{
-		if (page != eUI.eWaiting) {
-			curUI = eUI.eNone;
-			objShadow.SetActive (false);
-		}
+        switch (page)
+        {
+            case eUI.eWaiting:
+                elapsedTime = 0f;
+                waiting = false;
+                break;
+            case eUI.eShowLog:
+                break;
+            default:
+                curUI = eUI.eNone;
+                objShadow.SetActive (false);
+                break;
+        }
 		
 		dicObject [page].SetActive (false);
 	}
@@ -138,8 +166,23 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
         }
     }
 
+    bool waiting = false;
+    const float WAIT_DISCONNECT = 10f;
+    float elapsedTime = 0f;
     void Update()
     {
+        if (waiting)
+        {
+            elapsedTime += Time.unscaledDeltaTime;
+            if (elapsedTime >= WAIT_DISCONNECT)
+            {
+                SystemMessage.Instance.Add("네트워크 문제가 발생 하였습니다");
+                NetworkManager.Instance.disconnect();
+                Hide(eUI.eWaiting);
+                SceneChanger.LoadScene ("Login", PageBase.Instance.curBoardObj ());
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.Keypad3))
             UIManager.Instance.ShowLog();
     }

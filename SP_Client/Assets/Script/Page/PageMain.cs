@@ -32,6 +32,11 @@ public class PageMain : PageBase {
         txtTableNo.text = Info.TableNum.ToString();
 	}
 
+    public void RefreshGamePlay()
+    {
+        txtPlayCnt.text = Info.GamePlayCnt.ToString ();
+    }
+
 	public void OnClickMenu(int idx)
 	{
 		EMenu e = (EMenu)idx;

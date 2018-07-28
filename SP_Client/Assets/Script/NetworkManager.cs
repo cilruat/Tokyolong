@@ -16,8 +16,18 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     CFreeNetUnityService freenet;
 	public IMessageReceiver message_receiver;
 
+    static NetworkManager single = null;
+
 	void Awake()
 	{
+        if (single != null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
+        single = NetworkManager.Instance;
+        
         this.freenet = gameObject.AddComponent<CFreeNetUnityService>();
         this.freenet.appcallback_on_message += this.on_message;
         this.freenet.appcallback_on_status_changed += this.on_status_changed;

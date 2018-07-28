@@ -395,7 +395,11 @@ namespace SP_Server.UserState
                         send_msg.push(tableDiscountJson.ToString());
                         break;
                     case PROTOCOL.TABLE_ORDER_INPUT_REQ:
-                        byte targetTableNo = msg.pop_byte();
+                        tableNo = msg.pop_byte();
+
+                        ++owner.info.gameInfo.gameCnt;
+                        owner.mainFrm.RefreshGameCount(tableNo, owner.info.gameInfo.gameCnt);
+
                         string inputTableOrderPacking = msg.pop_string();
                         JsonData inputOrder = JsonMapper.ToObject(inputTableOrderPacking);
                         for (int i = 0; i < inputOrder.Count; i++)
@@ -403,16 +407,17 @@ namespace SP_Server.UserState
                             int reqSendMenu = int.Parse(inputOrder[i]["menu"].ToString());
                             int reqSendCnt = int.Parse(inputOrder[i]["cnt"].ToString());
 
-                            owner.mainFrm.SetOrder((int)targetTableNo, new SendMenu(reqSendMenu, reqSendCnt));
+                            owner.mainFrm.SetOrder((int)tableNo, new SendMenu(reqSendMenu, reqSendCnt));
                         }
 
                         for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
                         {
                             User inputTargetUser = owner.mainFrm.ListUser[i];
-                            if (inputTargetUser.tableNum != (int)targetTableNo)
+                            if (inputTargetUser.tableNum != (int)tableNo)
                                 continue;
 
                             other_msg = CPacket.create((short)PROTOCOL.TABLE_ORDER_INPUT_NOT);
+                            other_msg.push((byte)(owner.mainFrm.GetGameCount(inputTargetUser.tableNum)));
                             inputTargetUser.send(other_msg);
                             break;
                         }

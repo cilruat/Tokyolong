@@ -113,6 +113,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         if (tableNo == Info.TableNum)
         {
             Info.Init();
+            NetworkManager.Instance.disconnect();
             SceneChanger.LoadScene ("Login", PageBase.Instance.curBoardObj ());
         }
         else
@@ -309,6 +310,10 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
     void TableOrderInputNOT(CPacket msg)
     {
+        Info.GamePlayCnt = msg.pop_byte();
+        if (Info.isCheckScene("Main"))
+            ((PageMain)PageBase.Instance).RefreshGamePlay();
+
         UIManager.Instance.ShowOrderAlarm();
     }
 
@@ -341,10 +346,14 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 	void UnfinishGameConfirmNOT(CPacket msg)
 	{
 		int id = msg.pop_int32 ();
-		if (Info.isCheckScene ("Admin"))
-			PageAdmin.Instance.RemoveUnfinishGame (id);
-		else
-			((PageGame)PageBase.Instance).RemoveUnfinishGame (id);
+        if (Info.isCheckScene("Admin"))
+            PageAdmin.Instance.RemoveUnfinishGame(id);
+        else
+        {
+            UIManager.Instance.ShowDiscountAlarm();
+            if(Info.isCheckScene("Game"))
+                ((PageGame)PageBase.Instance).RemoveUnfinishGame(id);
+        }
 	}
 
     void TableDiscountInputACK(CPacket msg)
