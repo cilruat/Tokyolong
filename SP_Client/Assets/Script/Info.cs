@@ -34,4 +34,7 @@ public partial class Info : MonoBehaviour {
 	{
 		return SceneManager.GetActiveScene ().name == scene;
 	}
+
+	public static int idRobot = -1;
+	public static List<byte> listGamePlayCnt_Robot = new List<byte>();
 }

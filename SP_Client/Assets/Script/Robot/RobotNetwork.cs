@@ -5,31 +5,35 @@ using System.Collections.Generic;
 using FreeNet;
 using FreeNetUnity;
 
-public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
+/*public interface IMessageReceiver
+{
+    void on_recv(CPacket msg);
+}*/
+
+public partial class RobotNetwork : MonoBehaviour
 {
     Queue<CPacket> sending_queue;
     CFreeNetUnityService freenet;
 
-    static NetworkManager single = null;
+	static public string IP = "";
+	static public string PORT = "";
+
+	public void Init(int id)
+	{
+		idRobot = id;
+		Info.listGamePlayCnt_Robot.Add (0);	
+	}
 
 	void Awake()
 	{
-        if (single != null)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
-
-        single = NetworkManager.Instance;
-        
-        this.freenet = gameObject.AddComponent<CFreeNetUnityService>();
-        this.freenet.appcallback_on_message += this.on_message;
-        this.freenet.appcallback_on_status_changed += this.on_status_changed;
-
-        this.sending_queue = new Queue<CPacket>();
-
 		Application.runInBackground = true;
-        DontDestroyOnLoad(this);
+
+		this.freenet = gameObject.AddComponent<CFreeNetUnityService>();
+		this.freenet.appcallback_on_message += this.on_message;
+		this.freenet.appcallback_on_status_changed += this.on_status_changed;
+		this.sending_queue = new Queue<CPacket>();
+
+		connect (IP, PORT);
 	}
 
     public void connect(string ip, string port)
@@ -57,14 +61,10 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         switch (status)
         {
 		case NETWORK_EVENT.connected:			
-			((PageLogin)PageBase.Instance).SuccessConnect ();
+			Login_REQ ();
 			break;
 		case NETWORK_EVENT.disconnected:
-			GameObject obj = PageBase.Instance.curBoardObj ();
-			if (Info.isCheckScene ("Admin"))
-				obj = PageAdmin.Instance.page;
-
-			SceneChanger.LoadScene ("Login", obj);
+			Debug.Log ("disconnected network robot");
             break;
         }
     }		   
@@ -80,11 +80,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
             this.freenet.send(msg);
         }
 
-        if(Input.GetKeyDown(KeyCode.Keypad0))
-            Game_Discount_REQ((short)1);
-
-//        if (Input.GetKeyDown(KeyCode.Keypad3))
-//            UIManager.Instance.ShowLog();
+		_UpdateAI ();
     }
 
     public bool is_connected()
