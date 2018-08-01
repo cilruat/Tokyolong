@@ -5,9 +5,11 @@ using UnityEngine.UI;
 
 public class MenuInfo : MonoBehaviour {
 
-	public EMenuDetail eMenu;
+	public int menu;
 	Text title;
 	Text price;
+
+    MenuData data = null;
 
 	void Awake()
 	{
@@ -17,7 +19,9 @@ public class MenuInfo : MonoBehaviour {
         child = transform.Find("Price");
         price = child.GetComponent<Text>();
 
-        title.text = Info.MenuName (eMenu);
-		price.text = Info.MakeMoneyString (Info.MenuPrice (eMenu));
+        this.data = MenuData.Get(menu);
+
+        title.text = "" + data.menuName + "";
+        price.text = data.price.ToString();
 	}
 }

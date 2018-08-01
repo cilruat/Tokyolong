@@ -18,10 +18,13 @@ public class BillChangeElt : MonoBehaviour {
 	int value = 0;
 	int price = 0;
 
+    MenuData data;
+
     public void SetInfo(EMenuDetail type, int oriVal, int value)
 	{
         this.type = type;
-        txtName.text = Info.MenuName (type);
+        this.data = MenuData.Get((int)type);
+        txtName.text = data.menuName;
 
         this.oriValue = oriVal;
         txtOriVal.text = this.oriValue.ToString();
@@ -45,7 +48,7 @@ public class BillChangeElt : MonoBehaviour {
 
 	void _RefreshPrice()
 	{
-        price = Info.MenuPrice (type) * value;
+        price = data.price * value;
 		txtPrice.text = Info.MakeMoneyString (price);
 	}
 

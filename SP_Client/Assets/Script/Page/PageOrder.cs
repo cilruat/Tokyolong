@@ -13,8 +13,6 @@ public class PageOrder : PageBase {
 		public Toggle tg;
 	}
 
-	public Text detailTitle;
-	public Text detailSubDesc;
 	public CanvasGroup[] cgBoards;
 	public MenuGroup[] menuGroup;
 	public Bill bill;
@@ -28,6 +26,9 @@ public class PageOrder : PageBase {
 
 		for (int i = 0; i < menuGroup.Length; i++)
 			menuGroup [i].obj.SetActive (false);
+
+        if (MenuData.loaded == false)
+            MenuData.Load();
 	}
 
 	public void OnClickMenu(int idx)
@@ -57,11 +58,6 @@ public class PageOrder : PageBase {
 			}
 		}
 
-		string title = "", subDesc = "";
-		Info.MenuTitle (eSelect, ref title, ref subDesc);
-		detailTitle.text = title;
-		detailSubDesc.text = subDesc;
-
 		eCurMenu = eSelect;
 	}
 
@@ -72,4 +68,9 @@ public class PageOrder : PageBase {
 
 		base.OnPrev ();
 	}
+
+    public void OnBillConfrim()
+    {
+        NetworkManager.Instance.Order_Detail_REQ();
+    }
 }

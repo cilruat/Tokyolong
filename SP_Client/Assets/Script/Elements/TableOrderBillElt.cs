@@ -13,7 +13,7 @@ public class TableOrderBillElt : MonoBehaviour {
     EMenuDetail type;
 	int value = 0;
 	int price = 0;
-
+    MenuData data;
     public void SetInfo(EMenuDetail type)
 	{
         SetInfo (type, 1);
@@ -22,7 +22,8 @@ public class TableOrderBillElt : MonoBehaviour {
     public void SetInfo(EMenuDetail type, int value)
 	{
         this.type = type;
-        txtName.text = Info.MenuName (type);
+        this.data = MenuData.Get((int)type);
+        txtName.text = data.menuName;
 
 		this.value = value;
 		txtVal.text = value.ToString ();
@@ -42,7 +43,7 @@ public class TableOrderBillElt : MonoBehaviour {
 
 	void _RefreshPrice()
 	{
-        price = Info.MenuPrice (type) * value;
+        price = this.data.price * value;
 		txtPrice.text = Info.MakeMoneyString (price);
 
         AdminTableOrderInput.Instance.tableOrderBill.CalcTotalPrice();

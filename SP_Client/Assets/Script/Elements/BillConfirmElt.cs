@@ -15,10 +15,14 @@ public class BillConfirmElt : MonoBehaviour {
 	int value = 0;
 	int price = 0;
 
+    MenuData data;
+
 	public void SetInfo(EMenuDetail eType, int value)
 	{
 		this.eType = eType;
-		txtName.text = Info.MenuName (eType);
+        this.data = MenuData.Get((int)eType);
+
+        txtName.text = data.menuName;
 
         this.oriValue = value;
 		this.value = value;
@@ -36,7 +40,7 @@ public class BillConfirmElt : MonoBehaviour {
 
 	void _RefreshPrice()
 	{
-		price = Info.MenuPrice (eType) * value;
+        price = data.price * value;
 		txtPrice.text = Info.MakeMoneyString (price);
 
         AdminBillConfirm.Instance.MenuChange(eType, value, oriValue);

@@ -15,27 +15,97 @@ public enum ECustomerType : byte
 public enum EMenuType : int
 {
 	eNone = -1,
-	eTop = 0,		// 탑메뉴
-	eParch,			// 볶음
-	eFruit,			// 과일
-	eFried,			// 튀김
-	eSoup,			// 탕
-	eSpecial = 5,	// 스페셜
-	eCook,			// 식사
-	eAlcohol,		// 주류
-	eDrink,			// 음료
+	eTop = 0,		    // 탑메뉴
+	eMeal,			    // 밥&안주 식사
+	ePochakaya,			// 튀김
+	eIzakaya,			// 탕
+	eWomanTarget,    	// 스페셜
+	eSashimiNFruit,     // 식사
+    eSoup,              // 탕&전골
+	eSozu,              // 소주
+	eBear,              // 맥주
+    eSake,              // 사케
+    eFruitSozu,         // 과일 소주
+    eFruitMakgeolli,    // 과일 막걸리
+    eGin,                // 고급진
+    eDrink,             // 음료
 }
 
 public enum EMenuDetail : int
 {
-	eNakgiBBokum = 0,
-	eGawilModum,
-	eSaeuTuikim,
-	eNagasaki,
-	eKrimSpageti,
-	eGonggiBob = 5,
-	eSoju,
-	eCola,
+    eOyakkokkioTeriGyudon           = 1,
+    eStakeCubeGyudon                = 2,
+    eGarlicShrimpGyudon             = 3,
+    eKoiGyudon                      = 4,
+    eChadolbagiGyudon               = 5,
+    eDaewangEdbikatsu               = 6,
+    eAnsimLoskatsu                  = 7,
+    eSausageVegetableGratin         = 8,
+    eButterCoconutShrimp            = 9,
+    eModeumFrenchFries              = 10,
+    eCornCheeseBaconBaPotato        = 11,
+    eHawaiianCheeseRollKatus        = 12,
+    eBeefTartare                    = 13,
+    eOkonomiyaki                    = 14,
+    eTokyoEbiFry                    = 15,
+    eTakoyaki                       = 16,
+    eKKanpungYug                    = 17,
+    eOkonomiWangEggRoll             = 18,
+    eYulingi                        = 19,
+    eYasaiYakiSamgyeob              = 20,
+    eModeumGaraAge                  = 21,
+    eModeumGoloke                   = 22,
+    eKobeGyuKatsu                   = 23,
+    eSpicyBaconCreamShrimp          = 24,
+    eCreamSpicyChicken              = 25,
+    eSpicySamgyeobSugjuBokkeum      = 26,
+    eChasyuBossam                   = 27,
+    eTakoWasabiNSoraWasabi          = 28,
+    eTakoChoSashimiSalad            = 29,
+    eMilkBingsuNIceHwangdo          = 30,
+    eModeumFruithwachae             = 31,
+    eBeefTartareNWaterSashimi       = 32,
+    eShanghaiSeafoodSpicyJjamppong  = 33,
+    eMilleFeuilleChadolNabe         = 34,
+    eMilleFeuillePorkKimchiNabe     = 35,
+    eNagasakiSeafoodJjamppong       = 36,
+    eGamabokoOdeng                  = 37,
+    eChamSozu                       = 38,
+    eChamiseul                      = 39,
+    eCheongha                       = 40,
+    eMaehwasu                       = 41,
+    eBogbadeunBuladeo               = 42,
+    eSimsul                         = 43,
+    eBingtanbog                     = 44,
+    eHiteBeer                       = 45,
+    eSangBeer500cc                  = 46,
+    eSangBeer1700cc                 = 47,
+    eSangBeer3000cc                 = 48,
+    eHakutsuruMaru                  = 49,
+    eGanbareOttosang                = 50,
+    eJunmai                         = 51,
+    eMaruJunmai                     = 52,
+    eStrawberrySozu                 = 53,
+    eMangoSozu                      = 54,
+    eBlueberrySozu                  = 55,
+    ePeachSozu                      = 56,
+    eWhiteGrapeSozu                 = 57,
+    eStrawberryMakgeolli            = 58,
+    eMangoMakgeolli                 = 59,
+    eBlueberryMakgeolli             = 60,
+    eBambaBambaMakgeolli            = 61,
+    ePeachMakgeolli                 = 62,
+    eWhiteGrapeMakgeolli            = 63,
+    eMilkMakgeolli                  = 64,
+    eYogurtMakgeolli                = 65,
+    eJajagpogtanZombieZu            = 66,
+    eJackDanielHoney                = 67,
+    eCoke                           = 68,
+    eCider                          = 69,
+    eFanta                          = 70,
+    eHotSix                         = 71,
+    eChocoEmong                     = 72,
+    eStrawberryEmong                = 73,
 }
 
 /// <summary>
@@ -89,63 +159,28 @@ public enum EBoardGame
 
 public partial class Info : MonoBehaviour {
 
-    public static Dictionary<EMenuType, List<EMenuDetail>> dictStaticMenu = new Dictionary<EMenuType, List<EMenuDetail>>()
-    {
-        { EMenuType.eParch,     new List<EMenuDetail>() { EMenuDetail.eNakgiBBokum } },
-        { EMenuType.eFruit,     new List<EMenuDetail>() { EMenuDetail.eGawilModum } },
-        { EMenuType.eFried,     new List<EMenuDetail>() { EMenuDetail.eSaeuTuikim } },
-        { EMenuType.eSoup,      new List<EMenuDetail>() { EMenuDetail.eNagasaki } },
-        { EMenuType.eSpecial,   new List<EMenuDetail>() { EMenuDetail.eKrimSpageti } },
-        { EMenuType.eCook,      new List<EMenuDetail>() { EMenuDetail.eGonggiBob } },
-        { EMenuType.eAlcohol,   new List<EMenuDetail>() { EMenuDetail.eSoju } },
-        { EMenuType.eDrink,     new List<EMenuDetail>() { EMenuDetail.eCola } },
-    };
-
-	public static void MenuTitle(EMenuType eType, ref string title, ref string subDesc)
+	public static string MenuTitle(EMenuType eType)
 	{		
-		switch (eType) {
-		case EMenuType.eTop:		title = "탑";		subDesc = "울집에서 젤 나가";	break;
-		case EMenuType.eParch:		title = "볶음";		subDesc = "일본식 퓨전 볶음";	break;
-		case EMenuType.eFruit:		title = "과일";		subDesc = "싱싱한 제철 과일";	break;
-		case EMenuType.eFried:		title = "튀김";		subDesc = "튀기면 뭔들";		break;
-		case EMenuType.eSoup:		title = "탕";		subDesc = "국물이 따끈따끈";	break;
-		case EMenuType.eSpecial:	title = "스페셜";	subDesc = "특별한 맛이 끌릴때";	break;
-		case EMenuType.eCook:		title = "식사";		subDesc = "배고플때 딱이야";	break;
-		case EMenuType.eAlcohol:	title = "주류";		subDesc = "이성의 끈을 놓자";	break;
-		case EMenuType.eDrink:		title = "음료";		subDesc = "시원한게 땡길때";	break;
-		}
-	}
+        string title = "";
+		switch (eType) 
+        {
+            case EMenuType.eTop:            title = "탑";          break;
+            case EMenuType.eMeal:           title = "밥&안주";     break;
+            case EMenuType.ePochakaya:      title = "포차카야";     break;
+            case EMenuType.eIzakaya:        title = "이자카야";     break;
+            case EMenuType.eWomanTarget:    title = "여심저격";     break;
+            case EMenuType.eSashimiNFruit:  title = "회&과일";      break;
+            case EMenuType.eSoup:           title = "탕&전골";      break;
+            case EMenuType.eSozu:           title = "소주";         break;
+            case EMenuType.eBear:           title = "맥주";         break;
+            case EMenuType.eSake:           title = "사케";         break;
+            case EMenuType.eFruitSozu:      title = "생과일 소주";   break;
+            case EMenuType.eFruitMakgeolli: title = "생과일 막걸리";  break;
+            case EMenuType.eGin:            title = "고급진";        break;
+            case EMenuType.eDrink:          title = "음료";          break;
+        }
 
-	public static string MenuName(EMenuDetail eType)
-	{
-		string name = "";
-		switch (eType) {
-		case EMenuDetail.eNakgiBBokum:		name = "낚지볶음";			break;
-		case EMenuDetail.eGawilModum:		name = "과일모듬";			break;
-		case EMenuDetail.eSaeuTuikim:		name = "새우튀김";			break;
-		case EMenuDetail.eNagasaki:			name = "나가사키짬뽕";		break;
-		case EMenuDetail.eKrimSpageti:		name = "크림스파게티";		break;
-		case EMenuDetail.eGonggiBob:		name = "공기밥";			break;
-		case EMenuDetail.eSoju:				name = "소주";				break;
-		case EMenuDetail.eCola:				name = "콜라";				break;
-		}
-		return name;
-	}
-
-	public static int MenuPrice(EMenuDetail eType)
-	{
-		int price = 0;
-		switch (eType) {
-		case EMenuDetail.eNakgiBBokum:		price = 9000;		break;
-		case EMenuDetail.eGawilModum:		price = 12000;		break;
-		case EMenuDetail.eSaeuTuikim:		price = 7900;		break;
-		case EMenuDetail.eNagasaki:			price = 11000;		break;
-		case EMenuDetail.eKrimSpageti:		price = 10000;		break;
-		case EMenuDetail.eGonggiBob:		price = 1000;		break;
-		case EMenuDetail.eSoju:				price = 4000;		break;
-		case EMenuDetail.eCola:				price = 2000;		break;
-		}
-		return price;
+        return title;
 	}
 
 	public static string GameTitle(EGameType eType)

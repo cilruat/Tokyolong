@@ -46,6 +46,8 @@ public class PageLogin : PageBase {
 
 			_ShowLoginBox ();
         }
+
+        MenuData.Load();
 	}
 
 	void _ShowLoginBox()

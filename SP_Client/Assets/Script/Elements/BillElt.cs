@@ -14,6 +14,8 @@ public class BillElt : MonoBehaviour {
 	int value = 0;
 	int price = 0;
 
+    MenuData menu;
+
 	public void SetInfo(EMenuDetail eType)
 	{
 		SetInfo (eType, 1);
@@ -22,7 +24,9 @@ public class BillElt : MonoBehaviour {
 	public void SetInfo(EMenuDetail eType, int value)
 	{
 		this.eType = eType;
-		txtName.text = Info.MenuName (eType);
+        this.menu = MenuData.Get((int)eType);
+
+        txtName.text = this.menu.menuName;
 
 		this.value = value;
 		txtVal.text = value.ToString ();
@@ -42,7 +46,7 @@ public class BillElt : MonoBehaviour {
 
 	void _RefreshPrice()
 	{
-		price = Info.MenuPrice (eType) * value;
+        price = menu.price * value;
 		txtPrice.text = Info.MakeMoneyString (price);
 
         if (Info.isCheckScene("Admin") == false)

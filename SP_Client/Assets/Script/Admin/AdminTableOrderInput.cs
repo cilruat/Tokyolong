@@ -24,18 +24,19 @@ public class AdminTableOrderInput : SingletonMonobehaviour<AdminTableOrderInput>
     void Awake() { LoadMenu(); }
     void LoadMenu()
     {
-        foreach (KeyValuePair<EMenuType, List<EMenuDetail>> pair in Info.dictStaticMenu)
+        foreach (KeyValuePair<int, List<MenuData>> pair in MenuData.dictMainMenu)
         {
+            EMenuType type = (EMenuType)pair.Key;
             MenuElt newMenuElt = CreateMenuElt();
-            newMenuElt.SetMenuElt(pair.Key);
+            newMenuElt.SetMenuElt(type);
 
-            dictMenuElt.Add(pair.Key, newMenuElt);
-            dictMenuDetailElt.Add(pair.Key, new List<MenuDetailElt>());
+            dictMenuElt.Add(type, newMenuElt);
+            dictMenuDetailElt.Add(type, new List<MenuDetailElt>());
             for (int i = 0; i < pair.Value.Count; i++)
             {
                 MenuDetailElt newMenuDetailElt = CreateMenuDetailElt();
                 newMenuDetailElt.SetMenuElt(pair.Value[i]);
-                dictMenuDetailElt[pair.Key].Add(newMenuDetailElt);
+                dictMenuDetailElt[type].Add(newMenuDetailElt);
             }
         }
     }
@@ -72,7 +73,7 @@ public class AdminTableOrderInput : SingletonMonobehaviour<AdminTableOrderInput>
     {
         this.tableNo = tableNo;
         tableOrderBill.SetTable(this.tableNo);
-        OnSelectMenuElt(EMenuType.eParch);
+        OnSelectMenuElt(EMenuType.eMeal);
     }
 
     public void OnSelectMenuElt(EMenuType type)

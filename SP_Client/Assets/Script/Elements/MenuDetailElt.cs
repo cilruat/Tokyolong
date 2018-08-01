@@ -8,18 +8,18 @@ public class MenuDetailElt : MonoBehaviour
     public Text textName;
     public Text textPrice;
 
-    EMenuDetail type = EMenuDetail.eNagasaki;
+    MenuData data;
 
-    public void SetMenuElt(EMenuDetail type)
+    public void SetMenuElt(MenuData data)
     {
-        this.type = type;
+        this.data = data;
 
-        textName.text = Info.MenuName (type);
-        textPrice.text = Info.MakeMoneyString (Info.MenuPrice (type));
+        textName.text = data.menuName;
+        textPrice.text = Info.MakeMoneyString (data.price);
     }
 
     public void OnSelect()
     {
-        AdminTableOrderInput.Instance.OnSelectMenuDetailElt(type);
+        AdminTableOrderInput.Instance.OnSelectMenuDetailElt((EMenuDetail)data.menuID);
     }
 }

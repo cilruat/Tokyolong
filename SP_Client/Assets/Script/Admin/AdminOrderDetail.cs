@@ -59,9 +59,9 @@ public class AdminOrderDetail : SingletonMonobehaviour<AdminOrderDetail> {
             int menu = int.Parse(json [i] ["menu"].ToString ());
             int cnt =  int.Parse(json [i] ["cnt"].ToString ());
 
-            EMenuDetail menuType = (EMenuDetail)menu;
+            MenuData data = MenuData.Get(menu);
 
-            string strMenu = Info.MenuName (menuType) + " " +  cnt.ToString ();
+            string strMenu = data.menuName + " " +  cnt.ToString ();
             GameObject objElt = Instantiate (objPrefab) as GameObject;
             Transform tr = objElt.transform;
             tr.SetParent (rtScroll);

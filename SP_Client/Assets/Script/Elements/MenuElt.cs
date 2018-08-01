@@ -13,12 +13,8 @@ public class MenuElt : MonoBehaviour
     public void SetMenuElt(EMenuType type)
     {
         this.type = type;
-        string title = "";
-        string subDesc = "";
 
-        Info.MenuTitle (type, ref title, ref subDesc);
-
-        textName.text = title;
+        textName.text = Info.MenuTitle(type);
     }
 
     public void OnSelect() { AdminTableOrderInput.Instance.OnSelectMenuElt(type); }

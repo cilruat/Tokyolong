@@ -11,6 +11,7 @@ public class CSVReader
     static string SPLIT_RE = @",(?=(?:[^""]*""[^""]*"")*(?![^""]*""))";
     static string LINE_SPLIT_RE = @"\r\n|\n\r|\n|\r";
     static char[] TRIM_CHARS = { '\"' };
+    static string LINE_CUTTER = "@N";
 
     public static List<Dictionary<string, object>> Read(string path)
     {
@@ -34,6 +35,7 @@ public class CSVReader
             {
                 string value = values[j];
                 value = value.TrimStart(TRIM_CHARS).TrimEnd(TRIM_CHARS).Replace("\\", "");
+                value = value.Replace("#n", "\n");
 
                 object finalValue = value;
 
