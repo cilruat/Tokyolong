@@ -47,5 +47,10 @@ public class VLogSave
 
         if (onSendLog != null)
             onSendLog(lastIndex, newLog);
+
+		if (type == LogType.Error || type == LogType.Exception || type == LogType.Assert) {
+			NetworkManager.Instance.disconnect ();
+			SceneChanger.LoadScene ("Login", PageBase.Instance.curBoardObj ());
+		}
     }
 }
