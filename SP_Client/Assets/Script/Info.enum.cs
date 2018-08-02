@@ -174,8 +174,8 @@ public partial class Info : MonoBehaviour {
             case EMenuType.eSozu:           title = "소주";         break;
             case EMenuType.eBear:           title = "맥주";         break;
             case EMenuType.eSake:           title = "사케";         break;
-            case EMenuType.eFruitSozu:      title = "생과일 소주";   break;
-            case EMenuType.eFruitMakgeolli: title = "생과일 막걸리";  break;
+            case EMenuType.eFruitSozu:      title = "수제 과일 소주";   break;
+            case EMenuType.eFruitMakgeolli: title = "수제 과일 막걸리타";  break;
             case EMenuType.eGin:            title = "고급진";        break;
             case EMenuType.eDrink:          title = "음료";          break;
         }
