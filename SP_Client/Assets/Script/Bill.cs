@@ -22,6 +22,7 @@ public class Bill : MonoBehaviour {
 	public GameObject prefab;
 	public GameObject objEmpty;
 	public RectTransform rtScroll;
+    public GridLayoutGroup layout;
 	public Text totalPrice;
     public Text textDiscountPrice;
     public Text textCalcPrice;
@@ -62,6 +63,8 @@ public class Bill : MonoBehaviour {
 
 		if (objEmpty != null && objEmpty.activeSelf)
 			objEmpty.SetActive (false);
+
+        ResizeScroll();
 	}
 
 	public void CalcTotalPrice()
@@ -107,6 +110,7 @@ public class Bill : MonoBehaviour {
 		}
 
 		CalcTotalPrice ();
+        ResizeScroll();
 	}
 
 	void _Clear()
@@ -125,6 +129,7 @@ public class Bill : MonoBehaviour {
         discountPrice = 0;
 
 		CalcTotalPrice ();
+        ResizeScroll();
 	}
 
 	public void CopyBill(List<BillElt> list)
@@ -148,6 +153,7 @@ public class Bill : MonoBehaviour {
             objEmpty.SetActive(list.Count <= 0);
         
 		CalcTotalPrice ();
+        ResizeScroll();
 	}
 
     public void CopyBill(List<KeyValuePair<EMenuDetail, int>> list, List<short> listDiscount)
@@ -175,6 +181,7 @@ public class Bill : MonoBehaviour {
             objEmpty.SetActive(list.Count <= 0);
 
 		CalcTotalPrice ();
+        ResizeScroll();
 	}
 
 	public void OnOrder()
@@ -239,4 +246,18 @@ public class Bill : MonoBehaviour {
 		_OrderState (true);
 		UIManager.Instance.Hide (eUI.eBillSending);
 	}
+
+    void ResizeScroll()
+    {
+        float height = layout.cellSize.y * (float)listElt.Count;
+        height += layout.spacing.y * (float)Mathf.Max((listElt.Count - 1), 0);
+        height += layout.padding.top + layout.padding.bottom;
+
+        if (height != rtScroll.rect.height)
+        {
+            rtScroll.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+            float parentHeight = rtScroll.parent.GetComponent<RectTransform>().rect.height;
+            rtScroll.anchoredPosition = new Vector2(0f, Mathf.Max((height - parentHeight), 0f));
+        }
+    }
 }

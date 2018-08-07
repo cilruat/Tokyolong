@@ -9,6 +9,7 @@ public class AdminBillConfirmChange : MonoBehaviour {
 
     public GameObject prefab;
     public RectTransform rtScroll; 
+    public GridLayoutGroup layout;
     public Text totalPrice;
 
     List<BillChangeElt> listElt = new List<BillChangeElt>();
@@ -50,6 +51,7 @@ public class AdminBillConfirmChange : MonoBehaviour {
         }       
 
         CalcTotalPrice ();
+        ResizeScroll();
     }
 
     public void CalcTotalPrice()
@@ -87,6 +89,7 @@ public class AdminBillConfirmChange : MonoBehaviour {
         }
 
         CalcTotalPrice ();
+        ResizeScroll();
     }
 
     void _Clear()
@@ -100,6 +103,7 @@ public class AdminBillConfirmChange : MonoBehaviour {
         listElt.Clear ();
 
         CalcTotalPrice ();
+        ResizeScroll();
     }
 
     public void FinishOrder()
@@ -130,5 +134,19 @@ public class AdminBillConfirmChange : MonoBehaviour {
         JsonData json = JsonMapper.ToJson (list);
         NetworkManager.Instance.Table_Order_Input_REQ (this.tableNo, json.ToString ());
         AdminBillConfirm.Instance.waitComplete = true;
+    }
+
+    void ResizeScroll()
+    {
+        float height = layout.cellSize.y * (float)listElt.Count;
+        height += layout.spacing.y * (float)Mathf.Max((listElt.Count - 1), 0);
+        height += layout.padding.top + layout.padding.bottom;
+
+        if (height != rtScroll.rect.height)
+        {
+            rtScroll.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+            float parentHeight = rtScroll.parent.GetComponent<RectTransform>().rect.height;
+            rtScroll.anchoredPosition = new Vector2(0f, Mathf.Max((height - parentHeight), 0f));
+        }
     }
 }
