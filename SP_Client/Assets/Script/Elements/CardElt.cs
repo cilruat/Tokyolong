@@ -21,7 +21,7 @@ public class CardElt : MonoBehaviour {
 		this.pairNum = pairNum;
 
 		temp.text = idx.ToString () + ", " + pairNum.ToString ();
-		temp.gameObject.SetActive (true);
+		temp.gameObject.SetActive (false);
 	}
 
 	public void SetImg(Texture tex)
@@ -32,16 +32,16 @@ public class CardElt : MonoBehaviour {
 
 	public void OnShow()
 	{
-		if (isFind)
+		if (isFind || parent.start == false || parent.end)
 			return;
 
 		parent.CheckPair (idx, pairNum);
-		objImg.SetActive (true);
+		Rolling (true);
 	}
 
 	public void Hide()
 	{
-		objImg.SetActive (false);
+		Rolling (false);
 	}
 
 	public void Find()
@@ -51,12 +51,35 @@ public class CardElt : MonoBehaviour {
 		ShiningGraphic.Start (img);
 	}
 
-	public void Rolling()
+	public void Rolling(bool show)
+	{
+		StartCoroutine (_Rolling (show));
+	}
+
+	IEnumerator _Rolling(bool show)
 	{
 		RectTransform rt = (RectTransform)transform;
-		float y = rt.anchoredPosition.y;
-		Vector3 start = new Vector3 (0f, y, 0f);
-		Vector3 end = new Vector3 (0f, y == 0f ? 180f : 0f, 0f);
-		UITweenRotation.Start (gameObject, start, end, TWParam.New (.2f).Curve (TWCurve.CurveLevel2));
+		float y = rt.localEulerAngles.y;
+		float end_y = show ? 180f : 0f;
+
+		Vector3 start = Vector3.up * y;
+		Vector3 end = Vector3.up * end_y;
+
+		while (true) {
+			Vector3 rot = Vector3.MoveTowards (start, end, 15f);
+			rt.Rotate (rot, Space.Self);
+
+			if (rt.localEulerAngles.y >= end_y * .5f) {
+				if (objImg.activeSelf != show)
+					objImg.SetActive (show);
+			}
+
+			if (rt.localEulerAngles.y >= end_y)
+				break;
+
+			yield return null;
+		}
+
+		rt.localEulerAngles = new Vector3 (0f, end_y, 0f);
 	}
 }

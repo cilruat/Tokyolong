@@ -80,6 +80,7 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 
 	bool start = false;
 	bool end = false;
+	bool startBtnClick = false;
 	int mode = 0;
     int[,] array;
 	List<Clip> listClip = new List<Clip>();
@@ -107,6 +108,7 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
     {
 		start = false;
 		end = false;
+		startBtnClick = false;
 
 		listClip.Clear();
 		for (int i = 0; i < grid.transform.childCount; i++) {
@@ -142,6 +144,10 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 
 	public void OnStart()
 	{
+		if (startBtnClick)
+			return;
+
+		startBtnClick = true;
 		StartCoroutine (_ReadyGo ());
 	}
 

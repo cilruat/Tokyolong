@@ -277,7 +277,7 @@ public partial class PageGame : PageBase {
 					sceneName = "PicturePuzzle";
 					break;
 				case EBrainSurvival.ePairCards:
-					sceneName = "PicturePuzzle";
+					sceneName = "PairCards";
                     break;
 				}
 			}

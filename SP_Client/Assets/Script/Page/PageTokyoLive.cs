@@ -20,14 +20,14 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 
     List<Dictionary<string, object>> data = new List<Dictionary<string, object>>();
 
-    const int LIMIT_TIME = 10;
+    const int LIMIT_TIME = 15;
 	const int LIMIT_TIME_SELECT = 2;
 
 	string[] desc = {
 		"도쿄라이브 대손님퀴드쇼~\n\n총 2문가 출제가 되는데\n모두 맞추셔야\n할인이 적용됩니다.\n\n한문제라도 틀리면 즉시 종료!!\n\n자 그럼 첫번째 문제 나갑니다\n\n고고고!!!", 
 		"\n\n역시 대단하시네요~~\n\n바로 이어서\n두번째 문제 나갑니다\n\n고고고!!!",
 		"\n\n\n정말 잘 푸셨어요~\n\n할인 적용됩니다^^*",
-		"\n\n\n아쉽지만 다음기회에\n\n안녕~~" };
+		"\n\n\n아쉽지만 할인은 다음기회에\nㅠㅠ\n\n안녕~~" };
 	
     string[] question1 = { "", "", "", "" };
     string[] question2 = { "", "", "", "" };
@@ -120,10 +120,10 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 		{
 			str += ch[i].ToString();
 			txtDesc.text = str;
-			yield return new WaitForSeconds(.01f);
+			yield return new WaitForSeconds(.015f);
 		}
 
-		yield return new WaitForSeconds(1f);
+		yield return new WaitForSeconds(2.5f);
 		UITweenAlpha.Start (txtDesc.gameObject, 1f, 0f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
 	}
 
@@ -137,7 +137,7 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 		{
 			str += ch[i].ToString();
 			txtQuesiton.text = str;
-			yield return new WaitForSeconds(.01f);
+			yield return new WaitForSeconds(.015f);
 		}
 
 		txtQuesiton.text = question[0];

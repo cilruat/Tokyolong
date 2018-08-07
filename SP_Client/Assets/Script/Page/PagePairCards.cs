@@ -23,8 +23,9 @@ public class PagePairCards : MonoBehaviour {
 	public GameObject[] objTimeOut;
 	public List<Texture> listCards = new List<Texture> ();
 
-	bool start = false;
-	bool end = false;
+	public bool start = false;
+	public bool end = false;
+	bool startBtnClick = false;
 	List<CardElt> listElt = new List<CardElt> ();
 
 	void Awake()
@@ -41,10 +42,6 @@ public class PagePairCards : MonoBehaviour {
 
 	void Update()
 	{
-		if (Input.GetKeyDown (KeyCode.A)) {
-			listElt [0].Rolling ();
-		}
-
 		if (start == false || end)
 			return;
 		
@@ -56,6 +53,7 @@ public class PagePairCards : MonoBehaviour {
 	void _SetCards()
 	{
 		int mode = Random.Range (0, 2);
+		mode = 0;
 		int cnt = mode == 0 ? NORMAL_MODE_CARD_COUNT : HARD_MODE_CARD_COUNT;
 
 		int prev_pairNum = 0;
@@ -110,6 +108,10 @@ public class PagePairCards : MonoBehaviour {
 
 	public void OnStart()
 	{
+		if (startBtnClick)
+			return;
+
+		startBtnClick = true;
 		StartCoroutine (_ReadyGo ());
 	}
 
@@ -119,7 +121,7 @@ public class PagePairCards : MonoBehaviour {
 
 		float sec = .5f / (float)(listElt.Count);
 		for (int i = 0; i < listElt.Count; i++) {
-			listElt [i].objImg.SetActive (true);
+			listElt [i].Rolling (true);
 			yield return new WaitForSeconds (sec);
 		}
 
@@ -129,7 +131,7 @@ public class PagePairCards : MonoBehaviour {
 		yield return new WaitForSeconds (.5f);
 
 		for (int i = 0; i < listElt.Count; i++) {
-			listElt [i].objImg.SetActive (false);
+			listElt [i].Rolling (false);
 			yield return new WaitForSeconds (sec);
 		}
 
@@ -221,10 +223,13 @@ public class PagePairCards : MonoBehaviour {
 	}
 
 	IEnumerator _SuccessEndGame()
-	{
-		float sec = 1f / (float)(listElt.Count);
-		for (int i = 0; i < listElt.Count; i++) {
-			ShiningGraphic.Start (listElt [i].img);
+	{		
+		float sec = 1f / (float)(grid.transform.childCount);
+		for (int i = 0; i < grid.transform.childCount; i++) {
+			Transform tr = grid.transform.GetChild (i);
+			CardElt elt = tr.GetComponent<CardElt> ();
+
+			ShiningGraphic.Start (elt.img);
 			yield return new WaitForSeconds (sec);
 		}
 
@@ -233,8 +238,7 @@ public class PagePairCards : MonoBehaviour {
 		objSendServer.SetActive (true);
 		yield return new WaitForSeconds (1f);
 
-		//NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
-		Debug.Log("Game_Discount_REQ");
+		NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
 	}
 
 	IEnumerator _FailEndGame()
