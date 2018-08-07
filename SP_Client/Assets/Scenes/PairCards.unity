@@ -206,7 +206,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1497141945}
         m_MethodName: OnStart
         m_Mode: 1
         m_Arguments:
@@ -921,7 +921,7 @@ GameObject:
   - component: {fileID: 484954080}
   - component: {fileID: 484954076}
   m_Layer: 5
-  m_Name: Picture
+  m_Name: Cards
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1138,9 +1138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scalingOnTouch: 1
   clickSound: click
-  shinings:
-  - {fileID: 528581974}
-  - {fileID: 1233970793}
+  shinings: []
 --- !u!114 &528581977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1209,7 +1207,9 @@ MonoBehaviour:
   temp: {fileID: 240397539}
   img: {fileID: 1233970793}
   objImg: {fileID: 1677762573}
+  btn: {fileID: 528581976}
   parent: {fileID: 1497141945}
+  isFind: 0
 --- !u!1 &530491617
 GameObject:
   m_ObjectHideFlags: 0
@@ -2387,6 +2387,15 @@ MonoBehaviour:
   grid: {fileID: 943109605}
   objCard: {fileID: 528581972}
   objBoard: {fileID: 2068870976}
+  objSendServer: {fileID: 1463240028}
+  objHide: {fileID: 1620869250}
+  objBtnStart: {fileID: 33715589}
+  objTxtReady: {fileID: 645951050}
+  objTxtGo: {fileID: 1044894442}
+  objTimeOut:
+  - {fileID: 530491617}
+  - {fileID: 435876859}
+  - {fileID: 266548672}
   listCards:
   - {fileID: 2800000, guid: c33abe9dd231b214ebcb9e3e26e4fb7c, type: 3}
   - {fileID: 2800000, guid: 8d6c1bcae1b44b74aa8c392e5604c6eb, type: 3}
@@ -2424,7 +2433,6 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 551bba96ce9308840b5ea72cbe03e3f0, type: 3}
   - {fileID: 2800000, guid: 37a6bfb3e1a59dd4485d5ec3aff85076, type: 3}
   - {fileID: 2800000, guid: 21c5c1e9ec64d0c42920c00ddff76db7, type: 3}
-  listElt: []
 --- !u!225 &1497141946
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -2482,7 +2490,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 1
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 1107212824}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -2535,7 +2543,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1620869251
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3182,7 +3190,7 @@ CanvasGroup:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2068870976}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0

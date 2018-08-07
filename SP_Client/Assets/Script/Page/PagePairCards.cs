@@ -15,8 +15,17 @@ public class PagePairCards : MonoBehaviour {
 	public GridLayoutGroup grid;
 	public GameObject objCard;
 	public GameObject objBoard;
+	public GameObject objSendServer;
+	public GameObject objHide;
+	public GameObject objBtnStart;
+	public GameObject objTxtReady;
+	public GameObject objTxtGo;
+	public GameObject[] objTimeOut;
 	public List<Texture> listCards = new List<Texture> ();
-	public List<CardElt> listElt = new List<CardElt> ();
+
+	bool start = false;
+	bool end = false;
+	List<CardElt> listElt = new List<CardElt> ();
 
 	void Awake()
 	{
@@ -24,10 +33,29 @@ public class PagePairCards : MonoBehaviour {
 		_SetCards ();
 	}
 
+	IEnumerator Start()
+	{
+		yield return new WaitForSeconds (.5f);
+		UITweenAlpha.Start(objBoard, 0f, 1f, TWParam.New(1f).Curve(TWCurve.CurveLevel2));
+	}
+
+	void Update()
+	{
+		if (Input.GetKeyDown (KeyCode.A)) {
+			listElt [0].Rolling ();
+		}
+
+		if (start == false || end)
+			return;
+		
+		float elapsed = countDown.GetElapsed ();
+		float fill = (LIMIT_TIME - elapsed) / (float)LIMIT_TIME;
+		imgTime.fillAmount = fill;
+	}
+
 	void _SetCards()
 	{
 		int mode = Random.Range (0, 2);
-		mode = 0;
 		int cnt = mode == 0 ? NORMAL_MODE_CARD_COUNT : HARD_MODE_CARD_COUNT;
 
 		int prev_pairNum = 0;
@@ -62,14 +90,11 @@ public class PagePairCards : MonoBehaviour {
 
 	Texture _GetRandCardImg()
 	{
-		Texture tex = null;
 		System.Random random = new System.Random ();
-		for (int i = 0; i < listCards.Count; i++) {
-			int rand = random.Next (listCards.Count);
-			tex = listCards [rand];
-			listCards.RemoveAt (rand);
-			break;
-		}
+		int rand = random.Next (listCards.Count);
+
+		Texture tex = listCards [rand];
+		listCards.RemoveAt (rand);
 
 		return tex;
 	}
@@ -83,11 +108,46 @@ public class PagePairCards : MonoBehaviour {
 		}
 	}		
 
-	void Update()
-	{		
-		float elapsed = countDown.GetElapsed ();
-		float fill = (LIMIT_TIME - elapsed) / (float)LIMIT_TIME;
-		imgTime.fillAmount = fill;
+	public void OnStart()
+	{
+		StartCoroutine (_ReadyGo ());
+	}
+
+	IEnumerator _ReadyGo()
+	{
+		UITweenAlpha.Start(objBtnStart, 1f, 0f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+
+		float sec = .5f / (float)(listElt.Count);
+		for (int i = 0; i < listElt.Count; i++) {
+			listElt [i].objImg.SetActive (true);
+			yield return new WaitForSeconds (sec);
+		}
+
+		yield return new WaitForSeconds (3f);
+
+		UITweenAlpha.Start(objTxtReady, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+		yield return new WaitForSeconds (.5f);
+
+		for (int i = 0; i < listElt.Count; i++) {
+			listElt [i].objImg.SetActive (false);
+			yield return new WaitForSeconds (sec);
+		}
+
+		yield return new WaitForSeconds (1f);
+
+		UITweenAlpha.Start(objTxtReady, 1f, 0f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+		yield return new WaitForSeconds (.25f);
+
+		UITweenAlpha.Start(objTxtGo, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+		yield return new WaitForSeconds (1f);
+
+		UITweenAlpha.Start(objTxtGo, 1f, 0f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+		yield return new WaitForSeconds (.3f);
+
+		objHide.SetActive (false);
+
+		start = true;
+		countDown.Set (LIMIT_TIME, () => StartCoroutine (_FailEndGame ()));
 	}
 
 	List<KeyValuePair<int,int>> listChecks = new List<KeyValuePair<int, int>>();
@@ -110,15 +170,35 @@ public class PagePairCards : MonoBehaviour {
 			KeyValuePair<int,int> first = listChecks [check];
 			KeyValuePair<int,int> second = listChecks [check + 1];
 
-			if (first.Value == second.Value)
+			if (first.Value == second.Value) {
+				listElt [first.Key].Find ();
+				listElt [second.Key].Find ();
+
 				_CheckAllPair ();
+			}
 			else
 				StartCoroutine (_DelayedHide (first.Key, second.Key));
+
+			_RemoveListChecks (first.Key, second.Key);
 		}
 	}
 
 	void _CheckAllPair()
 	{
+		bool isFinish = true;
+		for (int i = 0; i < listElt.Count; i++) {
+			if (listElt [i].isFind)
+				continue;
+
+			isFinish = false;
+			break;
+		}
+
+		if (isFinish) {
+			end = true;
+			countDown.Stop ();
+			StartCoroutine (_SuccessEndGame ());
+		}
 	}
 
 	IEnumerator _DelayedHide(int firstIdx, int secondIdx)
@@ -127,14 +207,47 @@ public class PagePairCards : MonoBehaviour {
 
 		listElt [firstIdx].Hide ();
 		listElt [secondIdx].Hide ();
+	}
 
+	void _RemoveListChecks(int firstIdx, int secondIdx)
+	{
 		for (int i = 0; i < listChecks.Count; i++) {
 			if (listChecks [i].Key == firstIdx ||
-			    listChecks [i].Key == secondIdx) {
+				listChecks [i].Key == secondIdx) {
 				listChecks.RemoveAt (i);
 				--i;
 			}
 		}
+	}
+
+	IEnumerator _SuccessEndGame()
+	{
+		float sec = 1f / (float)(listElt.Count);
+		for (int i = 0; i < listElt.Count; i++) {
+			ShiningGraphic.Start (listElt [i].img);
+			yield return new WaitForSeconds (sec);
+		}
+
+		yield return new WaitForSeconds (.25f);
+
+		objSendServer.SetActive (true);
+		yield return new WaitForSeconds (1f);
+
+		//NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+		Debug.Log("Game_Discount_REQ");
+	}
+
+	IEnumerator _FailEndGame()
+	{
+		UITweenAlpha.Start (objTimeOut [0], 0f, 1f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
+		yield return new WaitForSeconds (1.5f);
+
+		UITweenAlpha.Start (objTimeOut [1], 1f, 0f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
+		yield return new WaitForSeconds (.25f);
+
+		UITweenAlpha.Start (objTimeOut [2], 0f, 1f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
+		yield return new WaitForSeconds (1.5f);
+		ReturnHome ();
 	}
 
 	public void ReturnHome()
