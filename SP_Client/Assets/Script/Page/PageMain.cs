@@ -23,6 +23,11 @@ public class PageMain : PageBase {
 	public Text txtPlayCnt;
     public Text txtTableNo;
 
+    public GameObject objDiscountChance;
+    public GameObject objFireCracker;
+
+    public FlyChance flyChance;
+
 	protected override void Awake ()
 	{
         base.boards = cgBoard;
@@ -31,6 +36,11 @@ public class PageMain : PageBase {
 		txtPlayCnt.text = Info.GamePlayCnt.ToString ();
         txtTableNo.text = Info.TableNum.ToString();
 	}
+
+    void Start()
+    {
+        CreateFlyChance();
+    }
 
     public void RefreshGamePlay()
     {
@@ -52,5 +62,46 @@ public class PageMain : PageBase {
             case EMenu.eRequestMusic: NetworkManager.Instance.Request_Music_List_REQ();     break;
             case EMenu.eHowToUse:   UIManager.Instance.Show(eUI.eHowToUse);                 break;
 		}
-	}	
+	}
+
+    Coroutine scaleRouine = null;
+    public void RefreshGamePlayChance()
+    {
+        GameObject newObj = Instantiate(objFireCracker, objDiscountChance.transform) as GameObject;
+        newObj.gameObject.SetActive(true);
+
+        txtPlayCnt.text = Info.GamePlayCnt.ToString ();
+
+        if (scaleRouine != null)
+            StopCoroutine(scaleRouine);
+
+        scaleRouine = StartCoroutine(_ScaleAnim());
+    }
+
+    IEnumerator _ScaleAnim()
+    {
+        UITween tween = UITweenScale.Start(objDiscountChance, 1f, 1.2f, TWParam.New(.1f).Curve(TWCurve.Back).Speed(TWSpeed.Slower));
+        while (tween.IsTweening())
+            yield return null;
+
+        tween = UITweenScale.Start(objDiscountChance, 1.2f, 1f, TWParam.New(.1f).Curve(TWCurve.Back).Speed(TWSpeed.Faster));
+        while (tween.IsTweening())
+            yield return null;
+
+        scaleRouine = null;
+    }
+
+    void CreateFlyChance()
+    {
+        if (Info.orderCnt <= 0)
+            return;
+        
+        for (int i = Info.orderCnt; i > 0; i--)
+        {
+            GameObject objChance = Instantiate(flyChance.gameObject, flyChance.transform.parent) as GameObject;
+            objChance.gameObject.SetActive(true);
+
+            Info.orderCnt--;
+        }
+    }
 }

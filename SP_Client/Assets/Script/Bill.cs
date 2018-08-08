@@ -245,6 +245,7 @@ public class Bill : MonoBehaviour {
 
 		_OrderState (true);
 		UIManager.Instance.Hide (eUI.eBillSending);
+        SceneChanger.LoadScene ("Main", PageBase.Instance.curBoardObj ());
 	}
 
     void ResizeScroll()

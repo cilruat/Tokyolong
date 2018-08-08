@@ -150,7 +150,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
 	void OrderACK(CPacket msg)
 	{
-		Info.GamePlayCnt = msg.pop_byte ();
+//		Info.GamePlayCnt = msg.pop_byte ();
+        Info.orderCnt = Mathf.Max(0, (int)msg.pop_byte() - (int)Info.GamePlayCnt);
+
 		((PageOrder)PageBase.Instance).bill.CompleteOrder ();
 	}
 
