@@ -150,10 +150,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
 	void OrderACK(CPacket msg)
 	{
-//		Info.GamePlayCnt = msg.pop_byte ();
-        Info.orderCnt = Mathf.Max(0, (int)msg.pop_byte() - (int)Info.GamePlayCnt);
-
-		((PageOrder)PageBase.Instance).bill.CompleteOrder ();
+        Info.orderCnt = Mathf.Max(0, Info.orderCnt + msg.pop_int32());
+        ((PageOrder)PageBase.Instance).bill.CompleteOrder ();
 	}
 
 	void OrderNOT(CPacket msg)
@@ -312,9 +310,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
     void TableOrderInputNOT(CPacket msg)
     {
-        Info.GamePlayCnt = msg.pop_byte();
+        Info.orderCnt = Mathf.Max(0, Info.orderCnt + msg.pop_int32());
         if (Info.isCheckScene("Main"))
-            ((PageMain)PageBase.Instance).RefreshGamePlay();
+            ((PageMain)PageBase.Instance).CreateFlyChance();
 
         UIManager.Instance.ShowOrderAlarm();
     }

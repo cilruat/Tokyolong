@@ -64,4 +64,5 @@ public class BillElt : MonoBehaviour {
 	public int GetCount() {	return value; }
 	public int GetPrice() { return price; }
 	public EMenuDetail MenuDetailType() { return eType; }
+    public EMenuType MenuType() { return (EMenuType)this.menu.category; }
 }

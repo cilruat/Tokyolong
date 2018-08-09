@@ -67,6 +67,9 @@ public class PageMain : PageBase {
     Coroutine scaleRouine = null;
     public void RefreshGamePlayChance()
     {
+        if (Info.isCheckScene("Main"))
+            return;
+
         GameObject newObj = Instantiate(objFireCracker, objDiscountChance.transform) as GameObject;
         newObj.gameObject.SetActive(true);
 
@@ -80,18 +83,31 @@ public class PageMain : PageBase {
 
     IEnumerator _ScaleAnim()
     {
+        if (Info.isCheckScene("Main"))
+            yield break;
+
         UITween tween = UITweenScale.Start(objDiscountChance, 1f, 1.2f, TWParam.New(.1f).Curve(TWCurve.Back).Speed(TWSpeed.Slower));
         while (tween.IsTweening())
+        {
+            if (Info.isCheckScene("Main"))
+                yield break;
+
             yield return null;
+        }
 
         tween = UITweenScale.Start(objDiscountChance, 1.2f, 1f, TWParam.New(.1f).Curve(TWCurve.Back).Speed(TWSpeed.Faster));
         while (tween.IsTweening())
+        {
+            if (Info.isCheckScene("Main"))
+                yield break;
+            
             yield return null;
+        }
 
         scaleRouine = null;
     }
 
-    void CreateFlyChance()
+    public void CreateFlyChance()
     {
         if (Info.orderCnt <= 0)
             return;

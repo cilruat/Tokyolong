@@ -57,4 +57,5 @@ public class TableOrderBillElt : MonoBehaviour {
 	public int GetCount() {	return value; }
 	public int GetPrice() { return price; }
     public EMenuDetail MenuDetailType() { return type; }
+    public EMenuType MenuType() { return (EMenuType)this.data.category; }
 }

@@ -98,5 +98,19 @@ public class PageLogin : PageBase {
     {
         eType = (ECustomerType)type;
         OnNext();
-    }		   
+
+        if (waitRoutine != null)
+            StopCoroutine(waitRoutine);
+
+        waitRoutine = StartCoroutine(WaitShowNoticeAndHome());
+    }
+
+    Coroutine waitRoutine = null;
+    IEnumerator WaitShowNoticeAndHome()
+    {
+        yield return new WaitForSeconds(3.5f);
+
+        OnNext();
+        waitRoutine = null;
+    }
 }

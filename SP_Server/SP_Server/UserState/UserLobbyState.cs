@@ -210,14 +210,16 @@ namespace SP_Server.UserState
                     case PROTOCOL.ORDER_REQ:
                         tableNo = msg.pop_byte();
                         string order = msg.pop_string();
+                        int orderCnt = msg.pop_int32();
 
-                        ++owner.info.gameInfo.gameCnt;
+                        owner.info.gameInfo.gameCnt += orderCnt;
                         owner.mainFrm.RefreshGameCount(tableNo, owner.info.gameInfo.gameCnt);
 
                         ++owner.mainFrm.orderID;
 
                         RequestOrder reqOrder = new RequestOrder((byte)ERequestOrerType.eOrder, owner.mainFrm.orderID, tableNo, order);
                         owner.mainFrm.SetRequestOrder(reqOrder);
+
                         // Admin Send packet
                         if (Frm.GetAdminUser() != null)
                         {
@@ -231,7 +233,7 @@ namespace SP_Server.UserState
                         }
 
                         send_msg = CPacket.create((short)PROTOCOL.ORDER_ACK);
-                        send_msg.push(owner.info.gameInfo.gameCnt);
+                        send_msg.push(orderCnt);
                         break;
                     case PROTOCOL.CHAT_REQ:
                         tableNo = msg.pop_byte();
@@ -396,11 +398,12 @@ namespace SP_Server.UserState
                         break;
                     case PROTOCOL.TABLE_ORDER_INPUT_REQ:
                         tableNo = msg.pop_byte();
+                        string inputTableOrderPacking = msg.pop_string();
+                        int tableInputOrderCnt = msg.pop_int32();
 
-                        ++owner.info.gameInfo.gameCnt;
+                        owner.info.gameInfo.gameCnt += tableInputOrderCnt;
                         owner.mainFrm.RefreshGameCount(tableNo, owner.info.gameInfo.gameCnt);
 
-                        string inputTableOrderPacking = msg.pop_string();
                         JsonData inputOrder = JsonMapper.ToObject(inputTableOrderPacking);
                         for (int i = 0; i < inputOrder.Count; i++)
                         {
@@ -417,7 +420,7 @@ namespace SP_Server.UserState
                                 continue;
 
                             other_msg = CPacket.create((short)PROTOCOL.TABLE_ORDER_INPUT_NOT);
-                            other_msg.push((byte)(owner.mainFrm.GetGameCount(inputTargetUser.tableNum)));
+                            other_msg.push(tableInputOrderCnt);
                             inputTargetUser.send(other_msg);
                             break;
                         }

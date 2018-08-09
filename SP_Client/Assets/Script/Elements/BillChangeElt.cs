@@ -55,4 +55,5 @@ public class BillChangeElt : MonoBehaviour {
     public int GetCount() {	return value - oriValue; }
 	public int GetPrice() { return price; }
     public EMenuDetail MenuDetailType() { return type; }
+    public EMenuType MenuType() { return (EMenuType)this.data.category; }
 }

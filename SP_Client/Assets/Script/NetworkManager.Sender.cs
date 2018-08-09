@@ -52,11 +52,12 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		send (msg);
 	}
 
-    public void Order_REQ(string order)
+    public void Order_REQ(string order, int orderCnt)
 	{
 		CPacket msg = CPacket.create((short)PROTOCOL.ORDER_REQ);
         msg.push (Info.TableNum);
 		msg.push (order);
+        msg.push(orderCnt);
 
 		send (msg);
 	}
@@ -130,11 +131,12 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         send(msg);
     }
 
-    public void Table_Order_Input_REQ(byte tableNo, string packing)
+    public void Table_Order_Input_REQ(byte tableNo, string packing, int orderCnt)
     {
         CPacket msg = CPacket.create((short)PROTOCOL.TABLE_ORDER_INPUT_REQ);
         msg.push(tableNo);
         msg.push(packing);
+        msg.push(orderCnt);
 
         send(msg);
     }

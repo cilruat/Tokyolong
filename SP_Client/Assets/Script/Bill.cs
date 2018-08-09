@@ -201,16 +201,20 @@ public class Bill : MonoBehaviour {
 
 	public void FinishOrder()
 	{
+        int orderCnt = 0;
 		List<SendMenu> list = new List<SendMenu> ();
 		for (int i = 0; i < listElt.Count; i++) {
 			int menu = (int)listElt [i].MenuDetailType ();
 			int cnt = listElt [i].GetCount ();
 			SendMenu send = new SendMenu (menu, cnt);
 			list.Add (send);
+
+            if (listElt[i].MenuType() != EMenuType.eDrink)
+                orderCnt += cnt;
 		}
 
 		JsonData json = JsonMapper.ToJson (list);
-        NetworkManager.Instance.Order_REQ (json.ToString ());
+        NetworkManager.Instance.Order_REQ (json.ToString (), orderCnt);
 
 		_Clear ();
 	}

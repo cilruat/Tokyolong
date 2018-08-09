@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FlyChance : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class FlyChance : MonoBehaviour
     {
         Info.GamePlayCnt++;
 
-        if (Info.isCheckScene("Main"))
+        if (Info.isCheckScene("Main") && SceneChanger.nextName == "Main")
             ((PageMain)PageBase.Instance).RefreshGamePlayChance();
     }
 

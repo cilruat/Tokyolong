@@ -123,16 +123,20 @@ public class AdminBillConfirmChange : MonoBehaviour {
         if (AdminBillConfirm.Instance.waitComplete)
             return;
 
+        int orderCnt = 0;
         List<SendMenu> list = new List<SendMenu> ();
         for (int i = 0; i < listElt.Count; i++) {
             int menu = (int)listElt [i].MenuDetailType ();
             int cnt = listElt [i].GetCount ();
             SendMenu send = new SendMenu (menu, cnt);
             list.Add (send);
+
+            if (listElt[i].MenuType() != EMenuType.eDrink)
+                orderCnt += cnt;
         }
 
         JsonData json = JsonMapper.ToJson (list);
-        NetworkManager.Instance.Table_Order_Input_REQ (this.tableNo, json.ToString ());
+        NetworkManager.Instance.Table_Order_Input_REQ (this.tableNo, json.ToString (), orderCnt);
         AdminBillConfirm.Instance.waitComplete = true;
     }
 
