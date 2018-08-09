@@ -141,7 +141,7 @@ public class SlotMachineElt : MonoBehaviour {
 		yield return new WaitForSeconds (.1f);
 		ShiningGraphic.Start (imgFrame);
 
-		yield return new WaitForSeconds (.5f);
+		yield return new WaitForSeconds (1f);
 
         if (eType == ESlotType.eGameType && page.SelectGameType() == EGameType.eTokyoLive)
             page.ShowPopup();

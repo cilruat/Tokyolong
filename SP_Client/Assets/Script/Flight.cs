@@ -43,13 +43,13 @@ public class Flight : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		_CreateEff ();
+		_DestroyEff ();
 		Destroy (gameObject);
 
 		parent.FailEndGame ();
 	}
 
-	void _CreateEff()
+	void _DestroyEff()
 	{
 		
 	}

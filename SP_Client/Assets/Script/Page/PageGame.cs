@@ -59,10 +59,8 @@ public partial class PageGame : PageBase {
 				break;
 			case 1:
 				float percent = UnityEngine.Random.Range (0f, 1f);
-				Debug.Log ("slot percent: " + percent);
 				stopIdx = _GetGameTypeIdx (percent);
 				curGameType = stopIdx;
-                Debug.Log ("curGameType : " + curGameType);
 				break;
 			case 2:
 				RectTransform[] rtElts = _AllRtElts ();
@@ -166,7 +164,7 @@ public partial class PageGame : PageBase {
 			}
 				
 			listSlotMachine [i].StopSlot (false);
-			yield return new WaitForSeconds (.1f);
+			yield return new WaitForSeconds (1f);
 		}			
 	}
 

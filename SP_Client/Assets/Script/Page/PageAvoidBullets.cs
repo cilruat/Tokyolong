@@ -155,6 +155,8 @@ public class PageAvoidBullets : MonoBehaviour {
 		for (int i = 0; i < listBullet.Count; i++)
 			Destroy (listBullet [i].gameObject);
 
+		_CreateSuccessEff ();
+
 		yield return new WaitForSeconds (.5f);
 
 		UITweenPosY.Start (rtFlight.gameObject, rtFlight.anchoredPosition.y - 10f, TWParam.New (.5f).Curve (TWCurve.CurveLevel1));
@@ -168,6 +170,10 @@ public class PageAvoidBullets : MonoBehaviour {
 		yield return new WaitForSeconds (1f);
 
 		NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+	}
+
+	void _CreateSuccessEff()
+	{
 	}
 
 	public void FailEndGame()
