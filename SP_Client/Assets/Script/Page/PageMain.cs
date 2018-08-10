@@ -67,7 +67,7 @@ public class PageMain : PageBase {
     Coroutine scaleRouine = null;
     public void RefreshGamePlayChance()
     {
-        if (Info.isCheckScene("Main"))
+		if (Info.isCheckScene("Main") == false)
             return;
 
         GameObject newObj = Instantiate(objFireCracker, objDiscountChance.transform) as GameObject;
