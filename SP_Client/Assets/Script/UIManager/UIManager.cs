@@ -51,6 +51,8 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 
         VLogSave.Start();
 
+        Application.targetFrameRate = 60;
+
         DontDestroyOnLoad(this);
 	}
 
