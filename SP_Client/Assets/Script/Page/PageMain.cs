@@ -83,14 +83,14 @@ public class PageMain : PageBase {
 
     IEnumerator _ScaleAnim()
     {
-        if (Info.isCheckScene("Main"))
+		if (Info.isCheckScene("Main") == false)
             yield break;
 
         UITween tween = UITweenScale.Start(objDiscountChance, 1f, 1.2f, TWParam.New(.1f).Curve(TWCurve.Back).Speed(TWSpeed.Slower));
         while (tween.IsTweening())
         {
-            if (Info.isCheckScene("Main"))
-                yield break;
+			if (Info.isCheckScene("Main") == false)
+				yield break;
 
             yield return null;
         }
@@ -98,8 +98,8 @@ public class PageMain : PageBase {
         tween = UITweenScale.Start(objDiscountChance, 1.2f, 1f, TWParam.New(.1f).Curve(TWCurve.Back).Speed(TWSpeed.Faster));
         while (tween.IsTweening())
         {
-            if (Info.isCheckScene("Main"))
-                yield break;
+			if (Info.isCheckScene("Main") == false)
+				yield break;
             
             yield return null;
         }
