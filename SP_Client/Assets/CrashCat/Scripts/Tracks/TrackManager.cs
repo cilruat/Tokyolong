@@ -4,6 +4,7 @@ using System.Collections.Generic;
 #if UNITY_ANALYTICS
 using UnityEngine.Analytics;
 #endif
+using CrashCat;
 
 /// <summary>
 /// The TrackManager handles creating track segments, moving them and handling the whole pace of the game.

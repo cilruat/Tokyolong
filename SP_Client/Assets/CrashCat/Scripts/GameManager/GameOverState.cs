@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.Analytics;
 #endif
 using System.Collections.Generic;
+using CrashCat;
  
 /// <summary>
 /// state pushed on top of the GameManager when the player dies.

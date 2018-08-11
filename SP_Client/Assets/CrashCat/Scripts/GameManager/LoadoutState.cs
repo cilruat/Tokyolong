@@ -5,6 +5,7 @@ using System.Collections.Generic;
 #if UNITY_ANALYTICS
 using UnityEngine.Analytics;
 #endif
+using CrashCat;
 
 /// <summary>
 /// State pushed on the GameManager during the Loadout, when player select player, theme and accessories

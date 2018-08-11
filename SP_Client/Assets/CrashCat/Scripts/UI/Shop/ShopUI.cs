@@ -8,6 +8,7 @@ using UnityEngine.Advertisements;
 #if UNITY_ANALYTICS
 using UnityEngine.Analytics;
 #endif
+using CrashCat;
 
 public class ShopUI : MonoBehaviour
 {

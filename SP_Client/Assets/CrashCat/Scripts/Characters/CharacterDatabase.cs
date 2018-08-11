@@ -2,6 +2,7 @@
 using AssetBundles;
 using System.Collections;
 using System.Collections.Generic;
+using CrashCat;
 
 /// <summary>
 /// This allows us to store a database of all characters currently in the bundles, indexed by name.
