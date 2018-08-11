@@ -23,7 +23,7 @@ namespace SP_Server
         public UserInfo()
         {
             this.tableNum = -1;
-            this.peopleCnt = 0;
+            this.peopleCnt = 1;
             this.customerType = 0;
             this.gameInfo = new GameInfo();
             this.menus = new List<SendMenu>();
@@ -33,7 +33,7 @@ namespace SP_Server
         public UserInfo(int tableNum)
         {
             this.tableNum = tableNum;
-            this.peopleCnt = 0;
+            this.peopleCnt = 1;
             this.customerType = 0;
             this.gameInfo = new GameInfo();
             this.menus = new List<SendMenu>();
