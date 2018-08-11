@@ -3,45 +3,48 @@ using System.Collections;
 using System.Collections.Generic;
 using AssetBundles;
 
-// Handles loading data from the Asset Bundle to handle different themes for the game
-public class ThemeDatabase
+namespace CrashCat
 {
-    static protected Dictionary<string, ThemeData> themeDataList;
-    static public Dictionary<string, ThemeData> dictionnary { get { return themeDataList; } }
-
-    static protected bool m_Loaded = false;
-    static public bool loaded { get { return m_Loaded; } }
-
-    static public ThemeData GetThemeData(string type)
+    // Handles loading data from the Asset Bundle to handle different themes for the game
+    public class ThemeDatabase
     {
-        ThemeData list;
-        if (themeDataList == null || !themeDataList.TryGetValue(type, out list))
-            return null;
+        static protected Dictionary<string, ThemeData> themeDataList;
+        static public Dictionary<string, ThemeData> dictionnary { get { return themeDataList; } }
 
-        return list;
-    }
+        static protected bool m_Loaded = false;
+        static public bool loaded { get { return m_Loaded; } }
 
-    static public IEnumerator LoadDatabase(List<string> packages)
-    {
-        // If not null the dictionary was already loaded.
-        if (themeDataList == null)
+        static public ThemeData GetThemeData(string type)
         {
-            themeDataList = new Dictionary<string, ThemeData>();
+            ThemeData list;
+            if (themeDataList == null || !themeDataList.TryGetValue(type, out list))
+                return null;
 
-            foreach (string s in packages)
-            {
-                AssetBundleLoadAssetOperation op = AssetBundleManager.LoadAssetAsync(s, "themeData", typeof(ThemeData));
-                yield return CoroutineHandler.StartStaticCoroutine(op);
-
-                ThemeData list = op.GetAsset<ThemeData>();
-                if (list != null)
-                {
-                    themeDataList.Add(list.themeName, list);
-                }
-            }
-
-            m_Loaded = true;
+            return list;
         }
 
+        static public IEnumerator LoadDatabase(List<string> packages)
+        {
+            // If not null the dictionary was already loaded.
+            if (themeDataList == null)
+            {
+                themeDataList = new Dictionary<string, ThemeData>();
+
+                foreach (string s in packages)
+                {
+                    AssetBundleLoadAssetOperation op = AssetBundleManager.LoadAssetAsync(s, "themeData", typeof(ThemeData));
+                    yield return CoroutineHandler.StartStaticCoroutine(op);
+
+                    ThemeData list = op.GetAsset<ThemeData>();
+                    if (list != null)
+                    {
+                        themeDataList.Add(list.themeName, list);
+                    }
+                }
+
+                m_Loaded = true;
+            }
+
+        }
     }
 }

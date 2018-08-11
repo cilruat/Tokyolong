@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace SgLib
+namespace Emoji
 {
     [RequireComponent(typeof(AudioSource))]
     public class SoundManager : MonoBehaviour

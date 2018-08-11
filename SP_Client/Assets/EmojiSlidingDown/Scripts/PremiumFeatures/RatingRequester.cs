@@ -7,7 +7,7 @@ using System;
 using EasyMobile;
 #endif
 
-namespace SgLib
+namespace Emoji
 {
     public class RatingRequester : MonoBehaviour
     {

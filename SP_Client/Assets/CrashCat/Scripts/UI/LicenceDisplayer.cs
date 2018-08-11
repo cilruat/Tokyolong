@@ -1,32 +1,35 @@
 ﻿using UnityEngine;
 
-public class LicenceDisplayer : MonoBehaviour
-{
-    void Start ()
+namespace CrashCat
+{    
+    public class LicenceDisplayer : MonoBehaviour
     {
-        PlayerData.Create();
-
-	    if(PlayerData.instance.licenceAccepted)
+        void Start ()
         {
-            // If we have already accepted the licence, we close the popup, no need for it.
+            PlayerData.Create();
+
+    	    if(PlayerData.instance.licenceAccepted)
+            {
+                // If we have already accepted the licence, we close the popup, no need for it.
+                Close();
+            }	
+    	}
+    	
+    	public void Accepted()
+        {
+            PlayerData.instance.licenceAccepted = true;
+            PlayerData.instance.Save();
             Close();
-        }	
-	}
-	
-	public void Accepted()
-    {
-        PlayerData.instance.licenceAccepted = true;
-        PlayerData.instance.Save();
-        Close();
-    }
+        }
 
-    public void Refuse()
-    {
-        Application.Quit();
-    }
+        public void Refuse()
+        {
+            Application.Quit();
+        }
 
-    public void Close()
-    {
-        gameObject.SetActive(false);
+        public void Close()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

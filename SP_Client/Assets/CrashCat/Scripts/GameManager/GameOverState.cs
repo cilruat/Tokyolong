@@ -112,7 +112,7 @@ public class GameOverState : AState
         
         if (trackManager.characterController.coins > 0)
         {
-            AnalyticsEvent.ItemAcquired(
+            /*AnalyticsEvent.ItemAcquired(
                 AcquisitionType.Soft, // Currency type
                 transactionContext,
                 trackManager.characterController.coins,
@@ -121,12 +121,12 @@ public class GameOverState : AState
                 itemType,
                 level,
                 transactionId
-            );
+            );*/
         }
 
         if (trackManager.characterController.premium > 0)
         {
-            AnalyticsEvent.ItemAcquired(
+            /*AnalyticsEvent.ItemAcquired(
                 AcquisitionType.Premium, // Currency type
                 transactionContext,
                 trackManager.characterController.premium,
@@ -135,7 +135,7 @@ public class GameOverState : AState
                 itemType,
                 level,
                 transactionId
-            );
+            );*/
         }
 #endif 
 
@@ -158,7 +158,7 @@ public class GameOverState : AState
         CharacterCollider.DeathEvent de = trackManager.characterController.characterCollider.deathData;
         //register data to analytics
 #if UNITY_ANALYTICS
-        AnalyticsEvent.GameOver(null, new Dictionary<string, object> {
+        /*AnalyticsEvent.GameOver(null, new Dictionary<string, object> {
             { "coins", de.coins },
             { "premium", de.premium },
             { "score", de.score },
@@ -166,7 +166,7 @@ public class GameOverState : AState
             { "obstacle",  de.obstacleType },
             { "theme", de.themeUsed },
             { "character", de.character },
-        });
+        });*/
 #endif
 
         PlayerData.instance.Save();

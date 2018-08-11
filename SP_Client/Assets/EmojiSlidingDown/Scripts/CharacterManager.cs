@@ -1,40 +1,41 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Emoji;
 
-public class CharacterManager : MonoBehaviour
+namespace Emoji
 {
-    public static CharacterManager Instance;
-
-    public static readonly string CURRENT_CHARACTER_KEY = "SGLIB_CURRENT_CHARACTER";
-
-    public int CurrentCharacterIndex
+    public class CharacterManager : MonoBehaviour
     {
-        get
-        {
-            return PlayerPrefs.GetInt(CURRENT_CHARACTER_KEY, 0);
-        }
-        set
-        {
-            PlayerPrefs.SetInt(CURRENT_CHARACTER_KEY, value);
-            PlayerPrefs.Save();
-        }
-    }
+        public static CharacterManager Instance;
 
-    public Character[] characters;
+        public static readonly string CURRENT_CHARACTER_KEY = "SGLIB_CURRENT_CHARACTER";
 
-    void Awake()
-    {
-        if (Instance == null)
+        public int CurrentCharacterIndex
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
+            get
+            {
+                return PlayerPrefs.GetInt(CURRENT_CHARACTER_KEY, 0);
+            }
+            set
+            {
+                PlayerPrefs.SetInt(CURRENT_CHARACTER_KEY, value);
+                PlayerPrefs.Save();
+            }
         }
-        else
-        {
-            DestroyImmediate(gameObject);
 
+        public Character[] characters;
+
+        void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                DestroyImmediate(gameObject);
+
+            }
         }
     }
 }
-

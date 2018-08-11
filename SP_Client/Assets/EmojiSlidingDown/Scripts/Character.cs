@@ -28,11 +28,11 @@ namespace Emoji
             if (IsUnlocked)
                 return true;
 
-            if (SgLib.CoinManager.Instance.Coins >= price)
+            if (CoinManager.Instance.Coins >= price)
             {
                 PlayerPrefs.SetInt(characterName, 1);
                 PlayerPrefs.Save();
-                SgLib.CoinManager.Instance.RemoveCoins(price);
+                CoinManager.Instance.RemoveCoins(price);
 
                 return true;
             }

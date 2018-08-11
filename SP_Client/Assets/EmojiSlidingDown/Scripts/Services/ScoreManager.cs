@@ -2,7 +2,7 @@
 using System;
 using System.Collections;
 
-namespace SgLib
+namespace Emoji
 {
     public class ScoreManager : MonoBehaviour
     {

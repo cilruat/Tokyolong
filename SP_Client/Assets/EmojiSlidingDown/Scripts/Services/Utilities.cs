@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using System.Text.RegularExpressions;
 using System;
 
-namespace SgLib
+namespace Emoji
 {
     public static class Utilities
     {

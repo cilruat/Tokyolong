@@ -109,7 +109,7 @@ public class ShopAccessoriesList : ShopList
         var itemType = "non_consumable";
         var itemQty = 1;
 
-        AnalyticsEvent.ItemAcquired(
+        /*AnalyticsEvent.ItemAcquired(
             AcquisitionType.Soft,
             transactionContext,
             itemQty,
@@ -117,11 +117,11 @@ public class ShopAccessoriesList : ShopList
             itemType,
             level,
             transactionId
-        );
+        );*/
         
         if (cost > 0)
         {
-            AnalyticsEvent.ItemSpent(
+            /*AnalyticsEvent.ItemSpent(
                 AcquisitionType.Soft, // Currency type
                 transactionContext,
                 cost,
@@ -130,12 +130,12 @@ public class ShopAccessoriesList : ShopList
                 itemType,
                 level,
                 transactionId
-            );
+            );*/
         }
 
         if (premiumCost > 0)
         {
-            AnalyticsEvent.ItemSpent(
+            /*AnalyticsEvent.ItemSpent(
                 AcquisitionType.Premium, // Currency type
                 transactionContext,
                 premiumCost,
@@ -144,7 +144,7 @@ public class ShopAccessoriesList : ShopList
                 itemType,
                 level,
                 transactionId
-            );
+            );*/
         }
 #endif
 

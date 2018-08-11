@@ -5,7 +5,7 @@ using System.Collections;
 using EasyMobile;
 #endif
 
-namespace SgLib
+namespace Emoji
 {
     public class InAppPurchaser : MonoBehaviour
     {

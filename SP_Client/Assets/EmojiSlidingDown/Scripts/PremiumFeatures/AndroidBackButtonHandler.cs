@@ -6,43 +6,46 @@ using UnityEngine;
 using EasyMobile;
 #endif
 
-public class AndroidBackButtonHandler : MonoBehaviour
+namespace Emoji
 {
-    #if UNITY_ANDROID && EASY_MOBILE
-    [Header("Exit Confirmation Dialog")]
-    public string title = "Exit Game";
-    public string message = "Are you sure you want to exit?";
-    public string yesButton = "Yes";
-    public string noButton = "No";
-
-    void Update()
+    public class AndroidBackButtonHandler : MonoBehaviour
     {
-        // Exit on Android Back button
-        if (Input.GetKeyUp(KeyCode.Escape))
-        {   
+        #if UNITY_ANDROID && EASY_MOBILE
+        [Header("Exit Confirmation Dialog")]
+        public string title = "Exit Game";
+        public string message = "Are you sure you want to exit?";
+        public string yesButton = "Yes";
+        public string noButton = "No";
 
-            NativeUI.AlertPopup alert = NativeUI.ShowTwoButtonAlert(
-                                          title,
-                                          message,
-                                          yesButton, 
-                                          noButton
-                                      );
+        void Update()
+        {
+            // Exit on Android Back button
+            if (Input.GetKeyUp(KeyCode.Escape))
+            {   
 
-            if (alert != null)
-            {
-                alert.OnComplete += (int button) =>
+                NativeUI.AlertPopup alert = NativeUI.ShowTwoButtonAlert(
+                                              title,
+                                              message,
+                                              yesButton, 
+                                              noButton
+                                          );
+
+                if (alert != null)
                 {
-                    switch (button)
+                    alert.OnComplete += (int button) =>
                     {
-                        case 0: // Yes
-                            Application.Quit();
-                            break;
-                        case 1: // No
-                            break;
-                    }
-                };
-            }     
+                        switch (button)
+                        {
+                            case 0: // Yes
+                                Application.Quit();
+                                break;
+                            case 1: // No
+                                break;
+                        }
+                    };
+                }     
+            }
         }
+        #endif
     }
-    #endif
 }

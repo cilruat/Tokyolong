@@ -1,21 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Emoji;
 
-public class DeathPlane : MonoBehaviour
+namespace Emoji
 {
-    public float moveDownDistance;
-
-    public void MoveDown()
+    public class DeathPlane : MonoBehaviour
     {
-        transform.Translate(Vector3.down * moveDownDistance);
-    }
+        public float moveDownDistance;
 
-    public void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.tag == "Player")
+        public void MoveDown()
         {
-            GameManager.Instance.playerController.Die();
+            transform.Translate(Vector3.down * moveDownDistance);
+        }
+
+        public void OnTriggerEnter2D(Collider2D col)
+        {
+            if (col.tag == "Player")
+            {
+                GameManager.Instance.playerController.Die();
+            }
         }
     }
 }

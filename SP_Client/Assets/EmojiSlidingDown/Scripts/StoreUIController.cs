@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using EasyMobile;
 #endif
 
-namespace SgLib
+namespace Emoji
 {
     public class StoreUIController : MonoBehaviour
     {

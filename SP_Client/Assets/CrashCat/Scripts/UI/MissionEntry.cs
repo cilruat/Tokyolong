@@ -1,46 +1,49 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class MissionEntry : MonoBehaviour
+namespace CrashCat
 {
-    public Text descText;
-    public Text rewardText;
-    public Button claimButton;
-    public Text progressText;
-	public Image background;
-
-	public Color notCompletedColor;
-	public Color completedColor;
-
-    public void FillWithMission(MissionBase m, MissionUI owner)
+    public class MissionEntry : MonoBehaviour
     {
-        descText.text = m.GetMissionDesc();
-        rewardText.text = m.reward.ToString();
+        public Text descText;
+        public Text rewardText;
+        public Button claimButton;
+        public Text progressText;
+    	public Image background;
 
-        if (m.isComplete)
+    	public Color notCompletedColor;
+    	public Color completedColor;
+
+        public void FillWithMission(MissionBase m, MissionUI owner)
         {
-            claimButton.gameObject.SetActive(true);
-            progressText.gameObject.SetActive(false);
+            descText.text = m.GetMissionDesc();
+            rewardText.text = m.reward.ToString();
 
-			background.color = completedColor;
+            if (m.isComplete)
+            {
+                claimButton.gameObject.SetActive(true);
+                progressText.gameObject.SetActive(false);
 
-			progressText.color = Color.white;
-			descText.color = Color.white;
-			rewardText.color = Color.white;
+    			background.color = completedColor;
 
-			claimButton.onClick.AddListener(delegate { owner.Claim(m); } );
-        }
-        else
-        {
-            claimButton.gameObject.SetActive(false);
-            progressText.gameObject.SetActive(true);
+    			progressText.color = Color.white;
+    			descText.color = Color.white;
+    			rewardText.color = Color.white;
 
-			background.color = notCompletedColor;
+    			claimButton.onClick.AddListener(delegate { owner.Claim(m); } );
+            }
+            else
+            {
+                claimButton.gameObject.SetActive(false);
+                progressText.gameObject.SetActive(true);
 
-			progressText.color = Color.black;
-			descText.color = completedColor;
+    			background.color = notCompletedColor;
 
-			progressText.text = ((int)m.progress) + " / " + ((int)m.max);
+    			progressText.color = Color.black;
+    			descText.color = completedColor;
+
+    			progressText.text = ((int)m.progress) + " / " + ((int)m.max);
+            }
         }
     }
 }
