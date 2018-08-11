@@ -83,8 +83,11 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         if(Input.GetKeyDown(KeyCode.Keypad0))
             Game_Discount_REQ((short)1);
 
-//        if (Input.GetKeyDown(KeyCode.Keypad3))
-//            UIManager.Instance.ShowLog();
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+            UIManager.Instance.ShowLog();
+
+        if (Input.GetKeyDown(KeyCode.G))
+            SceneChanger.LoadScene("CrashCatStart", PageBase.Instance.curBoardObj());
     }
 
     public bool is_connected()
