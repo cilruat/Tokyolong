@@ -33,25 +33,25 @@ public class FlyChance : MonoBehaviour
             return;
 
         if (xWeight == 0f)
-            xWeight = Random.Range(-.25f, 0f);
+            xWeight = Random.Range(-1f, 0f);
 
         if (yWeight == 0f)
-            yWeight = Random.Range(-1f, 1f);
+            yWeight = Random.Range(-1.5f, 1.5f);
 
-        elapsedTime += Time.deltaTime *.25f;
-        rate = Mathf.Clamp01(elapsedTime);
+        elapsedTime += Time.deltaTime*.5f;
+        rate = elapsedTime;		
         Vector2 pos = rt.anchoredPosition;
         Vector2 bestDir = (target.anchoredPosition -pos).normalized;
 
-        float moveSpeed = Mathf.Lerp(0f, 20f, RATE_INC(rate));
+		float moveSpeed = Mathf.LerpUnclamped(0f, 20f, RATE_INC(rate));
 
-        if (rate < .75f)
+        if (rate < 1f)
         {
-            pos -= (bestDir * Mathf.Lerp(.5f, 1f, RATE_DEC(rate)));
+			pos -= (bestDir * Mathf.LerpUnclamped(0f, 2f, RATE_DEC(rate)));
             pos.x += RATE_DEC(RATE_DEC(xWeight));
             pos.y -= RATE_DEC(RATE_DEC(yWeight));
         }
-
+			
         Vector2 v2 = pos + (bestDir * moveSpeed);
         rt.anchoredPosition = new Vector2(v2.x, v2.y);
 
