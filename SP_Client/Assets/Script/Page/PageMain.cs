@@ -70,15 +70,15 @@ public class PageMain : PageBase {
 		if (Info.isCheckScene("Main") == false)
             return;
 
+        txtPlayCnt.text = Info.GamePlayCnt.ToString ();
+
         GameObject newObj = Instantiate(objFireCracker, objDiscountChance.transform) as GameObject;
         newObj.gameObject.SetActive(true);
 
-        txtPlayCnt.text = Info.GamePlayCnt.ToString ();
-
-        if (scaleRouine != null)
+        /*if (scaleRouine != null)
             StopCoroutine(scaleRouine);
 
-        scaleRouine = StartCoroutine(_ScaleAnim());
+        scaleRouine = StartCoroutine(_ScaleAnim());*/
     }
 
     IEnumerator _ScaleAnim()
