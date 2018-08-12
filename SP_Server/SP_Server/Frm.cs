@@ -48,7 +48,18 @@ namespace SP_Server
         public List<RequestOrder> listRequestOrder = new List<RequestOrder>();        
 
         public int musicID = -1;
-        public List<RequestMusicInfo> listReqMusicInfo = new List<RequestMusicInfo>();        
+        public List<RequestMusicInfo> listReqMusicInfo = new List<RequestMusicInfo>();
+
+        Random random;
+        public float discount0 = .25f;
+        public float discount1 = .25f;
+        public float discount2 = .25f;
+        public float discount3 = .25f;
+
+        float discount3Prob { get { return discount3; } }
+        float discount2Prob { get { return (discount3Prob + discount2); } }
+        float discount1Prob { get { return (discount2Prob + discount1); } }
+        float discount0Prob { get { return (discount1Prob + discount0); } }
 
         public Frm()
         {
@@ -65,6 +76,8 @@ namespace SP_Server
             this.colDate.Width = div;
 
             this.FormClosing += new FormClosingEventHandler(this.frmClosing);
+
+            this.random = new Random();
         }
 
         protected override void OnLoad(EventArgs e)
@@ -579,6 +592,19 @@ namespace SP_Server
             DataUserInfoSave();
             DataRequestSave(true);
             DataRequestSave(false);
+        }
+
+        public short GetRandomDiscountIndex()
+        {
+            short discountIdx = 0;
+
+            float prob = (float)random.NextDouble();
+            if (prob < discount3Prob)       discountIdx = 3;
+            else if (prob < discount2Prob)  discountIdx = 2;
+            else if (prob < discount1Prob)  discountIdx = 1;
+            else if (prob < discount0Prob)  discountIdx = 0;
+
+            return discountIdx;
         }
     }
 }

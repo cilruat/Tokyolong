@@ -114,7 +114,9 @@ public enum EMenuDetail : int
 public enum EDiscount
 {
 	e500won,
-	e1000won
+	e1000won,
+	eHalfDiscount,
+	eAllDiscount,
 }
 
 public enum EGameType

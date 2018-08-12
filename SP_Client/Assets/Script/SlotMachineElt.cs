@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SlotMachineElt : MonoBehaviour {
 
-	const float MOVE_SPEED = 400f;
+	const float MOVE_SPEED = 200f;
 
 	public PageGame page;
 	public ESlotType eType;

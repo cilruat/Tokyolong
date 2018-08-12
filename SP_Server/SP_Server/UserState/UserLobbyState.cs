@@ -431,8 +431,11 @@ namespace SP_Server.UserState
                         --owner.info.gameInfo.gameCnt;
                         owner.mainFrm.RefreshGameCount(tableNo, owner.info.gameInfo.gameCnt);
 
+                        short ranDiscountIdx = owner.mainFrm.GetRandomDiscountIndex();
+
                         send_msg = CPacket.create((short)PROTOCOL.SLOT_START_ACK);                        
                         send_msg.push(owner.info.gameInfo.gameCnt);
+                        send_msg.push(ranDiscountIdx);
                         break;
                     case PROTOCOL.REPORT_OFFLINE_GAME_REQ:
                         tableNo = msg.pop_byte();

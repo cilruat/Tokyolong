@@ -7,8 +7,10 @@ using LitJson;
 
 public class SendMenu
 {
-    public int menu;
-    public int cnt;
+	public int menu = 0;
+	public int cnt = 0;
+	public int halfCn = 0;
+	public int allCnt = 0;
 
     public SendMenu(int menu, int cnt)
     {

@@ -320,6 +320,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 	void SlotStartACK(CPacket msg)
 	{
 		Info.GamePlayCnt = msg.pop_byte ();
+		short ranDiscountIdx = msg.pop_int16 ();
 
 		if (Info.GamePlayCnt < 0)
 			Info.GamePlayCnt = 0;
