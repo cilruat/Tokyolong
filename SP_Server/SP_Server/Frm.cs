@@ -51,16 +51,13 @@ namespace SP_Server
         public List<RequestMusicInfo> listReqMusicInfo = new List<RequestMusicInfo>();
 
         Random random;
-        public float discount0 = .25f;
-        public float discount1 = .25f;
-        public float discount2 = .25f;
-        public float discount3 = .25f;
+        public float[] discountProbs = new float[4]
+        { .25f, .25f, .25f, .25f };
 
-        float discount3Prob { get { return discount3; } }
-        float discount2Prob { get { return (discount3Prob + discount2); } }
-        float discount1Prob { get { return (discount2Prob + discount1); } }
-        float discount0Prob { get { return (discount1Prob + discount0); } }
-
+        float discount3Prob { get { return discountProbs[3]; } }
+        float discount2Prob { get { return (discount3Prob + discountProbs[2]); } }
+        float discount1Prob { get { return (discount2Prob + discountProbs[1]); } }
+        float discount0Prob { get { return (discount1Prob + discountProbs[0]); } }
 
         public Frm()
         {
@@ -81,7 +78,7 @@ namespace SP_Server
             this.random = new Random();
 
             MenuData.Load();
-            
+
         }
 
         protected override void OnLoad(EventArgs e)
@@ -599,6 +596,19 @@ namespace SP_Server
             DataUserInfoSave();
             DataRequestSave(true);
             DataRequestSave(false);
+        }
+
+        public void SetDiscountProb()
+        {
+            if (Directory.Exists("Data") == false)
+                Directory.CreateDirectory("Data");
+
+            BinarySave.Serialize(discountProbs, "DataSave\\RequestMusic.bin");
+        }
+
+        public void GetDiscountProb()
+        {
+            discountProbs = BinarySave.Deserialize<float[]>("Data\\DiscountProb.bin");
         }
 
         public short GetRandomDiscountIndex()
