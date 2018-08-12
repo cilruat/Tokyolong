@@ -16,7 +16,6 @@ public class PageBase : SingletonMonobehaviour<PageBase> {
 	protected virtual void Awake()
 	{
 		Application.runInBackground = true;
-		//UITweenAlpha.Start (gameObject, 0f, 1f, TWParam.New (1f).Curve (TWCurve.CurveLevel2));
 
 		if (startFirstBoard == false)
 			return;
@@ -43,6 +42,15 @@ public class PageBase : SingletonMonobehaviour<PageBase> {
 		Info.AnimateChangeObj (boards [curBoardIdx], boards [change], ue);
 		curBoardIdx = change;
 	}
+
+    protected virtual void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Info.GamePlayCnt += 1;
+            ((PageGame)PageBase.Instance).RefreshPlayCnt();
+        }
+    }
 
 	public void OnPrev() { _OnChangeBoard (false); }
 	public void OnNext() { _OnChangeBoard (true); }

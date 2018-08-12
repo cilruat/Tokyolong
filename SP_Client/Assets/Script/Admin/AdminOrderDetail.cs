@@ -47,7 +47,6 @@ public class AdminOrderDetail : SingletonMonobehaviour<AdminOrderDetail> {
         switch ((ERequestOrderType)reqOrder.type)
         {
             case ERequestOrderType.eOrder:      SetOrder(reqOrder.packing);     break;
-            case ERequestOrderType.eDiscount:   SetDiscount(reqOrder.packing);  break;
         }
 	}
 
@@ -72,27 +71,7 @@ public class AdminOrderDetail : SingletonMonobehaviour<AdminOrderDetail> {
         }
 
         confrimDesc.text = "주문 내역 확인";
-    }
-
-    void SetDiscount(string packing)
-    {
-        GameObject objElt = Instantiate (objPrefab) as GameObject;
-        Transform tr = objElt.transform;
-        tr.SetParent (rtScroll);
-        tr.InitTransform ();
-        objElt.SetActive (true);
-        Text desc = tr.Find ("Desc").GetComponent<Text> ();
-
-        string strDiscount = "";
-        short discount = short.Parse(packing);
-        if (discount == (short)EDiscount.e500won)
-            strDiscount = "-500원 할인";
-        else if (discount == (short)EDiscount.e1000won)
-            strDiscount = "-1000원 할인";
-
-        desc.text = strDiscount;
-        confrimDesc.text = "할인 내역 확인";
-    }
+    }        
 
 	void _Clear()
 	{

@@ -53,21 +53,3 @@ public class Welcome : EditorWindow {
 		Close();
 	}
 }
-
-[InitializeOnLoad]
-class StartupHelper {
-
-	static StartupHelper() {
-		EditorApplication.update += Startup;
-	}
-
-	static void Startup() {
-		if(Time.realtimeSinceStartup < 1)
-			return;
-
-		EditorApplication.update -= Startup;
-		if (!PlayerPrefs.HasKey("DocumentationOpened"))
-			Welcome.Initialize();
-	}
-} 
-

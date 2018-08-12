@@ -21,10 +21,9 @@ public partial class PageGame : PageBase {
 	public GameObject objGameLoading;
 	public RectTransform[] rtDiscount;
 	public RectTransform[] rtGameTypes;
-	public RectTransform[] rtWinWaiterEasyGames;
-	public RectTransform[] rtWinWaiterHardGames;
-	public RectTransform[] rtBrainSurvival;
-	public RectTransform[] rtBoardGames;
+	public RectTransform[] rtWinWaiter;
+	public RectTransform[] rtPuzzleGame;
+	public RectTransform[] rtTabletGame;
 	public List<SlotMachineElt> listSlotMachine = new List<SlotMachineElt>();
 	public CountDown[] countDown;
 
@@ -42,24 +41,29 @@ public partial class PageGame : PageBase {
 
 	void Start()
 	{
-		NetworkManager.Instance.UnfinishGamelist_REQ (Info.TableNum);
-		_RefreshPlayCnt ();
+		//NetworkManager.Instance.UnfinishGamelist_REQ (Info.TableNum);
+		RefreshPlayCnt ();
 	}
 
-	IEnumerator _StartSlot()
+    IEnumerator _StartSlot(short discountType)
 	{
 		isStopEnable = false;
 
 		for (int i = 0; i < listSlotMachine.Count; i++) {
 			int stopIdx = -1;
 			switch (i) {
-			case 0:	
-				stopIdx = UnityEngine.Random.Range (0, 2);
-				Info.GameDiscountWon = (short)stopIdx;
+                case 0:					
+                Info.GameDiscountWon = discountType;
+                stopIdx = (short)discountType;
 				break;
-			case 1:
-				float percent = UnityEngine.Random.Range (0f, 1f);
-				stopIdx = _GetGameTypeIdx (percent);
+                case 1:
+                if (discountType == (short)EDiscount.e1000won)
+                {
+                    float percent = UnityEngine.Random.Range(0f, 1f);
+                    stopIdx = _GetGameTypeIdx(percent);
+                }
+                else
+                    stopIdx = 2;
 				curGameType = stopIdx;
 				break;
 			case 2:
@@ -77,19 +81,17 @@ public partial class PageGame : PageBase {
 	
 	int _GetGameTypeIdx(float percent)
 	{
-		if (percent < .4f)			return 0;
-		else if (percent < .8f)		return 3;
-		else if (percent < .9f)		return 1;
+		if (percent < .27f)			return 1;		
+		else if (percent > .95f)	return 0;
 		else						return 2;
 	}
 
 	RectTransform[] _AllRtElts()
 	{		
 		List<RectTransform> list = new List<RectTransform> ();
-		for (int i = 0; i < rtWinWaiterEasyGames.Length; i++)	list.Add (rtWinWaiterEasyGames [i]);
-		for (int i = 0; i < rtWinWaiterHardGames.Length; i++)	list.Add (rtWinWaiterHardGames[i]);
-		for (int i = 0; i < rtBrainSurvival.Length; i++)		list.Add (rtBrainSurvival[i]);
-		for (int i = 0; i < rtBoardGames.Length; i++)			list.Add (rtBoardGames[i]);
+        for (int i = 0; i < rtWinWaiter.Length; i++)	list.Add (rtWinWaiter[i]);
+        for (int i = 0; i < rtPuzzleGame.Length; i++)	list.Add (rtPuzzleGame[i]);
+        for (int i = 0; i < rtTabletGame.Length; i++)	list.Add (rtTabletGame[i]);
 
 		return list.ToArray ();
 	}
@@ -110,27 +112,37 @@ public partial class PageGame : PageBase {
 	}
 
 	public void OnStart()
-	{		
+	{
+        if (_CheckSlotAnimating()) {
+            SystemMessage.Instance.Add ("이미 슬롯이 동작중입니다");
+            return;
+        }
+
 		if (Info.GamePlayCnt <= 0) {
 			SystemMessage.Instance.Add ("게임을 시작할 수 없습니다\n주문을 먼저 해주세요~");
 			return;
 		}
 
-		if (_CheckSlotAnimating()) {
-			SystemMessage.Instance.Add ("이미 슬롯이 동작중입니다");
-			return;
-		}
-
-		NetworkManager.Instance.SlotStart_REQ ();
+        if (Info.RunInGameScene)
+        {
+            float rate = UnityEngine.Random.Range(0f, 1f);
+            short discountType = 0;
+            if (rate > .25f && rate <= .5f)          discountType = 1;
+            else if (rate > .5f && rate <= .75f)     discountType = 2;
+            else if (rate > .75f)                    discountType = 3;
+            FinishStart(discountType);
+        }
+        else
+            NetworkManager.Instance.SlotStart_REQ();
 	}
 
-	public void FinishStart()
+    public void FinishStart(short discountType)
 	{
 		for (int i = 0; i < objStartDesc.Length; i++)
 			objStartDesc [i].SetActive (false);
 
-		StartCoroutine (_StartSlot ());
-		_RefreshPlayCnt ();
+        StartCoroutine (_StartSlot (discountType));
+		RefreshPlayCnt ();
 	}
 
 	IEnumerator _StopSlot()
@@ -138,21 +150,25 @@ public partial class PageGame : PageBase {
 		int randRange = 0;
 		RectTransform[] rtElts = null;
 
-		if (curGameType == (int)EGameType.eBrainSurvival) {
-			randRange = Enum.GetValues (typeof(EBrainSurvival)).Length;
-			rtElts = rtBrainSurvival;
-		} else if (curGameType == (int)EGameType.eBoardGame) {
-			randRange = Enum.GetValues (typeof(EBoardGame)).Length;
-			rtElts = rtBoardGames;
-		} else if (curGameType == (int)EGameType.eWinWaiter) {
-			if (Info.GameDiscountWon == (int)EDiscount.e500won) {
-				randRange = Enum.GetValues (typeof(EWaiterEasyGame)).Length;
-				rtElts = rtWinWaiterEasyGames;
-			} else if (Info.GameDiscountWon == (int)EDiscount.e1000won) {
-				randRange = Enum.GetValues (typeof(EWaiterHardGame)).Length;
-				rtElts = rtWinWaiterHardGames;
-			}
-		}
+        if (Info.GameDiscountWon == (int)EDiscount.e1000won)
+        {
+            if (curGameType == (int)EGameType.eWinWaiter)
+            {
+                randRange = Enum.GetValues(typeof(EWinWaiter)).Length;
+                rtElts = rtWinWaiter;
+            }
+            else if (curGameType == (int)EGameType.ePuzzleGame)
+            {
+                randRange = Enum.GetValues(typeof(EPuzzleGame)).Length;
+                rtElts = rtPuzzleGame;
+            }
+        }
+
+        if(randRange == 0)
+        {
+            randRange = Enum.GetValues(typeof(ETabletGame)).Length;
+            rtElts = rtTabletGame;
+        }
 
 		int stopIdx = UnityEngine.Random.Range (0, randRange);
 		curGame = stopIdx;
@@ -183,7 +199,7 @@ public partial class PageGame : PageBase {
 		StartCoroutine (_StopSlot ());
 	}
 
-	void _RefreshPlayCnt()
+	public void RefreshPlayCnt()
 	{
 		for (int i = 0; i < txtPlayCnt.Length; i++)
 			txtPlayCnt [i].text = Info.GamePlayCnt.ToString ();
@@ -244,18 +260,12 @@ public partial class PageGame : PageBase {
 
 	public void ShowPopup()
 	{
-        Debug.Log ("ShowPopup!!!!");
 		int countIdx = 0;
-        if (curGameType == (int)EGameType.eBrainSurvival ||
-        curGameType == (int)EGameType.eTokyoLive)
-        {
-            Debug.Log ("objGameLoading!!!!");
+        if (curGameType == (int)EGameType.ePuzzleGame || curGameType == (int)EGameType.eTabletGame)
             objGameLoading.SetActive(true);
-        }
 		else {
 			countIdx = 1;
 			objCallMessage.SetActive (true);
-            Debug.Log ("ReportOfflineGame_REQ!!!!");
 			NetworkManager.Instance.ReportOfflineGame_REQ ((byte)curGameType, (byte)curGame, (byte)Info.GameDiscountWon);
 		}
 		
@@ -265,33 +275,39 @@ public partial class PageGame : PageBase {
 	void _FinishShowPopup()
 	{
 		string sceneName = "";
-		if (curGameType == (int)EGameType.eBrainSurvival ||
-		    curGameType == (int)EGameType.eTokyoLive) {
+        if (curGameType == (int)EGameType.eWinWaiter) {
+            for (int i = 0; i < objStartDesc.Length; i++)
+                objStartDesc [i].SetActive (true);
 
-			sceneName = "TokyoLive";
-			if (curGameType == (int)EGameType.eBrainSurvival) {
-				switch ((EBrainSurvival)curGame) {
-				case EBrainSurvival.ePicturePuzzle:
-					sceneName = "PicturePuzzle";
-					break;
-				case EBrainSurvival.ePairCards:
-					sceneName = "PairCards";
-                    break;
-				}
-			}
+            objGameLoading.SetActive (false);
+            objCallMessage.SetActive (false);
 
-			SceneChanger.LoadScene (sceneName, curBoardObj ());
-		} else {
-			for (int i = 0; i < objStartDesc.Length; i++)
-				objStartDesc [i].SetActive (true);
+            _SetActiveAllRtElts (false);
 
-			objGameLoading.SetActive (false);
-			objCallMessage.SetActive (false);
+            Info.GameDiscountWon = -1;
+            OnPrev ();
+		} else {            
+            if (curGameType == (int)EGameType.ePuzzleGame)
+            {
+                switch ((EPuzzleGame)curGame)
+                {
+                    case EPuzzleGame.ePicturePuzzle:    sceneName = "PicturePuzzle";    break;
+                    case EPuzzleGame.ePairCards:        sceneName = "PairCards";        break;
+                }
+            }
+            else if (curGameType == (int)EGameType.eTabletGame)
+            {
+                switch ((ETabletGame)curGame)
+                {
+                    case ETabletGame.CrashCat:      sceneName = "CrashCatStart";     break;
+                    case ETabletGame.FlappyBird:    sceneName = "FlappyBirdMain";   break;
+                    case ETabletGame.DownHill:      sceneName = "Emoji2Main";       break;
+                    case ETabletGame.SlidingDown:   sceneName = "EmojiMain";        break;
+                    case ETabletGame.AvoidObject:   sceneName = "AvoidMain";     break;
+                }
+            }
 
-			_SetActiveAllRtElts (false);
-
-			Info.GameDiscountWon = -1;
-			OnPrev ();
+            SceneChanger.LoadScene (sceneName, curBoardObj ());			
 		}
 
 		curGameType = -1;

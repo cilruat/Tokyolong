@@ -10,7 +10,7 @@ public class GameElt : MonoBehaviour {
 
 	byte tableNo = 0;
 	int id = -1;
-	EDiscount eDis = EDiscount.e500won;
+    EDiscount eDis = EDiscount.e1000won;
 
 	public void SetInfo(byte tableNo, int id, EGameType eType, int game, EDiscount eDis)
 	{

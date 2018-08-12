@@ -8,7 +8,6 @@ public enum ERequestOrderType
 {
     eNone = 0,
     eOrder = 1,
-    eDiscount,
 }
 
 public class OrderElt : MonoBehaviour {
@@ -28,7 +27,6 @@ public class OrderElt : MonoBehaviour {
         switch ((ERequestOrderType)reqOrder.type)
         {
             case ERequestOrderType.eOrder:      SetOrder(reqOrder.packing);     break;
-            case ERequestOrderType.eDiscount:   SetDiscount(reqOrder.packing);  break;
         }
     }
 
@@ -52,20 +50,7 @@ public class OrderElt : MonoBehaviour {
 
         order.text = desc;
         objDetail.SetActive (true);
-    }
-
-    void SetDiscount(string packing)
-    {
-        string desc = "";
-        short discount = short.Parse(packing);
-        if (discount == (short)EDiscount.e500won)
-            desc = "-500원 할인";
-        else if (discount == (short)EDiscount.e1000won)
-            desc = "-1000원 할인";
-
-        order.text = "게임 성공 (" + desc + ")";
-        objDetail.SetActive (true);
-    }
+    }        
 
 	public void OnDetail()
 	{

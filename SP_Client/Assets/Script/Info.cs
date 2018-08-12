@@ -14,6 +14,8 @@ public partial class Info : MonoBehaviour {
 	public static byte GamePlayCnt = 0;
 	public static short GameDiscountWon = -1;
 
+    public static bool RunInGameScene = false;
+
 	public static void AnimateChangeObj(CanvasGroup cur, CanvasGroup next, UnityEvent nextCallback = null)
     {
         UITweenAlpha.Start(cur.gameObject, 0f, TWParam.New(1f).Curve(TWCurve.CurveLevel2));

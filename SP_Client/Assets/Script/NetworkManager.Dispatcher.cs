@@ -286,7 +286,6 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         switch (type)
         {
             case ERequestOrderType.eOrder:      UIManager.Instance.ShowOrderAlarm();    break;
-            case ERequestOrderType.eDiscount:   UIManager.Instance.ShowDiscountAlarm(); break;
         }
     }
 
@@ -318,13 +317,14 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     }
 
 	void SlotStartACK(CPacket msg)
-	{
+	{        
 		Info.GamePlayCnt = msg.pop_byte ();
+        short discountType = msg.pop_int16();
 
 		if (Info.GamePlayCnt < 0)
 			Info.GamePlayCnt = 0;
 
-		((PageGame)PageBase.Instance).FinishStart ();
+        ((PageGame)PageBase.Instance).FinishStart (discountType);
 	}
 
 	void ReportOfflineGameACK()

@@ -102,14 +102,14 @@ public class ShopAccessoriesList : ShopList
         PlayerData.instance.Save();
 
 #if UNITY_ANALYTICS // Using Analytics Standard Events v0.3.0
-        var transactionId = System.Guid.NewGuid().ToString();
+        /*var transactionId = System.Guid.NewGuid().ToString();
         var transactionContext = "store";
         var level = PlayerData.instance.rank.ToString();
         var itemId = name;
         var itemType = "non_consumable";
         var itemQty = 1;
 
-        /*AnalyticsEvent.ItemAcquired(
+        AnalyticsEvent.ItemAcquired(
             AcquisitionType.Soft,
             transactionContext,
             itemQty,

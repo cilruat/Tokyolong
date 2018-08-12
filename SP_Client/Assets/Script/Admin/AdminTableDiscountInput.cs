@@ -73,19 +73,19 @@ public class AdminTableDiscountInput : SingletonMonobehaviour<AdminTableDiscount
             return;
         }
 
-        int discount500Cnt = 0;
-        int discount1000Cnt = 0;
+        int discount1000Won = 0;
         for (int i = 0; i < listElt.Count; i++)
         {
             EDiscount discountType = listElt[i].DiscountType();
 
             switch (discountType)
             {
-                case EDiscount.e500won:     discount500Cnt += listElt[i].GetCount();    break;
-                case EDiscount.e1000won:    discount1000Cnt += listElt[i].GetCount();   break;
+                case EDiscount.e1000won:    discount1000Won += listElt[i].GetCount();   break;
             }
         }
 
-        NetworkManager.Instance.TableDiscountInput_REQ (this.tableNo, discount500Cnt, discount1000Cnt);
+        int price1000 = Info.GetDiscountPrice(EDiscount.e1000won);
+        discount1000Won *= price1000;
+        NetworkManager.Instance.TableDiscountInput_REQ (this.tableNo, discount1000Won);
     }
 }

@@ -143,9 +143,7 @@ public class SlotMachineElt : MonoBehaviour {
 
 		yield return new WaitForSeconds (1f);
 
-        if (eType == ESlotType.eGameType && page.SelectGameType() == EGameType.eTokyoLive)
-            page.ShowPopup();
-        else if (eType == ESlotType.eGame)
+        if (eType == ESlotType.eGame)
             page.ShowPopup();
 	}
 

@@ -89,14 +89,14 @@ namespace CrashCat
             PlayerData.instance.Save();
 
     #if UNITY_ANALYTICS // Using Analytics Standard Events v0.3.0
-            var transactionId = System.Guid.NewGuid().ToString();
+            /*var transactionId = System.Guid.NewGuid().ToString();
             var transactionContext = "store";
             var level = PlayerData.instance.rank.ToString();
             var itemId = t.themeName;
             var itemType = "non_consumable";
             var itemQty = 1;
 
-            /*AnalyticsEvent.ItemAcquired(
+            AnalyticsEvent.ItemAcquired(
                 AcquisitionType.Soft,
                 transactionContext,
                 itemQty,
@@ -104,11 +104,11 @@ namespace CrashCat
                 itemType,
                 level,
                 transactionId
-            );*/
+            );
             
             if (t.cost > 0)
             {
-                /*AnalyticsEvent.ItemSpent(
+                AnalyticsEvent.ItemSpent(
                     AcquisitionType.Soft, // Currency type
                     transactionContext,
                     t.cost,
@@ -117,12 +117,12 @@ namespace CrashCat
                     itemType,
                     level,
                     transactionId
-                );*/
+                );
             }
 
             if (t.premiumCost > 0)
             {
-                /*AnalyticsEvent.ItemSpent(
+                AnalyticsEvent.ItemSpent(
                     AcquisitionType.Premium, // Currency type
                     transactionContext,
                     t.premiumCost,
@@ -131,8 +131,8 @@ namespace CrashCat
                     itemType,
                     level,
                     transactionId
-                );*/
-            }
+                );
+            }*/
     #endif
 
             // Repopulate to change button accordingly.

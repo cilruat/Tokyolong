@@ -105,14 +105,14 @@ public class GameOverState : AState
 		PlayerData.instance.Save();
 
 #if UNITY_ANALYTICS // Using Analytics Standard Events v0.3.0
-        var transactionId = System.Guid.NewGuid().ToString();
+        /*var transactionId = System.Guid.NewGuid().ToString();
         var transactionContext = "gameplay";
         var level = PlayerData.instance.rank.ToString();
         var itemType = "consumable";
         
         if (trackManager.characterController.coins > 0)
         {
-            /*AnalyticsEvent.ItemAcquired(
+            AnalyticsEvent.ItemAcquired(
                 AcquisitionType.Soft, // Currency type
                 transactionContext,
                 trackManager.characterController.coins,
@@ -121,12 +121,12 @@ public class GameOverState : AState
                 itemType,
                 level,
                 transactionId
-            );*/
+            );
         }
 
         if (trackManager.characterController.premium > 0)
         {
-            /*AnalyticsEvent.ItemAcquired(
+            AnalyticsEvent.ItemAcquired(
                 AcquisitionType.Premium, // Currency type
                 transactionContext,
                 trackManager.characterController.premium,
@@ -135,8 +135,8 @@ public class GameOverState : AState
                 itemType,
                 level,
                 transactionId
-            );*/
-        }
+            );
+        }*/
 #endif 
 
         m_CoinCredited = true;
