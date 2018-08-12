@@ -310,9 +310,5 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 	public void RemoveUnfinishGame(int id)
 	{
 		unfinishGame.RemoveUnfinish (id);
-	}
-
-	void Update()
-	{
-	}		
+	}	
 }

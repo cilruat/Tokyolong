@@ -85,8 +85,8 @@ public class AdminOrderDetail : SingletonMonobehaviour<AdminOrderDetail> {
 
         string strDiscount = "";
         short discount = short.Parse(packing);
-        if (discount == (short)EDiscount.e500won)
-            strDiscount = "-500원 할인";
+        if (discount == (short)EDiscount.e5000won)
+            strDiscount = "-5000원 할인";
         else if (discount == (short)EDiscount.e1000won)
             strDiscount = "-1000원 할인";
 

@@ -50,13 +50,26 @@ namespace SP_Server
             this.discounts = new List<short>();
         }
 
+        public void SetDiscount(short discount)
+        {
+            EDiscount type = (EDiscount)discount;
+            switch (type)
+            {
+                case EDiscount.e1000won:
+                case EDiscount.e5000won: discounts.Add(discount);
+                    break;
+                case EDiscount.eHalf:
+                    break;
+                case EDiscount.eAll:
+                    break;
+            }
+        }
+
         public bool IsAdmin()
         {
             return tableNum == 10000;
         }
     }
-
-    
 
     public class User : IPeer
     {

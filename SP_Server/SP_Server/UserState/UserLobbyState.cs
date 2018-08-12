@@ -284,22 +284,6 @@ namespace SP_Server.UserState
                         tableNo = msg.pop_byte();
                         short discount = msg.pop_int16();
 
-                        ++owner.mainFrm.orderID;
-                        RequestOrder reqOrderDiscount = new RequestOrder((byte)ERequestOrerType.eDiscount, owner.mainFrm.orderID, tableNo, Convert.ToString(discount));
-                        owner.mainFrm.SetRequestOrder(reqOrderDiscount);
-                        // Admin Send packet
-                        if (Frm.GetAdminUser() != null)
-                        {
-                            other_msg = CPacket.create((short)PROTOCOL.GAME_DISCOUNT_NOT);
-
-                            other_msg.push(reqOrderDiscount.type);
-                            other_msg.push(reqOrderDiscount.id);
-                            other_msg.push((byte)reqOrderDiscount.tableNo);
-                            other_msg.push(reqOrderDiscount.packing);
-
-                            Frm.GetAdminUser().send(other_msg);
-                        }
-
                         send_msg = CPacket.create((short)PROTOCOL.GAME_DISCOUNT_ACK);
 
                         break;

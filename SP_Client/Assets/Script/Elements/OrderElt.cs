@@ -58,8 +58,8 @@ public class OrderElt : MonoBehaviour {
     {
         string desc = "";
         short discount = short.Parse(packing);
-        if (discount == (short)EDiscount.e500won)
-            desc = "-500원 할인";
+        if (discount == (short)EDiscount.e5000won)
+            desc = "-5000원 할인";
         else if (discount == (short)EDiscount.e1000won)
             desc = "-1000원 할인";
 

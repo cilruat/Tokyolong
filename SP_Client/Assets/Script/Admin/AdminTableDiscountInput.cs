@@ -81,7 +81,7 @@ public class AdminTableDiscountInput : SingletonMonobehaviour<AdminTableDiscount
 
             switch (discountType)
             {
-                case EDiscount.e500won:     discount500Cnt += listElt[i].GetCount();    break;
+                case EDiscount.e5000won:    discount500Cnt += listElt[i].GetCount();    break;
                 case EDiscount.e1000won:    discount1000Cnt += listElt[i].GetCount();   break;
             }
         }

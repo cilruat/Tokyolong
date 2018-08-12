@@ -113,10 +113,10 @@ public enum EMenuDetail : int
 /// </summary>
 public enum EDiscount
 {
-	e500won,
 	e1000won,
-	eHalfDiscount,
-	eAllDiscount,
+    e5000won,
+	eHalf,
+	eAll,
 }
 
 public enum EGameType
@@ -202,14 +202,14 @@ public partial class Info : MonoBehaviour {
 		string name = "";
 		switch (eType) {
 		case EGameType.eWinWaiter:
-			if (eDis == EDiscount.e500won) {
+                if (eDis == EDiscount.e1000won) {
 				switch ((EWaiterEasyGame)game) {
 				case EWaiterEasyGame.eRockPaperScissors:	name = "가위바위보";	break;
 				case EWaiterEasyGame.eSniffling:			name = "홀짝";			break;
 				case EWaiterEasyGame.eFrontBack:			name = "앞뒤";			break;
 				case EWaiterEasyGame.eLieDetector:			name = "거짓말탐지기";	break;
 				}
-			} else if (eDis == EDiscount.e1000won) {
+                } else if (eDis == EDiscount.e5000won) {
 				switch ((EWaiterHardGame)game) {
 				case EWaiterHardGame.e369:				name = "369";					break;
 				case EWaiterHardGame.eSpeakingWords:	name = "탕수육";				break;
@@ -238,8 +238,8 @@ public partial class Info : MonoBehaviour {
         int discountPrice = 0;
         switch(type)
         {
-            case EDiscount.e500won:		discountPrice = 500;    break;
             case EDiscount.e1000won:	discountPrice = 1000;   break;
+            case EDiscount.e5000won:    discountPrice = 5000;   break;
         }
 
         return discountPrice;

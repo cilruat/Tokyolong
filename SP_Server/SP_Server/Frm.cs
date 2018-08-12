@@ -425,7 +425,18 @@ namespace SP_Server
         public void SetDiscount(int tableNo, short discount)
         {
             if (dictUserInfo.ContainsKey(tableNo) == false)
-                return;            
+                return;
+
+            EDiscount type = (EDiscount)discount;
+            switch(type)
+            {
+                case EDiscount.e1000won:
+                case EDiscount.e5000won:    dictUserInfo[tableNo].discounts.Add(discount);  break;
+                case EDiscount.eHalf:
+                    break;
+                case EDiscount.eAll:
+                    break;
+            }
 
             dictUserInfo[tableNo].discounts.Add(discount);
             DataUserInfoSave();

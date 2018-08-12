@@ -145,7 +145,7 @@ public partial class PageGame : PageBase {
 			randRange = Enum.GetValues (typeof(EBoardGame)).Length;
 			rtElts = rtBoardGames;
 		} else if (curGameType == (int)EGameType.eWinWaiter) {
-			if (Info.GameDiscountWon == (int)EDiscount.e500won) {
+            if (Info.GameDiscountWon == (int)EDiscount.e5000won) {
 				randRange = Enum.GetValues (typeof(EWaiterEasyGame)).Length;
 				rtElts = rtWinWaiterEasyGames;
 			} else if (Info.GameDiscountWon == (int)EDiscount.e1000won) {
