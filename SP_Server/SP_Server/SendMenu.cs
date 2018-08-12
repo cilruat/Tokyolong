@@ -6,6 +6,14 @@ using FreeNet;
 
 namespace SP_Server
 {
+    public enum EDiscount
+    {
+        e1000won,
+        e5000won,
+        eHalf,
+        eAll,
+    }
+
     [Serializable]
     public class SendMenu
     {

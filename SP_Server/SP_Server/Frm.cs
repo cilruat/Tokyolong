@@ -48,7 +48,19 @@ namespace SP_Server
         public List<RequestOrder> listRequestOrder = new List<RequestOrder>();        
 
         public int musicID = -1;
-        public List<RequestMusicInfo> listReqMusicInfo = new List<RequestMusicInfo>();        
+        public List<RequestMusicInfo> listReqMusicInfo = new List<RequestMusicInfo>();
+
+        Random random;
+        public float discount0 = .25f;
+        public float discount1 = .25f;
+        public float discount2 = .25f;
+        public float discount3 = .25f;
+
+        float discount3Prob { get { return discount3; } }
+        float discount2Prob { get { return (discount3Prob + discount2); } }
+        float discount1Prob { get { return (discount2Prob + discount1); } }
+        float discount0Prob { get { return (discount1Prob + discount0); } }
+
 
         public Frm()
         {
@@ -65,6 +77,11 @@ namespace SP_Server
             this.colDate.Width = div;
 
             this.FormClosing += new FormClosingEventHandler(this.frmClosing);
+
+            this.random = new Random();
+
+            MenuData.Load();
+            
         }
 
         protected override void OnLoad(EventArgs e)
@@ -404,28 +421,31 @@ namespace SP_Server
             return listSendMenu;
         }
 
-        public void SetDiscount(int tableNo, string packing)
-        {
-            SetDiscount(tableNo, short.Parse(packing));
-        }
-
         public void SetDiscount(int tableNo, short discount)
         {
             if (dictUserInfo.ContainsKey(tableNo) == false)
-                return;            
+                return;
 
-            dictUserInfo[tableNo].discounts.Add(discount);
+            dictUserInfo[tableNo].SetDiscount(discount);
+
             DataUserInfoSave();
         }
 
-        public List<short> GetDiscount(int tableNo)
+        public void SetDiscount(int tableNo, int inputDiscount)
         {
-            List<short> list = new List<short>();
+            if (dictUserInfo.ContainsKey(tableNo) == false)
+                return;
 
-            if (dictUserInfo.ContainsKey(tableNo))
-                list = dictUserInfo[tableNo].discounts;
+            dictUserInfo[tableNo].SetDiscount(inputDiscount);
+        }
 
-            return list;
+        public int GetDiscount(int tableNo)
+        {
+            UserInfo info;
+            if (dictUserInfo.TryGetValue(tableNo, out info) == false)
+                return 0;
+
+            return info.discount;
         }
 
         public void SetUnfinishGame(int tableNo, Unfinish info)
@@ -579,6 +599,19 @@ namespace SP_Server
             DataUserInfoSave();
             DataRequestSave(true);
             DataRequestSave(false);
+        }
+
+        public short GetRandomDiscountIndex()
+        {
+            short discountIdx = 0;
+
+            float prob = (float)random.NextDouble();
+            if (prob < discount3Prob)       discountIdx = (short)3;
+            else if (prob < discount2Prob)  discountIdx = (short)2;
+            else if (prob < discount1Prob)  discountIdx = (short)1;
+            else if (prob < discount0Prob)  discountIdx = (short)0;
+
+            return discountIdx;
         }
     }
 }

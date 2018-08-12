@@ -172,7 +172,7 @@ public partial class Info : MonoBehaviour {
         }
 
         return title;
-	}        
+	}
 
     public static int GetDiscountPrice(short type) { return GetDiscountPrice((EDiscount)type); }
     public static int GetDiscountPrice(EDiscount type)
@@ -181,6 +181,7 @@ public partial class Info : MonoBehaviour {
         switch(type)
         {
             case EDiscount.e1000won:	discountPrice = 1000;   break;
+            case EDiscount.e5000won:    discountPrice = 5000;   break;
         }
 
         return discountPrice;

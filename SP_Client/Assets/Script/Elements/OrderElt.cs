@@ -50,7 +50,7 @@ public class OrderElt : MonoBehaviour {
 
         order.text = desc;
         objDetail.SetActive (true);
-    }        
+    }
 
 	public void OnDetail()
 	{

@@ -78,7 +78,7 @@ public class AdminBill : MonoBehaviour {
 		CalcTotalPrice ();
 	}
 
-    public void CopyBill(List<KeyValuePair<EMenuDetail, int>> list, List<short> listDiscount)
+	public void CopyBill(List<KeyValuePair<EMenuDetail, int>> list, int discount)
 	{
 		_Clear ();
 
@@ -95,13 +95,10 @@ public class AdminBill : MonoBehaviour {
 			listElt.Add (elt);
 		}
 
-        for (int i = 0; i < listDiscount.Count; i++) {
-            discountPrice += Info.GetDiscountPrice(listDiscount[i]);
-        }
-
         if (objEmpty != null)
             objEmpty.SetActive(list.Count <= 0);
 
+		this.discountPrice = discount;
 		CalcTotalPrice ();
 	}
 }

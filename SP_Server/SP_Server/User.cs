@@ -18,7 +18,7 @@ namespace SP_Server
         public byte customerType;
         public GameInfo gameInfo;
         public List<SendMenu> menus;
-        public List<short> discounts;
+        public int discount;
 
         public UserInfo()
         {
@@ -27,7 +27,7 @@ namespace SP_Server
             this.customerType = 0;
             this.gameInfo = new GameInfo();
             this.menus = new List<SendMenu>();
-            this.discounts = new List<short>();
+            this.discount = 0;
         }
 
         public UserInfo(int tableNum)
@@ -37,7 +37,7 @@ namespace SP_Server
             this.customerType = 0;
             this.gameInfo = new GameInfo();
             this.menus = new List<SendMenu>();
-            this.discounts = new List<short>();
+            this.discount = 0;
         }
 
         public UserInfo(int tableNum, byte peopleCnt, byte customerType)
@@ -47,16 +47,41 @@ namespace SP_Server
             this.customerType = customerType;
             this.gameInfo = new GameInfo();
             this.menus = new List<SendMenu>();
-            this.discounts = new List<short>();
+            this.discount = 0;
         }
 
-        public bool IsAdmin()
+        public void SetDiscount(short sType)
+        {
+            EDiscount type = (EDiscount)sType;
+            int calcDiscount = 0;
+            switch (type)
+            {
+                case EDiscount.e1000won: calcDiscount = 1000;   break;
+                case EDiscount.e5000won: calcDiscount = 5000;   break;
+                case EDiscount.eHalf:
+                case EDiscount.eAll:
+                    int totalPrice = 0;
+                    for (int i = 0; i < menus.Count; i++)
+                        totalPrice += menus[i].cnt * MenuData.GetMenuPrice(menus[i].menu);
+
+                    totalPrice -= discount;
+                    calcDiscount = type == EDiscount.eAll ? totalPrice : (int)(totalPrice * .5f);
+                    break;
+            }
+
+            discount += calcDiscount;
+        }
+
+        public void SetDiscount(int inputDiscount)
+        {
+            discount += inputDiscount;
+        }
+
+            public bool IsAdmin()
         {
             return tableNum == 10000;
         }
     }
-
-    
 
     public class User : IPeer
     {

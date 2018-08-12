@@ -272,33 +272,15 @@ namespace SP_Server.UserState
                         List<SendMenu> listSendMenu = owner.mainFrm.GetOrder((int)tableNo);
                         JsonData listSendMenuJson = JsonMapper.ToJson(listSendMenu);
 
-                        List<short> listDiscount = owner.mainFrm.GetDiscount((int)tableNo);
-                        JsonData listDiscountJson = JsonMapper.ToJson(listDiscount);
-
                         send_msg = CPacket.create((short)PROTOCOL.ORDER_DETAIL_ACK);
                         send_msg.push(listSendMenuJson.ToString());
-                        send_msg.push(listDiscountJson.ToString());
+                        send_msg.push(owner.mainFrm.GetDiscount((int)tableNo));
                         break;
                     case PROTOCOL.GAME_DISCOUNT_REQ:
 
                         tableNo = msg.pop_byte();
                         short discount = msg.pop_int16();
-
-                        ++owner.mainFrm.orderID;
-                        RequestOrder reqOrderDiscount = new RequestOrder((byte)ERequestOrerType.eDiscount, owner.mainFrm.orderID, tableNo, Convert.ToString(discount));
-                        owner.mainFrm.SetRequestOrder(reqOrderDiscount);
-                        // Admin Send packet
-                        if (Frm.GetAdminUser() != null)
-                        {
-                            other_msg = CPacket.create((short)PROTOCOL.GAME_DISCOUNT_NOT);
-
-                            other_msg.push(reqOrderDiscount.type);
-                            other_msg.push(reqOrderDiscount.id);
-                            other_msg.push((byte)reqOrderDiscount.tableNo);
-                            other_msg.push(reqOrderDiscount.packing);
-
-                            Frm.GetAdminUser().send(other_msg);
-                        }
+                        owner.mainFrm.SetDiscount(tableNo, discount);
 
                         send_msg = CPacket.create((short)PROTOCOL.GAME_DISCOUNT_ACK);
 
@@ -363,7 +345,6 @@ namespace SP_Server.UserState
                         switch ((ERequestOrerType)reqType)
                         {
                             case ERequestOrerType.eOrder:       owner.mainFrm.SetOrder((int)reqOrderTableNo, reqOrderPacking);      break;
-                            case ERequestOrerType.eDiscount:    owner.mainFrm.SetDiscount((int)reqOrderTableNo, reqOrderPacking);   break;
                         }
 
                         for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
@@ -388,13 +369,10 @@ namespace SP_Server.UserState
                         List<SendMenu> listTableOrder = owner.mainFrm.GetOrder((int)tableNo);
                         JsonData tableOrderJson = JsonMapper.ToJson(listTableOrder);
 
-                        List<short> listTableDiscount = owner.mainFrm.GetDiscount((int)tableNo);
-                        JsonData tableDiscountJson = JsonMapper.ToJson(listTableDiscount);
-
                         send_msg = CPacket.create((short)PROTOCOL.TABLE_ORDER_CONFIRM_ACK);
                         send_msg.push(tableNo);
                         send_msg.push(tableOrderJson.ToString());
-                        send_msg.push(tableDiscountJson.ToString());
+                        send_msg.push(owner.mainFrm.GetDiscount((int)tableNo));
                         break;
                     case PROTOCOL.TABLE_ORDER_INPUT_REQ:
                         tableNo = msg.pop_byte();
@@ -431,8 +409,11 @@ namespace SP_Server.UserState
                         --owner.info.gameInfo.gameCnt;
                         owner.mainFrm.RefreshGameCount(tableNo, owner.info.gameInfo.gameCnt);
 
-                        send_msg = CPacket.create((short)PROTOCOL.SLOT_START_ACK);                        
-                        send_msg.push(owner.info.gameInfo.gameCnt);
+                        short ranDiscountIdx = owner.mainFrm.GetRandomDiscountIndex();
+
+                        send_msg = CPacket.create((short)PROTOCOL.SLOT_START_ACK);
+                        send_msg.push((byte)owner.info.gameInfo.gameCnt);
+                        send_msg.push(ranDiscountIdx);
                         break;
                     case PROTOCOL.REPORT_OFFLINE_GAME_REQ:
                         tableNo = msg.pop_byte();
@@ -484,14 +465,9 @@ namespace SP_Server.UserState
                         break;
                     case PROTOCOL.TABLE_DISCOUNT_INPUT_REQ:
                         tableNo = msg.pop_byte();
-                        int discount500Cnt = msg.pop_int32();
-                        int discount1000Cnt = msg.pop_int32();
+                        int inputDiscount = msg.pop_int32();
 
-                        for (int i = 0; i < discount500Cnt; i++)
-                            owner.mainFrm.SetDiscount((int)tableNo, (short)0);
-
-                        for (int i = 0; i < discount1000Cnt; i++)
-                            owner.mainFrm.SetDiscount((int)tableNo, (short)1);
+                        owner.mainFrm.SetDiscount((int)tableNo, inputDiscount);
 
 
                         for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
