@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using System.IO;
 using System.Text;
 
-public class CSVReader 
+public class CSVReader
 {
     static string SPLIT_RE = @",(?=(?:[^""]*""[^""]*"")*(?![^""]*""))";
     static string LINE_SPLIT_RE = @"\r\n|\n\r|\n|\r";
@@ -39,8 +39,8 @@ public class CSVReader
 
                 int n = 0;
                 float f = 0f;
-                if (int.TryParse(value, out n))         finalValue = n;
-                else if (float.TryParse(value, out f))  finalValue = f;
+                if (int.TryParse(value, out n)) finalValue = n;
+                else if (float.TryParse(value, out f)) finalValue = f;
 
                 entry[header[j]] = finalValue;
             }

@@ -9,8 +9,6 @@ public class SendMenu
 {
 	public int menu = 0;
 	public int cnt = 0;
-	public int halfCn = 0;
-	public int allCnt = 0;
 
     public SendMenu(int menu, int cnt)
     {
@@ -158,7 +156,7 @@ public class Bill : MonoBehaviour {
         ResizeScroll();
 	}
 
-    public void CopyBill(List<KeyValuePair<EMenuDetail, int>> list, List<short> listDiscount)
+	public void CopyBill(List<KeyValuePair<EMenuDetail, int>> list, int discountPrice)
 	{
 		_Clear ();
 
@@ -175,12 +173,11 @@ public class Bill : MonoBehaviour {
 			listElt.Add (elt);
 		}
 
-        for (int i = 0; i < listDiscount.Count; i++) {
-            discountPrice += Info.GetDiscountPrice(listDiscount[i]);
-        }
 
         if (objEmpty != null)
             objEmpty.SetActive(list.Count <= 0);
+
+		this.discountPrice = discountPrice;
 
 		CalcTotalPrice ();
         ResizeScroll();

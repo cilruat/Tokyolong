@@ -61,6 +61,7 @@ namespace SP_Server
         float discount1Prob { get { return (discount2Prob + discount1); } }
         float discount0Prob { get { return (discount1Prob + discount0); } }
 
+
         public Frm()
         {
             WriteLogInstance = new DelegateWriteLog(this.WriteLog);
@@ -78,6 +79,9 @@ namespace SP_Server
             this.FormClosing += new FormClosingEventHandler(this.frmClosing);
 
             this.random = new Random();
+
+            MenuData.Load();
+            
         }
 
         protected override void OnLoad(EventArgs e)
@@ -417,39 +421,31 @@ namespace SP_Server
             return listSendMenu;
         }
 
-        public void SetDiscount(int tableNo, string packing)
-        {
-            SetDiscount(tableNo, short.Parse(packing));
-        }
-
         public void SetDiscount(int tableNo, short discount)
         {
             if (dictUserInfo.ContainsKey(tableNo) == false)
                 return;
 
-            EDiscount type = (EDiscount)discount;
-            switch(type)
-            {
-                case EDiscount.e1000won:
-                case EDiscount.e5000won:    dictUserInfo[tableNo].discounts.Add(discount);  break;
-                case EDiscount.eHalf:
-                    break;
-                case EDiscount.eAll:
-                    break;
-            }
+            dictUserInfo[tableNo].SetDiscount(discount);
 
-            dictUserInfo[tableNo].discounts.Add(discount);
             DataUserInfoSave();
         }
 
-        public List<short> GetDiscount(int tableNo)
+        public void SetDiscount(int tableNo, int inputDiscount)
         {
-            List<short> list = new List<short>();
+            if (dictUserInfo.ContainsKey(tableNo) == false)
+                return;
 
-            if (dictUserInfo.ContainsKey(tableNo))
-                list = dictUserInfo[tableNo].discounts;
+            dictUserInfo[tableNo].SetDiscount(inputDiscount);
+        }
 
-            return list;
+        public int GetDiscount(int tableNo)
+        {
+            UserInfo info;
+            if (dictUserInfo.TryGetValue(tableNo, out info) == false)
+                return 0;
+
+            return info.discount;
         }
 
         public void SetUnfinishGame(int tableNo, Unfinish info)
@@ -610,10 +606,10 @@ namespace SP_Server
             short discountIdx = 0;
 
             float prob = (float)random.NextDouble();
-            if (prob < discount3Prob)       discountIdx = 3;
-            else if (prob < discount2Prob)  discountIdx = 2;
-            else if (prob < discount1Prob)  discountIdx = 1;
-            else if (prob < discount0Prob)  discountIdx = 0;
+            if (prob < discount3Prob)       discountIdx = (short)3;
+            else if (prob < discount2Prob)  discountIdx = (short)2;
+            else if (prob < discount1Prob)  discountIdx = (short)1;
+            else if (prob < discount0Prob)  discountIdx = (short)0;
 
             return discountIdx;
         }

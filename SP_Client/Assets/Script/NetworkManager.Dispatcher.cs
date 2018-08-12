@@ -202,13 +202,13 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     void OrderDetailACK(CPacket msg)
     {
         string menuPacking = msg.pop_string();
-        string discountPacking = msg.pop_string();
+		int discountPrice = msg.pop_int32();
         if (UIManager.Instance.IsActive(eUI.eBillDetail))
             return;
         
         GameObject obj = UIManager.Instance.Show(eUI.eBillDetail);
         UIBillDetail uiBillDetail = obj.GetComponent<UIBillDetail>();
-        uiBillDetail.SetBill(menuPacking, discountPacking);
+		uiBillDetail.SetBill(menuPacking, discountPrice);
     }
 
 	void GameDiscountACK(CPacket msg)
@@ -294,9 +294,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     {
         byte tableNo = msg.pop_byte();
         string orderPacking = msg.pop_string();
-        string discountPacking = msg.pop_string();
+		int discount = msg.pop_int32();
         AdminTableMenu.Instance.OnClose();
-        PageAdmin.Instance.ShowBillConfirm (tableNo, orderPacking, discountPacking);
+		PageAdmin.Instance.ShowBillConfirm (tableNo, orderPacking, discount);
     }
 
     void TableOrderInputACK(CPacket msg)
@@ -324,11 +324,11 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
 		if (Info.GamePlayCnt < 0)
 			Info.GamePlayCnt = 0;
-
+			
 		((PageGame)PageBase.Instance).FinishStart ();
 	}
 
-	void ReportOfflineGameACK()
+	void ReportOfflineGameACK()	
 	{
 		NetworkManager.Instance.UnfinishGamelist_REQ (Info.TableNum);
 	}

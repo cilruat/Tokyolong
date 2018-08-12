@@ -20,7 +20,6 @@ public class TableDiscountElt : MonoBehaviour {
 
         switch (type)
         {
-            case EDiscount.e5000won:    txtName.text = "5000원 할인";  break;
             case EDiscount.e1000won:    txtName.text = "1000원 할인";  break;
         }
 	}

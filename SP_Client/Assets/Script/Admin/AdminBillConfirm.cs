@@ -12,11 +12,11 @@ public class AdminBillConfirm : SingletonMonobehaviour<AdminBillConfirm> {
 
 	byte tableNo = 0;
 
-    public void SetInfo(byte tableNo, List<KeyValuePair<EMenuDetail,int>> list, List<short> listDiscount)
+    public void SetInfo(byte tableNo, List<KeyValuePair<EMenuDetail,int>> list, int discount)
 	{
 		this.tableNo = tableNo;
 		table.text = tableNo.ToString () + "번 테이블";
-        bill.CopyBill (list, listDiscount);
+		bill.CopyBill (list, discount);
         billChange.SetTable(tableNo);
 	}
 
