@@ -70,7 +70,7 @@ public class MenuManager : MonoBehaviour {
 					PlayerPrefs.SetInt("GameMode", 0);
 					StartCoroutine(animateButton(objectHit));
 					yield return new WaitForSeconds(1.0f);
-					SceneManager.LoadScene("Game");
+					SceneManager.LoadScene("AvoidGame");
 					break;
 
 				case "Btn-Mode-02":
@@ -79,7 +79,7 @@ public class MenuManager : MonoBehaviour {
 					PlayerPrefs.SetInt("GameMode", 1);
 					StartCoroutine(animateButton(objectHit));
 					yield return new WaitForSeconds(1.0f);
-					SceneManager.LoadScene("Game");
+                    SceneManager.LoadScene("AvoidGame");
 					break;
 					
 				case "btnExit":
