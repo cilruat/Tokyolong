@@ -59,5 +59,4 @@ public class PageBase : SingletonMonobehaviour<PageBase> {
 			obj = boards [curBoardIdx].gameObject;
 		return obj;
 	}
-
 }
