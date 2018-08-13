@@ -56,7 +56,7 @@ public class FlyChance : MonoBehaviour
         rt.anchoredPosition = new Vector2(v2.x, v2.y);
 
         float sqrDis = (target.anchoredPosition - rt.anchoredPosition).sqrMagnitude;
-        if (sqrDis <= target.rect.width *.5f)
+        if (sqrDis <= target.rect.width)
             Destroy(this.gameObject);
     }
 

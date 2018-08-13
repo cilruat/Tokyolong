@@ -74,37 +74,6 @@ public class PageMain : PageBase {
         newObj.gameObject.SetActive(true);
 
         txtPlayCnt.text = Info.GamePlayCnt.ToString ();
-
-        if (scaleRouine != null)
-            StopCoroutine(scaleRouine);
-
-        scaleRouine = StartCoroutine(_ScaleAnim());
-    }
-
-    IEnumerator _ScaleAnim()
-    {
-		if (Info.isCheckScene("Main") == false)
-            yield break;
-
-        UITween tween = UITweenScale.Start(objDiscountChance, 1f, 1.2f, TWParam.New(.1f).Curve(TWCurve.Back).Speed(TWSpeed.Slower));
-        while (tween.IsTweening())
-        {
-			if (Info.isCheckScene("Main") == false)
-				yield break;
-
-            yield return null;
-        }
-
-        tween = UITweenScale.Start(objDiscountChance, 1.2f, 1f, TWParam.New(.1f).Curve(TWCurve.Back).Speed(TWSpeed.Faster));
-        while (tween.IsTweening())
-        {
-			if (Info.isCheckScene("Main") == false)
-				yield break;
-            
-            yield return null;
-        }
-
-        scaleRouine = null;
     }
 
     public void CreateFlyChance()
