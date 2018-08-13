@@ -483,6 +483,26 @@ namespace SP_Server.UserState
 
                         send_msg = CPacket.create((short)PROTOCOL.TABLE_DISCOUNT_INPUT_ACK);
                         break;
+                    case PROTOCOL.GET_RANDOM_DISCOUNT_PROB_REQ:
+
+                        send_msg = CPacket.create((short)PROTOCOL.GET_RANDOM_DISCOUNT_PROB_ACK);
+                        send_msg.push(owner.mainFrm.listDiscountProb[0]);
+                        send_msg.push(owner.mainFrm.listDiscountProb[1]);
+                        send_msg.push(owner.mainFrm.listDiscountProb[2]);
+                        send_msg.push(owner.mainFrm.listDiscountProb[3]);
+                        break;
+                    case PROTOCOL.SET_RANDOM_DISCOUNT_PROB_REQ:
+
+                        List<float> listDiscountProb = new List<float>();
+                        listDiscountProb.Add(msg.pop_float());
+                        listDiscountProb.Add(msg.pop_float());
+                        listDiscountProb.Add(msg.pop_float());
+                        listDiscountProb.Add(msg.pop_float());
+
+                        owner.mainFrm.SetDiscountProb(listDiscountProb);
+
+                        send_msg = CPacket.create((short)PROTOCOL.SET_RANDOM_DISCOUNT_PROB_ACK);
+                        break;
                     default:
                         break;
                 }
