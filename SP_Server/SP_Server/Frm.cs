@@ -51,13 +51,12 @@ namespace SP_Server
         public List<RequestMusicInfo> listReqMusicInfo = new List<RequestMusicInfo>();
 
         Random random;
-        public float[] discountProbs = new float[4]
-        { .25f, .25f, .25f, .25f };
-
-        float discount3Prob { get { return discountProbs[3]; } }
-        float discount2Prob { get { return (discount3Prob + discountProbs[2]); } }
-        float discount1Prob { get { return (discount2Prob + discountProbs[1]); } }
-        float discount0Prob { get { return (discount1Prob + discountProbs[0]); } }
+        
+        public List<float> listDiscountProb = new List<float>() { 0.25f, 0.25f, 0.25f, 0.25f };
+        float Discount3Prob { get { return listDiscountProb[3]; } }
+        float Discount2Prob { get { return (Discount3Prob + listDiscountProb[2]); } }
+        float Discount1Prob { get { return (Discount2Prob + listDiscountProb[1]); } }
+        float Discount0Prob { get { return (Discount1Prob + listDiscountProb[0]); } }
 
         public Frm()
         {
@@ -78,7 +77,7 @@ namespace SP_Server
             this.random = new Random();
 
             MenuData.Load();
-
+            LoadDiscountProb();
         }
 
         protected override void OnLoad(EventArgs e)
@@ -598,17 +597,23 @@ namespace SP_Server
             DataRequestSave(false);
         }
 
-        public void SetDiscountProb()
+        public void SaveDiscountProb()
         {
             if (Directory.Exists("Data") == false)
                 Directory.CreateDirectory("Data");
 
-            BinarySave.Serialize(discountProbs, "DataSave\\RequestMusic.bin");
+            BinarySave.Serialize(listDiscountProb, "Data\\DiscountProb.bin");
         }
 
-        public void GetDiscountProb()
+        public void LoadDiscountProb()
         {
-            discountProbs = BinarySave.Deserialize<float[]>("Data\\DiscountProb.bin");
+            if (File.Exists("Data\\DiscountProb.bin") == false)
+            {
+                SaveDiscountProb();
+                return;
+            }
+
+            listDiscountProb = BinarySave.Deserialize<List<float>>("Data\\DiscountProb.bin");
         }
 
         public short GetRandomDiscountIndex()
@@ -616,12 +621,23 @@ namespace SP_Server
             short discountIdx = 0;
 
             float prob = (float)random.NextDouble();
-            if (prob < discount3Prob)       discountIdx = (short)3;
-            else if (prob < discount2Prob)  discountIdx = (short)2;
-            else if (prob < discount1Prob)  discountIdx = (short)1;
-            else if (prob < discount0Prob)  discountIdx = (short)0;
+            if (prob < Discount3Prob)       discountIdx = (short)3;
+            else if (prob < Discount2Prob)  discountIdx = (short)2;
+            else if (prob < Discount1Prob)  discountIdx = (short)1;
+            else if (prob < Discount0Prob)  discountIdx = (short)0;
 
             return discountIdx;
+        }
+
+        public void SetDiscountProb(List<float> list)
+        {
+            if (list.Count != 4)
+                return;
+
+            listDiscountProb.Clear();
+            listDiscountProb = list;
+
+            SaveDiscountProb();
         }
     }
 }

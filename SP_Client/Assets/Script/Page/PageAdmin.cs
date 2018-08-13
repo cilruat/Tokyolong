@@ -22,6 +22,7 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
     public GameObject objTableOrderInput;
     public GameObject objTableDiscountInput;
 	public UnfinishGameList unfinishGame;
+    public AdminSettingDiscountProb settingDiscountProb;
 
 	UITween tweenUrgency = null;
 	List<TableElt> listTable = new List<TableElt>();
@@ -305,5 +306,15 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 	public void RemoveUnfinishGame(int id)
 	{
 		unfinishGame.RemoveUnfinish (id);
-	}	
+	}
+
+    public void OnSettingDiscountProb()
+    {
+        NetworkManager.Instance.GetDiscountProb_REQ();
+    }
+
+    public void ShowSettingDiscountProb(List<float> list)
+    {
+        settingDiscountProb.ShowDiscountProb(list);
+    }
 }

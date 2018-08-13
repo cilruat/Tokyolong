@@ -184,4 +184,20 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
         send(msg);
     }
+
+    public void GetDiscountProb_REQ()
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.GET_RANDOM_DISCOUNT_PROB_REQ);
+        send(msg);
+    }
+
+    public void SetDiscountProb_REQ(List<float> list)
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.SET_RANDOM_DISCOUNT_PROB_REQ);
+        msg.push(list[0]);
+        msg.push(list[1]);
+        msg.push(list[2]);
+        msg.push(list[3]);
+        send(msg);
+    }
 }

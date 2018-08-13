@@ -52,6 +52,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		case PROTOCOL.UNFINISH_GAME_CONFIRM_NOT:	UnfinishGameConfirmNOT (msg);	break;
         case PROTOCOL.TABLE_DISCOUNT_INPUT_ACK:     TableDiscountInputACK(msg);     break;
         case PROTOCOL.TABLE_DISCOUNT_INPUT_NOT:     TableDiscountInputNOT(msg);     break;
+        case PROTOCOL.GET_RANDOM_DISCOUNT_PROB_ACK: GetDiscountProb_ACK(msg);   break;
+        case PROTOCOL.SET_RANDOM_DISCOUNT_PROB_ACK: SetDiscountProb_ACK(msg);   break;
 		}
 	}
 
@@ -364,5 +366,20 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     void TableDiscountInputNOT(CPacket msg)
     {
         UIManager.Instance.ShowDiscountAlarm();
+    }
+
+    void GetDiscountProb_ACK(CPacket msg)
+    {
+        List<float> listProb = new List<float>();
+
+        for (int i = 0; i < 4; i++)
+            listProb.Add(msg.pop_float());
+
+        PageAdmin.Instance.ShowSettingDiscountProb(listProb);
+    }
+
+    void SetDiscountProb_ACK(CPacket msg)
+    {
+        SystemMessage.Instance.Add("설정이 완료 되었습니다.");
     }
 }
