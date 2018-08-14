@@ -54,6 +54,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         case PROTOCOL.TABLE_DISCOUNT_INPUT_NOT:     TableDiscountInputNOT(msg);     break;
         case PROTOCOL.GET_RANDOM_DISCOUNT_PROB_ACK: GetDiscountProb_ACK(msg);   break;
         case PROTOCOL.SET_RANDOM_DISCOUNT_PROB_ACK: SetDiscountProb_ACK(msg);   break;
+        case PROTOCOL.COUPON_ACK:                   Coupon_ACK(msg);            break;
 		}
 	}
 
@@ -78,6 +79,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		else {
             Info.TableNum = byte.Parse (pop_string);
 			Info.GamePlayCnt = (byte)msg.pop_int32 ();
+            Info.couponCnt = msg.pop_int32();
+            Info.waitCoupon = false;
 
 			int existUser = msg.pop_int32 ();
 			if (existUser == 1) {
@@ -381,5 +384,11 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     void SetDiscountProb_ACK(CPacket msg)
     {
         SystemMessage.Instance.Add("설정이 완료 되었습니다.");
+    }
+
+    void Coupon_ACK(CPacket msg)
+    {
+        Info.couponCnt = msg.pop_int32();
+        UIManager.Instance.Show(eUI.eCoupon);
     }
 }

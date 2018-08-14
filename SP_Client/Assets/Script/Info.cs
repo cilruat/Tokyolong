@@ -14,6 +14,13 @@ public partial class Info : MonoBehaviour {
 	public static byte GamePlayCnt = 0;
 	public static short GameDiscountWon = -1;
 
+    const int COUPON_MAX_COUNT = 3;
+    const int COUPON_REMAIN_MIN = 20;
+
+    public static int couponCnt = 0;
+    public static float loopCouponRemainTime = 0f;
+    public static bool waitCoupon = false;
+
     public static bool RunInGameScene = false;
 
 	public static void AnimateChangeObj(CanvasGroup cur, CanvasGroup next, UnityEvent nextCallback = null)
@@ -39,4 +46,20 @@ public partial class Info : MonoBehaviour {
 
 	public static int idRobot = -1;
 	public static List<byte> listGamePlayCnt_Robot = new List<byte>();
+
+    public static void UpdateCouponRemainTime()
+    {
+        if (couponCnt >= COUPON_MAX_COUNT)
+            return;
+
+        if (waitCoupon)
+            return;
+        
+        loopCouponRemainTime += Time.deltaTime;
+        if (COUPON_REMAIN_MIN <= Mathf.FloorToInt((Info.loopCouponRemainTime) / 60))
+        {
+            NetworkManager.Instance.Coupon_REQ();
+            waitCoupon = true;
+        }
+    }
 }

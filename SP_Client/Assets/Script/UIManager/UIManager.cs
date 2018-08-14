@@ -6,14 +6,15 @@ using UnityEngine.SceneManagement;
 
 public enum eUI
 {
-	eChat,
+	eChat           = 0,
 	eTableSetting,
 	eBillDetail,
 	eBillSending,
 	eMusicRequest,
-	eWaiting,
+	eWaiting        = 5,
     eHowToUse,
     eShowLog,
+    eCoupon,
 
 	eNone = 100,
 }
@@ -85,6 +86,9 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
                 break;
             case eUI.eShowLog:
                 break;
+            case eUI.eCoupon:
+                curUI = page;
+                break;
             default:
                 curUI = page;
                 objShadow.SetActive (true);
@@ -105,6 +109,10 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
                 waiting = false;
                 break;
             case eUI.eShowLog:
+                break;
+            case eUI.eCoupon:
+                Info.waitCoupon = false;
+                Info.loopCouponRemainTime = 0f;
                 break;
             default:
                 curUI = eUI.eNone;
@@ -219,5 +227,8 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 			Vector3 pos = new Vector3 (mousePos.x - 400f, mousePos.y -225f, -100f);
 			objEff.transform.localPosition = pos;
 		}
+
+        if(Info.isCheckScene("Main"))
+            Info.UpdateCouponRemainTime();
     }
 }

@@ -100,6 +100,7 @@ namespace SP_Server.UserState
                         else
                         {                            
                             send_msg.push(owner.mainFrm.GetGameCount(tableNum));
+                            send_msg.push(owner.mainFrm.GetCouponCount((byte)tableNum));
                             send_msg.push(existUser ? 1 : 0);
 
                             // 유저 정보가 있는경우 추가 패킷
@@ -132,7 +133,7 @@ namespace SP_Server.UserState
 
                                 JsonData json = JsonMapper.ToJson(list);
                                 send_msg.push(json.ToString());
-                            }                            
+                            }
                         }                           
                         break;
                     case PROTOCOL.LOGOUT_REQ:
@@ -502,6 +503,14 @@ namespace SP_Server.UserState
                         owner.mainFrm.SetDiscountProb(listDiscountProb);
 
                         send_msg = CPacket.create((short)PROTOCOL.SET_RANDOM_DISCOUNT_PROB_ACK);
+                        break;
+                    case PROTOCOL.COUPON_REQ:
+                        tableNo = msg.pop_byte();
+                        owner.mainFrm.SetCouponCount((int)tableNo);
+
+                        int couponCnt = owner.mainFrm.GetCouponCount((int)tableNo);
+                        send_msg = CPacket.create((short)PROTOCOL.COUPON_ACK);
+                        send_msg.push(couponCnt);
                         break;
                     default:
                         break;

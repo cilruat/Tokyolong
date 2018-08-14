@@ -64,7 +64,6 @@ public class PageMain : PageBase {
 		}
 	}
 
-    Coroutine scaleRouine = null;
     public void RefreshGamePlayChance()
     {
 		if (Info.isCheckScene("Main") == false)

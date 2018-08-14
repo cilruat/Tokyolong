@@ -200,4 +200,12 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         msg.push(list[3]);
         send(msg);
     }
+
+    public void Coupon_REQ()
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.COUPON_REQ);
+        msg.push(Info.TableNum);
+
+        send(msg);
+    }
 }

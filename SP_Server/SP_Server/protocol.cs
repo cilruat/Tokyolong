@@ -79,6 +79,8 @@ namespace SP_Server
         GET_RANDOM_DISCOUNT_PROB_ACK,
         SET_RANDOM_DISCOUNT_PROB_REQ,
         SET_RANDOM_DISCOUNT_PROB_ACK,
+        COUPON_REQ,
+        COUPON_ACK,
         //-------------------------------------
         // 게임 프로토콜.
         //-------------------------------------        

@@ -50,6 +50,8 @@ namespace SP_Server
         public int musicID = -1;
         public List<RequestMusicInfo> listReqMusicInfo = new List<RequestMusicInfo>();
 
+        const int COUPON_MAX_CNT = 3;
+
         Random random;
         
         public List<float> listDiscountProb = new List<float>() { 0.25f, 0.25f, 0.25f, 0.25f };
@@ -57,6 +59,8 @@ namespace SP_Server
         float Discount2Prob { get { return (Discount3Prob + listDiscountProb[2]); } }
         float Discount1Prob { get { return (Discount2Prob + listDiscountProb[1]); } }
         float Discount0Prob { get { return (Discount1Prob + listDiscountProb[0]); } }
+
+        public Dictionary<int, int> dictCouponCount = new Dictionary<int, int>();
 
         public Frm()
         {
@@ -77,7 +81,7 @@ namespace SP_Server
             this.random = new Random();
 
             MenuData.Load();
-            LoadDiscountProb();
+            DataDiscountProbLoad();
         }
 
         protected override void OnLoad(EventArgs e)
@@ -508,6 +512,9 @@ namespace SP_Server
             if (dictUserInfo.ContainsKey(tableNo))
                 dictUserInfo.Remove(tableNo);
 
+            if (dictCouponCount.ContainsKey(tableNo))
+                dictCouponCount.Remove(tableNo);
+
             for (int i = listRequestOrder.Count - 1; i >= 0; i--)
             {
                 if (listRequestOrder[i].tableNo != tableNo)
@@ -550,8 +557,9 @@ namespace SP_Server
             Dictionary<int, UserInfo> users = BinarySave.Deserialize<Dictionary<int, UserInfo>>("DataSave\\UserInfo.bin");
             List<RequestOrder> orders = BinarySave.Deserialize<List<RequestOrder>>("DataSave\\RequestOrder.bin");
             List<RequestMusicInfo> musics = BinarySave.Deserialize<List<RequestMusicInfo>>("DataSave\\RequestMusic.bin");
+            DataCouponCountLoad();
 
-            foreach(KeyValuePair<int, UserInfo> pair in users)            
+            foreach (KeyValuePair<int, UserInfo> pair in users)            
                 dictUserInfo.Add(pair.Key, pair.Value);            
 
             for (int i = 0; i < orders.Count; i++)
@@ -595,9 +603,10 @@ namespace SP_Server
             DataUserInfoSave();
             DataRequestSave(true);
             DataRequestSave(false);
+            DataCouponCountSave();
         }
 
-        public void SaveDiscountProb()
+        public void DataDiscountProbSave()
         {
             if (Directory.Exists("Data") == false)
                 Directory.CreateDirectory("Data");
@@ -605,11 +614,11 @@ namespace SP_Server
             BinarySave.Serialize(listDiscountProb, "Data\\DiscountProb.bin");
         }
 
-        public void LoadDiscountProb()
+        public void DataDiscountProbLoad()
         {
             if (File.Exists("Data\\DiscountProb.bin") == false)
             {
-                SaveDiscountProb();
+                DataDiscountProbSave();
                 return;
             }
 
@@ -637,7 +646,49 @@ namespace SP_Server
             listDiscountProb.Clear();
             listDiscountProb = list;
 
-            SaveDiscountProb();
+            DataDiscountProbSave();
+        }
+
+        public void SetCouponCount(int tableNo)
+        {
+            if (dictCouponCount.ContainsKey(tableNo) == false)
+                dictCouponCount.Add(tableNo, 0);
+
+            if (dictCouponCount[tableNo] >= COUPON_MAX_CNT)
+                return;
+
+            dictCouponCount[tableNo]++;
+
+            DataCouponCountSave();
+        }
+
+        public int GetCouponCount(int tableNo)
+        {
+            int cnt = 0;
+            if (dictCouponCount.TryGetValue(tableNo, out cnt) == false)
+                return 0;
+
+            return cnt;
+        }
+
+        public void DataCouponCountSave()
+        {
+            if (Directory.Exists("Data") == false)
+                Directory.CreateDirectory("Data");
+
+            BinarySave.Serialize(dictCouponCount, "Data\\TableCouponCount.bin");
+        }
+
+        public void DataCouponCountLoad()
+        {
+            if (File.Exists("Data\\TableCouponCount.bin") == false)
+            {
+                DataCouponCountSave();
+                return;
+            }
+
+            dictCouponCount.Clear();
+            dictCouponCount = BinarySave.Deserialize<Dictionary<int, int>>("Data\\TableCouponCount.bin");
         }
     }
 }
