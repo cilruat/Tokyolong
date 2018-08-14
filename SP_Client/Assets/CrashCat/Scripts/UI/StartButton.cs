@@ -29,9 +29,5 @@ namespace CrashCat
     #endif
             SceneManager.LoadScene("CrashCatMain");
         }
-
-        public void Rule()
-        {
-        }
     }
 }

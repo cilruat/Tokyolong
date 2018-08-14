@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class ColumnPool : MonoBehaviour 
-{
+{	
 	public GameObject columnPrefab;									//The column game object.
 	public int columnPoolSize = 5;									//How many columns to keep on standby.
 	public float spawnRate = 3f;									//How quickly columns spawn.
@@ -36,11 +36,16 @@ public class ColumnPool : MonoBehaviour
 	//This spawns columns as long as the game is not over.
 	void Update()
 	{
+		if (GameControl.instance && GameControl.instance.isStart == false)
+			return;
+
 		timeSinceLastSpawned += Time.deltaTime;
 
 		if (GameControl.instance.gameOver == false && timeSinceLastSpawned >= spawnRate) 
 		{	
 			timeSinceLastSpawned = 0f;
+
+			spawnRate = Random.Range (1, 2.5f);
 
 			//Set a random y position for the column
 			float spawnYPosition = Random.Range(columnMin, columnMax);

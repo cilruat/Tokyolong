@@ -57,16 +57,17 @@ namespace Emoji2
 
         void GameManager_GameStateChanged(GameState newState, GameState oldState)
         {
-            if (newState == GameState.Playing && oldState == GameState.Prepare)
-            {
-                if (firstClick)
-                {
-                    firstClick = false;
-                    isReadyToPlay = true;
-                    isReadyForNextJump = true;
-                    isJumpingToTheRight = true;
-                }
-            }
+			if (newState == GameState.Playing && oldState == GameState.Prepare) {
+				if (firstClick) {
+					firstClick = false;
+					isReadyToPlay = true;
+					isReadyForNextJump = true;
+					isJumpingToTheRight = true;
+				}
+			} else if (newState == GameState.GameOver) {
+				isReadyToPlay = false;
+				isReadyForNextJump = false;
+			}
         }
 
 

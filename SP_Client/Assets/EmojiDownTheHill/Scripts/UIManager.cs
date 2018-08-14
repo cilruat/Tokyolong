@@ -13,6 +13,9 @@ namespace Emoji2
 {
     public class UIManager : MonoBehaviour
     {
+		const int EASY_FINISH_POINT = 20;
+		const int HARD_FINISH_POINT = 50;
+
         [Header("Object References")]
         public GameManager gameManager;
         public SelectCharacter characterSprite;
@@ -28,6 +31,10 @@ namespace Emoji2
         public GameObject settingsUI;
         public GameObject soundOnBtn;
         public GameObject soundOffBtn;
+		public RawImage imgVictory;
+		public GameObject objVictory;
+		public GameObject objSendServer;
+		public GameObject objGameOver;
 
         [Header("Premium Features Buttons")]
         public GameObject leaderboardBtn;
@@ -36,6 +43,9 @@ namespace Emoji2
         public GameObject restorePurchaseBtn;
 
         Animator scoreAnimator;
+
+		int finishPoint = 0;
+		bool success = false;
 
         void OnEnable()
         {
@@ -52,6 +62,9 @@ namespace Emoji2
         // Use this for initialization
         void Start()
         {
+			finishPoint = Info.GameDiscountWon == (short)EDiscount.e1000won ? EASY_FINISH_POINT : HARD_FINISH_POINT;
+			score.text = "0 / " + finishPoint.ToString ();
+
             scoreAnimator = score.GetComponent<Animator>();
 
             Reset();
@@ -61,13 +74,13 @@ namespace Emoji2
         // Update is called once per frame
         void Update()
         {
-            score.text = ScoreManager.Instance.Score.ToString();
+            /*score.text = ScoreManager.Instance.Score.ToString();
             bestScore.text = ScoreManager.Instance.HighScore.ToString();
 
             if (settingsUI.activeSelf)
             {
                 UpdateMuteButtons();
-            }
+            }*/
         }
 
         void GameManager_GameStateChanged(GameState newState, GameState oldState)
@@ -89,7 +102,27 @@ namespace Emoji2
         void OnScoreUpdated(int newScore)
         {
             scoreAnimator.Play("NewScore");
+			score.text = ScoreManager.Instance.Score.ToString () + " / " + finishPoint.ToString();
+
+			if (ScoreManager.Instance.Score >= finishPoint)
+				StartCoroutine (_SuccessEndGame ());
         }
+
+		IEnumerator _SuccessEndGame()
+		{
+			success = true;
+			GameManager.Instance.GameOver ();
+
+			ShiningGraphic.Start (imgVictory);
+			objVictory.SetActive (true);
+			yield return new WaitForSeconds (4f);
+
+			UITweenAlpha.Start (objVictory, 1f, 0f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
+			UITweenAlpha.Start (objSendServer, 0f, 1f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
+
+			yield return new WaitForSeconds (1f);
+			NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+		}
 
         void Reset()
         {
@@ -140,35 +173,39 @@ namespace Emoji2
         }
 
         public void ShowStartUI()
-        {
-            settingsUI.SetActive(false);
+        {            
+			tapToStart.SetActive(true);
+			title.gameObject.SetActive(true);
 
+			/*settingsUI.SetActive(false);
             header.SetActive(true);
-            title.gameObject.SetActive(true);
-            tapToStart.SetActive(true);
             nextBtn.SetActive(true);
-            prevBtn.SetActive(true);
+            prevBtn.SetActive(true);*/
         }
 
         public void ShowGameUI()
         {
-            header.SetActive(true);
-            title.gameObject.SetActive(false);
-            score.gameObject.SetActive(true);
-            tapToStart.SetActive(false);
+			score.gameObject.SetActive(true);
+			title.gameObject.SetActive(false);
+			tapToStart.SetActive(false);
+
+            /*header.SetActive(true);            
             nextBtn.SetActive(false);
-            prevBtn.SetActive(false);
+            prevBtn.SetActive(false);*/
         }
 
         public void ShowGameOverUI()
         {
-            header.SetActive(true);
+			if (success == false)
+				objGameOver.SetActive (true);
+
+            /*header.SetActive(true);
             title.gameObject.SetActive(false);
             score.gameObject.SetActive(true);
             tapToStart.SetActive(false);
             restartBtn.SetActive(true);
             menuButtons.SetActive(true);
-            settingsUI.SetActive(false);
+            settingsUI.SetActive(false);*/
         }
 
         public void ShowSettingsUI()

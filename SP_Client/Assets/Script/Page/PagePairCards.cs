@@ -20,7 +20,7 @@ public class PagePairCards : MonoBehaviour {
 	public GameObject objBtnStart;
 	public GameObject objTxtReady;
 	public GameObject objTxtGo;
-	public GameObject[] objTimeOut;
+	public GameObject objGameOver;
 	public List<Texture> listCards = new List<Texture> ();
 
 	public bool start = false;
@@ -51,10 +51,8 @@ public class PagePairCards : MonoBehaviour {
 	}
 
 	void _SetCards()
-	{
-		int mode = Random.Range (0, 2);
-		mode = 0;
-		int cnt = mode == 0 ? NORMAL_MODE_CARD_COUNT : HARD_MODE_CARD_COUNT;
+	{		
+		int cnt = NORMAL_MODE_CARD_COUNT; //Info.GameDiscountWon == 0 ? NORMAL_MODE_CARD_COUNT : HARD_MODE_CARD_COUNT;
 
 		int prev_pairNum = 0;
 		int pairNum = 0;
@@ -149,7 +147,7 @@ public class PagePairCards : MonoBehaviour {
 		objHide.SetActive (false);
 
 		start = true;
-		countDown.Set (LIMIT_TIME, () => StartCoroutine (_FailEndGame ()));
+		countDown.Set (LIMIT_TIME, () => _FailEndGame ());
 	}
 
 	List<KeyValuePair<int,int>> listChecks = new List<KeyValuePair<int, int>>();
@@ -241,17 +239,9 @@ public class PagePairCards : MonoBehaviour {
 		NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
 	}
 
-	IEnumerator _FailEndGame()
+	void _FailEndGame()
 	{
-		UITweenAlpha.Start (objTimeOut [0], 0f, 1f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
-		yield return new WaitForSeconds (1.5f);
-
-		UITweenAlpha.Start (objTimeOut [1], 1f, 0f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
-		yield return new WaitForSeconds (.25f);
-
-		UITweenAlpha.Start (objTimeOut [2], 0f, 1f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
-		yield return new WaitForSeconds (1.5f);
-		ReturnHome ();
+		objGameOver.SetActive (true);
 	}
 
 	public void ReturnHome()

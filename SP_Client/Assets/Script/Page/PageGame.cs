@@ -150,7 +150,7 @@ public partial class PageGame : PageBase {
 		int randRange = 0;
 		RectTransform[] rtElts = null;
 
-        if (Info.GameDiscountWon == (int)EDiscount.e1000won)
+        if (Info.GameDiscountWon == (short)EDiscount.e1000won)
         {
             if (curGameType == (int)EGameType.eWinWaiter)
             {

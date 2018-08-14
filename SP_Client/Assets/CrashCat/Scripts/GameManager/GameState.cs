@@ -18,7 +18,10 @@ namespace CrashCat
     public class GameState : AState
     {
     	static int s_DeadHash = Animator.StringToHash("Dead");
-        const int LIMIT_TIME = 30;
+
+        const int EASY_LIMIT_TIME = 20;
+		const int HARD_LIMIT_TIME = 40;
+		int finishLimitTime = 0;
 
         public Canvas canvas;
         public TrackManager trackManager;
@@ -49,6 +52,9 @@ namespace CrashCat
         public Text txtTime;
         public Image imgTime;
         public CountDown limitTime;
+		public RawImage imgVictory;
+		public GameObject objVictory;
+		public GameObject objSendServer;
 
         [Header("Prefabs")]
         public GameObject PowerupIconPrefab;
@@ -105,7 +111,8 @@ namespace CrashCat
 
         public void StartGame()
         {
-            txtTime.text = LIMIT_TIME.ToString();
+			finishLimitTime = Info.GameDiscountWon == (short)EDiscount.e1000won ? EASY_LIMIT_TIME : HARD_LIMIT_TIME;
+			txtTime.text = finishLimitTime.ToString();
 
             canvas.gameObject.SetActive(true);
             pauseMenu.gameObject.SetActive(false);
@@ -129,8 +136,29 @@ namespace CrashCat
 
         public void RealStart()
         {
-            limitTime.Set(LIMIT_TIME, () => StartCoroutine(WaitForGameOver()));
-        }        
+			limitTime.Set (finishLimitTime, () => StartCoroutine (_SuccessEndGame ()));
+        }
+
+		IEnumerator _SuccessEndGame ()
+		{
+			// show sendserver obj
+			m_Finished = true;
+			trackManager.StopMove();
+			limitTime.Stop();
+
+			// Reseting the global blinking value. Can happen if game unexpectly exited while still blinking
+			Shader.SetGlobalFloat("_BlinkingValue", 0.0f);
+
+			ShiningGraphic.Start (imgVictory);
+			objVictory.SetActive (true);
+			yield return new WaitForSeconds (4f);
+
+			UITweenAlpha.Start (objVictory, 1f, 0f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
+			UITweenAlpha.Start (objSendServer, 0f, 1f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
+
+			yield return new WaitForSeconds (1f);
+			NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+		}
 
         public override string GetName()
         {
@@ -158,7 +186,7 @@ namespace CrashCat
                 else if(!m_AdsInitialised)
                     adsForLifeButton.SetActive(false);
     #else
-                adsForLifeButton.SetActive(false); //Ads is disabled
+                //adsForLifeButton.SetActive(false); //Ads is disabled
     #endif
 
                 return;
@@ -310,7 +338,7 @@ namespace CrashCat
     			m_CountdownRectTransform.localScale = Vector3.zero;
 
                 float elapsed = limitTime.GetElapsed();
-                float fill = (LIMIT_TIME - elapsed) / (float)LIMIT_TIME;
+				float fill = (finishLimitTime - elapsed) / (float)finishLimitTime;
                 imgTime.fillAmount = fill;
     		}
 
@@ -335,7 +363,7 @@ namespace CrashCat
             // Reseting the global blinking value. Can happen if game unexpectly exited while still blinking
             Shader.SetGlobalFloat("_BlinkingValue", 0.0f);
 
-            yield return new WaitForSeconds(2.0f);
+            yield return new WaitForSeconds(1.0f);
             if (currentModifier.OnRunEnd(this))
             {
                 if (trackManager.isRerun)
@@ -360,13 +388,13 @@ namespace CrashCat
 
         public void OpenGameOverPopup()
         {
-            premiumForLifeButton.interactable = PlayerData.instance.premium >= 3;
+            //premiumForLifeButton.interactable = PlayerData.instance.premium >= 3;
 
-            premiumCurrencyOwned.text = PlayerData.instance.premium.ToString();
+            //premiumCurrencyOwned.text = PlayerData.instance.premium.ToString();
 
-            ClearPowerup();
+            //ClearPowerup();
 
-            gameOverPopup.SetActive(true);           
+            gameOverPopup.SetActive(true);
         }
 
         public void GameOver()

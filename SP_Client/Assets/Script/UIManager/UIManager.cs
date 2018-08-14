@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public enum eUI
@@ -31,6 +32,12 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 
     public UIAlarm uiAlarm;
 
+	public Canvas canvas;
+	public GameObject objClickEffA;
+	public GameObject objClickEffB;
+
+	bool isMouseClickEff = false;
+
 	eUI curUI = eUI.eNone;
 	Dictionary<eUI, GameObject> dicObject = new Dictionary<eUI, GameObject> ();
 
@@ -54,6 +61,9 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
         Application.targetFrameRate = 60;
 
         Info.RunInGameScene = Info.isCheckScene("Game");
+
+		if (PageBase.Instance != null )
+			isMouseClickEff = true;
 
         DontDestroyOnLoad(this);
 	}
@@ -169,10 +179,14 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
             Hide_All();
         }
     }
+		
 
     bool waiting = false;
     const float WAIT_DISCONNECT = 10f;
     float elapsedTime = 0f;
+
+	bool showClickA = true;
+
     void Update()
     {
         if (waiting)
@@ -189,5 +203,21 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 
         if (Input.GetKeyDown(KeyCode.Keypad3))
             UIManager.Instance.ShowLog();
+
+		if (Input.GetKeyDown (KeyCode.P))
+			showClickA = !showClickA;
+
+		if (Input.GetMouseButtonDown (0)) {
+			if (isMouseClickEff == false)
+				return;
+
+			GameObject showEff = showClickA ? objClickEffA : objClickEffB;
+			GameObject objEff = Instantiate (showEff, PageBase.Instance.transform) as GameObject;
+			objEff.SetActive (true);
+
+			Vector3 mousePos = Input.mousePosition;
+			Vector3 pos = new Vector3 (mousePos.x - 400f, mousePos.y -225f, -100f);
+			objEff.transform.localPosition = pos;
+		}
     }
 }

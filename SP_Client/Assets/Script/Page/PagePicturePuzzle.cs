@@ -60,7 +60,7 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 
     const int EASY_MODE = 3;
     const int HARD_MODE = 4;
-    const int LIMIT_TIME = 60;
+    const int LIMIT_TIME = 20;
 
 	public Text txtCountDown;
 	public CountDown countDown;
@@ -76,7 +76,7 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 	public GameObject objBtnStart;
 	public GameObject objTxtReady;
 	public GameObject objTxtGo;
-	public GameObject[] objTimeOut;
+	public GameObject objGameOver;
 
 	bool start = false;
 	bool end = false;
@@ -117,7 +117,7 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 				Destroy (child.gameObject);
 		}
 
-		mode = Info.GameDiscountWon == 0 ? EASY_MODE : HARD_MODE;
+		mode = EASY_MODE; //Info.GameDiscountWon == 0 ? EASY_MODE : HARD_MODE;
         array = new int[mode, mode];
 
 		float cellSize = img.rectTransform.rect.height / (float)mode;
@@ -184,7 +184,7 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 		grid.enabled = false;
 
 		start = true;
-		countDown.Set (LIMIT_TIME, () => StartCoroutine (_FailEndGame ()));
+		countDown.Set (LIMIT_TIME, () => _FailEndGame ());
 	}
 
 	void _ClopClip(Texture tex)
@@ -356,17 +356,9 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 		NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
 	}
 
-	IEnumerator _FailEndGame()
+	void _FailEndGame()
 	{
-		UITweenAlpha.Start (objTimeOut [0], 0f, 1f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
-		yield return new WaitForSeconds (1.5f);
-
-		UITweenAlpha.Start (objTimeOut [1], 1f, 0f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
-		yield return new WaitForSeconds (.25f);
-
-		UITweenAlpha.Start (objTimeOut [2], 0f, 1f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
-		yield return new WaitForSeconds (1.5f);
-		ReturnHome ();
+		objGameOver.SetActive (true);
 	}
 
 	public void ReturnHome()

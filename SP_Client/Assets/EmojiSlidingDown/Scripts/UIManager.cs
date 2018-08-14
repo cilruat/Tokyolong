@@ -13,6 +13,9 @@ namespace Emoji
 {
     public class UIManager : MonoBehaviour
     {
+		const int EASY_FINISH_POINT = 20;
+		const int HARD_FINISH_POINT = 50;
+
         [Header("Object References")]
         public GameObject header;
         public GameObject title;
@@ -28,6 +31,10 @@ namespace Emoji
         public GameObject soundOffBtn;
         public GameObject musicOnBtn;
         public GameObject musicOffBtn;
+		public RawImage imgVictory;
+		public GameObject objVictory;
+		public GameObject objSendServer;
+		public GameObject objGameOver;
 
         [Header("Premium Features Buttons")]
         public GameObject watchRewardedAdBtn;
@@ -43,6 +50,9 @@ namespace Emoji
         Animator scoreAnimator;
         bool isWatchAdsForCoinBtnActive;
 
+		int finishPoint = 0;
+		bool success = false;
+
         void OnEnable()
         {
             GameManager.GameStateChanged += GameManager_GameStateChanged;
@@ -53,11 +63,14 @@ namespace Emoji
         {
             GameManager.GameStateChanged -= GameManager_GameStateChanged;
             ScoreManager.ScoreUpdated -= OnScoreUpdated;
-        }
+        }			
 
         // Use this for initialization
         void Start()
         {
+			finishPoint = Info.GameDiscountWon == (short)EDiscount.e1000won ? EASY_FINISH_POINT : HARD_FINISH_POINT;
+			score.text = "0 / " + finishPoint.ToString ();
+
             scoreAnimator = score.GetComponent<Animator>();
             Reset();
             ShowStartUI();
@@ -66,14 +79,14 @@ namespace Emoji
         // Update is called once per frame
         void Update()
         {
-            score.text = ScoreManager.Instance.Score.ToString();
+			/*score.text = ScoreManager.Instance.Score.ToString ();
             bestScore.text = ScoreManager.Instance.HighScore.ToString();
             coinText.text = CoinManager.Instance.Coins.ToString();
 
             if (settingsUI.activeSelf)
             {
                 UpdateMuteButtons();
-            }
+            }*/
         }
 
         void GameManager_GameStateChanged(GameState newState, GameState oldState)
@@ -95,7 +108,27 @@ namespace Emoji
         void OnScoreUpdated(int newScore)
         {
             scoreAnimator.Play("NewScore");
+			score.text = ScoreManager.Instance.Score.ToString () + " / " + finishPoint.ToString();
+
+			if (ScoreManager.Instance.Score >= finishPoint)
+				StartCoroutine (_SuccessEndGame ());
         }
+
+		IEnumerator _SuccessEndGame()
+		{
+			success = true;
+			GameManager.Instance.GameOver ();
+
+			ShiningGraphic.Start (imgVictory);
+			objVictory.SetActive (true);
+			yield return new WaitForSeconds (4f);
+
+			UITweenAlpha.Start (objVictory, 1f, 0f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
+			UITweenAlpha.Start (objSendServer, 0f, 1f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
+
+			yield return new WaitForSeconds (1f);
+			NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+		}
 
         void Reset()
         {
@@ -140,25 +173,25 @@ namespace Emoji
 
         public void ShowStartUI()
         {
-            header.SetActive(true);
+            //header.SetActive(true);
             title.SetActive(true);
             tapToStart.SetActive(true);
 
             // Display character selection button
-            Character selectedCharacter = CharacterManager.Instance.characters[CharacterManager.Instance.CurrentCharacterIndex];
+            /*Character selectedCharacter = CharacterManager.Instance.characters[CharacterManager.Instance.CurrentCharacterIndex];
             characterSelectBtn.transform.Find("Image").GetComponent<Image>().sprite = selectedCharacter.sprite;
-            characterSelectBtn.SetActive(true);
+            characterSelectBtn.SetActive(true);*/
 
             // If first launch: show "WatchForCoins" if the conditions are met
             if (GameManager.GameCount == 0)
             {
-                ShowWatchForCoinsBtn();
+                //ShowWatchForCoinsBtn();
             }
         }
 
         public void ShowGameUI()
         {
-            header.SetActive(true);
+            //header.SetActive(true);
             title.SetActive(false);
             score.gameObject.SetActive(true);
             tapToStart.SetActive(false);
@@ -169,7 +202,10 @@ namespace Emoji
 
         public void ShowGameOverUI()
         {
-            header.SetActive(true);
+			if (success == false)
+				objGameOver.SetActive (true);
+
+            /*header.SetActive(true);
             title.SetActive(false);
             score.gameObject.SetActive(true);
             tapToStart.SetActive(false);
@@ -179,7 +215,7 @@ namespace Emoji
             settingsUI.SetActive(false);
 
             // Show "WatchForCoins" and "DailyReward" buttons if the conditions are met
-            ShowWatchForCoinsBtn();
+            ShowWatchForCoinsBtn();*/
         }
 
         void ShowWatchForCoinsBtn()
