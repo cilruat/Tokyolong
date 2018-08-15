@@ -90,13 +90,20 @@ namespace Emoji2
         void Update()
         {
 
-            if (GameManager.Instance.GameState == GameState.Playing && Input.GetMouseButtonDown(0))
-            {
+			if (GameManager.Instance.GameState == GameState.Playing)				
+            {				
                 // Change direction
                 if (!firstClick)
                 {
-                    direction *= -1;
-                    isJumpingToTheRight = !isJumpingToTheRight;
+					if (Input.GetKeyDown (KeyCode.LeftArrow)) {
+						direction = -1;
+						isJumpingToTheRight = false;
+					}
+
+					if (Input.GetKeyDown (KeyCode.RightArrow)) {
+						direction = 1;
+						isJumpingToTheRight = true;
+					}
                 }
             }
 

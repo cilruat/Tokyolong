@@ -7,11 +7,13 @@ namespace Emoji
     {
         public void Update()
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                if (GameManager.Instance.GameState == GameState.Playing)
-                    GameManager.Instance.rotationDirection = GameManager.Instance.rotationDirection == 0 ? GameManager.Instance.firstRotationDirection : -GameManager.Instance.rotationDirection;
-            }
+			if (GameManager.Instance.GameState != GameState.Playing)
+				return;
+
+			if (Input.GetKeyDown(KeyCode.LeftArrow))
+				GameManager.Instance.rotationDirection = 1;
+			if (Input.GetKeyDown (KeyCode.RightArrow))
+				GameManager.Instance.rotationDirection = -1;
         }
 
         public void OnEnable()

@@ -27,7 +27,7 @@ public class Bird : MonoBehaviour
 		if (isDead == false && GameControl.instance.gameOver == false)
 		{
 			//Look for input to trigger a "flap".
-			if (Input.GetMouseButtonDown(0)) 
+			if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.UpArrow)) 
 			{
 				//...tell the animator about it and then...
 				anim.SetTrigger("Flap");

@@ -34,6 +34,7 @@ namespace CrashCat
     	public MultiplierModifier modifyMultiply;
 
         public GameState gameState;
+		public GameObject objBlack;
 
     	[Header("Character & Movements")]
     	public CharacterInputController characterController;
@@ -264,6 +265,9 @@ namespace CrashCat
     			SpawnNewSegment();
     		}
 
+			if (objBlack.activeSelf)
+				objBlack.SetActive (false);
+
     		if (parallaxRoot != null && currentTheme.cloudPrefabs.Length > 0)
     		{
     			while (parallaxRoot.childCount < currentTheme.cloudNumber)
@@ -472,7 +476,11 @@ namespace CrashCat
     		{
     			for (int i = 0; i < segment.obstaclePositions.Length; ++i)
     			{
-    				segment.possibleObstacles[Random.Range(0, segment.possibleObstacles.Length)].Spawn(segment, segment.obstaclePositions[i]);
+					int randIdx = Random.Range (0, segment.possibleObstacles.Length);
+					if (segment.possibleObstacles [randIdx].name.IndexOf ("ObstacleHighBarrier") > -1)
+						continue;
+					
+					segment.possibleObstacles[randIdx].Spawn(segment, segment.obstaclePositions[i]);
     			}
     		}
 

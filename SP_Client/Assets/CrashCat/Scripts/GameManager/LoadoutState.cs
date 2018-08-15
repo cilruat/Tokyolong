@@ -69,7 +69,7 @@ namespace CrashCat
 
         void Start()
         {
-            StartGame();
+            
         }
 
         public override void Enter(AState from)
@@ -228,6 +228,8 @@ namespace CrashCat
 
     		skyMeshFilter.sharedMesh = t.skyMesh;
             UIGroundFilter.sharedMesh = t.UIGroundMesh;
+
+			StartGame();
     	}
 
         public IEnumerator PopulateCharacters()
