@@ -113,6 +113,9 @@ public class PageOrder : PageBase {
 
 	public void OnClickMenu(int idx)
 	{
+        if (param == idx)
+            return;
+
         param = idx;
 
         if (showRoutine != null)
@@ -125,6 +128,7 @@ public class PageOrder : PageBase {
     {
         OnNext ();
         OnTabChange (idx);
+        param = -1;
     }
 
 	public void OnClickDetailMenu(int idx)
