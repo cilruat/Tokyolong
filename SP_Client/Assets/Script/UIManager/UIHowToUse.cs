@@ -40,6 +40,7 @@ public class UIHowToUse : MonoBehaviour
         }
 
         _anim = null;
+        skip = true;
 	}
 
     public void OnClose()
@@ -49,6 +50,9 @@ public class UIHowToUse : MonoBehaviour
 
     public void TweenSkip()
     {
+        if (skip)
+            return;
+
         skip = true;
 
         if (_anim != null)

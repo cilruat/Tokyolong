@@ -10,7 +10,7 @@ public class ChatElt : MonoBehaviour {
     {
         public RectTransform rtPerson;
         public RawImage imgCustomer;
-        public Text textCount;
+//        public Text textCount;
         public Text textTableNo;
         public Text textTime;
         public RectTransform rtChat;
@@ -38,10 +38,9 @@ public class ChatElt : MonoBehaviour {
 
         ChatPerson current = chatPersons[chat.person];
         current.imgCustomer.texture = imgCustomer[info.customerType];
-        current.imgCustomer.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, info.customerType != 2 ? 35f : 70f);
 
         current.textTableNo.text = "No. <size='20'>" + info.tableNo.ToString() + "</size>";
-        current.textCount.text = info.peopleCnt.ToString() + "명";
+//        current.textCount.text = info.peopleCnt.ToString() + "명";
 
         string[] times = chat.time.Split('/');
         string sendTT = times[0] == "AM" ? "오전" : "오후";

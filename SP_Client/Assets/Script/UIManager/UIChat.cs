@@ -41,7 +41,10 @@ public class UIChat : MonoBehaviour
     public void SelectTable(byte tableNo)
     {
         if (dictChatTable.ContainsKey(selectTableNo))
+        {
             dictChatTable[selectTableNo].OnSelected(false);
+            dictChatTable[selectTableNo].OnNewActive(false);
+        }
 
         if (chatBoard.gameObject.activeSelf == false)
             chatBoard.gameObject.SetActive(true);
@@ -51,6 +54,7 @@ public class UIChat : MonoBehaviour
 
         selectTableNo = tableNo;
         dictChatTable[selectTableNo].OnSelected(true);
+        dictChatTable[selectTableNo].OnNewActive(false);
         chatBoard.SetChat(Info.GetUserChat(tableNo));
     }
 

@@ -35,9 +35,6 @@ public class ChatTableElt : MonoBehaviour
 
     public void OnNewActive(bool isActive)
     {
-        if (objNew.gameObject.activeSelf == isActive)
-            return;
-
         objNew.gameObject.SetActive(isActive);
     }
 }
