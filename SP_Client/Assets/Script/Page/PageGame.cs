@@ -303,7 +303,7 @@ public partial class PageGame : PageBase {
                     case ETabletGame.FlappyBird:    sceneName = "FlappyBirdMain";   break;
                     case ETabletGame.DownHill:      sceneName = "Emoji2Main";       break;
                     case ETabletGame.SlidingDown:   sceneName = "EmojiMain";        break;
-                    case ETabletGame.AvoidObject:   sceneName = "AvoidMain";     break;
+                    //case ETabletGame.AvoidObject:   sceneName = "AvoidMain";     break;
                 }
             }
 

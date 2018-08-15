@@ -145,7 +145,7 @@ public enum ETabletGame
     FlappyBird,
     DownHill,
     SlidingDown,
-    AvoidObject,
+    //AvoidObject,
 }
 
 public partial class Info : MonoBehaviour {
