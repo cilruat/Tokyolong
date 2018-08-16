@@ -92,7 +92,7 @@ namespace SP_Server
 
             service = new CNetworkService(true);
             service.session_created_callback += on_session_created;
-            service.initialize(1000, 1024);
+            service.initialize(1000, 8192);
             service.listen("0.0.0.0", 7979, 100);            
         }        
 

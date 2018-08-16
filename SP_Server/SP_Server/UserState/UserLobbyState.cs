@@ -292,7 +292,6 @@ namespace SP_Server.UserState
 
                         send_msg = CPacket.create((short)PROTOCOL.REQUEST_MUSIC_LIST_ACK);
                         send_msg.push(listRequestMusicJson.ToString());
-
                         break;
                     case PROTOCOL.REQUEST_MUSIC_REQ:
 
@@ -524,6 +523,8 @@ namespace SP_Server.UserState
                         new object[] { e.ToString(),
                         stackFrame.GetMethod().Name, stackFrame.GetFileName(),
                         stackFrame.GetFileLineNumber().ToString() });
+
+                Console.WriteLine("Error : " + e.ToString());
             }
 
             //owner.db.Close();

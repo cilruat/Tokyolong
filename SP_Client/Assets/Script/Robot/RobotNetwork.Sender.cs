@@ -51,9 +51,21 @@ public partial class RobotNetwork : MonoBehaviour
 
     public void Order_REQ()
 	{
-		CPacket msg = CPacket.create((short)PROTOCOL.ORDER_REQ);
-		msg.push ((byte)idRobot);
-		msg.push ("[{\\\"menu\\\":3,\\\"cnt\\\":1},{\\\"menu\\\":6,\\\"cnt\\\":1}]");
+        List<SendMenu> list = new List<SendMenu>();
+        for (int i = 0; i < 10; i++)
+        {
+            int menu = Mathf.Max(1, i+1);
+            int cnt = 1;
+            SendMenu send = new SendMenu(menu, cnt);
+            list.Add(send);
+        }
+
+        LitJson.JsonData json = LitJson.JsonMapper.ToJson(list);
+
+        CPacket msg = CPacket.create((short)PROTOCOL.ORDER_REQ);
+        msg.push ((byte)idRobot);
+        msg.push(json.ToString());
+        msg.push(10);
 
 		send (msg);
 	}
@@ -93,20 +105,15 @@ public partial class RobotNetwork : MonoBehaviour
     public void Request_Music_REQ()
     {
         CPacket msg = CPacket.create((short)PROTOCOL.REQUEST_MUSIC_REQ);
-        msg.push(Info.TableNum);
-        msg.push("눈의꽃");
-        msg.push("박효신");
+        msg.push((byte)idRobot);
+        msg.push("눈의꽃_" + idRobot.ToString());
+        msg.push("박효신_" + idRobot.ToString());
 
         send(msg);
     }
 		   
 	public void SlotStart_REQ()
 	{
-		if (Info.listGamePlayCnt_Robot [idRobot] <= 0) {
-			waiting = false;
-			return;
-		}
-
 		CPacket msg = CPacket.create((short)PROTOCOL.SLOT_START_REQ);
 		send (msg);
 	}
@@ -147,4 +154,43 @@ public partial class RobotNetwork : MonoBehaviour
 
 		send (msg);
 	}		
+
+    public void TableDiscountInput_REQ()
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.TABLE_DISCOUNT_INPUT_REQ);
+        msg.push ((byte)idRobot);
+        msg.push (1000);
+
+        send(msg);
+    }
+
+    public void GetDiscountProb_REQ()
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.GET_RANDOM_DISCOUNT_PROB_REQ);
+        send(msg);
+    }
+
+    public void SetDiscountProb_REQ()
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.SET_RANDOM_DISCOUNT_PROB_REQ);
+        List<float> list = new List<float>();
+        list.Add(.25f);
+        list.Add(.25f);
+        list.Add(.25f);
+        list.Add(.25f);
+
+        msg.push(list[0]);
+        msg.push(list[1]);
+        msg.push(list[2]);
+        msg.push(list[3]);
+        send(msg);
+    }
+
+    public void Coupon_REQ()
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.COUPON_REQ);
+        msg.push((byte)idRobot);
+
+        send(msg);
+    }
 }

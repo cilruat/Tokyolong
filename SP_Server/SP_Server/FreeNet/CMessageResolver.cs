@@ -25,7 +25,7 @@ namespace FreeNet
 		int message_size;
 
 		// 진행중인 버퍼.
-		byte[] message_buffer = new byte[1024];
+		byte[] message_buffer = new byte[8192];
 
 		// 현재 진행중인 버퍼의 인덱스를 가리키는 변수.
 		// 패킷 하나를 완성한 뒤에는 0으로 초기화 시켜줘야 한다.

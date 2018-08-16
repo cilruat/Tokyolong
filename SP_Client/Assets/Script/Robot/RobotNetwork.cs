@@ -21,7 +21,8 @@ public partial class RobotNetwork : MonoBehaviour
 	public void Init(int id)
 	{
 		idRobot = id;
-		Info.listGamePlayCnt_Robot.Add (0);	
+        Info.listGameCnt_Robot.Add (0);   
+        Info.listOrderCnt_Robot.Add (0);	
 	}
 
 	void Awake()
