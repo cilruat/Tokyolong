@@ -114,6 +114,10 @@ public partial class RobotNetwork : MonoBehaviour {
 		case BH.SlotStart:			SlotStart_REQ ();			break;
 		case BH.ReportOfflineGame:	ReportOfflineGame_REQ ();	break;
 		case BH.UnfinishGameList:	UnfinishGamelist_REQ ();	break;
+        case BH.TableDiscountInput:     TableDiscountInput_REQ ();  break;
+        case BH.GetRandomDiscountProb:  SetDiscountProb_REQ ();     break;
+        case BH.SetRandomDiscountProb:  UnfinishGamelist_REQ ();    break;
+        case BH.Coupon:                 Coupon_REQ ();              break;
 		default:
 			break;
 		}
@@ -134,7 +138,10 @@ public partial class RobotNetwork : MonoBehaviour {
 		SlotStart,
 		ReportOfflineGame,
 		UnfinishGameList,
-
+        TableDiscountInput,
+        GetRandomDiscountProb,
+        SetRandomDiscountProb,
+        Coupon,
 		Max,
 	}
 }

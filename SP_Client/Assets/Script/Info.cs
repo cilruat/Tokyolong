@@ -45,7 +45,8 @@ public partial class Info : MonoBehaviour {
 	}
 
 	public static int idRobot = -1;
-	public static List<byte> listGamePlayCnt_Robot = new List<byte>();
+    public static List<int> listGameCnt_Robot = new List<int>();
+    public static List<int> listOrderCnt_Robot = new List<int>();
 
     public static void UpdateCouponRemainTime()
     {

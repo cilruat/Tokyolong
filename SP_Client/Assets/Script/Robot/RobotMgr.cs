@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class RobotMgr : MonoBehaviour {
 
 	static public int idStart = 0;
-	static public int numRobots = 20;
+	static public int numRobots = 50;
 
 	public Text infomation;
 	public Text injected;
