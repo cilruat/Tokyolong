@@ -35,6 +35,8 @@ namespace Emoji
 		public GameObject objVictory;
 		public GameObject objSendServer;
 		public GameObject objGameOver;
+		public GameObject objReady;
+		public GameObject objGo;
 
         [Header("Premium Features Buttons")]
         public GameObject watchRewardedAdBtn;
@@ -135,7 +137,7 @@ namespace Emoji
             header.SetActive(false);
             title.SetActive(false);
             score.gameObject.SetActive(false);
-            tapToStart.SetActive(false);
+            //tapToStart.SetActive(false);
             characterSelectBtn.SetActive(false);
             menuButtons.SetActive(false);
 
@@ -158,8 +160,29 @@ namespace Emoji
 
         public void StartGame()
         {
-            GameManager.Instance.StartGame();
+			StartCoroutine (_StartGame ());
         }
+
+		IEnumerator _StartGame()
+		{
+			UITweenAlpha.Start (tapToStart, 1f, 0f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2).DisableOnFinish ());
+			yield return new WaitForSeconds (.5f);
+
+			UITweenAlpha.Start(objReady, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+
+			yield return new WaitForSeconds (1f);
+			UITweenAlpha.Start(objReady, 1f, 0f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+
+			yield return new WaitForSeconds (.25f);
+			UITweenAlpha.Start(objGo, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+
+			yield return new WaitForSeconds (1f);
+			UITweenAlpha.Start(objGo, 1f, 0f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+
+			yield return new WaitForSeconds (.3f);
+
+			GameManager.Instance.StartGame();
+		}
 
         public void EndGame()
         {
@@ -174,7 +197,7 @@ namespace Emoji
         public void ShowStartUI()
         {
             //header.SetActive(true);
-            title.SetActive(true);
+            //title.SetActive(true);
             tapToStart.SetActive(true);
 
             // Display character selection button
@@ -194,10 +217,10 @@ namespace Emoji
             //header.SetActive(true);
             title.SetActive(false);
             score.gameObject.SetActive(true);
-            tapToStart.SetActive(false);
+            /*tapToStart.SetActive(false);
             characterSelectBtn.SetActive(false);
             menuButtons.SetActive(false);
-            watchRewardedAdBtn.SetActive(false);
+            watchRewardedAdBtn.SetActive(false);*/
         }
 
         public void ShowGameOverUI()

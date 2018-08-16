@@ -20,7 +20,6 @@ public class GameControl : MonoBehaviour
 	public Bird bird;
 	public bool isStart = false;
 
-	public GameObject objTitle;
 	public GameObject objStart;
 	public Text txtTime;
 	public Image imgTime;
@@ -29,6 +28,8 @@ public class GameControl : MonoBehaviour
 	public GameObject objVictory;
 	public GameObject objSendServer;
 	public GameObject objGameOver;
+	public GameObject objReady;
+	public GameObject objGo;
 
 	void Awake()
 	{
@@ -59,15 +60,33 @@ public class GameControl : MonoBehaviour
 			//...reload the current scene.
 			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		}*/
-	}
+	}		
 
 	public void OnStart()
 	{
+		StartCoroutine (_Start ());
+	}
+
+	IEnumerator _Start()
+	{		
+		UITweenAlpha.Start (objStart, 1f, 0f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2).DisableOnFinish ());
+		yield return new WaitForSeconds (.5f);
+
+		UITweenAlpha.Start(objReady, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+
+		yield return new WaitForSeconds (1f);
+		UITweenAlpha.Start(objReady, 1f, 0f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+
+		yield return new WaitForSeconds (.25f);
+		UITweenAlpha.Start(objGo, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+
+		yield return new WaitForSeconds (1f);
+		UITweenAlpha.Start(objGo, 1f, 0f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+
+		yield return new WaitForSeconds (.3f);
+
 		isStart = true;
 		bird.SetGravity (.66f);
-
-		objTitle.SetActive (false);
-		objStart.SetActive (false);
 
 		finishLimitTime = Info.GameDiscountWon == (short)EDiscount.e1000won ? EASY_LIMIT_TIME : HARD_LIMIT_TIME;
 		txtTime.text = finishLimitTime.ToString ();

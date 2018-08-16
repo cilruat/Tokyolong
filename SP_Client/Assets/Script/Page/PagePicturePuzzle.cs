@@ -85,13 +85,10 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
     int[,] array;
 	List<Clip> listClip = new List<Clip>();
 
-	IEnumerator Start()
+	void Start()
 	{		
 		_Init();
 		txtCountDown.text = LIMIT_TIME.ToString ();
-
-		yield return new WaitForSeconds(.5f);
-		UITweenAlpha.Start(objBoard, 0f, 1f, TWParam.New(1f).Curve(TWCurve.CurveLevel2));
 	}		
 
 	void Update()
@@ -155,7 +152,7 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 	{
 		UITweenAlpha.Start(objBtnStart, 1f, 0f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
 		UITweenAlpha.Start(grid.gameObject, 1f, 0f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
-		yield return new WaitForSeconds (.2f);
+		yield return new WaitForSeconds (.5f);
 
 		UITweenAlpha.Start(objTxtReady, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
 		yield return new WaitForSeconds (.5f);

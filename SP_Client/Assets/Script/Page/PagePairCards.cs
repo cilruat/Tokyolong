@@ -32,13 +32,7 @@ public class PagePairCards : MonoBehaviour {
 	{
 		txtCountDown.text = LIMIT_TIME.ToString ();
 		_SetCards ();
-	}
-
-	IEnumerator Start()
-	{
-		yield return new WaitForSeconds (.5f);
-		UITweenAlpha.Start(objBoard, 0f, 1f, TWParam.New(1f).Curve(TWCurve.CurveLevel2));
-	}
+	}		
 
 	void Update()
 	{
@@ -116,6 +110,7 @@ public class PagePairCards : MonoBehaviour {
 	IEnumerator _ReadyGo()
 	{
 		UITweenAlpha.Start(objBtnStart, 1f, 0f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+		yield return new WaitForSeconds (.7f);
 
 		float sec = .5f / (float)(listElt.Count);
 		for (int i = 0; i < listElt.Count; i++) {

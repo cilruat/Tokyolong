@@ -17,7 +17,7 @@ public partial class PageGame : PageBase {
 	public CanvasGroup[] cgBoards;
 	public Text[] txtPlayCnt;
 	public GameObject[] objStartDesc;
-	public GameObject objCallMessage;
+	public GameObject[] objCallMessage;
 	public GameObject objGameLoading;
 	public RectTransform[] rtDiscount;
 	public RectTransform[] rtGameTypes;
@@ -267,7 +267,7 @@ public partial class PageGame : PageBase {
 		int countIdx = 0;
 		if (curGameType == (int)EGameType.eWinWaiter) {
 			countIdx = 1;
-			objCallMessage.SetActive (true);
+			UITweenAlpha.Start (objCallMessage[curGame], 0f, 1f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
 			_FinishShowPopup ();
 		} else {
 			objGameLoading.SetActive (true);
@@ -314,9 +314,9 @@ public partial class PageGame : PageBase {
 		curGame = -1;
 	}
 
-	public void OnCloseCallMsg()
+	public void OnCloseCallMsg(int idx)
 	{
-		objCallMessage.SetActive (false);
+		UITweenAlpha.Start (objCallMessage [idx], 1f, 0f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2).DisableOnFinish ());
 	}
 
 	public EGameType SelectGameType() { return (EGameType)curGameType; }

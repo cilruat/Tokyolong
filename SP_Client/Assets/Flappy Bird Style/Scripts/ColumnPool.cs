@@ -45,7 +45,7 @@ public class ColumnPool : MonoBehaviour
 		{	
 			timeSinceLastSpawned = 0f;
 
-			spawnRate = Random.Range (1, 2.5f);
+			spawnRate = Random.Range (1.25f, 2.25f);
 
 			//Set a random y position for the column
 			float spawnYPosition = Random.Range(columnMin, columnMax);
