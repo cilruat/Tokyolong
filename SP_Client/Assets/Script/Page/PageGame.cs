@@ -25,7 +25,7 @@ public partial class PageGame : PageBase {
 	public RectTransform[] rtPuzzleGame;
 	public RectTransform[] rtTabletGame;
 	public List<SlotMachineElt> listSlotMachine = new List<SlotMachineElt>();
-	public CountDown[] countDown;
+	public CountDown countDownGameLoading;
 
 	bool isStopEnable = false;
 	int curGameType = -1;
@@ -81,9 +81,13 @@ public partial class PageGame : PageBase {
 	
 	int _GetGameTypeIdx(float percent)
 	{
-		if (percent < .27f)			return 1;		
-		else if (percent > .95f)	return 0;
-		else						return 2;
+		if (Info.RunInGameScene) {
+			return 0;
+		} else {
+			if (percent < .27f)			return 1;		
+			else if (percent > .95f)	return 0;
+			else						return 2;
+		}
 	}
 
 	RectTransform[] _AllRtElts()
@@ -127,9 +131,9 @@ public partial class PageGame : PageBase {
         {
             float rate = UnityEngine.Random.Range(0f, 1f);
             short discountType = 0;
-            if (rate > .25f && rate <= .5f)          discountType = 1;
+            /*if (rate > .25f && rate <= .5f)          discountType = 1;
             else if (rate > .5f && rate <= .75f)     discountType = 2;
-            else if (rate > .75f)                    discountType = 3;
+            else if (rate > .75f)                    discountType = 3;*/
             FinishStart(discountType);
         }
         else
@@ -261,15 +265,14 @@ public partial class PageGame : PageBase {
 	public void ShowPopup()
 	{
 		int countIdx = 0;
-        if (curGameType == (int)EGameType.ePuzzleGame || curGameType == (int)EGameType.eTabletGame)
-            objGameLoading.SetActive(true);
-		else {
+		if (curGameType == (int)EGameType.eWinWaiter) {
 			countIdx = 1;
 			objCallMessage.SetActive (true);
-			NetworkManager.Instance.ReportOfflineGame_REQ ((byte)curGameType, (byte)curGame, (byte)Info.GameDiscountWon);
+			_FinishShowPopup ();
+		} else {
+			objGameLoading.SetActive (true);
+			countDownGameLoading.Set (3, () => _FinishShowPopup ());
 		}
-		
-		countDown[countIdx].Set (3, () => _FinishShowPopup ());
 	}
 
 	void _FinishShowPopup()
@@ -280,12 +283,9 @@ public partial class PageGame : PageBase {
                 objStartDesc [i].SetActive (true);
 
             objGameLoading.SetActive (false);
-            objCallMessage.SetActive (false);
-
             _SetActiveAllRtElts (false);
 
-            Info.GameDiscountWon = -1;
-            OnPrev ();
+            Info.GameDiscountWon = -1;            
 		} else {            
             if (curGameType == (int)EGameType.ePuzzleGame)
             {
@@ -312,6 +312,11 @@ public partial class PageGame : PageBase {
 
 		curGameType = -1;
 		curGame = -1;
+	}
+
+	public void OnCloseCallMsg()
+	{
+		objCallMessage.SetActive (false);
 	}
 
 	public EGameType SelectGameType() { return (EGameType)curGameType; }
