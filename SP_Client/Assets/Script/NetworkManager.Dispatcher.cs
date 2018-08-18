@@ -224,6 +224,16 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 			PageTokyoLive.Instance.ReturnHome ();
 		else if (Info.isCheckScene ("PicturePuzzle"))
 			PagePicturePuzzle.Instance.ReturnHome ();
+		else if (Info.isCheckScene ("PairCards"))
+			PagePairCards.Instance.ReturnHome ();
+		else if (Info.isCheckScene ("CrashCatMain"))
+			;
+		else if (Info.isCheckScene ("EmojiMain"))
+			;
+		else if (Info.isCheckScene ("Emoji2Main"))
+			;
+		else if (Info.isCheckScene ("FlappyBirdMain"))
+			;
 	}
 
 	void GameDiscountNOT(CPacket msg)

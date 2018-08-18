@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PagePairCards : MonoBehaviour {
+public class PagePairCards : SingletonMonobehaviour<PagePairCards> {
 
 	const int LIMIT_TIME = 20;
 	const int NORMAL_MODE_CARD_COUNT = 18;
