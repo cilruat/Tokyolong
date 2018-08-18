@@ -60,7 +60,7 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 
     const int EASY_MODE = 3;
     const int HARD_MODE = 4;
-    const int LIMIT_TIME = 20;
+    const int LIMIT_TIME = 30;
 
 	public Text txtCountDown;
 	public CountDown countDown;
@@ -132,7 +132,7 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 
     void _SetImage()
     {
-        int rand = UnityEngine.Random.Range(1, 2);
+        int rand = UnityEngine.Random.Range(1, 37);
 		Texture tex = Resources.Load("PicturePuzzle/Puzzle" + rand.ToString()) as Texture;
 
         img.texture = tex;
