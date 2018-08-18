@@ -248,15 +248,29 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
     void RequestMusicACK(CPacket msg)
     {
-        int priority = msg.pop_int32();
+        bool isAdd = System.Convert.ToBoolean(msg.pop_byte());
+        if (isAdd == false)
+        {
+            SystemMessage.Instance.Add("죄송합니다. 현재 신청곡이 많아 지연되고 있습니다.");
+            return;
+        }
+
         string packing = msg.pop_string ();
-        GameObject obj = UIManager.Instance.GetUI (eUI.eMusicRequest);
-        UIRequestMusic uiReqMusic = obj.GetComponent<UIRequestMusic> ();
-        uiReqMusic.SetAddMusic (priority, packing);
+
+        if(UIManager.Instance.GetUI (eUI.eMusicRequest).activeSelf)
+        {
+            GameObject obj = UIManager.Instance.GetUI (eUI.eMusicRequest);
+            UIRequestMusic uiReqMusic = obj.GetComponent<UIRequestMusic> ();
+            uiReqMusic.SetAddMusic (packing);
+        }
     }
 
     void RequestMusicNOT(CPacket msg)
     {
+        bool isAdd = System.Convert.ToBoolean(msg.pop_byte());
+        if (isAdd == false)
+            return;
+
         string packing = msg.pop_string();
         PageAdmin.Instance.SetRequestMusic(packing);
     }
@@ -269,13 +283,14 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
     void RequestMusicRemoveNOT(CPacket msg)
     {
-        if (UIManager.Instance.IsActive(eUI.eMusicRequest) == false)
-            return;
-
         int removeReqMusicID = msg.pop_int32();
-        GameObject obj = UIManager.Instance.GetUI(eUI.eMusicRequest);
-        UIRequestMusic uiReqMusic = obj.GetComponent<UIRequestMusic> ();
-        uiReqMusic.RemoveRequestMusic(removeReqMusicID);
+
+        if(UIManager.Instance.GetUI (eUI.eMusicRequest).activeSelf)
+        {
+            GameObject obj = UIManager.Instance.GetUI(eUI.eMusicRequest);
+            UIRequestMusic uiReqMusic = obj.GetComponent<UIRequestMusic> ();
+            uiReqMusic.RemoveRequestMusic(removeReqMusicID);
+        }
     }
 
     void OrderConfirmACK(CPacket msg)

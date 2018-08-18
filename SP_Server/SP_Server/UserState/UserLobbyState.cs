@@ -299,20 +299,25 @@ namespace SP_Server.UserState
                         string reqTitle = msg.pop_string();
                         string reqSinger = msg.pop_string();
 
-                        RequestMusicInfo reqMusicInfo = owner.mainFrm.AddRequestMusic(reqTableNo, reqTitle, reqSinger);
-                        JsonData reqMusicJson = JsonMapper.ToJson(reqMusicInfo);
-
-                        // 관리자에게 전달
-                        if (Frm.GetAdminUser() != null)
-                        {
-                            other_msg = CPacket.create((short)PROTOCOL.REQUEST_MUSIC_NOT);
-                            other_msg.push(reqMusicJson.ToString());
-                            Frm.GetAdminUser().send(other_msg);
-                        }
-
+                        bool requestMusicAdd = owner.mainFrm.listReqMusicInfo.Count < Frm.REQUEST_MUSIC_MAX_COUNT;
                         send_msg = CPacket.create((short)PROTOCOL.REQUEST_MUSIC_ACK);
-                        send_msg.push(owner.mainFrm.musicID);
-                        send_msg.push(reqMusicJson.ToString());
+                        send_msg.push(Convert.ToByte(requestMusicAdd));
+                        if (requestMusicAdd)
+                        {
+                            RequestMusicInfo reqMusicInfo = owner.mainFrm.AddRequestMusic(reqTableNo, reqTitle, reqSinger);
+                            JsonData reqMusicJson = JsonMapper.ToJson(reqMusicInfo);
+
+                            // 관리자에게 전달
+                            if (Frm.GetAdminUser() != null)
+                            {
+                                other_msg = CPacket.create((short)PROTOCOL.REQUEST_MUSIC_NOT);
+                                other_msg.push(Convert.ToByte(requestMusicAdd));
+                                other_msg.push(reqMusicJson.ToString());
+                                Frm.GetAdminUser().send(other_msg);
+                            }
+
+                            send_msg.push(reqMusicJson.ToString());
+                        }
 
                         break;
                     case PROTOCOL.REQUEST_MUSIC_REMOVE_REQ:
