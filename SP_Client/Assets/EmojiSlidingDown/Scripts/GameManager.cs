@@ -77,6 +77,7 @@ namespace Emoji
         public Rigidbody2D playerRigidbody;
         public DeathPlane playerDeathPlane;
         public GameObject cloudPrefab;
+		public GameObject objBoard;
 
         void OnEnable()
         {
@@ -113,7 +114,7 @@ namespace Emoji
         void Start()
         {
             // Initial setup
-            Application.targetFrameRate = targetFrameRate;
+            //Application.targetFrameRate = targetFrameRate;
             ScoreManager.Instance.Reset();
 
             PrepareGame();
@@ -167,5 +168,10 @@ namespace Emoji
             yield return new WaitForSeconds(delay);
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+
+		public void ReturnHome()
+		{
+			SceneChanger.LoadScene ("Main", objBoard);
+		}
     }
 }

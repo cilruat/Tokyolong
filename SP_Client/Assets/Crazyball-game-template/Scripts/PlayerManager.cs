@@ -18,7 +18,7 @@ public class PlayerManager : MonoBehaviour {
 		//Disable screen dimming on mobile devices
 		Screen.sleepTimeout = SleepTimeout.NeverSleep;
 		//Playe the game with a fixed framerate in all platforms
-		Application.targetFrameRate = 60;
+		//Application.targetFrameRate = 60;
 	}
 	
 	

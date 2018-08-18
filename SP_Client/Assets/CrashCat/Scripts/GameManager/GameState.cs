@@ -157,7 +157,11 @@ namespace CrashCat
 			UITweenAlpha.Start (objSendServer, 0f, 1f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
 
 			yield return new WaitForSeconds (1f);
-			NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+
+			if (Info.TableNum == 0)
+				GameManager.instance.ReturnHome ();
+			else
+				NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
 		}
 
         public override string GetName()
@@ -433,23 +437,23 @@ namespace CrashCat
     #if UNITY_ADS
             if (Advertisement.IsReady(adsPlacementId))
             {
-    #if UNITY_ANALYTICS
+    	#if UNITY_ANALYTICS
                 AnalyticsEvent.AdStart(adsRewarded, adsNetwork, adsPlacementId, new Dictionary<string, object>
                 {
                     { "level_index", PlayerData.instance.rank },
                     { "distance", TrackManager.instance == null ? 0 : TrackManager.instance.worldDistance },
                 });
-    #endif
+    	#endif
                 var options = new ShowOptions { resultCallback = HandleShowResult };
                 Advertisement.Show(adsPlacementId, options);
             }
             else
             {
-    #if UNITY_ANALYTICS
+    	#if UNITY_ANALYTICS
                 AnalyticsEvent.AdSkip(adsRewarded, adsNetwork, adsPlacementId, new Dictionary<string, object> {
                     { "error", Advertisement.GetPlacementState(adsPlacementId).ToString() }
                 });
-    #endif
+    	#endif
             }
     #else
     		GameOver();
@@ -464,24 +468,24 @@ namespace CrashCat
             switch (result)
             {
                 case ShowResult.Finished:
-    #if UNITY_ANALYTICS
+    	#if UNITY_ANALYTICS
                     AnalyticsEvent.AdComplete(adsRewarded, adsNetwork, adsPlacementId);
-    #endif
+    	#endif
                     SecondWind();
                     break;
                 case ShowResult.Skipped:
                     Debug.Log("The ad was skipped before reaching the end.");
-    #if UNITY_ANALYTICS
+    	#if UNITY_ANALYTICS
                     AnalyticsEvent.AdSkip(adsRewarded, adsNetwork, adsPlacementId);
-    #endif
+    	#endif
                     break;
                 case ShowResult.Failed:
                     Debug.LogError("The ad failed to be shown.");
-    #if UNITY_ANALYTICS
+    	#if UNITY_ANALYTICS
                     AnalyticsEvent.AdSkip(adsRewarded, adsNetwork, adsPlacementId, new Dictionary<string, object> {
                         { "error", "failed" }
                     });
-    #endif
+    	#endif
                     break;
             }
         }

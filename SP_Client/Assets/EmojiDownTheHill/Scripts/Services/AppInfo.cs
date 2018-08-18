@@ -91,6 +91,6 @@ public class AppInfo : MonoBehaviour
         FACEBOOK_LINK += FACEBOOK_ID;
         TWITTER_LINK += TWITTER_NAME;
 
-        Application.targetFrameRate = targetFrameRate;
+        //Application.targetFrameRate = targetFrameRate;
     }
 }

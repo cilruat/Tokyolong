@@ -123,7 +123,11 @@ namespace Emoji2
 			UITweenAlpha.Start (objSendServer, 0f, 1f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
 
 			yield return new WaitForSeconds (1f);
-			NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+
+			if (Info.TableNum == 0)
+				GameManager.Instance.ReturnHome ();
+			else
+				NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
 		}
 
         void Reset()

@@ -30,6 +30,7 @@ public class GameControl : MonoBehaviour
 	public GameObject objGameOver;
 	public GameObject objReady;
 	public GameObject objGo;
+	public GameObject objBoard;
 
 	void Awake()
 	{
@@ -108,7 +109,11 @@ public class GameControl : MonoBehaviour
 		UITweenAlpha.Start (objSendServer, 0f, 1f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
 
 		yield return new WaitForSeconds (1f);
-		NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+
+		if (Info.TableNum == 0)
+			ReturnHome ();
+		else
+			NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
 	}
 
 	public void BirdScored()
@@ -130,5 +135,10 @@ public class GameControl : MonoBehaviour
 		gameOver = true;
 
 		limitTime.Stop ();
+	}
+
+	public void ReturnHome()
+	{
+		SceneChanger.LoadScene ("Main", objBoard);
 	}
 }

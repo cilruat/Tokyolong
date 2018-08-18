@@ -67,6 +67,8 @@ namespace Emoji2
         [HideInInspector]   public float boundsX;
         [HideInInspector]   public float boundsY;
 
+		public GameObject objBoard;
+
         void Awake()
         {
             Instance = this;
@@ -115,5 +117,10 @@ namespace Emoji2
             yield return new WaitForSeconds(delay);
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+
+		public void ReturnHome()
+		{
+			SceneChanger.LoadScene ("Main", objBoard);
+		}
     }
 }

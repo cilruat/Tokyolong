@@ -224,7 +224,11 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 			objSendServer.SetActive (true);
 
 			yield return new WaitForSeconds (1f);
-			NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+
+			if (Info.TableNum == 0)
+				ReturnHome ();
+			else
+				NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
 		} else {
 			yield return StartCoroutine (_ShowPrevDesc (desc [3]));
 			ReturnHome ();
@@ -235,7 +239,7 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 
 	public void ReturnHome()
 	{
-		SceneChanger.LoadScene ("Game", objBoard);
+		SceneChanger.LoadScene ("Main", objBoard);
 	}
 
 	public void OnSelect(int answer)

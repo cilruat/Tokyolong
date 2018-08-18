@@ -169,7 +169,10 @@ public class PageAvoidBullets : MonoBehaviour {
 		objSendServer.SetActive (true);
 		yield return new WaitForSeconds (1f);
 
-		NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+		if (Info.TableNum == 0)
+			ReturnHome ();
+		else
+			NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
 	}
 
 	void _CreateSuccessEff()

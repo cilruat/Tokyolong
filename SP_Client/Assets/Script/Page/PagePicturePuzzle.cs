@@ -350,7 +350,10 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 		objSendServer.SetActive (true);
 		yield return new WaitForSeconds (1f);
 
-		NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+		if (Info.TableNum == 0)
+			ReturnHome ();
+		else
+			NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
 	}
 
 	void _FailEndGame()
@@ -360,6 +363,6 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 
 	public void ReturnHome()
 	{
-		SceneChanger.LoadScene ("Game", objBoard);
+		SceneChanger.LoadScene ("Main", objBoard);
 	}
 }
