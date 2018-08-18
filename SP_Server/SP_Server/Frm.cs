@@ -45,8 +45,9 @@ namespace SP_Server
         public Dictionary<int, UserInfo> dictUserInfo = new Dictionary<int, UserInfo>();
 
         public int orderID = -1;
-        public List<RequestOrder> listRequestOrder = new List<RequestOrder>();        
+        public List<RequestOrder> listRequestOrder = new List<RequestOrder>();
 
+        public const int REQUEST_MUSIC_MAX_COUNT = 20;
         public int musicID = -1;
         public List<RequestMusicInfo> listReqMusicInfo = new List<RequestMusicInfo>();
 

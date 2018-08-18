@@ -46,6 +46,12 @@ public class UIRequestMusic : MonoBehaviour
             requestor.gameObject.SetActive(false);
     }
 
+    void OnEanble()
+    {
+        if (requestor.gameObject.activeSelf)
+            requestor.gameObject.SetActive(false);
+    }
+
     public void SetAddMusicList(string packing)
     {
         _Clear();
@@ -53,7 +59,7 @@ public class UIRequestMusic : MonoBehaviour
         JsonData json = JsonMapper.ToObject (packing);
         for (int i = 0; i < json.Count; i++)
         {
-            int id = int.Parse(json[i]["tableNo"].ToString());
+            int id = int.Parse(json[i]["id"].ToString());
             byte tableNo = byte.Parse(json[i]["tableNo"].ToString());
             string title = json[i]["title"].ToString();
 			string singer = json[i]["singer"].ToString();
@@ -64,11 +70,11 @@ public class UIRequestMusic : MonoBehaviour
 		}
     }
 
-    public void SetAddMusic(int priority, string packing)
+    public void SetAddMusic(string packing)
     {
         MusicElt elt = CreateMusicElt();
-        elt.SetInfo(priority, packing);
         elts.Add(elt);
+        elt.SetInfo(elts.Count, packing);
     }
 
     MusicElt CreateMusicElt()
@@ -94,12 +100,13 @@ public class UIRequestMusic : MonoBehaviour
                 continue;
 
             removeIdx = i;
+            break;
         }
 
         if (removeIdx == -1)
             return;
 
-        DestroyImmediate(elts[removeIdx].gameObject);
+        Destroy(elts[removeIdx].gameObject);
         elts.RemoveAt(removeIdx);
 
         for (int i = removeIdx; i < elts.Count; i++)

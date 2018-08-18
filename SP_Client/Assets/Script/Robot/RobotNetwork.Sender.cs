@@ -56,8 +56,8 @@ public partial class RobotNetwork : MonoBehaviour
         {
             int menu = Mathf.Max(1, i+1);
             int cnt = 1;
-            SendMenu send = new SendMenu(menu, cnt);
-            list.Add(send);
+            SendMenu sendMenu = new SendMenu(menu, cnt);
+            list.Add(sendMenu);
         }
 
         LitJson.JsonData json = LitJson.JsonMapper.ToJson(list);
