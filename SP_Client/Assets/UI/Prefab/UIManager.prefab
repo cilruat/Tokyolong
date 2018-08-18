@@ -2221,6 +2221,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224547996470783832}
+  - component: {fileID: 114553464500761870}
   m_Layer: 5
   m_Name: Star_A
   m_TagString: Untagged
@@ -2236,6 +2237,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224302141869379016}
+  - component: {fileID: 114437930443743092}
   m_Layer: 5
   m_Name: Star_B
   m_TagString: Untagged
@@ -9060,6 +9062,21 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: "\uCE58!"
+--- !u!114 &114437930443743092
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1441209018738014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cb76e5153fb3b843b2ce6d748004340, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rt: {fileID: 224302141869379016}
+  listParticle:
+  - {fileID: 198467903278464352}
+  - {fileID: 198755106681742980}
 --- !u!114 &114438205430205218
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10624,6 +10641,21 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.2509804}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!114 &114553464500761870
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1439741290162232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cb76e5153fb3b843b2ce6d748004340, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rt: {fileID: 224547996470783832}
+  listParticle:
+  - {fileID: 198077387447397332}
+  - {fileID: 198718786126174186}
 --- !u!114 &114560112919218580
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -11278,8 +11310,8 @@ MonoBehaviour:
     obj: {fileID: 1815290070727608}
   uiAlarm: {fileID: 114037569093467744}
   canvas: {fileID: 223339737530586380}
-  objClickEffA: {fileID: 1439741290162232}
-  objClickEffB: {fileID: 1441209018738014}
+  clickStarA: {fileID: 114553464500761870}
+  clickStarB: {fileID: 114437930443743092}
 --- !u!114 &114616046946677198
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -28504,7 +28536,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -28558,7 +28590,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -28612,7 +28644,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -28666,7 +28698,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0

@@ -34,8 +34,8 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
     public UIAlarm uiAlarm;
 
 	public Canvas canvas;
-	public GameObject objClickEffA;
-	public GameObject objClickEffB;
+    public ClickStar clickStarA;
+    public ClickStar clickStarB;
 
 	bool isMouseClickEff = false;
 
@@ -44,7 +44,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 
     static UIManager single = null;
 
-	void Awake () 
+    void Awake () 
 	{
         if (single != null)
         {
@@ -219,13 +219,10 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 			if (isMouseClickEff == false)
 				return;
 
-			GameObject showEff = showClickA ? objClickEffA : objClickEffB;
-			GameObject objEff = Instantiate (showEff, PageBase.Instance.transform) as GameObject;
-			objEff.SetActive (true);
-
-			Vector3 mousePos = Input.mousePosition;
-			Vector3 pos = new Vector3 (mousePos.x - 400f, mousePos.y -225f, -100f);
-			objEff.transform.localPosition = pos;
+            GameObject showEff = showClickA ? clickStarA.gameObject : clickStarB.gameObject;
+            GameObject objEff = Instantiate (showEff, PageBase.Instance.transform) as GameObject;
+            ClickStar clickStar = objEff.GetComponent<ClickStar>();
+            clickStar.ShowClickStar(Input.mousePosition);
 		}
 
         if(Info.isCheckScene("Main"))
