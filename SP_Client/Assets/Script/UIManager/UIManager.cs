@@ -220,12 +220,17 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 				return;
 
             GameObject showEff = showClickA ? clickStarA.gameObject : clickStarB.gameObject;
-            GameObject objEff = Instantiate (showEff, PageBase.Instance.transform) as GameObject;
+            GameObject objEff = null;
+            if(Info.isCheckScene("Admin"))
+                objEff = Instantiate (showEff, PageAdmin.Instance.transform) as GameObject;
+            else
+                objEff = Instantiate (showEff, PageBase.Instance.transform) as GameObject;
+
             ClickStar clickStar = objEff.GetComponent<ClickStar>();
             clickStar.ShowClickStar(Input.mousePosition);
 		}
 
-        if(Info.isCheckScene("Main"))
+        if(Info.TableNum != (byte)0 && Info.isCheckScene("Login") == false)
             Info.UpdateCouponRemainTime();
     }
 }

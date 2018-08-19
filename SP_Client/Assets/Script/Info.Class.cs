@@ -83,6 +83,9 @@ public partial class Info : MonoBehaviour
         ECustomer = ECustomerType.MAN;
         GamePlayCnt = 0;
         GameDiscountWon = -1;
+        couponCnt = 0;
+        loopCouponRemainTime = 0f;
+        waitCoupon = false;
 
         myInfo = null;
         dictUserInfo.Clear();
