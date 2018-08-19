@@ -55,6 +55,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         case PROTOCOL.GET_RANDOM_DISCOUNT_PROB_ACK: GetDiscountProb_ACK(msg);   break;
         case PROTOCOL.SET_RANDOM_DISCOUNT_PROB_ACK: SetDiscountProb_ACK(msg);   break;
         case PROTOCOL.COUPON_ACK:                   Coupon_ACK(msg);            break;
+        case PROTOCOL.TABLE_PRICE_CONFIRM_ACK:   TablePriceConfirm_ACK(msg);    break;
 		}
 	}
 
@@ -415,5 +416,14 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     {
         Info.couponCnt = msg.pop_int32();
         UIManager.Instance.Show(eUI.eCoupon);
+    }
+
+    void TablePriceConfirm_ACK(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+        int tablePrice = msg.pop_int32();
+        int tableDiscount = msg.pop_int32();
+
+        PageAdmin.Instance.ShowTableDiscountInput(tableNo, tablePrice, tableDiscount);
     }
 }

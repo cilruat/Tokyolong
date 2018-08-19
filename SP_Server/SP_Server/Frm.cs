@@ -438,6 +438,7 @@ namespace SP_Server
                 return;
 
             dictUserInfo[tableNo].SetDiscount(inputDiscount);
+            DataUserInfoSave();
         }
 
         public int GetDiscount(int tableNo)
@@ -690,6 +691,21 @@ namespace SP_Server
 
             dictCouponCount.Clear();
             dictCouponCount = BinarySave.Deserialize<Dictionary<int, int>>("Data\\TableCouponCount.bin");
+        }
+
+        public int GetTablePrice(int tableNo)
+        {
+            int price = 0;
+
+            List<SendMenu> listMenu = GetOrder(tableNo);
+
+            if (MenuData.loaded == false)
+                MenuData.Load();
+
+            for (int i = 0; i < listMenu.Count; i++)
+                price += MenuData.GetMenuPrice(listMenu[i].menu) * listMenu[i].cnt;
+
+            return price;
         }
     }
 }

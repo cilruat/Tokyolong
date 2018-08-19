@@ -33,7 +33,7 @@ public class AdminTableMenu : SingletonMonobehaviour<AdminTableMenu> {
 
     public void OnTableDiscountInput()
     {
-        PageAdmin.Instance.ShowTableDiscountInput(tableNo);
+        NetworkManager.Instance.TablePriceConfirm_REQ(tableNo);
         OnClose();
     }
 

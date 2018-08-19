@@ -52,29 +52,36 @@ namespace SP_Server
 
         public void SetDiscount(short sType)
         {
+            int oriTotalPrice = 0;
+            for (int i = 0; i < menus.Count; i++)
+                oriTotalPrice += menus[i].cnt * MenuData.GetMenuPrice(menus[i].menu);
+
             EDiscount type = (EDiscount)sType;
             int calcDiscount = 0;
+
             switch (type)
             {
                 case EDiscount.e1000won: calcDiscount = 1000;   break;
                 case EDiscount.e5000won: calcDiscount = 5000;   break;
                 case EDiscount.eHalf:
                 case EDiscount.eAll:
-                    int totalPrice = 0;
-                    for (int i = 0; i < menus.Count; i++)
-                        totalPrice += menus[i].cnt * MenuData.GetMenuPrice(menus[i].menu);
 
-                    totalPrice -= discount;
-                    calcDiscount = type == EDiscount.eAll ? totalPrice : (int)(totalPrice * .5f);
+                    int price = oriTotalPrice - discount;
+                    calcDiscount = type == EDiscount.eAll ? price : (int)(price * .5f);
+                    calcDiscount = Math.Min(price, calcDiscount);
                     break;
             }
 
-            discount += calcDiscount;
+            discount = Math.Min(oriTotalPrice, discount + calcDiscount);
         }
 
         public void SetDiscount(int inputDiscount)
         {
-            discount += inputDiscount;
+            int oriTotalPrice = 0;
+            for (int i = 0; i < menus.Count; i++)
+                oriTotalPrice += menus[i].cnt * MenuData.GetMenuPrice(menus[i].menu);
+
+            discount = Math.Min(oriTotalPrice, discount + inputDiscount);
         }
 
             public bool IsAdmin()

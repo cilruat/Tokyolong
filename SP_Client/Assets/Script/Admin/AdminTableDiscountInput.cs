@@ -8,12 +8,17 @@ public class AdminTableDiscountInput : SingletonMonobehaviour<AdminTableDiscount
     public Text textTableNo;
     public GameObject prefab;
     public RectTransform rtScroll; 
-    public Text totalDiscount;
+    public Text textPrice; 
+    public Text textlDiscount;
+    public Text textCalcPrice;
 
     byte tableNo = 0;
     List<TableDiscountElt> listElt = new List<TableDiscountElt>();
 
-    public void SetTable(byte tableNo) 
+    int oriTablePrice = 0;
+    int oriTableDiscount = 0;
+
+    public void SetTable(byte tableNo, int tablePrice, int tableDiscount) 
     {
         this.tableNo = tableNo;
         textTableNo.text = tableNo.ToString() +"번 테이블";
@@ -33,6 +38,11 @@ public class AdminTableDiscountInput : SingletonMonobehaviour<AdminTableDiscount
             elt.SetInfo ((EDiscount)i);
             listElt.Add (elt);
         }
+
+        oriTablePrice = tablePrice;
+        oriTableDiscount = tableDiscount;
+
+        RefreshCalcPrice();
     }
 
     void _Clear()
@@ -44,17 +54,37 @@ public class AdminTableDiscountInput : SingletonMonobehaviour<AdminTableDiscount
         }
 
         listElt.Clear ();
-
-        CalcTotalPrice ();
     }
 
-    public void CalcTotalPrice()
+    public int GetTotalDiscount()
     {
-        int total = 0;
+        int totalDiscount = 0;
+        int discount = 0;
+        int wonDiscount = 0;
         for (int i = 0; i < listElt.Count; i++)
-            total += listElt [i].GetDiscount ();
+        {
+            EDiscount type = listElt[i].DiscountType();
+            int cnt = listElt[i].GetCount();
+            switch (type)
+            {
+                case EDiscount.e1000won:
+                case EDiscount.e5000won:    wonDiscount += (Info.GetDiscountPrice(type) * cnt);         break;
+                case EDiscount.eHalf:       discount += ((oriTablePrice - oriTableDiscount) / 2) * cnt; break;
+                case EDiscount.eAll:        discount += (oriTablePrice - oriTableDiscount) * cnt;       break;
+            }
+        }
 
-        totalDiscount.text = Info.MakeMoneyString (total);
+        totalDiscount = Mathf.Min(oriTablePrice, (oriTableDiscount + discount + wonDiscount));
+        return totalDiscount;
+    }
+
+    public void RefreshCalcPrice()
+    {
+        textPrice.text = Info.MakeMoneyString (oriTablePrice);
+
+        int discount = GetTotalDiscount ();
+        textlDiscount.text = Info.MakeMoneyString (discount);
+        textCalcPrice.text = Info.MakeMoneyString (oriTablePrice - discount);
     }
 
     public void OnClose() { gameObject.SetActive (false); }
@@ -73,19 +103,6 @@ public class AdminTableDiscountInput : SingletonMonobehaviour<AdminTableDiscount
             return;
         }
 
-        int discount1000Won = 0;
-        for (int i = 0; i < listElt.Count; i++)
-        {
-            EDiscount discountType = listElt[i].DiscountType();
-
-            switch (discountType)
-            {
-                case EDiscount.e1000won:    discount1000Won += listElt[i].GetCount();   break;
-            }
-        }
-
-        int price1000 = Info.GetDiscountPrice(EDiscount.e1000won);
-        discount1000Won *= price1000;
-        NetworkManager.Instance.TableDiscountInput_REQ (this.tableNo, discount1000Won);
+        NetworkManager.Instance.TableDiscountInput_REQ(this.tableNo, GetTotalDiscount() - oriTableDiscount);
     }
 }

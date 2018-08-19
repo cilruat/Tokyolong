@@ -297,10 +297,10 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 		unfinishGame.gameObject.SetActive (true);
 	}
 
-    public void ShowTableDiscountInput(byte tableNo)
+    public void ShowTableDiscountInput(byte tableNo, int tablePrice, int tableDiscount)
     {
         objTableDiscountInput.SetActive (true);
-        AdminTableDiscountInput.Instance.SetTable(tableNo);
+        AdminTableDiscountInput.Instance.SetTable(tableNo, tablePrice, tableDiscount);
     }
 
 	public void RemoveUnfinishGame(int id)

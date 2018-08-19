@@ -474,7 +474,6 @@ namespace SP_Server.UserState
 
                         owner.mainFrm.SetDiscount((int)tableNo, inputDiscount);
 
-
                         for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
                         {
                             User other = owner.mainFrm.ListUser[i];
@@ -515,6 +514,18 @@ namespace SP_Server.UserState
                         int couponCnt = owner.mainFrm.GetCouponCount((int)tableNo);
                         send_msg = CPacket.create((short)PROTOCOL.COUPON_ACK);
                         send_msg.push(couponCnt);
+                        break;
+                    case PROTOCOL.TABLE_PRICE_CONFIRM_REQ:
+                        tableNo = msg.pop_byte();
+
+                        int tablePrice = owner.mainFrm.GetTablePrice((int)tableNo);
+                        int tableDiscount = owner.mainFrm.GetDiscount((int)tableNo);
+
+                        send_msg = CPacket.create((short)PROTOCOL.TABLE_PRICE_CONFIRM_ACK);
+                        send_msg.push(tableNo);
+                        send_msg.push(tablePrice);
+                        send_msg.push(tableDiscount);
+
                         break;
                     default:
                         break;

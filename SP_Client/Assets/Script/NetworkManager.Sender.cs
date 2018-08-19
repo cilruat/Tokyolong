@@ -176,11 +176,11 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		send (msg);
 	}
 
-    public void TableDiscountInput_REQ(byte tableNo, int discountWon)
+    public void TableDiscountInput_REQ(byte tableNo, int discount)
     {
         CPacket msg = CPacket.create((short)PROTOCOL.TABLE_DISCOUNT_INPUT_REQ);
         msg.push (tableNo);
-        msg.push (discountWon);
+        msg.push (discount);
 
         send(msg);
     }
@@ -205,6 +205,14 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     {
         CPacket msg = CPacket.create((short)PROTOCOL.COUPON_REQ);
         msg.push(Info.TableNum);
+
+        send(msg);
+    }
+
+    public void TablePriceConfirm_REQ(byte tableNo)
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.TABLE_PRICE_CONFIRM_REQ);
+        msg.push(tableNo);
 
         send(msg);
     }
