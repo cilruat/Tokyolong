@@ -79,15 +79,6 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
             CPacket msg = this.sending_queue.Dequeue();
             this.freenet.send(msg);
         }
-
-        if(Input.GetKeyDown(KeyCode.Keypad0))
-            Game_Discount_REQ((short)1);
-
-        if (Input.GetKeyDown(KeyCode.Alpha0))
-            UIManager.Instance.ShowLog();
-
-        if (Input.GetKeyDown(KeyCode.G))
-            SceneChanger.LoadScene("CrashCatStart", PageBase.Instance.curBoardObj());
     }
 
     public bool is_connected()

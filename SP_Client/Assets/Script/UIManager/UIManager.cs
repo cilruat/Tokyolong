@@ -193,7 +193,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
     const float WAIT_DISCONNECT = 10f;
     float elapsedTime = 0f;
 
-	bool showClickA = true;
+	bool showClickA = false;
 
     void Update()
     {
@@ -209,11 +209,20 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Keypad3))
-            UIManager.Instance.ShowLog();
+		if (Input.GetKeyDown(KeyCode.KeypadPlus))
+		{
+			Info.GamePlayCnt += 1;
+			((PageGame)PageBase.Instance).RefreshPlayCnt();
+		}
 
-		if (Input.GetKeyDown (KeyCode.P))
-			showClickA = !showClickA;
+		if (Input.GetKey (KeyCode.LeftShift)) {
+			
+			if (Input.GetKeyDown (KeyCode.L))
+				UIManager.Instance.ShowLog ();
+
+			if (Input.GetKeyDown (KeyCode.C))
+				showClickA = !showClickA;
+		}			
 
 		if (Input.GetMouseButtonDown (0)) {
 			if (isMouseClickEff == false)
