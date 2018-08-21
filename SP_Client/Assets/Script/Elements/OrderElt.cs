@@ -48,7 +48,7 @@ public class OrderElt : MonoBehaviour {
                 desc += ", ";
         }
 
-        order.text = desc;
+        order.text = reqOrder.tableNo + "번 테이블 주문 내역";
         objDetail.SetActive (true);
     }
 
