@@ -49,6 +49,13 @@ public partial class PageGame : PageBase {
 		RefreshPlayCnt ();
 	}
 
+	bool isForceSelectGame = false;
+	protected override void Update()
+	{
+		if (Input.GetKey (KeyCode.LeftShift) && Input.GetKeyDown (KeyCode.F))
+			isForceSelectGame = !isForceSelectGame;
+	}
+
     IEnumerator _StartSlot(short discountType)
 	{
 		isStopEnable = false;
@@ -81,11 +88,14 @@ public partial class PageGame : PageBase {
 		}
 
 		isStopEnable = true;
+
+		/*yield return new WaitForSeconds (2f);
+		OnStop ();*/
 	}
 	
 	int _GetGameTypeIdx(float percent)
 	{
-		if (Info.RunInGameScene) {
+		if (Info.RunInGameScene && isForceSelectGame) {
 			return runInGameType;
 		} else {
 			if (percent < .27f)			return 1;		
@@ -172,7 +182,7 @@ public partial class PageGame : PageBase {
         }
 
 		int stopIdx = UnityEngine.Random.Range (0, randRange);
-		if (Info.RunInGameScene)
+		if (Info.RunInGameScene && isForceSelectGame)
 			stopIdx = runInGame;
 
 		curGame = stopIdx;
@@ -264,9 +274,7 @@ public partial class PageGame : PageBase {
 
 	public void ShowPopup()
 	{
-		int countIdx = 0;
 		if (curGameType == (int)EGameType.eWinWaiter) {
-			countIdx = 1;
 			UITweenAlpha.Start (objCallMessage[curGame], 0f, 1f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
 			_FinishShowPopup ();
 		} else {
