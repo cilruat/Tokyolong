@@ -37,7 +37,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
     public ClickStar clickStarA;
     public ClickStar clickStarB;
 
-	bool isMouseClickEff = false;
+    [System.NonSerialized]public bool isMouseClickEff = false;
 
 	eUI curUI = eUI.eNone;
 	Dictionary<eUI, GameObject> dicObject = new Dictionary<eUI, GameObject> ();
