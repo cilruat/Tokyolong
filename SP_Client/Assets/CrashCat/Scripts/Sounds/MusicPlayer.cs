@@ -33,8 +33,6 @@ namespace CrashCat
             // As this is one of the first script executed, set that here.
             //Application.targetFrameRate = 30;
             AudioListener.pause = false;
-            
-            DontDestroyOnLoad(gameObject);
         }
 
     	void Start()

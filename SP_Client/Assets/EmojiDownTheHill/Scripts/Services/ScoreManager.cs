@@ -29,7 +29,6 @@ namespace Emoji2
             else
             {
                 Instance = this;
-                DontDestroyOnLoad(gameObject);
             }
         }
 

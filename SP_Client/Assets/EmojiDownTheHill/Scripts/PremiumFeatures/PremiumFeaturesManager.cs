@@ -18,7 +18,6 @@ public class PremiumFeaturesManager : MonoBehaviour
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
     }
 }

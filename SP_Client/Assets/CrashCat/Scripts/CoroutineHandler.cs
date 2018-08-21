@@ -15,7 +15,6 @@ public class CoroutineHandler : MonoBehaviour
             if(m_Instance == null)
             {
                 GameObject o = new GameObject("CoroutineHandler");
-                DontDestroyOnLoad(o);
                 m_Instance = o.AddComponent<CoroutineHandler>();
             }
 

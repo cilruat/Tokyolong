@@ -66,7 +66,6 @@ public class AppInfo : MonoBehaviour
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
 
             #if UNITY_EDITOR
             if (clearPlayerPrefs)
