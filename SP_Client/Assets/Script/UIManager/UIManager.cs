@@ -209,7 +209,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
             }
         }
 
-		if (Input.GetKeyDown(KeyCode.Plus))
+		if (Input.GetKeyDown(KeyCode.P))
 		{
 			Info.GamePlayCnt += 1;
 			((PageGame)PageBase.Instance).RefreshPlayCnt();
