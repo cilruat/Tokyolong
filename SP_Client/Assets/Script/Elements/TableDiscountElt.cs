@@ -6,38 +6,50 @@ using UnityEngine.SceneManagement;
 
 public class TableDiscountElt : MonoBehaviour {
 
+    public EDiscount type;
 	public Text txtName;
-	public Text txtVal;
 
-    EDiscount type;
-	int value = 0;
+    int idx = 0;
+    int discount = 0;
+
+    void Awake()
+    {
+        SetInfo(type);
+    }
+
+    public void SetInfo(EDiscount type, int idx, int discount)
+	{
+        this.idx = idx;
+        this.discount = discount;
+
+        SetInfo(type);
+	}
 
     public void SetInfo(EDiscount type)
-	{
+    {
         this.type = type;
-
         switch (type)
         {
             case EDiscount.e1000won:    txtName.text = "1000원 할인";   break;
             case EDiscount.e5000won:    txtName.text = "5000원 할인";   break;
             case EDiscount.eHalf:       txtName.text = "반액 할인";     break;
             case EDiscount.eAll:        txtName.text = "전액 할인";     break;
+            case EDiscount.eDirect:     txtName.text = this.discount + "원 할인";  break;
         }
-	}
-
-    public void OnChangeValue(bool isAdd)
-    {
-        value = Mathf.Max(0, isAdd ? value + 1 : value - 1);
-        if (value > 1 && (type == EDiscount.eHalf || type == EDiscount.eAll))
-        {
-            value = 1;
-            return;
-        }
-
-        txtVal.text = value.ToString();
-        AdminTableDiscountInput.Instance.RefreshCalcPrice();
     }
 
-	public int GetCount() {	return value; }
+    public void SetIndex(int idx) { this.idx = idx; }
+
+    public void OnRegister()
+    {
+        AdminTableDiscountInput.Instance.OnRegister(this.type);
+    }
+
+    public void OnDelete()
+    {
+        AdminTableDiscountInput.Instance.OnDelete(idx);
+    }
+
     public EDiscount DiscountType() { return type; }
+    public int Discount() { return this.discount; }
 }

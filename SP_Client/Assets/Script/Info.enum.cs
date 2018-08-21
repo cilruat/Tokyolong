@@ -117,6 +117,7 @@ public enum EDiscount
 	e5000won,
     eHalf,
     eAll,
+    eDirect,
 }
 
 public enum EGameType

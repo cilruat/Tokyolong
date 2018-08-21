@@ -12,6 +12,7 @@ namespace SP_Server
         e5000won,
         eHalf,
         eAll,
+        eDirect,
     }
 
     [Serializable]
