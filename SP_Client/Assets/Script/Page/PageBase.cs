@@ -45,11 +45,6 @@ public class PageBase : SingletonMonobehaviour<PageBase> {
 
     protected virtual void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            Info.GamePlayCnt += 1;
-            ((PageGame)PageBase.Instance).RefreshPlayCnt();
-        }
     }
 
 	public void OnPrev() { _OnChangeBoard (false); }

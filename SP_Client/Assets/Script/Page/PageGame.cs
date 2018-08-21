@@ -31,6 +31,10 @@ public partial class PageGame : PageBase {
 	int curGameType = -1;
 	int curGame = -1;
 
+	short runInGameDiscount = (short)EDiscount.e1000won;
+	int runInGameType = (int)EGameType.eTabletGame;
+	int runInGame = 0;
+
 	protected override void Awake ()
 	{
 		base.boards = cgBoards;
@@ -82,7 +86,7 @@ public partial class PageGame : PageBase {
 	int _GetGameTypeIdx(float percent)
 	{
 		if (Info.RunInGameScene) {
-			return 0;
+			return runInGameType;
 		} else {
 			if (percent < .27f)			return 1;		
 			else if (percent > .95f)	return 0;
@@ -128,14 +132,7 @@ public partial class PageGame : PageBase {
 		}
 
         if (Info.RunInGameScene)
-        {
-            float rate = UnityEngine.Random.Range(0f, 1f);
-            short discountType = 0;
-            /*if (rate > .25f && rate <= .5f)          discountType = 1;
-            else if (rate > .5f && rate <= .75f)     discountType = 2;
-            else if (rate > .75f)                    discountType = 3;*/
-            FinishStart(discountType);
-        }
+			FinishStart(runInGameDiscount);
         else
             NetworkManager.Instance.SlotStart_REQ();
 	}
@@ -175,6 +172,9 @@ public partial class PageGame : PageBase {
         }
 
 		int stopIdx = UnityEngine.Random.Range (0, randRange);
+		if (Info.RunInGameScene)
+			stopIdx = runInGame;
+
 		curGame = stopIdx;
 		
 		for (int i = 0; i < listSlotMachine.Count; i++) {
