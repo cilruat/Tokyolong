@@ -22,7 +22,7 @@ public class FlyChance : MonoBehaviour
             ((PageMain)PageBase.Instance).RefreshGamePlayChance();
     }
 
-    void Update()
+    void LateUpdate()
     {
         Flying();
     }

@@ -39,7 +39,7 @@ public class PageMain : PageBase {
 
     void Start()
     {
-        CreateFlyChance();
+        StartFlyChance();
     }
 
     public void RefreshGamePlay()
@@ -49,6 +49,9 @@ public class PageMain : PageBase {
 
 	public void OnClickMenu(int idx)
 	{
+        if (flyRoutine != null)
+            return;
+
 		EMenu e = (EMenu)idx;
 		switch (e) {
             case EMenu.eChat:       SceneChanger.LoadScene("TableStatus", curBoardObj());   break;
@@ -77,17 +80,26 @@ public class PageMain : PageBase {
         txtPlayCnt.text = Info.GamePlayCnt.ToString ();
     }
 
-    public void CreateFlyChance()
+    Coroutine flyRoutine = null;
+    public void StartFlyChance()
     {
         if (Info.orderCnt <= 0)
             return;
-        
+
+        flyRoutine = StartCoroutine(_CreateFlyChance());
+    }
+
+    IEnumerator _CreateFlyChance()
+    {
         for (int i = Info.orderCnt; i > 0; i--)
         {
             GameObject objChance = Instantiate(flyChance.gameObject, flyChance.transform.parent) as GameObject;
             objChance.gameObject.SetActive(true);
 
             Info.orderCnt--;
+            yield return new WaitForSeconds(0.1f);
         }
+
+        flyRoutine = null;
     }
 }

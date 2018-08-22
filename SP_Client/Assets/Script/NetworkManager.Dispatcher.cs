@@ -342,7 +342,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     {
         Info.orderCnt = Mathf.Max(0, Info.orderCnt + msg.pop_int32());
         if (Info.isCheckScene("Main"))
-            ((PageMain)PageBase.Instance).CreateFlyChance();
+            ((PageMain)PageBase.Instance).StartFlyChance();
 
         UIManager.Instance.ShowOrderAlarm();
     }
