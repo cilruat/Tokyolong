@@ -50,7 +50,7 @@ public class ShiningGraphic : MonoBehaviour {
 		_sg.graphic.material = new Material (Shader.Find ("UI/Shining"));
 	}
 
-	void Update () {
+	void LateUpdate () {
 		if (step < 2) {
 			elapsedStep += Time.unscaledDeltaTime;
 			if (elapsedStep > STEP_GAP) {
