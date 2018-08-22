@@ -28,6 +28,7 @@ public partial class PageGame : PageBase {
 	public CountDown countDownGameLoading;
 
 	bool isStopEnable = false;
+	bool clickStop = false;
 	int curGameType = -1;
 	int curGame = -1;
 
@@ -89,13 +90,15 @@ public partial class PageGame : PageBase {
 
 		isStopEnable = true;
 
-		/*yield return new WaitForSeconds (2f);
-		OnStop ();*/
+		yield return new WaitForSeconds (2f);
+
+		if (clickStop == false)
+			OnStop ();
 	}
 	
 	int _GetGameTypeIdx(float percent)
 	{
-		if (Info.RunInGameScene && isForceSelectGame) {
+		if (Info.RunInGameScene || isForceSelectGame) {
 			return runInGameType;
 		} else {
 			if (percent < .27f)			return 1;		
@@ -182,7 +185,7 @@ public partial class PageGame : PageBase {
         }
 
 		int stopIdx = UnityEngine.Random.Range (0, randRange);
-		if (Info.RunInGameScene && isForceSelectGame)
+		if (Info.RunInGameScene || isForceSelectGame)
 			stopIdx = runInGame;
 
 		curGame = stopIdx;
@@ -200,6 +203,9 @@ public partial class PageGame : PageBase {
 
 	public void OnStop()
 	{
+		if (clickStop)
+			return;
+
 		if (isStopEnable == false) {
 			SystemMessage.Instance.Add ("아직 정지를 할 수 없습니다");
 			return;
@@ -208,8 +214,9 @@ public partial class PageGame : PageBase {
 		if (_CheckSlotStopAnimating()) {
 			SystemMessage.Instance.Add ("슬롯이 정지중입니다");
 			return;
-		}
+		}			
 
+		clickStop = true;
 		StartCoroutine (_StopSlot ());
 	}
 
@@ -274,6 +281,8 @@ public partial class PageGame : PageBase {
 
 	public void ShowPopup()
 	{
+		clickStop = false;
+
 		if (curGameType == (int)EGameType.eWinWaiter) {
 			UITweenAlpha.Start (objCallMessage[curGame], 0f, 1f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
 			_FinishShowPopup ();
