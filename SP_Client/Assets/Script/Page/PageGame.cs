@@ -45,8 +45,7 @@ public partial class PageGame : PageBase {
 	}
 
 	void Start()
-	{
-		//NetworkManager.Instance.UnfinishGamelist_REQ (Info.TableNum);
+	{		
 		RefreshPlayCnt ();
 	}
 
