@@ -1312,7 +1312,6 @@ GameObject:
   - component: {fileID: 80191444}
   - component: {fileID: 80191443}
   - component: {fileID: 80191445}
-  - component: {fileID: 80191447}
   m_Layer: 5
   m_Name: Alcohol
   m_TagString: Untagged
@@ -1339,7 +1338,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -310, y: -190}
+  m_AnchoredPosition: {x: -310.00003, y: -190}
   m_SizeDelta: {x: 110, y: 110}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &80191443
@@ -1418,104 +1417,75 @@ MonoBehaviour:
   m_GameObject: {fileID: 80191441}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b09c334cff71fa744a5e6a3902da2d67, type: 3}
+  m_Script: {fileID: 11500000, guid: 387615f45fcad3b4ca1094679d1f9513, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTweenGroup: 0
-  startTag: 0
-  autoStart: 0
-  param:
-    duration: 0.5
-    delay: 0.9
-    loopType: 0
-    animationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    curveType: 9
-    curveSpeed: 0
-    initStartVal: 1
-    destroyOnFinish: 0
-    disableOnFinish: 0
-  next: {fileID: 0}
-  prev: {fileID: 0}
-  onCompleteFunc:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  start: 320
-  end: 90
+  rt: {fileID: 80191442}
+  start: 50
+  end: -190
+  duration: 0.5
+  startDelay: 0.8
+  endDelay: 0.2
+  showCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.6022225
+      value: 1.1060721
+      inSlope: -0.21908917
+      outSlope: -0.21908917
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  hideCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.30096647
+      value: -0.060018066
+      inSlope: 0.06525573
+      outSlope: 0.06525573
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.7503987
+      value: 1.0569897
+      inSlope: 0.1132368
+      outSlope: 0.1132368
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: -0.3381842
+      outSlope: -0.3381842
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!222 &80191446
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 80191441}
---- !u!114 &80191447
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 80191441}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b09c334cff71fa744a5e6a3902da2d67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isTweenGroup: 0
-  startTag: 1
-  autoStart: 0
-  param:
-    duration: 0.5
-    delay: 0.15
-    loopType: 0
-    animationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    curveType: 9
-    curveSpeed: 1
-    initStartVal: 1
-    destroyOnFinish: 0
-    disableOnFinish: 0
-  next: {fileID: 0}
-  prev: {fileID: 0}
-  onCompleteFunc:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  start: 90
-  end: 320
 --- !u!1 &83211552
 GameObject:
   m_ObjectHideFlags: 0
@@ -4398,7 +4368,6 @@ GameObject:
   - component: {fileID: 202842688}
   - component: {fileID: 202842687}
   - component: {fileID: 202842691}
-  - component: {fileID: 202842692}
   m_Layer: 5
   m_Name: Drink
   m_TagString: Untagged
@@ -4534,98 +4503,69 @@ MonoBehaviour:
   m_GameObject: {fileID: 202842685}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b09c334cff71fa744a5e6a3902da2d67, type: 3}
+  m_Script: {fileID: 11500000, guid: 387615f45fcad3b4ca1094679d1f9513, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTweenGroup: 0
-  startTag: 0
-  autoStart: 0
-  param:
-    duration: 0.5
-    delay: 1
-    loopType: 0
-    animationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    curveType: 9
-    curveSpeed: 0
-    initStartVal: 1
-    destroyOnFinish: 0
-    disableOnFinish: 0
-  next: {fileID: 0}
-  prev: {fileID: 0}
-  onCompleteFunc:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  start: 320
-  end: 120
---- !u!114 &202842692
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 202842685}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b09c334cff71fa744a5e6a3902da2d67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isTweenGroup: 0
-  startTag: 1
-  autoStart: 0
-  param:
-    duration: 0.5
-    delay: 0
-    loopType: 0
-    animationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    curveType: 9
-    curveSpeed: 1
-    initStartVal: 1
-    destroyOnFinish: 0
-    disableOnFinish: 0
-  next: {fileID: 0}
-  prev: {fileID: 0}
-  onCompleteFunc:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  start: 120
-  end: 320
+  rt: {fileID: 202842686}
+  start: 50
+  end: -150
+  duration: 0.5
+  startDelay: 0.9
+  endDelay: 0.1
+  showCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.6022225
+      value: 1.1060721
+      inSlope: -0.21908917
+      outSlope: -0.21908917
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  hideCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.30096647
+      value: -0.060018066
+      inSlope: 0.06525573
+      outSlope: 0.06525573
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.7503987
+      value: 1.0569897
+      inSlope: 0.1132368
+      outSlope: 0.1132368
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: -0.3381842
+      outSlope: -0.3381842
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!1 &203994635
 GameObject:
   m_ObjectHideFlags: 0
@@ -11961,7 +11901,6 @@ GameObject:
   - component: {fileID: 568470223}
   - component: {fileID: 568470222}
   - component: {fileID: 568470224}
-  - component: {fileID: 568470226}
   m_Layer: 5
   m_Name: Meal
   m_TagString: Untagged
@@ -12067,104 +12006,75 @@ MonoBehaviour:
   m_GameObject: {fileID: 568470220}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b09c334cff71fa744a5e6a3902da2d67, type: 3}
+  m_Script: {fileID: 11500000, guid: 387615f45fcad3b4ca1094679d1f9513, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTweenGroup: 0
-  startTag: 0
-  autoStart: 0
-  param:
-    duration: 0.5
-    delay: 0.6
-    loopType: 0
-    animationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    curveType: 9
-    curveSpeed: 0
-    initStartVal: 1
-    destroyOnFinish: 0
-    disableOnFinish: 0
-  next: {fileID: 0}
-  prev: {fileID: 0}
-  onCompleteFunc:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  start: 320
-  end: 80
+  rt: {fileID: 568470221}
+  start: 50
+  end: -205
+  duration: 0.5
+  startDelay: 0.6
+  endDelay: 0.4
+  showCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.6022225
+      value: 1.1060721
+      inSlope: -0.21908917
+      outSlope: -0.21908917
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  hideCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.30096647
+      value: -0.060018066
+      inSlope: 0.06525573
+      outSlope: 0.06525573
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.7503987
+      value: 1.0569897
+      inSlope: 0.1132368
+      outSlope: 0.1132368
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: -0.3381842
+      outSlope: -0.3381842
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!222 &568470225
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 568470220}
---- !u!114 &568470226
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 568470220}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b09c334cff71fa744a5e6a3902da2d67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isTweenGroup: 0
-  startTag: 1
-  autoStart: 0
-  param:
-    duration: 0.5
-    delay: 0.45
-    loopType: 0
-    animationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    curveType: 9
-    curveSpeed: 1
-    initStartVal: 1
-    destroyOnFinish: 0
-    disableOnFinish: 0
-  next: {fileID: 0}
-  prev: {fileID: 0}
-  onCompleteFunc:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  start: 80
-  end: 320
 --- !u!1 &570716739
 GameObject:
   m_ObjectHideFlags: 0
@@ -17695,7 +17605,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 838091711}
-  - component: {fileID: 838091712}
   m_Layer: 5
   m_Name: MenuGroup
   m_TagString: Untagged
@@ -17729,72 +17638,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &838091712
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 838091710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5adc141f8c9eb7240a64f74efbbc98e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isTweenGroup: 1
-  startTag: 1
-  autoStart: 0
-  param:
-    duration: 1
-    delay: 0
-    loopType: 0
-    animationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    curveType: 1
-    curveSpeed: 0
-    initStartVal: 1
-    destroyOnFinish: 0
-    disableOnFinish: 0
-  next: {fileID: 0}
-  prev: {fileID: 0}
-  onCompleteFunc:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  tweens:
-  - {fileID: 568470224}
-  - {fileID: 568470226}
-  - {fileID: 1191977498}
-  - {fileID: 1191977499}
-  - {fileID: 1385272210}
-  - {fileID: 1385272211}
-  - {fileID: 1696405965}
-  - {fileID: 1696405966}
-  - {fileID: 1289662765}
-  - {fileID: 1289662766}
-  - {fileID: 1732883282}
-  - {fileID: 1732883283}
-  - {fileID: 80191445}
-  - {fileID: 80191447}
-  - {fileID: 202842691}
-  - {fileID: 202842692}
-  activeOnlyEnabled: 0
 --- !u!1 &843987914
 GameObject:
   m_ObjectHideFlags: 0
@@ -25065,7 +24908,6 @@ GameObject:
   - component: {fileID: 1191977495}
   - component: {fileID: 1191977494}
   - component: {fileID: 1191977498}
-  - component: {fileID: 1191977499}
   m_Layer: 5
   m_Name: Pochakaya
   m_TagString: Untagged
@@ -25201,98 +25043,69 @@ MonoBehaviour:
   m_GameObject: {fileID: 1191977492}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b09c334cff71fa744a5e6a3902da2d67, type: 3}
+  m_Script: {fileID: 11500000, guid: 387615f45fcad3b4ca1094679d1f9513, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTweenGroup: 0
-  startTag: 0
-  autoStart: 0
-  param:
-    duration: 0.5
-    delay: 0.75
-    loopType: 0
-    animationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    curveType: 9
-    curveSpeed: 0
-    initStartVal: 1
-    destroyOnFinish: 0
-    disableOnFinish: 0
-  next: {fileID: 0}
-  prev: {fileID: 0}
-  onCompleteFunc:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  start: 320
-  end: 130
---- !u!114 &1191977499
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1191977492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b09c334cff71fa744a5e6a3902da2d67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isTweenGroup: 0
-  startTag: 1
-  autoStart: 0
-  param:
-    duration: 0.5
-    delay: 0.3
-    loopType: 0
-    animationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    curveType: 9
-    curveSpeed: 1
-    initStartVal: 1
-    destroyOnFinish: 0
-    disableOnFinish: 0
-  next: {fileID: 0}
-  prev: {fileID: 0}
-  onCompleteFunc:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  start: 130
-  end: 320
+  rt: {fileID: 1191977493}
+  start: 50
+  end: -164
+  duration: 0.5
+  startDelay: 0.7
+  endDelay: 0.3
+  showCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.6022225
+      value: 1.1060721
+      inSlope: -0.21908917
+      outSlope: -0.21908917
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  hideCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.30096647
+      value: -0.060018066
+      inSlope: 0.06525573
+      outSlope: 0.06525573
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.7503987
+      value: 1.0569897
+      inSlope: 0.1132368
+      outSlope: 0.1132368
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: -0.3381842
+      outSlope: -0.3381842
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!1 &1196953076
 GameObject:
   m_ObjectHideFlags: 0
@@ -27250,7 +27063,6 @@ GameObject:
   - component: {fileID: 1289662762}
   - component: {fileID: 1289662761}
   - component: {fileID: 1289662765}
-  - component: {fileID: 1289662766}
   m_Layer: 5
   m_Name: SashimiNFruit
   m_TagString: Untagged
@@ -27386,98 +27198,69 @@ MonoBehaviour:
   m_GameObject: {fileID: 1289662759}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b09c334cff71fa744a5e6a3902da2d67, type: 3}
+  m_Script: {fileID: 11500000, guid: 387615f45fcad3b4ca1094679d1f9513, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTweenGroup: 0
-  startTag: 0
-  autoStart: 0
-  param:
-    duration: 0.5
-    delay: 0.15
-    loopType: 0
-    animationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    curveType: 9
-    curveSpeed: 0
-    initStartVal: 1
-    destroyOnFinish: 0
-    disableOnFinish: 0
-  next: {fileID: 0}
-  prev: {fileID: 0}
-  onCompleteFunc:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  start: 320
-  end: -90
---- !u!114 &1289662766
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1289662759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b09c334cff71fa744a5e6a3902da2d67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isTweenGroup: 0
-  startTag: 1
-  autoStart: 0
-  param:
-    duration: 0.5
-    delay: 0.9
-    loopType: 0
-    animationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    curveType: 9
-    curveSpeed: 1
-    initStartVal: 1
-    destroyOnFinish: 0
-    disableOnFinish: 0
-  next: {fileID: 0}
-  prev: {fileID: 0}
-  onCompleteFunc:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  start: -90
-  end: 320
+  rt: {fileID: 1289662760}
+  start: 50
+  end: -365
+  duration: 0.5
+  startDelay: 0.2
+  endDelay: 0.8
+  showCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.6022225
+      value: 1.1060721
+      inSlope: -0.21908917
+      outSlope: -0.21908917
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  hideCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.30096647
+      value: -0.060018066
+      inSlope: 0.06525573
+      outSlope: 0.06525573
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.7503987
+      value: 1.0569897
+      inSlope: 0.1132368
+      outSlope: 0.1132368
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: -0.3381842
+      outSlope: -0.3381842
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!1 &1290916877
 GameObject:
   m_ObjectHideFlags: 0
@@ -29363,7 +29146,6 @@ GameObject:
   - component: {fileID: 1385272207}
   - component: {fileID: 1385272206}
   - component: {fileID: 1385272210}
-  - component: {fileID: 1385272211}
   m_Layer: 5
   m_Name: Izakaya
   m_TagString: Untagged
@@ -29499,98 +29281,69 @@ MonoBehaviour:
   m_GameObject: {fileID: 1385272204}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b09c334cff71fa744a5e6a3902da2d67, type: 3}
+  m_Script: {fileID: 11500000, guid: 387615f45fcad3b4ca1094679d1f9513, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTweenGroup: 0
-  startTag: 0
-  autoStart: 0
-  param:
-    duration: 0.5
-    delay: 0
-    loopType: 0
-    animationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    curveType: 9
-    curveSpeed: 0
-    initStartVal: 1
-    destroyOnFinish: 0
-    disableOnFinish: 0
-  next: {fileID: 0}
-  prev: {fileID: 0}
-  onCompleteFunc:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  start: 320
-  end: -130
---- !u!114 &1385272211
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1385272204}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b09c334cff71fa744a5e6a3902da2d67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isTweenGroup: 0
-  startTag: 1
-  autoStart: 0
-  param:
-    duration: 0.5
-    delay: 1
-    loopType: 0
-    animationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    curveType: 9
-    curveSpeed: 1
-    initStartVal: 1
-    destroyOnFinish: 0
-    disableOnFinish: 0
-  next: {fileID: 0}
-  prev: {fileID: 0}
-  onCompleteFunc:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  start: -130
-  end: 320
+  rt: {fileID: 1385272205}
+  start: 50
+  end: -420
+  duration: 0.5
+  startDelay: 0.1
+  endDelay: 0.9
+  showCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.6022225
+      value: 1.1060721
+      inSlope: -0.21908917
+      outSlope: -0.21908917
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  hideCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.30096647
+      value: -0.060018066
+      inSlope: 0.06525573
+      outSlope: 0.06525573
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.7503987
+      value: 1.0569897
+      inSlope: 0.1132368
+      outSlope: 0.1132368
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: -0.3381842
+      outSlope: -0.3381842
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!1 &1391045532
 GameObject:
   m_ObjectHideFlags: 0
@@ -35848,7 +35601,6 @@ GameObject:
   - component: {fileID: 1696405962}
   - component: {fileID: 1696405961}
   - component: {fileID: 1696405965}
-  - component: {fileID: 1696405966}
   m_Layer: 5
   m_Name: Woman
   m_TagString: Untagged
@@ -35984,98 +35736,69 @@ MonoBehaviour:
   m_GameObject: {fileID: 1696405959}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b09c334cff71fa744a5e6a3902da2d67, type: 3}
+  m_Script: {fileID: 11500000, guid: 387615f45fcad3b4ca1094679d1f9513, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTweenGroup: 0
-  startTag: 0
-  autoStart: 0
-  param:
-    duration: 0.5
-    delay: 0.45
-    loopType: 0
-    animationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    curveType: 9
-    curveSpeed: 0
-    initStartVal: 1
-    destroyOnFinish: 0
-    disableOnFinish: 0
-  next: {fileID: 0}
-  prev: {fileID: 0}
-  onCompleteFunc:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  start: 320
-  end: 42
---- !u!114 &1696405966
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1696405959}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b09c334cff71fa744a5e6a3902da2d67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isTweenGroup: 0
-  startTag: 1
-  autoStart: 0
-  param:
-    duration: 0.5
-    delay: 0.6
-    loopType: 0
-    animationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    curveType: 9
-    curveSpeed: 1
-    initStartVal: 1
-    destroyOnFinish: 0
-    disableOnFinish: 0
-  next: {fileID: 0}
-  prev: {fileID: 0}
-  onCompleteFunc:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  start: 42
-  end: 320
+  rt: {fileID: 1696405960}
+  start: 50
+  end: -243
+  duration: 0.5
+  startDelay: 0.4
+  endDelay: 0.6
+  showCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.6022225
+      value: 1.1060721
+      inSlope: -0.21908917
+      outSlope: -0.21908917
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  hideCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.30096647
+      value: -0.060018066
+      inSlope: 0.06525573
+      outSlope: 0.06525573
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.7503987
+      value: 1.0569897
+      inSlope: 0.1132368
+      outSlope: 0.1132368
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: -0.3381842
+      outSlope: -0.3381842
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!1 &1708542346
 GameObject:
   m_ObjectHideFlags: 0
@@ -36547,7 +36270,6 @@ GameObject:
   - component: {fileID: 1732883279}
   - component: {fileID: 1732883278}
   - component: {fileID: 1732883282}
-  - component: {fileID: 1732883283}
   m_Layer: 5
   m_Name: Soup
   m_TagString: Untagged
@@ -36683,98 +36405,69 @@ MonoBehaviour:
   m_GameObject: {fileID: 1732883276}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b09c334cff71fa744a5e6a3902da2d67, type: 3}
+  m_Script: {fileID: 11500000, guid: 387615f45fcad3b4ca1094679d1f9513, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTweenGroup: 0
-  startTag: 0
-  autoStart: 0
-  param:
-    duration: 0.5
-    delay: 0.3
-    loopType: 0
-    animationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    curveType: 9
-    curveSpeed: 0
-    initStartVal: 1
-    destroyOnFinish: 0
-    disableOnFinish: 0
-  next: {fileID: 0}
-  prev: {fileID: 0}
-  onCompleteFunc:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  start: 320
-  end: -10
---- !u!114 &1732883283
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1732883276}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b09c334cff71fa744a5e6a3902da2d67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isTweenGroup: 0
-  startTag: 1
-  autoStart: 0
-  param:
-    duration: 0.5
-    delay: 0.75
-    loopType: 0
-    animationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    curveType: 9
-    curveSpeed: 1
-    initStartVal: 1
-    destroyOnFinish: 0
-    disableOnFinish: 0
-  next: {fileID: 0}
-  prev: {fileID: 0}
-  onCompleteFunc:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  start: -10
-  end: 320
+  rt: {fileID: 1732883277}
+  start: 50
+  end: -305
+  duration: 0.5
+  startDelay: 0.3
+  endDelay: 0.7
+  showCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.6022225
+      value: 1.1060721
+      inSlope: -0.21908917
+      outSlope: -0.21908917
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  hideCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.30096647
+      value: -0.060018066
+      inSlope: 0.06525573
+      outSlope: 0.06525573
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.7503987
+      value: 1.0569897
+      inSlope: 0.1132368
+      outSlope: 0.1132368
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: -0.3381842
+      outSlope: -0.3381842
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!1 &1741595903
 GameObject:
   m_ObjectHideFlags: 0
@@ -40437,54 +40130,14 @@ MonoBehaviour:
   - {fileID: 619479242}
   - {fileID: 230103591}
   menuTypeGroup:
-  - rt: {fileID: 568470221}
-    start: 50
-    end: -205
-    duration: 0.5
-    startDelay: 0.6
-    endDelay: 0.45
-  - rt: {fileID: 1191977493}
-    start: 50
-    end: -164
-    duration: 0.5
-    startDelay: 0.75
-    endDelay: 0.3
-  - rt: {fileID: 1385272205}
-    start: 50
-    end: -420
-    duration: 0.5
-    startDelay: 0
-    endDelay: 1
-  - rt: {fileID: 1696405960}
-    start: 50
-    end: -243
-    duration: 0.5
-    startDelay: 0.45
-    endDelay: 0.6
-  - rt: {fileID: 1289662760}
-    start: 50
-    end: -365
-    duration: 0.5
-    startDelay: 0.15
-    endDelay: 0.9
-  - rt: {fileID: 1732883277}
-    start: 50
-    end: -305
-    duration: 0.5
-    startDelay: 0.3
-    endDelay: 0.75
-  - rt: {fileID: 80191442}
-    start: 50
-    end: -190
-    duration: 0.5
-    startDelay: 0.9
-    endDelay: 0.15
-  - rt: {fileID: 202842686}
-    start: 50
-    end: -150
-    duration: 0.5
-    startDelay: 1
-    endDelay: 0
+  - {fileID: 568470224}
+  - {fileID: 1191977498}
+  - {fileID: 1385272210}
+  - {fileID: 1696405965}
+  - {fileID: 1289662765}
+  - {fileID: 1732883282}
+  - {fileID: 80191445}
+  - {fileID: 202842691}
   menuGroup:
   - eType: 1
     obj: {fileID: 1619534069}
@@ -40526,7 +40179,7 @@ MonoBehaviour:
     obj: {fileID: 1939305005}
     tg: {fileID: 721232042}
   bill: {fileID: 1479455702}
-  tweenGroup: {fileID: 838091712}
+  tweenGroup: {fileID: 0}
 --- !u!1 &1918255302
 GameObject:
   m_ObjectHideFlags: 0

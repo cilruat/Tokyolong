@@ -6,32 +6,6 @@ using UnityEngine.UI;
 
 public class PageOrder : PageBase {
 
-    [System.Serializable]
-    public class MenuTypeGroup
-    {
-        public RectTransform rt;
-        public float start;
-        public float end;
-        public float duration;
-        public float startDelay;
-        public float endDelay;
-
-        [System.NonSerialized]public bool show = false;
-
-        public void Show()
-        {
-            UITweenPosY.Start(rt.gameObject, start, end, TWParam.New(duration, startDelay).Curve(TWCurve.Back).Speed(TWSpeed.Slower)).AddCallback(OnComplete);
-        }
-
-        public void Hide()
-        {
-            float endPosY = rt.anchoredPosition.y > end ? rt.anchoredPosition.y : end;
-            UITweenPosY.Start(rt.gameObject, endPosY, start, TWParam.New(duration, endDelay).Curve(TWCurve.Back).Speed(TWSpeed.Faster)).AddCallback(OnComplete);
-        }
-
-        void OnComplete() { show = !show; }
-    }
-
 	[System.Serializable]
 	public class MenuGroup
 	{
@@ -44,7 +18,6 @@ public class PageOrder : PageBase {
     public MenuTypeGroup[] menuTypeGroup;
 	public MenuGroup[] menuGroup;
 	public Bill bill;
-    public UITweenGroup tweenGroup;
 
 	EMenuType eCurMenu = EMenuType.eNone;
 
@@ -93,13 +66,13 @@ public class PageOrder : PageBase {
             yield break;
         }
 
-        bool isTweening = true;
-        while (isTweening)
+        bool isShow = true;
+        while (isShow)
         {
             for (int i = 0; i < menuTypeGroup.Length; i++)
             {
-                isTweening = menuTypeGroup[i].show;
-                if (isTweening)
+                isShow = menuTypeGroup[i].show;
+                if (isShow)
                     break;
             }
 
