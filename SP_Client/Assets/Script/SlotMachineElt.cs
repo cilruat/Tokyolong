@@ -15,7 +15,6 @@ public class SlotMachineElt : MonoBehaviour {
 
 	bool isAllAnimating = false;
 	bool isStopAnimating = false;
-	bool startRoll = false;
 	int stopIdx = -1;
 	float StartPosY = 0f;
 	float CutlinePosY = 0f;
@@ -28,22 +27,25 @@ public class SlotMachineElt : MonoBehaviour {
 		_SettingPos (false);
 	}
 
-	void Update () {
-
-		if (startRoll == false)
-			return;
+	IEnumerator _StartSlotAni () {
 
 		if (rtElts == null || rtElts.Length == 0)
-			return;
+			yield break;
 
-		for (int i = 0; i < rtElts.Length; i++) {
-			float y = rtElts [i].anchoredPosition.y;
-			float move = MOVE_SPEED * Time.fixedDeltaTime;
-			float down = y - move;
-			if (down <= CutlinePosY)
-				down = StartPosY;
+		while (true) {
+			if (isStopAnimating)
+				break;
+			
+			for (int i = 0; i < rtElts.Length; i++) {
+				float y = rtElts [i].anchoredPosition.y;
+				float move = MOVE_SPEED * Time.deltaTime;
+				float down = y - move;
+				if (down <= CutlinePosY)
+					down = StartPosY;
 
-			rtElts [i].anchoredPosition = new Vector2 (0f, down);
+				rtElts [i].anchoredPosition = new Vector2 (0f, down);
+			}
+			yield return null;
 		}			
 	}
 
@@ -87,13 +89,13 @@ public class SlotMachineElt : MonoBehaviour {
 			return;
 
 		isAllAnimating = true;
-		startRoll = true;
-
 		this.stopIdx = stopIdx;
 
 		_resetPos ();
 		for (int i = 0; i < rtElts.Length; i++)
 			rtElts [i].gameObject.SetActive (true);
+
+		StartCoroutine (_StartSlotAni ());
 	}
 
 	float _DynamicTime(float time, float fullTime)
@@ -152,7 +154,6 @@ public class SlotMachineElt : MonoBehaviour {
 		if (isJackpot == false && (rtElts == null || rtElts.Length == 0))
 			return;
 		
-		startRoll = false;
 		StartCoroutine (_StopAni (isJackpot));
 	}
 

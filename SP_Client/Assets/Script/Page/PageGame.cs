@@ -78,8 +78,8 @@ public partial class PageGame : PageBase {
 				curGameType = stopIdx;
 				break;
 			case 2:
-				RectTransform[] rtElts = _AllRtElts ();
-				listSlotMachine [i].SetElts (rtElts);
+				/*RectTransform[] rtElts = _AllRtElts ();
+				listSlotMachine [i].SetElts (rtElts);*/
 				break;
 			}				
 
