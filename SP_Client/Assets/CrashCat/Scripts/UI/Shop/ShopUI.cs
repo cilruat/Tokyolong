@@ -38,7 +38,7 @@ namespace CrashCat
             PlayerData.Create();
 
             consumableDatabase.Load();
-            AssetBundlesDatabaseHandler.Load();
+            //AssetBundlesDatabaseHandler.Load();
 
     #if UNITY_ANALYTICS
             //AnalyticsEvent.StoreOpened(StoreType.Soft);
