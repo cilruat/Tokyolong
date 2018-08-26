@@ -44,7 +44,7 @@
             this.textBox1.Location = new System.Drawing.Point(103, 361);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(253, 25);
+            this.textBox1.Size = new System.Drawing.Size(457, 25);
             this.textBox1.TabIndex = 2;
             // 
             // listviewLog
@@ -61,7 +61,7 @@
             this.listviewLog.Location = new System.Drawing.Point(12, 12);
             this.listviewLog.MultiSelect = false;
             this.listviewLog.Name = "listviewLog";
-            this.listviewLog.Size = new System.Drawing.Size(510, 331);
+            this.listviewLog.Size = new System.Drawing.Size(760, 331);
             this.listviewLog.TabIndex = 4;
             this.listviewLog.UseCompatibleStateImageBehavior = false;
             this.listviewLog.View = System.Windows.Forms.View.Details;
@@ -84,9 +84,9 @@
             // 
             // btnSend
             // 
-            this.btnSend.Location = new System.Drawing.Point(362, 361);
+            this.btnSend.Location = new System.Drawing.Point(566, 361);
             this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(77, 25);
+            this.btnSend.Size = new System.Drawing.Size(100, 25);
             this.btnSend.TabIndex = 6;
             this.btnSend.Text = "SEND";
             this.btnSend.UseVisualStyleBackColor = true;
@@ -107,26 +107,26 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(445, 361);
+            this.button1.Location = new System.Drawing.Point(672, 361);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(77, 25);
+            this.button1.Size = new System.Drawing.Size(100, 25);
             this.button1.TabIndex = 8;
-            this.button1.Text = "LOAD";
+            this.button1.Text = "초기화";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.OnBtnDataLoad);
+            this.button1.Click += new System.EventHandler(this.OnBtnDataInit);
             // 
             // Frm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(534, 401);
+            this.ClientSize = new System.Drawing.Size(784, 402);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.CB_AutoScroll);
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.listviewLog);
             this.Controls.Add(this.textBox1);
-            this.MaximumSize = new System.Drawing.Size(550, 440);
-            this.MinimumSize = new System.Drawing.Size(550, 440);
+            this.MaximumSize = new System.Drawing.Size(800, 440);
+            this.MinimumSize = new System.Drawing.Size(800, 440);
             this.Name = "Frm";
             this.Text = "SP_SERVER";
             this.ResumeLayout(false);

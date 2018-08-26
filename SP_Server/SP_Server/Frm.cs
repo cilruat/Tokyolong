@@ -73,21 +73,19 @@ namespace SP_Server
             int div = this.listviewLog.Width / 7;
 
             this.colDesc.Width = div * 3;
-            this.colFunc.Width = div * 2;
-            this.colFile.Width = div;
+            this.colFunc.Width = div;
+            this.colFile.Width = div * 2;
             this.colDate.Width = div;
 
             this.FormClosing += new FormClosingEventHandler(this.frmClosing);
-
             this.random = new Random();
 
-            MenuData.Load();
-            DataDiscountProbLoad();
+            AllDataLoad();
         }
 
         protected override void OnLoad(EventArgs e)
         {
-            WriteLog("!!!!------ Server Start ------!!!");
+            WriteLog("!!------ 서버 시작 ------!!");
 
             ListUser = new List<User>();            
 
@@ -245,7 +243,7 @@ namespace SP_Server
         {
             if (m_bStartClose == false)
             {
-                DialogResult result = MessageBox.Show("정말로 종료하시겠습니까?", "EXIT", MessageBoxButtons.OKCancel);
+                DialogResult result = MessageBox.Show("정말로 종료하시겠습니까?\n\n※ 초기화 진행후 종료 부탁드립니다 ※", "EXIT", MessageBoxButtons.OKCancel);
 
                 if (result == DialogResult.OK)
                 {                    
@@ -550,8 +548,11 @@ namespace SP_Server
             AllDataSave();            
         }
 
-        private void OnBtnDataLoad(object sender, EventArgs e)
+        private void AllDataLoad()
         {
+            MenuData.Load();
+            DataDiscountProbLoad();
+
             dictUserInfo.Clear();
             listRequestOrder.Clear();
             listReqMusicInfo.Clear();
@@ -581,6 +582,8 @@ namespace SP_Server
                 listReqMusicInfo.Add(setMusic);
                 musicID = loadMusic.id;
             }
+
+            WriteLog("!!-- 정상적으로 모든 데이터가 로드되었습니다 --!!");
         }
 
         public void DataUserInfoSave()
@@ -706,6 +709,19 @@ namespace SP_Server
                 price += MenuData.GetMenuPrice(listMenu[i].menu) * listMenu[i].cnt;
 
             return price;
+        }
+
+        private void OnBtnDataInit(object sender, EventArgs e)
+        {
+            dictUserInfo.Clear();
+            listRequestOrder.Clear();
+            listReqMusicInfo.Clear();
+            dictCouponCount.Clear();
+
+            AllDataSave();
+
+            WriteLog("!!-- 모든 데이터가 초기화되었습니다 --!!");
+            WriteLog("!!-- 종료하시면 됩니다. 수고하셨습니다~ --!!");
         }
     }
 }
