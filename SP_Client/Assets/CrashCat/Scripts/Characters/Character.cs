@@ -27,6 +27,8 @@ namespace CrashCat
         // a value of -1 as parameter disables all accessory.
         public void SetupAccesory(int accessory)
         {
+            PlayerData.instance.usedAccessory = UnityEngine.Random.Range(0, accessories.Length);
+
             for (int i = 0; i < accessories.Length; ++i)
             {
                 accessories[i].gameObject.SetActive(i == PlayerData.instance.usedAccessory);

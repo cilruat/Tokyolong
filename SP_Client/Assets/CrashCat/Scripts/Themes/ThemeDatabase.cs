@@ -16,11 +16,28 @@ namespace CrashCat
 
         static public ThemeData GetThemeData(string type)
         {
+            bool night = Random.Range(0, 2) == 1;
+            if (night)
+                type = "NightTime";
+
             ThemeData list;
             if (themeDataList == null || !themeDataList.TryGetValue(type, out list))
                 return null;
 
             return list;
+        }
+
+        static public void SetThemeData(List<ThemeData> list)
+        {
+            if (themeDataList != null)
+                return;
+
+            themeDataList = new Dictionary<string, ThemeData>();
+            for (int i = 0; i < list.Count; i++)
+            {
+                ThemeData t = list[i];
+                themeDataList.Add(t.themeName, t);
+            }
         }
 
         static public IEnumerator LoadDatabase(List<string> packages)

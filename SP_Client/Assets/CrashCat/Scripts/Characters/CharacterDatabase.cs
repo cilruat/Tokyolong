@@ -18,11 +18,28 @@ public class CharacterDatabase
 
     static public Character GetCharacter(string type)
     {
+        bool Raccoon = Random.Range(0, 2) == 1;
+        if (Raccoon)
+            type = "Rubbish Raccoon";
+
         Character c;
         if (m_CharactersDict == null || !m_CharactersDict.TryGetValue(type, out c))
             return null;
 
         return c;
+    }
+
+    static public void SetCharacter(List<Character> list)
+    {
+        if(m_CharactersDict != null)
+            return;
+
+        m_CharactersDict = new Dictionary<string, Character>();
+        for (int i = 0; i < list.Count; i++)
+        {
+            Character c = list[i];
+            m_CharactersDict.Add(c.characterName, c);
+        }
     }
 
     static public IEnumerator LoadDatabase(List<string> packages)
