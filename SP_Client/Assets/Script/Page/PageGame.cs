@@ -134,12 +134,17 @@ public partial class PageGame : PageBase {
 	public void OnStart()
 	{
         if (_CheckSlotAnimating()) {
-            SystemMessage.Instance.Add ("이미 슬롯이 동작중입니다");
+            SystemMessage.Instance.Add ("이미 슬롯이 동작중이에요~~");
             return;
         }
 
 		if (Info.GamePlayCnt <= 0) {
-			SystemMessage.Instance.Add ("게임을 시작할 수 없습니다\n주문을 먼저 해주세요~");
+			SystemMessage.Instance.Add ("게임을 시작할 수 없어요~\n주문 먼저 부탁드릴께요~~");
+			return;
+		}
+
+		if (clickStop) {
+			SystemMessage.Instance.Add ("잠시후 게임이 시작되므로 슬롯을 동작할 수 없어요~~");
 			return;
 		}
 
