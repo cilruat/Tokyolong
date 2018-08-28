@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public partial class Info : MonoBehaviour {
 
@@ -76,4 +78,10 @@ public partial class Info : MonoBehaviour {
                 mainWaitCoupon = true;
         }
     }
+
+	public static bool IsInputFieldFocused()
+	{
+		GameObject objSelected = EventSystem.current.currentSelectedGameObject;
+		return objSelected != null && objSelected.GetComponent<InputField> () != null;
+	}
 }

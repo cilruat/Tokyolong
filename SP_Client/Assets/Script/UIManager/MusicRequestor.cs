@@ -8,6 +8,21 @@ public class MusicRequestor : MonoBehaviour
     public InputField inputTitle;
     public InputField inputSinger;
 
+	VirtualKeyboard keyboard = new VirtualKeyboard();
+
+	void Update()
+	{
+		if (Input.GetMouseButton (0)) {			
+			if (Info.IsInputFieldFocused ())
+				keyboard.ShowOnScreenKeyboard ();
+		}
+	}		
+
+	public void OnEndEdit()
+	{		
+		keyboard.HideOnScreenKeyboard ();
+	}
+	
     public void OnSendMusicRequest()
     {
         if (string.IsNullOrEmpty(inputTitle.text))

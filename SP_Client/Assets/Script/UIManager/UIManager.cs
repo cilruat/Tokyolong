@@ -212,7 +212,8 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 		if (Input.GetKeyDown(KeyCode.P))
 		{
 			Info.GamePlayCnt += 1;
-			((PageGame)PageBase.Instance).RefreshPlayCnt();
+			if (Info.isCheckScene ("Game"))
+				((PageGame)PageBase.Instance).RefreshPlayCnt ();
 		}
 
 		if (Input.GetKey (KeyCode.LeftShift)) {

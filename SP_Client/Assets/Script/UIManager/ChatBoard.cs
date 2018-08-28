@@ -13,6 +13,21 @@ public class ChatBoard : MonoBehaviour
 
     UserChatInfo userChatInfo = null;
 
+	VirtualKeyboard keyboard = new VirtualKeyboard();
+
+	void Update()
+	{
+		if (Input.GetMouseButton (0)) {			
+			if (Info.IsInputFieldFocused ())
+				keyboard.ShowOnScreenKeyboard ();
+		}
+	}		
+
+	public void OnEndEdit()
+	{
+		keyboard.HideOnScreenKeyboard ();
+	}
+
     public void RemoveAllChat()
     {
         for(int i = listChat.Count-1; i >= 0; i--)
