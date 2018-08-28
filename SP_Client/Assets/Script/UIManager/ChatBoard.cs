@@ -48,14 +48,14 @@ public class ChatBoard : MonoBehaviour
         for (int i = 0; i < this.userChatInfo.listChat.Count; i++)
         {
             UserChat chat = this.userChatInfo.listChat[i];
-            AddChatElt(chatInfo.info, chat);
+            AddChatElt(chat);
         }
     }
 
-    public void AddChatElt(UserInfo userInfo, UserChat chat)
+    public void AddChatElt(UserChat chat)
 	{
 		ChatElt elt = CreateChatElt ();
-        elt.SetChatElt (userInfo, chat);
+        elt.SetChatElt (chat);
 		listChat.Add (elt);
 
         ResizeScroll();

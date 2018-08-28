@@ -6,19 +6,21 @@ using UnityEngine.UI;
 public class ChatTableElt : MonoBehaviour 
 {
     public UIChat uiChat;
-
-    public Button btn;
     public Image imgSelect;
     public Text textTableNo;
     public GameObject objNew;
 
     byte tableNo;
 
-	public void SetTableElt(byte tableNo)
+    UIChat owner;
+
+    public void SetTableElt(byte tableNo, UIChat owner)
     {
         OnNewActive(true);
 
 		this.tableNo = tableNo;
+        this.owner = owner;
+
 		textTableNo.text = "No. <size='30'>" + tableNo.ToString () + "</size>";
 	}
 
@@ -36,5 +38,10 @@ public class ChatTableElt : MonoBehaviour
     public void OnNewActive(bool isActive)
     {
         objNew.gameObject.SetActive(isActive);
+    }
+
+    public void Remove()
+    {
+        this.owner.RemoveChat(tableNo);
     }
 }

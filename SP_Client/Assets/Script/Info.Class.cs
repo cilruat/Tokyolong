@@ -21,27 +21,22 @@ public class UserInfo
 
 public class UserChatInfo
 {
-    public UserInfo info = null;
     public List<UserChat> listChat = new List<UserChat>();
     public bool isNew = false;
 
-    public UserChatInfo(UserInfo info)
-    {
-        this.info = info;
-    }
-
     public void AddChat(UserChat chat) { listChat.Add(chat); }
-    public void AddChat(byte person, string time, string chat) { listChat.Add(new UserChat(person, time, chat)); }
 }
 
 public class UserChat
 {
+    public UserInfo info;
     public byte person;
     public string time;
     public string chat;
 
-    public UserChat(byte person, string time, string chat)
+    public UserChat(UserInfo info, byte person, string time, string chat)
     {
+        this.info = info;
         this.person = person;
         this.time = time;
         this.chat = chat;
@@ -86,6 +81,7 @@ public partial class Info : MonoBehaviour
         couponCnt = 0;
         loopCouponRemainTime = 0f;
         waitCoupon = false;
+        mainWaitCoupon = false;
 
         myInfo = null;
         dictUserInfo.Clear();
@@ -144,10 +140,7 @@ public partial class Info : MonoBehaviour
 
         dictUserInfo.Remove(tableNo);
 
-        if (dictUserChatInfo.ContainsKey(tableNo) == false)
-            return;
-        
-        dictUserChatInfo.Remove(tableNo);
+        RemoveUserChatInfo(tableNo);
 
         GameObject objUIChat = UIManager.Instance.GetUI(eUI.eChat);
         UIChat uiChat = objUIChat.GetComponent<UIChat>();
@@ -158,6 +151,14 @@ public partial class Info : MonoBehaviour
         }
 
         uiChat.RemoveChatTableElt(tableNo);
+    }
+
+    public static void RemoveUserChatInfo(byte tableNo)
+    {
+        if (dictUserChatInfo.ContainsKey(tableNo) == false)
+            return;
+
+        dictUserChatInfo.Remove(tableNo);
     }
 
     // About Chat..
@@ -172,7 +173,7 @@ public partial class Info : MonoBehaviour
     public static void AddUserChatInfo(byte tableNo, UserChat chat, bool isNew)
     {
         if (dictUserChatInfo.ContainsKey(tableNo) == false)
-            dictUserChatInfo.Add(tableNo, new UserChatInfo(GetUser(tableNo)));
+            dictUserChatInfo.Add(tableNo, new UserChatInfo());
 
         if (chat == null)
             return;

@@ -177,12 +177,12 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         byte otherTableNo = msg.pop_byte();
         string time = msg.pop_string();
         string chat = msg.pop_string();
-        UserChat newChat = new UserChat(1, time, chat);
+        UserChat newChat = new UserChat(Info.GetUser(Info.TableNum), (byte)1, time, chat);
 
         Info.AddUserChatInfo(otherTableNo, newChat, false);
         GameObject obj = UIManager.Instance.GetCurUI();
         UIChat uiChat = obj.GetComponent<UIChat>();
-        uiChat.chatBoard.AddChatElt(Info.myInfo, newChat);
+        uiChat.AddChat(otherTableNo, newChat);
     }
 
     void ChatNOT(CPacket msg)
@@ -190,16 +190,17 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         byte otherTableNo = msg.pop_byte ();
         string time = msg.pop_string();
         string chat = msg.pop_string();
-        UserChat newChat = new UserChat(0, time, chat);
+
+        UserChat newChat = new UserChat(Info.GetUser(otherTableNo), (byte)0, time, chat);
 
         bool isActive = UIManager.Instance.IsActive(eUI.eChat);
         Info.AddUserChatInfo(otherTableNo, newChat, !isActive);
 
         if (UIManager.Instance.IsActive(eUI.eChat))
         {
-            GameObject obj = UIManager.Instance.GetCurUI();
+            GameObject obj = UIManager.Instance.GetUI(eUI.eChat);
             UIChat uiChat = obj.GetComponent<UIChat>();
-            uiChat.chatBoard.AddChatElt(Info.GetUser(otherTableNo), newChat);
+            uiChat.AddChat(otherTableNo, newChat);
         }
         else
             UIManager.Instance.ShowChatAlarm();        

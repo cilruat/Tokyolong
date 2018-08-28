@@ -22,9 +22,8 @@ public class UIChat : MonoBehaviour
     {
         foreach (KeyValuePair<byte, UserChatInfo> pair in Info.dictUserChatInfo)
         {
-            bool isCreate = dictChatTable.ContainsKey(pair.Key) == false;
-            if (isCreate)   
-                AddTableChat(pair.Key);
+            if (dictChatTable.ContainsKey(pair.Key) == false)
+                AddChatTableElt(pair.Key);
             else 
                 dictChatTable[pair.Key].OnNewActive(pair.Value.isNew);
 
@@ -58,10 +57,10 @@ public class UIChat : MonoBehaviour
         chatBoard.SetChat(Info.GetUserChat(tableNo));
     }
 
-    void AddTableChat(byte tableNo)
+    void AddChatTableElt(byte tableNo)
 	{
 		ChatTableElt elt = CreateChatTableElt ();
-		elt.SetTableElt (tableNo);
+		elt.SetTableElt (tableNo, this);
 		dictChatTable.Add (tableNo, elt);
 
         Info.AddUserChatInfo(tableNo, null, false);
@@ -72,9 +71,30 @@ public class UIChat : MonoBehaviour
         ShowChatTable();
 
         if (Info.GetUserChat(tableNo) == null)
-            AddTableChat(tableNo);
+            AddChatTableElt(tableNo);
 
         SelectTable(tableNo);
+    }
+
+    public void AddChat(byte tableNo, UserChat chat)
+    {
+        if (selectTableNo == tableNo)
+        {
+            if (chatBoard.gameObject.activeSelf == false)
+                chatBoard.gameObject.SetActive(true);
+
+            if (rtChatEmpty.gameObject.activeSelf)
+                rtChatEmpty.gameObject.SetActive(false);
+
+            chatBoard.AddChatElt(chat);
+        }
+        else
+        {
+            if (dictChatTable.ContainsKey(tableNo) == false)
+                AddChatTableElt(tableNo);
+            else
+                dictChatTable[tableNo].OnNewActive(true);
+        }
     }
 
 	ChatTableElt CreateChatTableElt()
@@ -96,6 +116,21 @@ public class UIChat : MonoBehaviour
 
         Destroy(dictChatTable[tableNo].gameObject);
         dictChatTable.Remove(tableNo);
+    }
+
+    public void RemoveChat(byte tableNo)
+    {
+        if (selectTableNo == tableNo)
+        {
+            if (chatBoard.gameObject.activeSelf)
+                chatBoard.gameObject.SetActive(false);
+
+            if (rtChatEmpty.gameObject.activeSelf == false)
+                rtChatEmpty.gameObject.SetActive(true);
+        }
+
+        RemoveChatTableElt(tableNo);
+        Info.RemoveUserChatInfo(tableNo);
     }
 
     public void OnChatSend()
