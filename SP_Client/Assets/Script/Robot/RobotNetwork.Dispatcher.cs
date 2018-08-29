@@ -87,7 +87,10 @@ public partial class RobotNetwork : MonoBehaviour
 
     void RequestMusicACK(CPacket msg)
     {       
-        int priority = msg.pop_int32();
+        bool isAdd = System.Convert.ToBoolean(msg.pop_byte());
+        if (isAdd == false)
+            return;
+
         string packing = msg.pop_string ();
     }
 
