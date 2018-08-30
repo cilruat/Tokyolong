@@ -208,9 +208,27 @@ public class Bill : MonoBehaviour {
 			SendMenu send = new SendMenu (menu, cnt);
 			list.Add (send);
 
-            if (listElt[i].MenuType() != EMenuType.eDrink)
-                orderCnt += cnt;
-		}
+            int dcChanceCnt = 0;
+            switch (listElt[i].MenuType())
+            {
+                case EMenuType.eSozu:
+                case EMenuType.eBear:
+                case EMenuType.eSake:
+                case EMenuType.eFruitSozu:
+                case EMenuType.eFruitMakgeolli:
+                case EMenuType.eGin:
+                    dcChanceCnt = 2;
+                    break;
+                case EMenuType.eDrink:
+                    dcChanceCnt = 1;
+                    break;
+                default:
+                    dcChanceCnt = 3;
+                    break;
+            }
+
+            orderCnt += (dcChanceCnt * cnt);
+        }
 
 		JsonData json = JsonMapper.ToJson (list);
         NetworkManager.Instance.Order_REQ (json.ToString (), orderCnt);
