@@ -207,14 +207,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
                 Hide(eUI.eWaiting);
                 SceneChanger.LoadScene ("Login", PageBase.Instance.curBoardObj ());
             }
-        }
-
-		if (Input.GetKeyDown(KeyCode.P))
-		{
-			Info.GamePlayCnt += 1;
-			if (Info.isCheckScene ("Game"))
-				((PageGame)PageBase.Instance).RefreshPlayCnt ();
-		}
+        }			
 
 		if (Input.GetKey (KeyCode.LeftShift)) {
 			
@@ -223,7 +216,14 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 
 			if (Input.GetKeyDown (KeyCode.C))
 				showClickA = !showClickA;
-		}			
+
+			if (Input.GetKeyDown(KeyCode.P))
+			{
+				Info.GamePlayCnt += 1;
+				if (Info.isCheckScene ("Game"))
+					((PageGame)PageBase.Instance).RefreshPlayCnt ();
+			}
+		}		
 
 		if (Input.GetMouseButtonDown (0)) {
 			if (isMouseClickEff == false)
