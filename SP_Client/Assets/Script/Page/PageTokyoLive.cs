@@ -7,7 +7,7 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
    
 	public Text txtDesc;
     public Text txtQuesiton;
-    public Text[] txtChoice;    
+    public Text[] txtChoice; 
 	public Image[] imgCheck;
 	public GameObject[] objChoice;
 	public GameObject[] objSelect;
@@ -18,20 +18,30 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 	public GameObject objSendServer;
 	public GameObject objBoard;
 
+	public Text txtPrevTime;
+	public Image imgReady;
+	public GameObject objDecoText;
+
     List<Dictionary<string, object>> data = new List<Dictionary<string, object>>();
 
     const int LIMIT_TIME = 15;
 	const int LIMIT_TIME_SELECT = 2;
+	const int LIMIT_PREV_TIME = 60;
 
-	string[] desc = {
-		"도쿄라이브 대손님퀴드쇼~\n\n총 2문가 출제가 되는데\n모두 맞추셔야\n할인이 적용됩니다.\n\n한문제라도 틀리면 즉시 종료!!\n\n자 그럼 첫번째 문제 나갑니다\n\n고고고!!!", 
-		"\n\n역시 대단하시네요~~\n\n바로 이어서\n두번째 문제 나갑니다\n\n고고고!!!",
-		"\n\n\n정말 잘 푸셨어요~\n\n할인 적용됩니다^^*",
-		"\n\n\n아쉽지만 할인은 다음기회에\nㅠㅠ\n\n안녕~~" };
+	string[] first_desc = {
+		"\n도쿄라이브 대손님퀴즈쇼~\n\n총 2문제가 출제가 되는데\n모두 맞추셔야\n할인이 적용됩니다.\n\n한문제라도 틀리면\n즉시 종료!!\n\n그럼 첫번째 문제 나갑니다\n\n고고고!!!",
+		"\n\n다시 찾아온 도쿄라이브~~\n\n이번에도 모든 문제\n다 맞추실수 있죠~?\n\n그럼 화이팅있게\n첫번째 문제 나갑니다\n\n고고고!!!",
+		"\n이번이 마지막 퀴즈 할인~~\n\n계속 할인받으신 손님은\n여전히 이번에도 할인\n가즈아~\n\n아니신 손님은\n이번만이라도 흑흑 ㅠㅠ\n\n그럼 첫번째 문제 나갑니다\n\n고고고!!!"};
+	string[] desc = {		
+		"\n\n\n역시 대단하시네요~~\n\n바로 이어서\n두번째 문제 나갑니다\n\n고고고!!!",
+		"\n\n\n\n정말 잘 푸셨어요~\n\n할인 적용됩니다^^*",
+		"\n\n\n\n아쉽지만 할인은\n다음기회에\nㅠㅠ\n\n안녕~~" };
 	
     string[] question1 = { "", "", "", "" };
     string[] question2 = { "", "", "", "" };
 
+	bool cheat = false;
+	bool startGame = false;
 	bool showTime = false;
 	bool nextQuestion = false;
     	
@@ -42,22 +52,38 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 
     void Awake()
     {
-		Application.runInBackground = true;
-
         string path = Application.dataPath;
         int lastIdx = path.LastIndexOf(@"/");
         path = path.Substring(0, lastIdx) + @"\Info\TokyoLive_QuestionBook.csv";
-
         data = CSVReader.Read(path);
-
-        _RandQuestion(ref question1, ref answer1);
-        _RandQuestion(ref question2, ref answer2);
-
-		_Init ();              
     }
+
+	public void PrevSet(bool cheat = false)
+	{
+		this.cheat = cheat;
+		UITweenAlpha.Start (gameObject, 0f, 1f, TWParam.New (1f).Curve (TWCurve.CurveLevel2).Speed (TWSpeed.Slower));
+
+		_RandQuestion(ref question1, ref answer1);
+		_RandQuestion(ref question2, ref answer2);
+
+		_Init ();
+	}
 
 	void Update()
 	{
+		if (cheat) {
+			cheat = false;
+			Info.tokyoLiveCnt = 1;
+			StartCoroutine (_CheatStart ());
+		}
+
+		if (startGame == false) {
+			txtPrevTime.text = (60 - System.DateTime.Now.Second).ToString ();
+
+			if (Info.IsStartTokyoLiveTime ())
+				NetworkManager.Instance.TokyoLive_REQ ();
+		}
+
 		if (showTime == false)
 			return;
 
@@ -76,6 +102,7 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 
 	void _Init()
 	{		
+		startGame = false;
 		txtQuesiton.text = "";
 		selectAnswer = 0;
 
@@ -92,22 +119,44 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 			imgCheck [i].fillAmount = 0f;
 		}			
 	}
+		
+	IEnumerator _CheatStart()
+	{
+		yield return new WaitForSeconds (5f);
+		OnStart ();
+	}
 
-    IEnumerator Start()
+	public void OnStart()
+	{
+		startGame = true;
+		StartCoroutine (_Start ());
+	}
+
+    IEnumerator _Start()
     {
+		objDecoText.SetActive (false);
+		while (true) {
+			imgReady.fillAmount -= Time.deltaTime * 2f;
+			if (imgReady.fillAmount <= 0f)
+				break;
+
+			yield return null;
+		}
+
         yield return new WaitForSeconds(.5f);
         UITweenAlpha.Start(objBoard, 0f, 1f, TWParam.New(1f).Curve(TWCurve.CurveLevel2));
 
         yield return new WaitForSeconds(.5f);
 
-		yield return StartCoroutine (_ShowPrevDesc (desc[0]));
+		int firstDescIdx = Info.tokyoLiveCnt - 1;
+		yield return StartCoroutine (_ShowPrevDesc (first_desc[firstDescIdx]));
 		yield return new WaitForSeconds(1f);
 		yield return StartCoroutine (_ShowQuestion ());
 
 		while (nextQuestion == false)
 			yield return null;			
 
-		yield return StartCoroutine (_ShowPrevDesc (desc[1]));
+		yield return StartCoroutine (_ShowPrevDesc (desc[0]));
 		yield return new WaitForSeconds(1f);
 		yield return StartCoroutine (_ShowQuestion ());
    }
@@ -150,7 +199,7 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 		}
 
 		objTime.SetActive(true);
-		UITweenScale.Start(objTime, 1f, 1.1f, TWParam.New(.5f, .7f).Curve(TWCurve.CurveLevel2).Loop(TWLoop.PingPong));
+		//UITweenScale.Start(objTime, 1f, 1.1f, TWParam.New(.5f, .7f).Curve(TWCurve.CurveLevel2).Loop(TWLoop.PingPong));
 		countDown.Set (LIMIT_TIME, () => _ShowAnswer ());
 
 		showTime = true;
@@ -219,27 +268,38 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 	IEnumerator _EndGame(bool right)
 	{		
 		if (curStage == 2 && right) {
-			yield return StartCoroutine (_ShowPrevDesc (desc [2]));
+			yield return StartCoroutine (_ShowPrevDesc (desc [1]));
 			yield return new WaitForSeconds (.5f);
 			objSendServer.SetActive (true);
 
 			yield return new WaitForSeconds (1f);
 
 			if (Info.TableNum == 0)
-				ReturnHome ();
+				OnClose ();
 			else
 				NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
 		} else {
-			yield return StartCoroutine (_ShowPrevDesc (desc [3]));
-			ReturnHome ();
+			yield return StartCoroutine (_ShowPrevDesc (desc [2]));
+			OnClose ();
 		}
 
 		yield break;
 	}
 
-	public void ReturnHome()
+	public void OnClose()
 	{
-		SceneChanger.LoadScene ("Main", objBoard);
+		StartCoroutine (_OnClose ());
+	}
+
+	IEnumerator _OnClose()
+	{
+		UITweenAlpha.Start (gameObject, 1f, 0f, TWParam.New (1f).Curve (TWCurve.CurveLevel2).Speed (TWSpeed.Slower));
+		yield return new WaitForSeconds (.8f);
+
+		UIManager.Instance.Hide (eUI.eTokyoLive);
+
+		imgReady.fillAmount = 1f;
+		objDecoText.SetActive (true);
 	}
 
 	public void OnSelect(int answer)

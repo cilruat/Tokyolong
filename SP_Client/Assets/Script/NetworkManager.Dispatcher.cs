@@ -52,10 +52,11 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		case PROTOCOL.UNFINISH_GAME_CONFIRM_NOT:	UnfinishGameConfirmNOT (msg);	break;
         case PROTOCOL.TABLE_DISCOUNT_INPUT_ACK:     TableDiscountInputACK(msg);     break;
         case PROTOCOL.TABLE_DISCOUNT_INPUT_NOT:     TableDiscountInputNOT(msg);     break;
-        case PROTOCOL.GET_RANDOM_DISCOUNT_PROB_ACK: GetDiscountProb_ACK(msg);   break;
-        case PROTOCOL.SET_RANDOM_DISCOUNT_PROB_ACK: SetDiscountProb_ACK(msg);   break;
-        case PROTOCOL.COUPON_ACK:                   Coupon_ACK(msg);            break;
-        case PROTOCOL.TABLE_PRICE_CONFIRM_ACK:   TablePriceConfirm_ACK(msg);    break;
+        case PROTOCOL.GET_RANDOM_DISCOUNT_PROB_ACK: GetDiscountProb_ACK(msg);   	break;
+        case PROTOCOL.SET_RANDOM_DISCOUNT_PROB_ACK: SetDiscountProb_ACK(msg);   	break;
+        case PROTOCOL.COUPON_ACK:                   Coupon_ACK(msg);            	break;
+        case PROTOCOL.TABLE_PRICE_CONFIRM_ACK:   	TablePriceConfirm_ACK(msg);    	break;
+		case PROTOCOL.TOKYOLIVE_ACK:				TokyoLive_ACK (msg);			break;
 		}
 	}
 
@@ -82,6 +83,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 			Info.GamePlayCnt = (byte)msg.pop_int32 ();
             Info.couponCnt = msg.pop_int32();
             Info.waitCoupon = false;
+			Info.tokyoLiveCnt = msg.pop_int32 ();
 
 			int existUser = msg.pop_int32 ();
 			if (existUser == 1) {
@@ -223,7 +225,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		Info.GameDiscountWon = -1;
 
 		if (Info.isCheckScene ("TokyoLive"))
-			PageTokyoLive.Instance.ReturnHome ();
+			PageTokyoLive.Instance.OnClose ();
 		else if (Info.isCheckScene ("PicturePuzzle"))
 			PagePicturePuzzle.Instance.ReturnHome ();
 		else if (Info.isCheckScene ("PairCards"))
@@ -427,4 +429,11 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
         PageAdmin.Instance.ShowTableDiscountInput(tableNo, tablePrice, tableDiscount);
     }
+
+	void TokyoLive_ACK(CPacket msg)
+	{
+		Info.tokyoLiveCnt = msg.pop_int32();
+		if (PageTokyoLive.Instance)
+			PageTokyoLive.Instance.OnStart ();
+	}
 }

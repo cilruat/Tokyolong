@@ -15,11 +15,14 @@ public enum eUI
     eHowToUse,
     eShowLog,
     eCoupon,
+	eTokyoLive,
 
 	eNone = 100,
 }
 
 public class UIManager : SingletonMonobehaviour<UIManager> {
+
+	static UIManager single = null;
 
 	[System.Serializable]
 	public class UI
@@ -41,8 +44,6 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 
 	eUI curUI = eUI.eNone;
 	Dictionary<eUI, GameObject> dicObject = new Dictionary<eUI, GameObject> ();
-
-    static UIManager single = null;
 
     void Awake () 
 	{
@@ -78,22 +79,16 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
     public void Show(int pageIdx) { Show((eUI)pageIdx); }
 	public GameObject Show(eUI page)
 	{
-        switch (page)
-        {
-            case eUI.eWaiting:
-                elapsedTime = 0f;
-                waiting = true;
-                break;
-            case eUI.eShowLog:
-                break;
-            case eUI.eCoupon:
-                curUI = page;
-                break;
-            default:
-                curUI = page;
-                objShadow.SetActive (true);
-                break;
-        }
+		switch (page) {
+		case eUI.eWaiting:		elapsedTime = 0f;	waiting = true;		break;
+		case eUI.eShowLog:		break;
+		case eUI.eCoupon:		curUI = page;	break;
+		case eUI.eTokyoLive:	curUI = page;	break;
+		default:
+			curUI = page;
+			objShadow.SetActive (true);
+			break;
+		}
 
 		dicObject [page].SetActive (true);
 		return dicObject [page];
@@ -102,23 +97,16 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
     public void Hide(int pageIdx) { Hide((eUI)pageIdx); }
 	public void Hide(eUI page)
 	{
-        switch (page)
-        {
-            case eUI.eWaiting:
-                elapsedTime = 0f;
-                waiting = false;
-                break;
-            case eUI.eShowLog:
-                break;
-            case eUI.eCoupon:
-                Info.waitCoupon = false;
-                Info.loopCouponRemainTime = 0f;
-                break;
-            default:
-                curUI = eUI.eNone;
-                objShadow.SetActive (false);
-                break;
-        }
+		switch (page) {
+		case eUI.eWaiting:		elapsedTime = 0f;	waiting = false;	break;
+		case eUI.eShowLog:		break;
+		case eUI.eCoupon:		Info.waitCoupon = false;	Info.loopCouponRemainTime = 0f;		break;
+		case eUI.eTokyoLive:	curUI = eUI.eNone;	break;
+		default:
+			curUI = eUI.eNone;
+			objShadow.SetActive (false);
+			break;
+		}
 		
 		dicObject [page].SetActive (false);
 	}
@@ -223,6 +211,13 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 				if (Info.isCheckScene ("Game"))
 					((PageGame)PageBase.Instance).RefreshPlayCnt ();
 			}
+
+			if (Input.GetKeyDown (KeyCode.T)) {
+				GameObject obj = UIManager.Instance.Show (eUI.eTokyoLive);
+				PageTokyoLive page = obj.GetComponent<PageTokyoLive> ();
+				if (page)
+					page.PrevSet (true);
+			}
 		}		
 
 		if (Input.GetMouseButtonDown (0)) {
@@ -240,7 +235,17 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
             clickStar.ShowClickStar(Input.mousePosition);
 		}
 
-        if(Info.TableNum != (byte)0 && Info.isCheckScene("Login") == false)
-            Info.UpdateCouponRemainTime();
+		if (Info.TableNum != (byte)0 && Info.isCheckScene ("Login") == false) {
+			Info.UpdateCouponRemainTime ();
+			Info.UpdateTokyoLiveTime ();
+		}			
     }
+
+	public void QuitPos()
+	{
+	#if UNITY_EDITOR
+		UnityEditor.EditorApplication.isPlaying = false;
+	#endif
+		Application.Quit ();
+	}
 }

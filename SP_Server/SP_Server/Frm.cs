@@ -51,7 +51,8 @@ namespace SP_Server
         public int musicID = -1;
         public List<RequestMusicInfo> listReqMusicInfo = new List<RequestMusicInfo>();
 
-        const int COUPON_MAX_CNT = 2;
+        public const int COUPON_MAX_CNT = 2;
+        public const int TOKYO_MAX_CNT = 3;
 
         Random random;
         
@@ -59,9 +60,7 @@ namespace SP_Server
         float Discount3Prob { get { return listDiscountProb[3]; } }
         float Discount2Prob { get { return (Discount3Prob + listDiscountProb[2]); } }
         float Discount1Prob { get { return (Discount2Prob + listDiscountProb[1]); } }
-        float Discount0Prob { get { return (Discount1Prob + listDiscountProb[0]); } }
-
-        public Dictionary<int, int> dictCouponCount = new Dictionary<int, int>();
+        float Discount0Prob { get { return (Discount1Prob + listDiscountProb[0]); } }        
 
         public Frm()
         {
@@ -285,6 +284,7 @@ namespace SP_Server
                 return;
 
             dictUserInfo[tableNo] = info;
+            DataUserInfoSave();
         }
 
         public RequestMusicInfo AddRequestMusic(int tableNo, string title, string singer)
@@ -510,10 +510,7 @@ namespace SP_Server
         public void RemoveUserData(int tableNo)
         {
             if (dictUserInfo.ContainsKey(tableNo))
-                dictUserInfo.Remove(tableNo);
-
-            if (dictCouponCount.ContainsKey(tableNo))
-                dictCouponCount.Remove(tableNo);
+                dictUserInfo.Remove(tableNo);            
 
             for (int i = listRequestOrder.Count - 1; i >= 0; i--)
             {
@@ -559,8 +556,7 @@ namespace SP_Server
 
             Dictionary<int, UserInfo> users = BinarySave.Deserialize<Dictionary<int, UserInfo>>("DataSave\\UserInfo.bin");
             List<RequestOrder> orders = BinarySave.Deserialize<List<RequestOrder>>("DataSave\\RequestOrder.bin");
-            List<RequestMusicInfo> musics = BinarySave.Deserialize<List<RequestMusicInfo>>("DataSave\\RequestMusic.bin");
-            DataCouponCountLoad();
+            List<RequestMusicInfo> musics = BinarySave.Deserialize<List<RequestMusicInfo>>("DataSave\\RequestMusic.bin");            
 
             foreach (KeyValuePair<int, UserInfo> pair in users)            
                 dictUserInfo.Add(pair.Key, pair.Value);            
@@ -607,8 +603,7 @@ namespace SP_Server
         {
             DataUserInfoSave();
             DataRequestSave(true);
-            DataRequestSave(false);
-            DataCouponCountSave();
+            DataRequestSave(false);            
         }
 
         public void DataDiscountProbSave()
@@ -652,49 +647,7 @@ namespace SP_Server
             listDiscountProb = list;
 
             DataDiscountProbSave();
-        }
-
-        public void SetCouponCount(int tableNo)
-        {
-            if (dictCouponCount.ContainsKey(tableNo) == false)
-                dictCouponCount.Add(tableNo, 0);
-
-            if (dictCouponCount[tableNo] >= COUPON_MAX_CNT)
-                return;
-
-            dictCouponCount[tableNo]++;
-
-            DataCouponCountSave();
-        }
-
-        public int GetCouponCount(int tableNo)
-        {
-            int cnt = 0;
-            if (dictCouponCount.TryGetValue(tableNo, out cnt) == false)
-                return 0;
-
-            return cnt;
-        }
-
-        public void DataCouponCountSave()
-        {
-            if (Directory.Exists("Data") == false)
-                Directory.CreateDirectory("Data");
-
-            BinarySave.Serialize(dictCouponCount, "Data\\TableCouponCount.bin");
-        }
-
-        public void DataCouponCountLoad()
-        {
-            if (File.Exists("Data\\TableCouponCount.bin") == false)
-            {
-                DataCouponCountSave();
-                return;
-            }
-
-            dictCouponCount.Clear();
-            dictCouponCount = BinarySave.Deserialize<Dictionary<int, int>>("Data\\TableCouponCount.bin");
-        }
+        }        
 
         public int GetTablePrice(int tableNo)
         {
@@ -713,15 +666,19 @@ namespace SP_Server
 
         private void OnBtnDataInit(object sender, EventArgs e)
         {
-            dictUserInfo.Clear();
-            listRequestOrder.Clear();
-            listReqMusicInfo.Clear();
-            dictCouponCount.Clear();
+            DialogResult result = MessageBox.Show("정말로 모든 데이터를 초기화하시겠습니까?", "초기화", MessageBoxButtons.OKCancel);
 
-            AllDataSave();
+            if (result == DialogResult.OK)
+            {
+                dictUserInfo.Clear();
+                listRequestOrder.Clear();
+                listReqMusicInfo.Clear();
 
-            WriteLog("!!-- 모든 데이터가 초기화되었습니다 --!!");
-            WriteLog("!!-- 종료하시면 됩니다. 수고하셨습니다~ --!!");
+                AllDataSave();
+
+                WriteLog("!!-- 모든 데이터가 초기화되었습니다 --!!");
+                WriteLog("!!-- 종료하시면 됩니다. 수고하셨습니다~ --!!");
+            }            
         }
     }
 }

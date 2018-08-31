@@ -216,4 +216,12 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
         send(msg);
     }
+
+	public void TokyoLive_REQ()
+	{
+		CPacket msg = CPacket.create((short)PROTOCOL.TOKYOLIVE_REQ);
+		msg.push(Info.TableNum);
+
+		send(msg);
+	}
 }

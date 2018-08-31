@@ -75,14 +75,16 @@ namespace SP_Server
         TABLE_DISCOUNT_INPUT_REQ,
         TABLE_DISCOUNT_INPUT_ACK,
         TABLE_DISCOUNT_INPUT_NOT,
-        GET_RANDOM_DISCOUNT_PROB_REQ,
-        GET_RANDOM_DISCOUNT_PROB_ACK,
-        SET_RANDOM_DISCOUNT_PROB_REQ,
-        SET_RANDOM_DISCOUNT_PROB_ACK,
+		GET_RANDOM_DISCOUNT_PROB_REQ,
+		GET_RANDOM_DISCOUNT_PROB_ACK,
+		SET_RANDOM_DISCOUNT_PROB_REQ,
+		SET_RANDOM_DISCOUNT_PROB_ACK,
         COUPON_REQ,
         COUPON_ACK,
         TABLE_PRICE_CONFIRM_REQ,
         TABLE_PRICE_CONFIRM_ACK,
+		TOKYOLIVE_REQ,
+		TOKYOLIVE_ACK,
         //-------------------------------------
         // 게임 프로토콜.
         //-------------------------------------        
