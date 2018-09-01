@@ -34,6 +34,9 @@ public class AdminTableOrderInput : SingletonMonobehaviour<AdminTableOrderInput>
             dictMenuDetailElt.Add(type, new List<MenuDetailElt>());
             for (int i = 0; i < pair.Value.Count; i++)
             {
+                if (pair.Value[i].menuID == (int)EMenuDetail.eMilkMakgeolli)
+                    continue;
+
                 MenuDetailElt newMenuDetailElt = CreateMenuDetailElt();
                 newMenuDetailElt.SetMenuElt(pair.Value[i]);
                 dictMenuDetailElt[type].Add(newMenuDetailElt);
