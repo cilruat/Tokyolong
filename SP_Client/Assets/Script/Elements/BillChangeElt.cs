@@ -24,6 +24,9 @@ public class BillChangeElt : MonoBehaviour {
 	{
         this.type = type;
         this.data = MenuData.Get((int)type);
+        if (data == null)
+            return;
+
         txtName.text = data.menuName;
 
         this.oriValue = oriVal;

@@ -20,6 +20,8 @@ public class MenuInfo : MonoBehaviour {
         price = child.GetComponent<Text>();
 
         this.data = MenuData.Get(menu);
+        if (this.data == null)
+            return;
 
         title.text = "" + data.menuName + "";
         price.text = data.price.ToString();

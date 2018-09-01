@@ -284,10 +284,10 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 
 			yield return new WaitForSeconds (1f);
 
-			if (Info.TableNum == 0)
-				OnClose ();
-			else
-				NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+            if (Info.TableNum == 0)
+                OnClose();
+            else
+                NetworkManager.Instance.TableDiscountInput_REQ(Info.TableNum, 500);
 		} else {
 			yield return StartCoroutine (_ShowPrevDesc (desc [2]));
 			OnClose ();

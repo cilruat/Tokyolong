@@ -21,6 +21,8 @@ public class BillConfirmElt : MonoBehaviour {
 	{
 		this.eType = eType;
         this.data = MenuData.Get((int)eType);
+        if (this.data == null)
+            return;
 
         txtName.text = data.menuName;
 

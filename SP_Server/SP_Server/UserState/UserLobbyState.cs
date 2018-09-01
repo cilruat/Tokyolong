@@ -476,18 +476,24 @@ namespace SP_Server.UserState
 
                         owner.mainFrm.SetDiscount((int)tableNo, inputDiscount);
 
-                        for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
+                        bool isSend = owner.tableNum != tableNo;
+                        if (isSend)
                         {
-                            User other = owner.mainFrm.ListUser[i];
-                            if (other.tableNum != tableNo)
-                                continue;
+                            for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
+                            {
+                                User other = owner.mainFrm.ListUser[i];
+                                if (other.tableNum != tableNo)
+                                    continue;
 
-                            other_msg = CPacket.create((short)PROTOCOL.TABLE_DISCOUNT_INPUT_NOT);
-                            other.send(other_msg);
-                            break;
+                                other_msg = CPacket.create((short)PROTOCOL.TABLE_DISCOUNT_INPUT_NOT);
+                                other.send(other_msg);
+                                break;
+                            }
                         }
 
                         send_msg = CPacket.create((short)PROTOCOL.TABLE_DISCOUNT_INPUT_ACK);
+                        send_msg.push(Convert.ToByte(isSend));
+
                         break;
                     case PROTOCOL.GET_RANDOM_DISCOUNT_PROB_REQ:
 
