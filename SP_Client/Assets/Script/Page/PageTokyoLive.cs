@@ -29,13 +29,13 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 	const int LIMIT_PREV_TIME = 60;
 
 	string[] first_desc = {
-		"\n도쿄라이브 대손님퀴즈쇼~\n\n총 2문제가 출제가 되는데\n모두 맞추셔야\n할인이 적용됩니다.\n\n한문제라도 틀리면\n즉시 종료!!\n\n그럼 첫번째 문제 나갑니다\n\n고고고!!!",
-		"\n\n다시 찾아온 도쿄라이브~~\n\n이번에도 모든 문제\n다 맞추실수 있죠~?\n\n그럼 화이팅있게\n첫번째 문제 나갑니다\n\n고고고!!!",
-		"\n이번이 마지막 퀴즈 할인~~\n\n계속 할인받으신 손님은\n여전히 이번에도 할인\n가즈아~\n\n아니신 손님은\n이번만이라도 흑흑 ㅠㅠ\n\n그럼 첫번째 문제 나갑니다\n\n고고고!!!"};
+		"도쿄라이브 대손님퀴즈쇼~\n\n총 2문제가 출제가 되는데\n모두 맞추셔야\n할인이 적용됩니다.\n\n한문제라도 틀리면 즉시 종료!!\n\n그럼 첫번째 문제 나갑니다\n\n고고고!!!",
+		"\n다시 찾아온 도쿄라이브~~\n\n이번에도 모든 문제\n다 맞추실수 있죠~?\n\n그럼 화이팅있게\n첫번째 문제 나갑니다\n\n고고고!!!",
+		"이번이 마지막 퀴즈 할인~~\n\n계속 할인받으신 손님은\n여전히 이번에도 할인 가즈아!!\n\n아니신 손님은\n이번만이라도 흑흑 ㅠㅠ\n\n그럼 첫번째 문제 나갑니다\n\n고고고!!!"};
 	string[] desc = {		
-		"\n\n\n역시 대단하시네요~~\n\n바로 이어서\n두번째 문제 나갑니다\n\n고고고!!!",
-		"\n\n\n\n정말 잘 푸셨어요~\n\n할인 적용됩니다^^*",
-		"\n\n\n\n아쉽지만 할인은\n다음기회에\nㅠㅠ\n\n안녕~~" };
+		"\n\n역시 대단하시네요~~\n\n바로 이어서\n두번째 문제 나갑니다\n\n고고고!!!",
+		"\n\n\n정말 잘 푸셨어요~\n\n할인 적용됩니다^^*",
+		"\n\n\n아쉽지만 할인은\n다음기회에\nㅠㅠ\n\n안녕~~" };
 	
     string[] question1 = { "", "", "", "" };
     string[] question2 = { "", "", "", "" };
@@ -66,6 +66,12 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 		_RandQuestion(ref question1, ref answer1);
 		_RandQuestion(ref question2, ref answer2);
 
+		showTime = false;
+		nextQuestion = false;
+
+		curStage = 1;
+		selectAnswer = 0;
+
 		_Init ();
 	}
 
@@ -73,12 +79,14 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 	{
 		if (cheat) {
 			cheat = false;
-			Info.tokyoLiveCnt = 1;
+			Info.tokyoLiveCnt += 1;
 			StartCoroutine (_CheatStart ());
 		}
 
 		if (startGame == false) {
-			txtPrevTime.text = (60 - System.DateTime.Now.Second).ToString ();
+			string time = (60 - System.DateTime.Now.Second).ToString ();
+			if (txtPrevTime.text != time)
+				txtPrevTime.text = time;
 
 			if (Info.IsStartTokyoLiveTime ())
 				NetworkManager.Instance.TokyoLive_REQ ();
@@ -117,7 +125,9 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 			objSelect [i].SetActive (false);
 			objChoice [i].SetActive (false);
 			imgCheck [i].fillAmount = 0f;
-		}			
+		}
+
+		objSendServer.SetActive (false);
 	}
 		
 	IEnumerator _CheatStart()

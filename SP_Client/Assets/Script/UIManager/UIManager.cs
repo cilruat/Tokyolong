@@ -213,6 +213,9 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 			}
 
 			if (Input.GetKeyDown (KeyCode.T)) {
+				if (Info.tokyoLiveCnt >= Info.TOKYOLIVE_MAX_COUNT)
+					return;
+
 				GameObject obj = UIManager.Instance.Show (eUI.eTokyoLive);
 				PageTokyoLive page = obj.GetComponent<PageTokyoLive> ();
 				if (page)
