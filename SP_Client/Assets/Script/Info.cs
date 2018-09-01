@@ -12,7 +12,7 @@ public partial class Info : MonoBehaviour {
 	const int COUPON_MAX_COUNT = 2;
 	const int COUPON_REMAIN_MIN = 20;
 	const int TOKYOLIVE_MAX_COUNT = 3;
-	static int[] TOKYOLIVE_START_TIME = { 41, 11 };
+	static int[] TOKYOLIVE_START_TIME = { 41, 30 };
 
     public static byte TableNum = 0;
     public static byte PersonCnt = 0;
