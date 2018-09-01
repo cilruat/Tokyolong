@@ -12,7 +12,7 @@ public partial class Info : MonoBehaviour {
 	const int COUPON_MAX_COUNT = 2;
 	const int COUPON_REMAIN_MIN = 20;
 	public const int TOKYOLIVE_MAX_COUNT = 3;
-	static int[] TOKYOLIVE_START_TIME = { 41, 30 };
+	static int[] TOKYOLIVE_START_TIME = { 0, 30 };
 
     public static byte TableNum = 0;
     public static byte PersonCnt = 0;
@@ -97,6 +97,9 @@ public partial class Info : MonoBehaviour {
 		if (tokyoLiveCnt >= TOKYOLIVE_MAX_COUNT)
 			return;
 
+		if (UIManager.Instance.IsActive (eUI.eTokyoLive))
+			return;
+
 		_CheckTokyoLivePrev_1Min ();
 	}
 
@@ -105,11 +108,12 @@ public partial class Info : MonoBehaviour {
 		int min = DateTime.Now.Minute;
 		int sec = DateTime.Now.Second;
 
-		int prev_1Min = min + 1;
-		Debug.Log ("prev_1Min: " + prev_1Min);
 		if (sec == 0 &&
-		    (prev_1Min == _GetTokyoLivePrevTime (TOKYOLIVE_START_TIME [0]) ||
-		    prev_1Min == _GetTokyoLivePrevTime (TOKYOLIVE_START_TIME [1]))) {
+		    (min == _GetTokyoLivePrevTime (TOKYOLIVE_START_TIME [0]) ||
+		    min == _GetTokyoLivePrevTime (TOKYOLIVE_START_TIME [1]))) {
+			if (UIManager.Instance.IsActive (eUI.eTokyoLive))
+				return;
+
 			GameObject obj = UIManager.Instance.Show (eUI.eTokyoLive);
 			PageTokyoLive page = obj.GetComponent<PageTokyoLive> ();
 			if (page)

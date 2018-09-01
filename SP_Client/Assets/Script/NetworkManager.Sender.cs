@@ -8,8 +8,11 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 {
 	void send(CPacket msg)
 	{
-		if (UIManager.Instance.IsActive (eUI.eWaiting) == false)
-			UIManager.Instance.Show (eUI.eWaiting);
+		if (UIManager.Instance.IsActive (eUI.eWaiting) == false) {
+			PROTOCOL protocol_id = (PROTOCOL)msg.protocol_id;
+			if (protocol_id != PROTOCOL.TOKYOLIVE_REQ)
+				UIManager.Instance.Show (eUI.eWaiting);
+		}
 
         #if UNITY_EDITOR
         Debug.Log(((PROTOCOL)msg.protocol_id).ToString());

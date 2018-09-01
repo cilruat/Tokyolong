@@ -84,6 +84,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
             Info.couponCnt = msg.pop_int32();
             Info.waitCoupon = false;
 			Info.tokyoLiveCnt = msg.pop_int32 ();
+			Debug.Log ("Info.tokyoLiveCnt: " + Info.tokyoLiveCnt);
 
 			int existUser = msg.pop_int32 ();
 			if (existUser == 1) {
