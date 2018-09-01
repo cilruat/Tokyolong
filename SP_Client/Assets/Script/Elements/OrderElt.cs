@@ -42,6 +42,8 @@ public class OrderElt : MonoBehaviour {
             listSendMenu.Add(new SendMenu(menu, cnt));
 
             MenuData data = MenuData.Get(menu);
+            if (data == null)
+                continue;
 
             desc += data.menuName + " " + cnt.ToString ();
             if (i < json.Count - 1)

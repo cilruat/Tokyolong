@@ -59,6 +59,8 @@ public class AdminOrderDetail : SingletonMonobehaviour<AdminOrderDetail> {
             int cnt =  int.Parse(json [i] ["cnt"].ToString ());
 
             MenuData data = MenuData.Get(menu);
+            if (data == null)
+                continue;
 
             string strMenu = data.menuName + " " +  cnt.ToString ();
             GameObject objElt = Instantiate (objPrefab) as GameObject;

@@ -392,6 +392,15 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
     void TableDiscountInputACK(CPacket msg)
     {
+        bool isSend = System.Convert.ToBoolean(msg.pop_byte());
+        if (isSend == false)
+        {
+            GameObject objTokyo = UIManager.Instance.GetUI(eUI.eTokyoLive);
+            PageTokyoLive pageTokyo = objTokyo.GetComponent<PageTokyoLive> ();
+            pageTokyo.OnClose();
+            return;
+        }
+
         AdminTableDiscountInput.Instance.OnClose();
     }
 

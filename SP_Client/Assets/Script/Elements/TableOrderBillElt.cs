@@ -23,6 +23,9 @@ public class TableOrderBillElt : MonoBehaviour {
 	{
         this.type = type;
         this.data = MenuData.Get((int)type);
+        if (this.data == null)
+            return;
+
         txtName.text = data.menuName;
 
 		this.value = value;

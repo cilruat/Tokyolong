@@ -25,6 +25,8 @@ public class BillElt : MonoBehaviour {
 	{
 		this.eType = eType;
         this.menu = MenuData.Get((int)eType);
+        if (this.menu == null)
+            return;
 
         txtName.text = this.menu.menuName;
 
