@@ -13,6 +13,9 @@ public class SceneChanger : SingletonMonobehaviour<SceneChanger> {
         if (Info.RunInGameScene == false)
             UIManager.Instance.isMouseClickEff = CheckMouseClickEff(name);
 
+        if (name == "Login")
+            UIManager.Instance.Hide_All();
+
         nextName = name;
 		objHide = obj;
 		SceneChanger.Instance._LoadScene();

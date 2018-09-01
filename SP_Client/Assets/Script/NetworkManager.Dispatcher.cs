@@ -84,6 +84,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
             Info.couponCnt = msg.pop_int32();
             Info.waitCoupon = false;
 			Info.tokyoLiveCnt = msg.pop_int32 ();
+            Info.showTokyoLive = false;
 			Debug.Log ("Info.tokyoLiveCnt: " + Info.tokyoLiveCnt);
 
 			int existUser = msg.pop_int32 ();
@@ -122,6 +123,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         if (tableNo == Info.TableNum)
         {
             Info.Init();
+            UIManager.Instance.Hide_All();
             NetworkManager.Instance.disconnect();
             SceneChanger.LoadScene ("Login", PageBase.Instance.curBoardObj ());
         }

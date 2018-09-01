@@ -83,7 +83,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 		case eUI.eWaiting:		elapsedTime = 0f;	waiting = true;		break;
 		case eUI.eShowLog:		break;
 		case eUI.eCoupon:		curUI = page;	break;
-		case eUI.eTokyoLive:	curUI = page;	break;
+        case eUI.eTokyoLive:    Info.showTokyoLive = true; curUI = page;	break;
 		default:
 			curUI = page;
 			objShadow.SetActive (true);
@@ -101,7 +101,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 		case eUI.eWaiting:		elapsedTime = 0f;	waiting = false;	break;
 		case eUI.eShowLog:		break;
 		case eUI.eCoupon:		Info.waitCoupon = false;	Info.loopCouponRemainTime = 0f;		break;
-		case eUI.eTokyoLive:	curUI = eUI.eNone;	break;
+        case eUI.eTokyoLive:    Info.showTokyoLive = false; curUI = eUI.eNone;	break;
 		default:
 			curUI = eUI.eNone;
 			objShadow.SetActive (false);

@@ -30,6 +30,7 @@ public partial class Info : MonoBehaviour {
 
 	// TokyoLive Info
 	public static int tokyoLiveCnt = 0;
+    public static bool showTokyoLive = false;
 
     public static bool RunInGameScene = false;
 
@@ -65,6 +66,9 @@ public partial class Info : MonoBehaviour {
         
         if (waitCoupon)
         {
+            if (showTokyoLive)
+                return;
+
             if (mainWaitCoupon && Info.isCheckScene("Main"))
             {
                 mainWaitCoupon = false;
@@ -80,7 +84,15 @@ public partial class Info : MonoBehaviour {
             waitCoupon = true;
 
             if (Info.isCheckScene("Main"))
+            {
+                if (showTokyoLive)
+                {
+                    mainWaitCoupon = true;
+                    return;
+                }
+
                 NetworkManager.Instance.Coupon_REQ();
+            }
             else
                 mainWaitCoupon = true;
         }

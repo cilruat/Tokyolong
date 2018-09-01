@@ -83,6 +83,7 @@ public partial class Info : MonoBehaviour
         waitCoupon = false;
         mainWaitCoupon = false;
 		tokyoLiveCnt = 0;
+        showTokyoLive = false;
 
         myInfo = null;
         dictUserInfo.Clear();
