@@ -331,8 +331,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         byte tableNo = msg.pop_byte();
         string orderPacking = msg.pop_string();
 		int discount = msg.pop_int32();
+        int extraGameCnt = msg.pop_int32();
         AdminTableMenu.Instance.OnClose();
-		PageAdmin.Instance.ShowBillConfirm (tableNo, orderPacking, discount);
+        PageAdmin.Instance.ShowBillConfirm (tableNo, orderPacking, discount, extraGameCnt);
     }
 
     void TableOrderInputACK(CPacket msg)

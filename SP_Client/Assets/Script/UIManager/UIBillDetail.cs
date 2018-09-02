@@ -10,6 +10,7 @@ public class UIBillDetail : MonoBehaviour
     public Text textpeopleCnt;
     public Text textTotalPrice;
     public Text textDutchPayPrice;
+    public Text textExtraGameCnt;
 
     int peopleCount = 0;
     int totalPrice = 0;
@@ -39,6 +40,8 @@ public class UIBillDetail : MonoBehaviour
 
         int dutchPayPrice = totalPrice / peopleCount;
         textDutchPayPrice.text = Info.MakeMoneyString (dutchPayPrice);
+
+        textExtraGameCnt.text = "남은 할인 찬스 : <color='#70ad47'><size=23>" + Info.GamePlayCnt.ToString() + "</size></color>";
     }
 
     public void OnDutchPayPerson(bool up)

@@ -253,7 +253,7 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 		AdminTableMenu.Instance.SetInfo (tableNo);
 	}
 
-	public void ShowBillConfirm(byte tableNo, string orderPacking, int discount)
+    public void ShowBillConfirm(byte tableNo, string orderPacking, int discount, int extraGameCnt)
     {
         List<KeyValuePair<EMenuDetail, int>> listOrder = new List<KeyValuePair<EMenuDetail, int>>(); 
         JsonData json = JsonMapper.ToObject(orderPacking);
@@ -266,13 +266,13 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
             listOrder.Add(new KeyValuePair<EMenuDetail, int>(eType, cnt));
         }
 
-		ShowBillConfirm(tableNo, listOrder, discount);
+        ShowBillConfirm(tableNo, listOrder, discount, extraGameCnt);
     }
 
-	public void ShowBillConfirm(byte tableNo, List<KeyValuePair<EMenuDetail,int>> listOrder, int discount)
+    public void ShowBillConfirm(byte tableNo, List<KeyValuePair<EMenuDetail,int>> listOrder, int discount, int extraGameCnt)
 	{
 		objBillConfirm.SetActive (true);
-		AdminBillConfirm.Instance.SetInfo (tableNo, listOrder, discount);
+        AdminBillConfirm.Instance.SetInfo (tableNo, listOrder, discount, extraGameCnt);
 	}
 
     public void ShowOrderDetail(RequestOrder reqOrder)

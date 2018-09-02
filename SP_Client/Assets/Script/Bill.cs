@@ -30,8 +30,10 @@ public class Bill : MonoBehaviour {
 	List<BillElt> listElt = new List<BillElt>();
 
     int billTotalPrice = 0;
+    int billTotalDiscount = 0;
+
     int discountPrice = 0;
-    public int BillTotalPrice { get { return Mathf.Max(0, (billTotalPrice - discountPrice)); } }
+    public int BillTotalPrice { get { return Mathf.Max(0, (billTotalPrice - billTotalDiscount)); } }
 
 	public void SetMenu(EMenuDetail eType)
 	{
@@ -77,8 +79,10 @@ public class Bill : MonoBehaviour {
 
         totalPrice.text = Info.MakeMoneyString (billTotalPrice);
 
+        billTotalDiscount = Mathf.Min(billTotalPrice, discountPrice + ((int)Info.GamePlayCnt * 100));
+
         if(textDiscountPrice != null)
-            textDiscountPrice.text = "-"+Info.MakeMoneyString(discountPrice);
+            textDiscountPrice.text = "-"+Info.MakeMoneyString(billTotalDiscount);
 
         if(textCalcPrice != null)
             textCalcPrice.text = Info.MakeMoneyString(BillTotalPrice);

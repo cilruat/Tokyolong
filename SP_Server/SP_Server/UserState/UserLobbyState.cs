@@ -380,6 +380,7 @@ namespace SP_Server.UserState
                         send_msg.push(tableNo);
                         send_msg.push(tableOrderJson.ToString());
                         send_msg.push(owner.mainFrm.GetDiscount((int)tableNo));
+                        send_msg.push(owner.mainFrm.GetGameCount((int)tableNo));
                         break;
                     case PROTOCOL.TABLE_ORDER_INPUT_REQ:
                         tableNo = msg.pop_byte();

@@ -17,8 +17,11 @@ public class AdminBill : MonoBehaviour {
     List<BillConfirmElt> listElt = new List<BillConfirmElt>();
 
     int billTotalPrice = 0;
-    int discountPrice = 0;
-    public int BillTotalPrice { get { return Mathf.Max(0, (billTotalPrice - discountPrice)); } }
+    int billTotalDiscount = 0;
+
+    int discount = 0;
+    int extraGameCnt = 0;
+    public int BillTotalPrice { get { return Mathf.Max(0, (billTotalPrice - billTotalDiscount)); } }
 
 	public void CalcTotalPrice()
 	{
@@ -28,7 +31,10 @@ public class AdminBill : MonoBehaviour {
 
         billTotalPrice = total;
 		totalPrice.text = Info.MakeMoneyString (total);
-        textDiscountPrice.text = "-"+Info.MakeMoneyString(discountPrice);
+
+        billTotalDiscount = Mathf.Min(billTotalPrice, this.discount + (this.extraGameCnt * 100));
+
+        textDiscountPrice.text = "-"+Info.MakeMoneyString(billTotalDiscount);
         textCalcPrice.text = Info.MakeMoneyString(BillTotalPrice);
 	}
 
@@ -73,12 +79,13 @@ public class AdminBill : MonoBehaviour {
 		if (objEmpty != null && objEmpty.activeSelf == false)
 			objEmpty.SetActive (true);
 
-        discountPrice = 0;
+        this.discount = 0;
+        this.extraGameCnt = 0;
 
 		CalcTotalPrice ();
 	}
 
-	public void CopyBill(List<KeyValuePair<EMenuDetail, int>> list, int discount)
+    public void CopyBill(List<KeyValuePair<EMenuDetail, int>> list, int discount, int extraGameCnt)
 	{
 		_Clear ();
 
@@ -98,7 +105,9 @@ public class AdminBill : MonoBehaviour {
         if (objEmpty != null)
             objEmpty.SetActive(list.Count <= 0);
 
-		this.discountPrice = discount;
+        this.discount = discount;
+        this.extraGameCnt = extraGameCnt;
+
 		CalcTotalPrice ();
 	}
 }

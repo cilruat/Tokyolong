@@ -6,17 +6,19 @@ using UnityEngine.UI;
 public class AdminBillConfirm : SingletonMonobehaviour<AdminBillConfirm> {
 
 	public Text table;
+    public Text tableExtraGameCnt;
 	public AdminBill bill;
     public AdminBillConfirmChange billChange;
     public GameObject objComplete;
 
 	byte tableNo = 0;
 
-    public void SetInfo(byte tableNo, List<KeyValuePair<EMenuDetail,int>> list, int discount)
+    public void SetInfo(byte tableNo, List<KeyValuePair<EMenuDetail,int>> list, int discount, int extraGameCnt)
 	{
 		this.tableNo = tableNo;
 		table.text = tableNo.ToString () + "번 테이블";
-		bill.CopyBill (list, discount);
+        tableExtraGameCnt.text = "남은 할인 찬스 : <color='#70ad47'><size=23>" + extraGameCnt.ToString() + "</size></color>";
+        bill.CopyBill (list, discount, extraGameCnt);
         billChange.SetTable(tableNo);
 	}
 
