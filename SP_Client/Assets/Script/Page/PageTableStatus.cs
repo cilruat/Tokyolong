@@ -19,7 +19,7 @@ public class PageTableStatus : PageBase {
         Battle,
     }
 
-    const int FLOOR_MAX_TABLE_1 = 9;
+    const int FLOOR_MAX_TABLE_1 = 8;
     const int FLOOR_MAX_TABLE_2 = 33;
 
     public CanvasGroup[] cgBoards;

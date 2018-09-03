@@ -17,17 +17,17 @@ public enum EMenuType : int
 	eNone = -1,
 	eTop = 0,		    // 탑메뉴
 	eMeal,			    // 밥&안주 식사
-	ePochakaya,			// 튀김
-	eIzakaya,			// 탕
-	eWomanTarget,    	// 스페셜
-	eSashimiNFruit,     // 식사
-    eSoup,              // 탕&전골
+	ePochakaya,			// 포차카야
+	eIzakaya,			// 이자카야
+	eWomanTarget,    	// 여심저격
+	eSashimiNFruit = 5, // 회,과일
+    eSoup,              // 탕,전골
 	eSozu,              // 소주
 	eBear,              // 맥주
     eSake,              // 사케
-    eFruitSozu,         // 과일 소주
+    eFruitSozu = 10,    // 과일 소주
     eFruitMakgeolli,    // 과일 막걸리
-    eGin,                // 고급진
+    eGin,               // 고급진
     eDrink,             // 음료
 }
 
@@ -106,6 +106,10 @@ public enum EMenuDetail : int
     eHotSix                         = 71,
     eChocoEmong                     = 72,
     eStrawberryEmong                = 73,
+	ePear							= 74,
+	eHungaeSalmonSalad				= 75,
+	eBeefTadakki					= 76,
+	eBagirakSoup					= 77,
 }
 
 /// <summary>
