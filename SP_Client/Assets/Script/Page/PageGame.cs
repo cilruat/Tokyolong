@@ -24,6 +24,8 @@ public partial class PageGame : PageBase {
 	public RectTransform[] rtWinWaiter;
 	public RectTransform[] rtPuzzleGame;
 	public RectTransform[] rtTabletGame;
+	public RectTransform[] rtTabletGame_Half;
+	public RectTransform[] rtTabletGame_All;
 	public List<SlotMachineElt> listSlotMachine = new List<SlotMachineElt>();
 	public CountDown countDownGameLoading;
 
@@ -148,7 +150,7 @@ public partial class PageGame : PageBase {
 			return;
 		}
 
-        if (Info.RunInGameScene)
+		if (Info.RunInGameScene)
 			FinishStart(runInGameDiscount);
         else
             NetworkManager.Instance.SlotStart_REQ();
@@ -168,19 +170,32 @@ public partial class PageGame : PageBase {
 		int randRange = 0;
 		RectTransform[] rtElts = null;
 
-        if (Info.GameDiscountWon == (short)EDiscount.e1000won)
-        {
-            if (curGameType == (int)EGameType.eWinWaiter)
-            {
-                randRange = Enum.GetValues(typeof(EWinWaiter)).Length;
-                rtElts = rtWinWaiter;
-            }
-            else if (curGameType == (int)EGameType.ePuzzleGame)
-            {
-                randRange = Enum.GetValues(typeof(EPuzzleGame)).Length;
-                rtElts = rtPuzzleGame;
-            }
-        }
+		switch (Info.GameDiscountWon) {
+		case (short)EDiscount.e1000won:
+			if (curGameType == (int)EGameType.eWinWaiter) {
+				randRange = Enum.GetValues (typeof(EWinWaiter)).Length;
+				rtElts = rtWinWaiter;
+			} else if (curGameType == (int)EGameType.ePuzzleGame) {
+				randRange = Enum.GetValues (typeof(EPuzzleGame)).Length;
+				rtElts = rtPuzzleGame;
+			} else if (curGameType == (int)EGameType.eTabletGame) {
+				randRange = Enum.GetValues(typeof(ETabletGame)).Length;
+				rtElts = rtTabletGame;
+			}
+			break;
+		case (short)EDiscount.e5000won:
+			randRange = Enum.GetValues(typeof(ETabletGame)).Length;
+			rtElts = rtTabletGame;
+			break;
+		case (short)EDiscount.eHalf:
+			randRange = Enum.GetValues (typeof(ETabletGame)).Length - 1;
+			rtElts = rtTabletGame_Half;
+			break;
+		case (short)EDiscount.eAll:
+			randRange = Enum.GetValues (typeof(ETabletGame)).Length - 2;
+			rtElts = rtTabletGame_All;
+			break;
+		}			
 
         if(randRange == 0)
         {

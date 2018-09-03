@@ -148,8 +148,8 @@ public enum ETabletGame
 {
     CrashCat,
     FlappyBird,
-    DownHill,
-    SlidingDown,
+	SlidingDown,
+    DownHill, 
     //AvoidObject,
 }
 
