@@ -112,6 +112,9 @@ public partial class Info : MonoBehaviour {
 		if (UIManager.Instance.IsActive (eUI.eTokyoLive))
 			return;
 
+        if (SceneChanger.CheckGameScene(SceneManager.GetActiveScene().name))
+            return;
+
 		_CheckTokyoLivePrev_1Min ();
 	}
 
