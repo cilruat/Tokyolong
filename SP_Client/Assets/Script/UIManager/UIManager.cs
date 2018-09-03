@@ -40,6 +40,8 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
     public ClickStar clickStarA;
     public ClickStar clickStarB;
 
+	public AudioSource audioClick;
+
     [System.NonSerialized]public bool isMouseClickEff = false;
 
 	eUI curUI = eUI.eNone;
@@ -236,6 +238,8 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 
             ClickStar clickStar = objEff.GetComponent<ClickStar>();
             clickStar.ShowClickStar(Input.mousePosition);
+
+			_ClickSound ();
 		}
 
 		if (Info.TableNum != (byte)0 && Info.isCheckScene ("Login") == false) {
@@ -243,6 +247,14 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 			Info.UpdateTokyoLiveTime ();
 		}			
     }
+
+	void _ClickSound()
+	{
+		if (audioClick == null)
+			return;
+
+		audioClick.PlayOneShot (audioClick.clip);
+	}
 
 	public void QuitPos()
 	{

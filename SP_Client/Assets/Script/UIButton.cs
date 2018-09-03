@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.Events;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Selectable))]
@@ -22,8 +23,9 @@ public class UIButton : MonoBehaviour,
 	public bool IsDown { get { return down; } }
 
 	public bool scalingOnTouch = true;
-	public string clickSound = "click";
 	public MaskableGraphic[] shinings;
+	public List<MaskableGraphic> exceptWhenUnable = new List<MaskableGraphic> ();
+	Dictionary<MaskableGraphic, Material> backup = new Dictionary<MaskableGraphic, Material> ();
 
 	bool isRegisterd = false;
 
@@ -129,10 +131,6 @@ public class UIButton : MonoBehaviour,
 			ShiningGraphic.Start (shinings [i]);
 
 		down = true;
-
-		if (string.IsNullOrEmpty (clickSound) == false) 
-		{
-		}
 	}
 
 	public void OnPointerUp (PointerEventData data)
@@ -222,5 +220,57 @@ public class UIButton : MonoBehaviour,
 		rt.anchoredPosition = Vector2.zero;
 		rt.SetSizeWithCurrentAnchors (RectTransform.Axis.Horizontal, rtOrigin.rect.width * rate);
 		rt.SetSizeWithCurrentAnchors (RectTransform.Axis.Vertical, rtOrigin.rect.height * rate);
+	}
+
+	public void EnableAndRecover () {
+		if (enabled)
+			return;
+
+		MaskableGraphic[] _mgs = GetComponentsInChildren<MaskableGraphic> (false);
+
+		foreach (MaskableGraphic _mg in _mgs) {
+			if (exceptWhenUnable.Contains (_mg))
+				continue;
+
+			Material backupMaterial;
+			if (backup.TryGetValue (_mg, out backupMaterial))
+				_mg.material = backupMaterial;
+			else
+				_mg.material = null;
+		}
+
+		backup.Clear ();
+		enabled = true;
+
+		if (selectable == null)
+			selectable = GetComponent<Selectable> ();
+
+		selectable.enabled = true;
+	}
+
+	public void DisableAndGreyScale () {
+		if (enabled == false)
+			return;
+
+		backup.Clear ();
+
+		MaskableGraphic[] _mgs = GetComponentsInChildren<MaskableGraphic> (false);
+		Material m = new Material (Shader.Find ("UI/Greyscale"));
+		foreach (MaskableGraphic _mg in _mgs) {
+			if (exceptWhenUnable.Contains (_mg))
+				continue;
+
+			if (_mg.material)
+				backup.Add (_mg, _mg.material);			
+
+			_mg.material = m;
+		}
+
+		enabled = false;
+
+		if (selectable == null)
+			selectable = GetComponent<Selectable> ();
+
+		selectable.enabled = false;
 	}
 }

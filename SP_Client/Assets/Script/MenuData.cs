@@ -10,16 +10,18 @@ public class MenuData
     public int category;
     public string menuName;
     public int price;
+	public bool show;
 
     public static Dictionary<int, List<MenuData>> dictMainMenu = new Dictionary<int, List<MenuData>>();
     public static Dictionary<int, MenuData> dictMenu = new Dictionary<int, MenuData>();
 
-    public MenuData(int menuID, int category, string menuName, int price)
+	public MenuData(int menuID, int category, string menuName, int price, bool show)
     {
         this.menuID = menuID;
         this.category = category;
         this.menuName = menuName;
         this.price = price;
+		this.show = show;
     }
 
     public static void Load()
@@ -41,7 +43,11 @@ public class MenuData
             string menuName = data[i]["MenuName"].ToString();
             int price = int.Parse(data[i]["Price"].ToString());
 
-            MenuData menuData = new MenuData(menuID, category, menuName, price);
+			bool show = true;
+			if (string.IsNullOrEmpty (data [i] ["Show"].ToString ()) == false)
+				show = bool.Parse (data [i] ["Show"].ToString ());
+
+			MenuData menuData = new MenuData(menuID, category, menuName, price, show);
 
             dictMenu.Add(menuID, menuData);
 
