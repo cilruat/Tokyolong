@@ -173,40 +173,18 @@ public partial class Info : MonoBehaviour {
 
     public static void AddGameCount()
     {
-        #if UNITY_EDITOR
-        Debug.Log("Before GamePlayCnt : " + GamePlayCnt);
-        #endif
-
         GamePlayCnt++;
-
-        #if UNITY_EDITOR
-        Debug.Log("After GamePlayCnt : " + GamePlayCnt);
-        #endif
-
         GamePlayCnt = Mathf.Clamp(GamePlayCnt, GAMEPLAY_MIN_COUNT, GAMEPLAY_MAX_COUNT);
-
-        #if UNITY_EDITOR
-        Debug.Log("GamePlayCnt : " + GamePlayCnt);
-        #endif
     }
 
     public static void AddGameCount(int cnt, bool overwrite = false)
     {
-        #if UNITY_EDITOR
-        Debug.Log("GAMECOUNT CNT : " + cnt);
-        Debug.Log("OverWrite : " + overwrite);
-        #endif
-
         if (overwrite == false)
             GamePlayCnt += cnt;
         else
             GamePlayCnt = cnt;
 
         GamePlayCnt = Mathf.Clamp(GamePlayCnt, GAMEPLAY_MIN_COUNT, GAMEPLAY_MAX_COUNT);
-
-        #if UNITY_EDITOR
-        Debug.Log("GAMECOUNT : " + GamePlayCnt);
-        #endif
     }
 
     public static void AddOrderCount(int cnt)
@@ -214,10 +192,5 @@ public partial class Info : MonoBehaviour {
         int value = orderCnt + cnt;
 
         orderCnt = Mathf.Clamp(value, GAMEPLAY_MIN_COUNT, GAMEPLAY_MAX_COUNT);
-
-        #if UNITY_EDITOR
-        Debug.Log("ORDER VALUE : " + value);
-        Debug.Log("ORDER VALUE : " + value);
-        #endif
     }
 }
