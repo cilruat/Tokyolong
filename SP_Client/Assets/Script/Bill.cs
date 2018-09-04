@@ -212,25 +212,7 @@ public class Bill : MonoBehaviour {
 			SendMenu send = new SendMenu (menu, cnt);
 			list.Add (send);
 
-            int dcChanceCnt = 0;
-            switch (listElt[i].MenuType())
-            {
-                case EMenuType.eSozu:
-                case EMenuType.eBear:
-                case EMenuType.eSake:
-                case EMenuType.eFruitSozu:
-                case EMenuType.eFruitMakgeolli:
-                case EMenuType.eGin:
-                    dcChanceCnt = 2;
-                    break;
-                case EMenuType.eDrink:
-                    dcChanceCnt = 1;
-                    break;
-                default:
-                    dcChanceCnt = 3;
-                    break;
-            }
-
+			int dcChanceCnt = Info.GetGameCntByMenuType (listElt [i].MenuType ());
             orderCnt += (dcChanceCnt * cnt);
         }
 

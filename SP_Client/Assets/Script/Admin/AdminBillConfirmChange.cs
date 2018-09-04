@@ -131,8 +131,8 @@ public class AdminBillConfirmChange : MonoBehaviour {
             SendMenu send = new SendMenu (menu, cnt);
             list.Add (send);
 
-            if (listElt[i].MenuType() != EMenuType.eDrink)
-                orderCnt += cnt;
+			int dcChanceCnt = Info.GetGameCntByMenuType (listElt [i].MenuType ());
+			orderCnt += (dcChanceCnt * cnt);
         }
 
         JsonData json = JsonMapper.ToJson (list);

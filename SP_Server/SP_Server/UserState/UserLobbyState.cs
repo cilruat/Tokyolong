@@ -387,8 +387,9 @@ namespace SP_Server.UserState
                         string inputTableOrderPacking = msg.pop_string();
                         int tableInputOrderCnt = msg.pop_int32();
 
-                        owner.info.gameInfo.gameCnt += tableInputOrderCnt;
-                        owner.mainFrm.RefreshGameCount(tableNo, owner.info.gameInfo.gameCnt);
+                        int tableGameCnt = owner.mainFrm.GetGameCount((int)tableNo);
+                        tableGameCnt += tableInputOrderCnt;
+                        owner.mainFrm.RefreshGameCount(tableNo, tableGameCnt);
 
                         JsonData inputOrder = JsonMapper.ToObject(inputTableOrderPacking);
                         for (int i = 0; i < inputOrder.Count; i++)

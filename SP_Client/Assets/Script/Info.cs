@@ -145,7 +145,24 @@ public partial class Info : MonoBehaviour {
 	{
 		int min = DateTime.Now.Minute;
 		int sec = DateTime.Now.Second;
-		return sec == 0 && 
-			(min == TOKYOLIVE_START_TIME [0] || min == TOKYOLIVE_START_TIME [1]);
-	}		
+		return sec == 0 &&
+		(min == TOKYOLIVE_START_TIME [0] || min == TOKYOLIVE_START_TIME [1]);
+	}
+
+	public static int GetGameCntByMenuType(EMenuType eType)
+	{
+		int cnt = 0;
+		switch (eType) {
+		case EMenuType.eSozu:
+		case EMenuType.eBear:
+		case EMenuType.eSake:
+		case EMenuType.eFruitSozu:
+		case EMenuType.eFruitMakgeolli:
+		case EMenuType.eGin:	cnt = 2;	break;
+		case EMenuType.eDrink:	cnt = 1;	break;
+		default:				cnt = 3;	break;
+		}
+
+		return cnt;
+	}
 }
