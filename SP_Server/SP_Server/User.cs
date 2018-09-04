@@ -92,9 +92,32 @@ namespace SP_Server
             discount = Math.Min(oriTotalPrice, discount + inputDiscount);
         }
 
-            public bool IsAdmin()
+        public bool IsAdmin()
         {
             return tableNum == 10000;
+        }
+
+        public void AddGameCount(int cnt)
+        {
+            SetGameCount(gameInfo.gameCnt + cnt);
+        }
+
+        public void SetGameCount(int cnt)
+        {
+            if (cnt < 0)        cnt = 0;
+            else if (cnt > 50)  cnt = 50;
+
+            gameInfo.gameCnt = cnt;
+        }
+
+        public int GetGameCount()
+        {
+            int cnt = gameInfo.gameCnt;
+
+            if (cnt < 0)        cnt = 0;
+            else if (cnt > 50)  cnt = 50;
+
+            return cnt;
         }
     }
 

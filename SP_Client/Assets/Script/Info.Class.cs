@@ -65,8 +65,6 @@ public partial class Info : MonoBehaviour
 	public static Dictionary<byte, UserInfo> dictUserInfo = new Dictionary<byte, UserInfo>(); // key : TableNo, value : UserInfo
     public static Dictionary<byte, UserChatInfo> dictUserChatInfo = new Dictionary<byte, UserChatInfo>(); // key : TableNo, value : UserChatInfo
 
-    public static int orderCnt = 0;
-
     public static string adminTablePacking = "";
     public static string adminOrderPacking = "";
     public static string adminMusicPacking = "";

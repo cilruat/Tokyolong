@@ -215,8 +215,8 @@ namespace SP_Server.UserState
                         string order = msg.pop_string();
                         int orderCnt = msg.pop_int32();
 
-                        owner.info.gameInfo.gameCnt += orderCnt;
-                        owner.mainFrm.RefreshGameCount(tableNo, owner.info.gameInfo.gameCnt);
+                        owner.info.AddGameCount(orderCnt);
+                        owner.mainFrm.RefreshGameCount(tableNo, owner.info.GetGameCount());
 
                         ++owner.mainFrm.orderID;
 
@@ -387,9 +387,8 @@ namespace SP_Server.UserState
                         string inputTableOrderPacking = msg.pop_string();
                         int tableInputOrderCnt = msg.pop_int32();
 
-                        int tableGameCnt = owner.mainFrm.GetGameCount((int)tableNo);
-                        tableGameCnt += tableInputOrderCnt;
-                        owner.mainFrm.RefreshGameCount(tableNo, tableGameCnt);
+                        owner.mainFrm.AddGameCount((int)tableNo, tableInputOrderCnt);
+                        owner.mainFrm.RefreshGameCount(tableNo, owner.mainFrm.GetGameCount((int)tableNo));
 
                         JsonData inputOrder = JsonMapper.ToObject(inputTableOrderPacking);
                         for (int i = 0; i < inputOrder.Count; i++)
@@ -415,13 +414,14 @@ namespace SP_Server.UserState
                         send_msg = CPacket.create((short)PROTOCOL.TABLE_ORDER_INPUT_ACK);
                         break;
                     case PROTOCOL.SLOT_START_REQ:
-                        --owner.info.gameInfo.gameCnt;
-                        owner.mainFrm.RefreshGameCount(tableNo, owner.info.gameInfo.gameCnt);
+                        tableNo = msg.pop_byte();
+                        owner.info.AddGameCount(-1);
+                        owner.mainFrm.RefreshGameCount(tableNo, owner.info.GetGameCount());
 
                         short ranDiscountIdx = owner.mainFrm.GetRandomDiscountIndex();
 
                         send_msg = CPacket.create((short)PROTOCOL.SLOT_START_ACK);
-                        send_msg.push((byte)owner.info.gameInfo.gameCnt);
+                        send_msg.push(owner.info.GetGameCount());
                         send_msg.push(ranDiscountIdx);
                         break;
                     case PROTOCOL.REPORT_OFFLINE_GAME_REQ:

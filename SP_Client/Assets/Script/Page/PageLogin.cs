@@ -78,6 +78,7 @@ public class PageLogin : PageBase {
 
 	IEnumerator _SendLoginREQ()
 	{
+        Info.Init();
 		yield return new WaitForSeconds (.5f);
 
 		if (string.IsNullOrEmpty (tableNo) == true) {

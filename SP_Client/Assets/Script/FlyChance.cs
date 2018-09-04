@@ -16,7 +16,7 @@ public class FlyChance : MonoBehaviour
 
     void OnDestroy()
     {
-        Info.GamePlayCnt++;
+        Info.AddGameCount();
 
         if (Info.isCheckScene("Main") && SceneChanger.nextName == "Main")
             ((PageMain)PageBase.Instance).RefreshGamePlayChance();

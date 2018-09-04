@@ -96,7 +96,7 @@ public class PageMain : PageBase {
             GameObject objChance = Instantiate(flyChance.gameObject, flyChance.transform.parent) as GameObject;
             objChance.gameObject.SetActive(true);
 
-            Info.orderCnt--;
+            Info.AddOrderCount(-1);
             yield return new WaitForSeconds(0.1f);
         }
 

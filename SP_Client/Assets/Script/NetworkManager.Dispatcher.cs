@@ -80,7 +80,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         }
 		else {
             Info.TableNum = byte.Parse (pop_string);
-			Info.GamePlayCnt = (byte)msg.pop_int32 ();
+            int gameCnt = msg.pop_int32 ();
+            Info.AddGameCount(gameCnt, true);
             Info.couponCnt = msg.pop_int32();
             Info.waitCoupon = false;
 			Info.tokyoLiveCnt = msg.pop_int32 ();
@@ -161,7 +162,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
 	void OrderACK(CPacket msg)
 	{
-        Info.orderCnt = Mathf.Max(0, Info.orderCnt + msg.pop_int32());
+        int orderCnt = msg.pop_int32();
+        Info.AddOrderCount(orderCnt);
         ((PageOrder)PageBase.Instance).bill.CompleteOrder ();
 	}
 
@@ -349,13 +351,13 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     {
 		int cnt = msg.pop_int32 ();
 		if (cnt < 0) {
-			Info.GamePlayCnt = (byte)Mathf.Max (0, Info.GamePlayCnt + cnt);
+            Info.AddGameCount(cnt);
 			if (Info.isCheckScene ("Main"))
 				((PageMain)PageBase.Instance).RefreshGamePlay ();
 			else if (Info.isCheckScene ("Game"))
 				((PageGame)PageBase.Instance).RefreshPlayCnt ();
 		} else {
-			Info.orderCnt = Mathf.Max (0, Info.orderCnt + cnt);
+            Info.AddOrderCount(cnt);
 			if (Info.isCheckScene ("Main"))
 				((PageMain)PageBase.Instance).StartFlyChance ();
 		}
@@ -365,11 +367,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
 	void SlotStartACK(CPacket msg)
 	{        
-		Info.GamePlayCnt = msg.pop_byte ();
+        int gameCnt = msg.pop_int32();
+        Info.AddGameCount(gameCnt, true);
         short discountType = msg.pop_int16();
-
-		if (Info.GamePlayCnt < 0)
-			Info.GamePlayCnt = 0;
 
         ((PageGame)PageBase.Instance).FinishStart (discountType);
 	}

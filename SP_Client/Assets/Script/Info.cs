@@ -19,8 +19,13 @@ public partial class Info : MonoBehaviour {
     public static ECustomerType ECustomer = ECustomerType.MAN;
 
 	// Game Info
-	public static byte GamePlayCnt = 0;
+    public static int GamePlayCnt = 0;
 	public static short GameDiscountWon = -1;	   
+    const int GAMEPLAY_MIN_COUNT = 0;
+    const int GAMEPLAY_MAX_COUNT = 50;
+
+    // 
+    public static int orderCnt = 0;
 
 	// Coupon Info
     public static int couponCnt = 0;
@@ -165,4 +170,54 @@ public partial class Info : MonoBehaviour {
 
 		return cnt;
 	}
+
+    public static void AddGameCount()
+    {
+        #if UNITY_EDITOR
+        Debug.Log("Before GamePlayCnt : " + GamePlayCnt);
+        #endif
+
+        GamePlayCnt++;
+
+        #if UNITY_EDITOR
+        Debug.Log("After GamePlayCnt : " + GamePlayCnt);
+        #endif
+
+        GamePlayCnt = Mathf.Clamp(GamePlayCnt, GAMEPLAY_MIN_COUNT, GAMEPLAY_MAX_COUNT);
+
+        #if UNITY_EDITOR
+        Debug.Log("GamePlayCnt : " + GamePlayCnt);
+        #endif
+    }
+
+    public static void AddGameCount(int cnt, bool overwrite = false)
+    {
+        #if UNITY_EDITOR
+        Debug.Log("GAMECOUNT CNT : " + cnt);
+        Debug.Log("OverWrite : " + overwrite);
+        #endif
+
+        if (overwrite == false)
+            GamePlayCnt += cnt;
+        else
+            GamePlayCnt = cnt;
+
+        GamePlayCnt = Mathf.Clamp(GamePlayCnt, GAMEPLAY_MIN_COUNT, GAMEPLAY_MAX_COUNT);
+
+        #if UNITY_EDITOR
+        Debug.Log("GAMECOUNT : " + GamePlayCnt);
+        #endif
+    }
+
+    public static void AddOrderCount(int cnt)
+    {
+        int value = orderCnt + cnt;
+
+        orderCnt = Mathf.Clamp(value, GAMEPLAY_MIN_COUNT, GAMEPLAY_MAX_COUNT);
+
+        #if UNITY_EDITOR
+        Debug.Log("ORDER VALUE : " + value);
+        Debug.Log("ORDER VALUE : " + value);
+        #endif
+    }
 }

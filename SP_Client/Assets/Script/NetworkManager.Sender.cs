@@ -147,6 +147,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 	public void SlotStart_REQ()
 	{
 		CPacket msg = CPacket.create((short)PROTOCOL.SLOT_START_REQ);
+        msg.push(Info.TableNum);
 		send (msg);
 	}
 

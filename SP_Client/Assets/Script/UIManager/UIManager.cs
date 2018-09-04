@@ -198,7 +198,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
                 SceneChanger.LoadScene ("Login", PageBase.Instance.curBoardObj ());
             }
         }			
-
+            
 		if (Input.GetKey (KeyCode.LeftShift)) {
 			
 			if (Input.GetKeyDown (KeyCode.L))
@@ -207,6 +207,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 			if (Input.GetKeyDown (KeyCode.C))
 				showClickA = !showClickA;
 
+            #if UNITY_EDITOR
 			if (Input.GetKeyDown(KeyCode.P))
 			{
 				Info.GamePlayCnt += 1;
@@ -223,7 +224,8 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 				if (page)
 					page.PrevSet (true);
 			}
-		}		
+            #endif
+		}
 
 		if (Input.GetMouseButtonDown (0)) {
 			if (isMouseClickEff == false)

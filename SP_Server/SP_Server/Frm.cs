@@ -495,7 +495,25 @@ namespace SP_Server
             if (dictUserInfo.ContainsKey(tableNo) == false)
                 return;
 
-            dictUserInfo[tableNo].gameInfo.gameCnt = cnt;
+            dictUserInfo[tableNo].SetGameCount(cnt);
+            DataUserInfoSave();
+        }
+
+        public void AddGameCount(int tableNo, int cnt)
+        {
+            if (dictUserInfo.ContainsKey(tableNo) == false)
+                return;
+
+            dictUserInfo[tableNo].AddGameCount(cnt);
+            DataUserInfoSave();
+        }
+
+        public void SetGameCount(int tableNo, int cnt)
+        {
+            if (dictUserInfo.ContainsKey(tableNo) == false)
+                return;
+
+            dictUserInfo[tableNo].SetGameCount(cnt);
             DataUserInfoSave();
         }
 
@@ -504,7 +522,7 @@ namespace SP_Server
             if (dictUserInfo.ContainsKey(tableNo) == false)
                 return 0;
 
-            return dictUserInfo[tableNo].gameInfo.gameCnt;
+            return dictUserInfo[tableNo].GetGameCount();
         }
 
         public void RemoveUserData(int tableNo)
@@ -673,6 +691,7 @@ namespace SP_Server
                 dictUserInfo.Clear();
                 listRequestOrder.Clear();
                 listReqMusicInfo.Clear();
+                listUser.Clear();
 
                 AllDataSave();
 
