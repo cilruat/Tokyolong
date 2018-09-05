@@ -110,6 +110,8 @@ public enum EMenuDetail : int
 	eHungaeSalmonSalad				= 75,
 	eBeefTadakki					= 76,
 	eBagirakSoup					= 77,
+	eMeal							= 78,
+	eSimsul12						= 79,
 }
 
 /// <summary>
