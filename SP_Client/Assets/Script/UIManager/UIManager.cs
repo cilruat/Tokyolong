@@ -14,7 +14,6 @@ public enum eUI
 	eWaiting        = 5,
     eHowToUse,
     eShowLog,
-    eCoupon,
 	eTokyoLive,
 
 	eNone = 100,
@@ -84,7 +83,6 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 		switch (page) {
 		case eUI.eWaiting:		elapsedTime = 0f;	waiting = true;		break;
 		case eUI.eShowLog:		break;
-		case eUI.eCoupon:		curUI = page;	break;
         case eUI.eTokyoLive:    Info.showTokyoLive = true; curUI = page;	break;
 		default:
 			curUI = page;
@@ -102,7 +100,6 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 		switch (page) {
 		case eUI.eWaiting:		elapsedTime = 0f;	waiting = false;	break;
 		case eUI.eShowLog:		break;
-		case eUI.eCoupon:		Info.waitCoupon = false;	Info.loopCouponRemainTime = 0f;		break;
         case eUI.eTokyoLive:    Info.showTokyoLive = false; curUI = eUI.eNone;	break;
 		default:
 			curUI = eUI.eNone;
@@ -245,9 +242,8 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 		}
 
 		if (Info.TableNum != (byte)0 && Info.isCheckScene ("Login") == false) {
-			Info.UpdateCouponRemainTime ();
 			Info.UpdateTokyoLiveTime ();
-		}			
+		}
     }
 
 	void _ClickSound()

@@ -8,9 +8,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 
 public partial class Info : MonoBehaviour {
-
-	const int COUPON_MAX_COUNT = 2;
-	const int COUPON_REMAIN_MIN = 20;
+    
 	public const int TOKYOLIVE_MAX_COUNT = 3;
 	static int[] TOKYOLIVE_START_TIME = { 0, 30 };
 
@@ -26,12 +24,6 @@ public partial class Info : MonoBehaviour {
 
     // 
     public static int orderCnt = 0;
-
-	// Coupon Info
-    public static int couponCnt = 0;
-    public static float loopCouponRemainTime = 0f;
-    public static bool waitCoupon = false;
-    public static bool mainWaitCoupon = false;
 
 	// TokyoLive Info
 	public static int tokyoLiveCnt = 0;
@@ -63,45 +55,6 @@ public partial class Info : MonoBehaviour {
 	public static int idRobot = -1;
     public static List<int> listGameCnt_Robot = new List<int>();
     public static List<int> listOrderCnt_Robot = new List<int>();
-
-    public static void UpdateCouponRemainTime()
-    {
-        if (couponCnt >= COUPON_MAX_COUNT)
-            return;
-        
-        if (waitCoupon)
-        {
-            if (showTokyoLive)
-                return;
-
-            if (mainWaitCoupon && Info.isCheckScene("Main"))
-            {
-                mainWaitCoupon = false;
-                NetworkManager.Instance.Coupon_REQ();
-            }
-
-            return;
-        }
-        
-        loopCouponRemainTime += Time.deltaTime;
-        if (COUPON_REMAIN_MIN <= Mathf.FloorToInt((Info.loopCouponRemainTime) / 60))
-        {
-            waitCoupon = true;
-
-            if (Info.isCheckScene("Main"))
-            {
-                if (showTokyoLive)
-                {
-                    mainWaitCoupon = true;
-                    return;
-                }
-
-                NetworkManager.Instance.Coupon_REQ();
-            }
-            else
-                mainWaitCoupon = true;
-        }
-    }
 
 	public static bool IsInputFieldFocused()
 	{

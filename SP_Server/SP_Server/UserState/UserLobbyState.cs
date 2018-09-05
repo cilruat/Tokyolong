@@ -100,7 +100,6 @@ namespace SP_Server.UserState
                         else
                         {                            
                             send_msg.push(owner.mainFrm.GetGameCount(tableNum));
-                            send_msg.push(owner.info.couponCnt);
                             send_msg.push(owner.info.tokyoLiveCnt);
 
                             send_msg.push(existUser ? 1 : 0);
@@ -516,18 +515,6 @@ namespace SP_Server.UserState
                         owner.mainFrm.SetDiscountProb(listDiscountProb);
 
                         send_msg = CPacket.create((short)PROTOCOL.SET_RANDOM_DISCOUNT_PROB_ACK);
-                        break;
-                    case PROTOCOL.COUPON_REQ:
-                        tableNo = msg.pop_byte();
-                        if (owner.info.couponCnt < Frm.COUPON_MAX_CNT)
-                        {
-                            ++owner.info.couponCnt;
-                            owner.mainFrm.DataUserInfoSave();
-                        }
-
-                        int couponCnt = owner.info.couponCnt;
-                        send_msg = CPacket.create((short)PROTOCOL.COUPON_ACK);
-                        send_msg.push(couponCnt);
                         break;
                     case PROTOCOL.TABLE_PRICE_CONFIRM_REQ:
                         tableNo = msg.pop_byte();

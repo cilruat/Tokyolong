@@ -36,7 +36,6 @@ public partial class RobotNetwork : MonoBehaviour
         case PROTOCOL.TABLE_DISCOUNT_INPUT_ACK:     TableDiscountInputACK (msg);   break;
         case PROTOCOL.GET_RANDOM_DISCOUNT_PROB_ACK: GetDiscountProbACK (msg);      break;
         case PROTOCOL.SET_RANDOM_DISCOUNT_PROB_ACK: SetDiscountProbACK (msg);      break;
-        case PROTOCOL.COUPON_ACK:                   CouponACK (msg);               break;
 		}
 	}
 
@@ -124,10 +123,5 @@ public partial class RobotNetwork : MonoBehaviour
 
     public void SetDiscountProbACK(CPacket msg)
     {
-    }
-
-    public void CouponACK(CPacket msg)
-    {
-        int couponCnt = msg.pop_int32();
     }
 }

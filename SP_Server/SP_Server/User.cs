@@ -19,7 +19,6 @@ namespace SP_Server
         public GameInfo gameInfo;
         public List<SendMenu> menus;
         public int discount;
-        public int couponCnt;
         public int tokyoLiveCnt;
 
         public UserInfo()
@@ -30,7 +29,6 @@ namespace SP_Server
             this.gameInfo = new GameInfo();
             this.menus = new List<SendMenu>();
             this.discount = 0;
-            this.couponCnt = 0;
             this.tokyoLiveCnt = 0;
         }
 
@@ -42,7 +40,6 @@ namespace SP_Server
             this.gameInfo = new GameInfo();
             this.menus = new List<SendMenu>();
             this.discount = 0;
-            this.couponCnt = 0;
             this.tokyoLiveCnt = 0;
         }
 
@@ -54,7 +51,6 @@ namespace SP_Server
             this.gameInfo = new GameInfo();
             this.menus = new List<SendMenu>();
             this.discount = 0;
-            this.couponCnt = 0;
             this.tokyoLiveCnt = 0;
         }
 

@@ -51,7 +51,6 @@ namespace SP_Server
         public int musicID = -1;
         public List<RequestMusicInfo> listReqMusicInfo = new List<RequestMusicInfo>();
 
-        public const int COUPON_MAX_CNT = 2;
         public const int TOKYO_MAX_CNT = 3;
 
         Random random;
