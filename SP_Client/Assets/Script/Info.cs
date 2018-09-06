@@ -10,6 +10,7 @@ using UnityEngine.EventSystems;
 public partial class Info : MonoBehaviour {
     
 	public const int TOKYOLIVE_MAX_COUNT = 3;
+	public static int TOKYOLIVE_PREV_SEC = 20;
 	static int[] TOKYOLIVE_START_TIME = { 0, 30 };
 
     public static byte TableNum = 0;
@@ -73,17 +74,13 @@ public partial class Info : MonoBehaviour {
         if (SceneChanger.CheckGameScene(SceneManager.GetActiveScene().name))
             return;
 
-		_CheckTokyoLivePrev_1Min ();
+		_CheckTokyoLivePrevStart ();
 	}
 
-	static void _CheckTokyoLivePrev_1Min()
+	static void _CheckTokyoLivePrevStart()
 	{
-		int min = DateTime.Now.Minute;
-		int sec = DateTime.Now.Second;
-
-		if (sec == 0 &&
-		    (min == _GetTokyoLivePrevTime (TOKYOLIVE_START_TIME [0]) ||
-		    min == _GetTokyoLivePrevTime (TOKYOLIVE_START_TIME [1]))) {
+		if (_GetTokyoLivePrevTime (TOKYOLIVE_START_TIME [0]) ||
+		    _GetTokyoLivePrevTime (TOKYOLIVE_START_TIME [1])) {
 			if (UIManager.Instance.IsActive (eUI.eTokyoLive))
 				return;
 
@@ -94,9 +91,18 @@ public partial class Info : MonoBehaviour {
 		}
 	}
 
-	static int _GetTokyoLivePrevTime(int startTime)
+	static bool _GetTokyoLivePrevTime(int startTime)
 	{
-		return startTime == 0 ? 59 : startTime - 1;
+		bool prevStart = false;
+
+		int min = DateTime.Now.Minute;
+		int sec = DateTime.Now.Second;
+
+		int prevMin = startTime == 0 ? 59 : startTime - 1;
+		if (prevMin == min && sec == 60 - TOKYOLIVE_PREV_SEC)
+			prevStart = true;
+
+		return prevStart;
 	}
 
 	public static bool IsStartTokyoLiveTime()

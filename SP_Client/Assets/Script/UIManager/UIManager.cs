@@ -39,7 +39,10 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
     public ClickStar clickStarA;
     public ClickStar clickStarB;
 
-	public AudioSource audioClick;
+	public AudioClip clipTokyoLive;
+
+	public AudioSource audioSound;
+	public AudioSource audioMusic;
 
     [System.NonSerialized]public bool isMouseClickEff = false;
 
@@ -221,6 +224,12 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 				if (page)
 					page.PrevSet (true);
 			}
+
+			if (Input.GetKeyDown (KeyCode.Z))
+				PlayMusic (clipTokyoLive);
+
+			if (Input.GetKeyDown (KeyCode.X))
+				StopMusic ();
             #endif
 		}
 
@@ -238,7 +247,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
             ClickStar clickStar = objEff.GetComponent<ClickStar>();
             clickStar.ShowClickStar(Input.mousePosition);
 
-			_ClickSound ();
+			PlaySound ();
 		}
 
 		if (Info.TableNum != (byte)0 && Info.isCheckScene ("Login") == false) {
@@ -246,12 +255,29 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 		}
     }
 
-	void _ClickSound()
+	public void PlaySound()
 	{
-		if (audioClick == null)
+		if (audioSound == null)
 			return;
 
-		audioClick.PlayOneShot (audioClick.clip);
+		audioSound.Play ();
+	}
+
+	public void PlayMusic(AudioClip clip)
+	{
+		if (audioMusic == null)
+			return;
+
+		audioMusic.clip = clip;
+		audioMusic.Play ();
+	}
+
+	public void StopMusic()
+	{
+		if (audioMusic == null)
+			return;
+
+		audioMusic.Stop ();
 	}
 
 	public void QuitPos()

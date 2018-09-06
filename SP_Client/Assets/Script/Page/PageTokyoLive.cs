@@ -72,6 +72,8 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 		curStage = 1;
 		selectAnswer = 0;
 
+		UIManager.Instance.PlayMusic (UIManager.Instance.clipTokyoLive);
+
 		_Init ();
 	}
 
@@ -85,11 +87,13 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 
 		if (startGame == false) {
 			string time = (60 - System.DateTime.Now.Second).ToString ();
-			if (txtPrevTime.text != time)
+			if (txtPrevTime.text != time && time.Equals("60") == false)
 				txtPrevTime.text = time;
 
-			if (Info.IsStartTokyoLiveTime ())
+			if (Info.IsStartTokyoLiveTime ()) {
+				UIManager.Instance.StopMusic ();
 				NetworkManager.Instance.TokyoLive_REQ ();
+			}
 		}
 
 		if (showTime == false)
