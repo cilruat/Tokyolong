@@ -13,7 +13,7 @@ namespace Emoji2
 {
     public class UIManager : MonoBehaviour
     {
-		const int EASY_FINISH_POINT = 30;
+		const int EASY_FINISH_POINT = 20;
 		const int HARD_FINISH_POINT = 60;
 
         [Header("Object References")]
