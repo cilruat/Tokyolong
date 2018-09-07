@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PagePairCards : SingletonMonobehaviour<PagePairCards> {
 
-	const int LIMIT_TIME = 20;
+	const int LIMIT_TIME = 30;
 	const int NORMAL_MODE_CARD_COUNT = 18;
 	const int HARD_MODE_CARD_COUNT = 24;
 

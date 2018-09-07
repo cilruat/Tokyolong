@@ -219,6 +219,9 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 				if (Info.tokyoLiveCnt >= Info.TOKYOLIVE_MAX_COUNT)
 					return;
 
+				if (UIManager.Instance.IsActive (eUI.eTokyoLive))
+					return;
+
 				GameObject obj = UIManager.Instance.Show (eUI.eTokyoLive);
 				PageTokyoLive page = obj.GetComponent<PageTokyoLive> ();
 				if (page)
@@ -226,10 +229,10 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 			}
 
 			if (Input.GetKeyDown (KeyCode.Z))
-				PlayMusic (clipTokyoLive);
+				PlayMusic (clipTokyoLive, 3f);
 
 			if (Input.GetKeyDown (KeyCode.X))
-				StopMusic ();
+				MuteMusic ();
             #endif
 		}
 
@@ -263,13 +266,13 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 		audioSound.Play ();
 	}
 
-	public void PlayMusic(AudioClip clip)
+	public void PlayMusic(AudioClip clip, float volumeScale = 1f)
 	{
 		if (audioMusic == null)
 			return;
 
-		audioMusic.clip = clip;
-		audioMusic.Play ();
+		audioMusic.volume = 1f;
+		audioMusic.PlayOneShot(clip, volumeScale);
 	}
 
 	public void StopMusic()
@@ -277,6 +280,28 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 		if (audioMusic == null)
 			return;
 
+		audioMusic.Stop ();
+	}
+
+	const float MUTE_FADE_IN = .5f;
+	public void MuteMusic()
+	{
+		StartCoroutine (_MuteMusic ());
+	}
+
+	IEnumerator _MuteMusic()
+	{
+		audioMusic.volume = 1;
+
+		float duration = MUTE_FADE_IN;
+		while (duration > 0) {
+			duration = Mathf.Max (0, duration - Time.unscaledDeltaTime);
+			float rate = duration / MUTE_FADE_IN;
+			audioMusic.volume = rate;
+			yield return null;
+		}
+
+		audioMusic.volume = 0;
 		audioMusic.Stop ();
 	}
 
