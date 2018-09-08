@@ -42,6 +42,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 	public AudioClip clipTokyoLive;
 
 	public AudioSource audioSound;
+	public AudioSource audioBell;
 	public AudioSource audioMusic;
 
     [System.NonSerialized]public bool isMouseClickEff = false;
@@ -233,6 +234,9 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 
 			if (Input.GetKeyDown (KeyCode.X))
 				MuteMusic ();
+
+			if (Input.GetKeyDown (KeyCode.C))
+				PlayBell ();
             #endif
 		}
 
@@ -242,15 +246,15 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 
             GameObject showEff = showClickA ? clickStarA.gameObject : clickStarB.gameObject;
             GameObject objEff = null;
-            if(Info.isCheckScene("Admin"))
-                objEff = Instantiate (showEff, PageAdmin.Instance.transform) as GameObject;
-            else
-                objEff = Instantiate (showEff, PageBase.Instance.transform) as GameObject;
+			if (Info.isCheckScene ("Admin"))
+				objEff = Instantiate (showEff, PageAdmin.Instance.transform) as GameObject;
+			else {
+				objEff = Instantiate (showEff, PageBase.Instance.transform) as GameObject;
+				PlaySound ();
+			}
 
             ClickStar clickStar = objEff.GetComponent<ClickStar>();
             clickStar.ShowClickStar(Input.mousePosition);
-
-			PlaySound ();
 		}
 
 		if (Info.TableNum != (byte)0 && Info.isCheckScene ("Login") == false) {
@@ -264,6 +268,14 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 			return;
 
 		audioSound.Play ();
+	}
+
+	public void PlayBell()
+	{
+		if (audioBell == null)
+			return;
+
+		audioBell.Play ();
 	}
 
 	public void PlayMusic(AudioClip clip, float volumeScale = 1f)

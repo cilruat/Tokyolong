@@ -6,7 +6,7 @@ using LitJson;
 
 public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 
-	const int TABLE_NUM = 42;
+	const int TABLE_NUM = 41;
 
 	public GameObject page;
 	public RectTransform rtScrollTable;
@@ -188,6 +188,8 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
         OrderElt elt = obj.GetComponent<OrderElt>();
         elt.SetInfo(reqOrder);
         listOrder.Add(elt);
+
+		UIManager.Instance.PlayBell ();
     }
 
     public void SetRequestMusic(RequestMusicInfo info)
