@@ -23,15 +23,15 @@ public class SceneChanger : SingletonMonobehaviour<SceneChanger> {
 
     public static bool CheckGameScene(string sceneName)
     {
-        if (sceneName == "PicturePuzzle"     ||
-            sceneName == "PairCards"         ||
-            sceneName == "CrashCatMain"      ||
-            sceneName == "CrashCatStart"     ||
-            sceneName == "FlappyBirdMain"    ||
-            sceneName == "EmojiMain"         ||
-            sceneName == "Emoji2Main"        ||
-            sceneName == "AvoidBullets"      ||
-            sceneName == "AvoidGame"         ||
+        if (sceneName == "PicturePuzzle"     		||
+            sceneName == "PairCards"         		||
+            sceneName == "CrashCatMain"      		||
+            sceneName == "CrashCatStart"     		||
+            sceneName == "FlappyBirdMasterMain"    	||
+            sceneName == "EmojiMain"         		||
+            sceneName == "Emoji2Main"        		||
+            sceneName == "AvoidBullets"      		||
+            sceneName == "AvoidGame"         		||
             sceneName == "AvoidMain"         )
             return true;
         else

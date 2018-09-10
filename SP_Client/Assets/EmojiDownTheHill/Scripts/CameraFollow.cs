@@ -1,23 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CameraFollow : MonoBehaviour {
+namespace Emoji2
+{
+	public class CameraFollow : MonoBehaviour {
 
-	public GameObject target;
-	float initialDeltaY;
+		public GameObject target;
+		float initialDeltaY;
 
-    void Start()
-    {
-        initialDeltaY = target.transform.position.y - transform.position.y;
-    }
-	
-	// Update is called once per frame
-	void Update () {
-        
-        float deltaY = target.transform.position.y - transform.position.y;
+	    void Start()
+	    {
+	        initialDeltaY = target.transform.position.y - transform.position.y;
+	    }
+		
+		// Update is called once per frame
+		void Update () {
+	        
+	        float deltaY = target.transform.position.y - transform.position.y;
 
-        if (deltaY > initialDeltaY + 0.5f) {
-            transform.position = transform.position + new Vector3(0, 0.02f, 0); // camera moves up to catch up with target 
+	        if (deltaY > initialDeltaY + 0.5f) {
+	            transform.position = transform.position + new Vector3(0, 0.02f, 0); // camera moves up to catch up with target 
+			}
 		}
 	}
 }

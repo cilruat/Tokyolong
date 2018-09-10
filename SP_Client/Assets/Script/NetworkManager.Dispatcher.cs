@@ -238,8 +238,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 			Emoji.GameManager.Instance.ReturnHome ();
 		else if (Info.isCheckScene ("Emoji2Main"))
 			Emoji2.GameManager.Instance.ReturnHome ();
-		else if (Info.isCheckScene ("FlappyBirdMain"))
-			GameControl.instance.ReturnHome ();
+		else if (Info.isCheckScene ("FlappyBirdMasterMain"))
+			FlappyScript.instance.ReturnHome ();
 	}
 
 	void GameDiscountNOT(CPacket msg)

@@ -122,8 +122,8 @@ public partial class Info : MonoBehaviour {
 		case EMenuType.eSake:
 		case EMenuType.eFruitSozu:
 		case EMenuType.eFruitMakgeolli:
-		case EMenuType.eGin:
-		case EMenuType.eDrink:	cnt = 1;	break;
+		case EMenuType.eGin:	cnt = 1;	break;
+		case EMenuType.eDrink:	cnt = 0;	break;
 		default:				cnt = 2;	break;
 		}
 

@@ -36,7 +36,7 @@ public partial class PageGame : PageBase {
 
 	short runInGameDiscount = (short)EDiscount.e1000won;
 	int runInGameType = (int)EGameType.eTabletGame;
-	int runInGame = 0;
+	int runInGame = 1;
 
 	protected override void Awake ()
 	{
@@ -335,10 +335,10 @@ public partial class PageGame : PageBase {
             {
                 switch ((ETabletGame)curGame)
                 {
-                    case ETabletGame.CrashCat:      sceneName = "CrashCatStart";     break;
-                    case ETabletGame.FlappyBird:    sceneName = "FlappyBirdMain";   break;
-                    case ETabletGame.DownHill:      sceneName = "Emoji2Main";       break;
-                    case ETabletGame.SlidingDown:   sceneName = "EmojiMain";        break;
+                    case ETabletGame.CrashCat:      sceneName = "CrashCatStart";     		break;
+                    case ETabletGame.FlappyBird:    sceneName = "FlappyBirdMasterMain";   	break;
+                    case ETabletGame.DownHill:      sceneName = "Emoji2Main";       		break;
+                    case ETabletGame.SlidingDown:   sceneName = "EmojiMain";        		break;
                     //case ETabletGame.AvoidObject:   sceneName = "AvoidMain";     break;
                 }
             }
