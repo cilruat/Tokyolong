@@ -36,7 +36,7 @@ public partial class PageGame : PageBase {
 
 	short runInGameDiscount = (short)EDiscount.e1000won;
 	int runInGameType = (int)EGameType.eTabletGame;
-	int runInGame = 1;
+	int runInGame = 0;
 
 	protected override void Awake ()
 	{
@@ -207,8 +207,12 @@ public partial class PageGame : PageBase {
 		if (Info.RunInGameScene || isForceSelectGame)
 			stopIdx = runInGame;
 
+		// 전액이 하나밖에 없으므로 두번째 게임 걸리면 강제로 첫번째로 이동
+		if (stopIdx == 1 && Info.GameDiscountWon == (short)EDiscount.eAll)
+			stopIdx = 0;
+
 		curGame = stopIdx;
-		
+
 		for (int i = 0; i < listSlotMachine.Count; i++) {
 			if (i == listSlotMachine.Count - 1) {
 				listSlotMachine [i].SetStopIdx (stopIdx);
