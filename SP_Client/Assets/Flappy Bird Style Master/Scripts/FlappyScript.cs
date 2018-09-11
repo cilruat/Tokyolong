@@ -192,8 +192,9 @@ public class FlappyScript : MonoBehaviour
 
     bool WasTouchedOrClicked()
     {
-        if (Input.GetButtonUp("Jump") || Input.GetMouseButtonDown(0) || 
-            (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Ended))
+		if (Input.GetKeyDown(KeyCode.LeftArrow) || 
+			Input.GetKeyDown(KeyCode.RightArrow) || 
+			Input.GetKeyDown(KeyCode.UpArrow))
             return true;
         else
             return false;
