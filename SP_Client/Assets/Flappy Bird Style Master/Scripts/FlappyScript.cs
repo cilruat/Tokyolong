@@ -8,8 +8,8 @@ using System.Collections;
 /// </summary>
 public class FlappyScript : MonoBehaviour
 {
-	const int EASY_LIMIT_TIME = 15;
-	const int HARD_LIMIT_TIME = 40;
+	const int EASY_LIMIT_TIME = 30;
+	const int HARD_LIMIT_TIME = 50;
 	const float MAX_SPEED = 5f;
 	int finishLimitTime = 0;
 
