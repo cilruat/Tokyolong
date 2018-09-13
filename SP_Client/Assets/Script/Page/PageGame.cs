@@ -290,6 +290,11 @@ public partial class PageGame : PageBase {
 		SceneChanger.LoadScene ("Order", curBoardObj ());
 	}
 
+	public void OnGoPracticeGame()
+	{
+		SceneChanger.LoadScene ("PracticeGame", curBoardObj ());
+	}
+
 	public void ShowPopup()
 	{
 		clickStop = false;
