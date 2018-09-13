@@ -18,7 +18,7 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 	public GameObject objSendServer;
 	public GameObject objBoard;
 
-	public Text txtPrevTime;
+	public CountDown countDownPrev;
 	public Image imgReady;
 	public GameObject objDecoText;
 
@@ -41,7 +41,6 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
     string[] question2 = { "", "", "", "" };
 
 	bool cheat = false;
-	bool startGame = false;
 	bool showTime = false;
 	bool nextQuestion = false;
     	
@@ -73,6 +72,7 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 		selectAnswer = 0;
 
 		UIManager.Instance.PlayMusic (UIManager.Instance.clipTokyoLive, 3f);
+		countDownPrev.Set (Info.TOKYOLIVE_PREV_SEC, () => NetworkManager.Instance.TokyoLive_REQ ());
 
 		_Init ();
 	}
@@ -83,16 +83,7 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 			cheat = false;
 			Info.tokyoLiveCnt += 1;
 			StartCoroutine (_CheatStart ());
-		}
-
-		if (startGame == false) {
-			string time = (60 - System.DateTime.Now.Second).ToString ();
-			if (txtPrevTime.text != time && time.Equals("60") == false)
-				txtPrevTime.text = time;
-
-			if (Info.IsStartTokyoLiveTime ())	
-				NetworkManager.Instance.TokyoLive_REQ ();
-		}
+		}			
 
 		if (showTime == false)
 			return;
@@ -112,7 +103,6 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 
 	void _Init()
 	{		
-		startGame = false;
 		txtQuesiton.text = "";
 		selectAnswer = 0;
 
@@ -141,8 +131,6 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 	public void OnStart()
 	{
 		UIManager.Instance.MuteMusic ();
-
-		startGame = true;
 		StartCoroutine (_Start ());
 	}
 
