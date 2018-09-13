@@ -28,7 +28,7 @@ public enum EMenuType : int
     eFruitSozu = 10,    // 과일 소주
     eFruitMakgeolli,    // 과일 막걸리
     eGin,               // 고급진
-    eDrink,             // 음료
+    eDrink,             // 음료&아이스크림
 }
 
 public enum EMenuDetail : int
@@ -112,6 +112,10 @@ public enum EMenuDetail : int
 	eBagirakSoup					= 77,
 	eMeal							= 78,
 	eSimsul12						= 79,
+	ePigBar							= 80,
+	eWaterMelonBar					= 81,
+	eMelonBar						= 82,
+	eScrewBar						= 83,
 }
 
 /// <summary>
