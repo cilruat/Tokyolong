@@ -5,10 +5,6 @@ using UnityEngine.UI;
 
 public class PagePairCards : SingletonMonobehaviour<PagePairCards> {
 
-	const int LIMIT_TIME = 30;
-	const int NORMAL_MODE_CARD_COUNT = 18;
-	const int HARD_MODE_CARD_COUNT = 24;
-
 	public Text txtCountDown;
 	public CountDown countDown;
 	public Image imgTime;
@@ -30,7 +26,7 @@ public class PagePairCards : SingletonMonobehaviour<PagePairCards> {
 
 	void Awake()
 	{
-		txtCountDown.text = LIMIT_TIME.ToString ();
+		txtCountDown.text = Info.PAIR_CARD_LIMIT_TIME.ToString ();
 		_SetCards ();
 	}		
 
@@ -40,13 +36,13 @@ public class PagePairCards : SingletonMonobehaviour<PagePairCards> {
 			return;
 		
 		float elapsed = countDown.GetElapsed ();
-		float fill = (LIMIT_TIME - elapsed) / (float)LIMIT_TIME;
+		float fill = (Info.PAIR_CARD_LIMIT_TIME - elapsed) / (float)Info.PAIR_CARD_LIMIT_TIME;
 		imgTime.fillAmount = fill;
 	}
 
 	void _SetCards()
 	{		
-		int cnt = NORMAL_MODE_CARD_COUNT; //Info.GameDiscountWon == 0 ? NORMAL_MODE_CARD_COUNT : HARD_MODE_CARD_COUNT;
+		int cnt = Info.PAIR_CARD_MODE;
 
 		int prev_pairNum = 0;
 		int pairNum = 0;
@@ -142,7 +138,7 @@ public class PagePairCards : SingletonMonobehaviour<PagePairCards> {
 		objHide.SetActive (false);
 
 		start = true;
-		countDown.Set (LIMIT_TIME, () => _FailEndGame ());
+		countDown.Set (Info.PAIR_CARD_LIMIT_TIME, () => _FailEndGame ());
 	}
 
 	List<KeyValuePair<int,int>> listChecks = new List<KeyValuePair<int, int>>();

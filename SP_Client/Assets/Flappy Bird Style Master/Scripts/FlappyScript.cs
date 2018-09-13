@@ -7,9 +7,7 @@ using System.Collections;
 /// Audio for Flappy Bird found here: https://www.sounds-resource.com/mobile/flappybird/sound/5309/
 /// </summary>
 public class FlappyScript : MonoBehaviour
-{
-	const int EASY_LIMIT_TIME = 30;
-	const int HARD_LIMIT_TIME = 50;
+{	
 	const float MAX_SPEED = 5f;
 	int finishLimitTime = 0;
 
@@ -76,7 +74,7 @@ public class FlappyScript : MonoBehaviour
 		BoostOnYAxis();
 		GameStateManager.GameState = GameState.Playing;
 
-		finishLimitTime = Info.GameDiscountWon == (short)EDiscount.e1000won ? EASY_LIMIT_TIME : HARD_LIMIT_TIME;
+		finishLimitTime = Info.FLAPPY_BIRD_LIMIT_TIME;
 		txtTime.text = finishLimitTime.ToString ();
 
 		limitTime.transform.parent.gameObject.SetActive (true);

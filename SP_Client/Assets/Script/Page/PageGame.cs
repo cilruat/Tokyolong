@@ -24,8 +24,6 @@ public partial class PageGame : PageBase {
 	public RectTransform[] rtWinWaiter;
 	public RectTransform[] rtPuzzleGame;
 	public RectTransform[] rtTabletGame;
-	public RectTransform[] rtTabletGame_Half;
-	public RectTransform[] rtTabletGame_All;
 	public List<SlotMachineElt> listSlotMachine = new List<SlotMachineElt>();
 	public CountDown countDownGameLoading;
 
@@ -102,8 +100,8 @@ public partial class PageGame : PageBase {
 		if (Info.RunInGameScene || isForceSelectGame) {
 			return runInGameType;
 		} else {
-			if (percent < .27f)			return 1;		
-			else if (percent > .95f)	return 0;
+			if (percent <= .1f)			return 0;
+			else if (percent > .75f)	return 1;
 			else						return 2;
 		}
 	}
@@ -184,16 +182,10 @@ public partial class PageGame : PageBase {
 			}
 			break;
 		case (short)EDiscount.e5000won:
+		case (short)EDiscount.eHalf:
+		case (short)EDiscount.eAll:
 			randRange = Enum.GetValues(typeof(ETabletGame)).Length;
 			rtElts = rtTabletGame;
-			break;
-		case (short)EDiscount.eHalf:
-			randRange = Enum.GetValues (typeof(ETabletGame)).Length - 1;
-			rtElts = rtTabletGame_Half;
-			break;
-		case (short)EDiscount.eAll:
-			randRange = Enum.GetValues (typeof(ETabletGame)).Length - 2;
-			rtElts = rtTabletGame_All;
 			break;
 		}			
 
@@ -206,10 +198,6 @@ public partial class PageGame : PageBase {
 		int stopIdx = UnityEngine.Random.Range (0, randRange);
 		if (Info.RunInGameScene || isForceSelectGame)
 			stopIdx = runInGame;
-
-		// 전액이 하나밖에 없으므로 두번째 게임 걸리면 강제로 첫번째로 이동
-		if (stopIdx == 1 && Info.GameDiscountWon == (short)EDiscount.eAll)
-			stopIdx = 0;
 
 		curGame = stopIdx;
 

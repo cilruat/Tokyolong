@@ -18,9 +18,7 @@ namespace CrashCat
     public class GameState : AState
     {
     	static int s_DeadHash = Animator.StringToHash("Dead");
-
-        const int EASY_LIMIT_TIME = 20;
-		const int HARD_LIMIT_TIME = 40;
+		        
 		int finishLimitTime = 0;
 
         public Canvas canvas;
@@ -111,7 +109,7 @@ namespace CrashCat
 
         public void StartGame()
         {
-			finishLimitTime = Info.GameDiscountWon == (short)EDiscount.e1000won ? EASY_LIMIT_TIME : HARD_LIMIT_TIME;
+			finishLimitTime = Info.CRASH_CAT_LIMIT_TIME;
 			txtTime.text = finishLimitTime.ToString();
 
             canvas.gameObject.SetActive(true);

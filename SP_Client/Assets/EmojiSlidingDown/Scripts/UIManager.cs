@@ -12,10 +12,7 @@ using EasyMobile;
 namespace Emoji
 {
     public class UIManager : MonoBehaviour
-    {
-		const int EASY_FINISH_POINT = 12;
-		const int HARD_FINISH_POINT = 50;
-
+    {		
         [Header("Object References")]
         public GameObject header;
         public GameObject title;
@@ -70,7 +67,7 @@ namespace Emoji
         // Use this for initialization
         void Start()
         {
-			finishPoint = Info.GameDiscountWon == (short)EDiscount.e1000won ? EASY_FINISH_POINT : HARD_FINISH_POINT;
+			finishPoint = Info.EMOJI_SLIDING_DOWN_FINISH_POINT;
 			score.text = "0 / " + finishPoint.ToString ();
 
             scoreAnimator = score.GetComponent<Animator>();

@@ -57,11 +57,7 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 		public Vector2 GetPos() { return ancPos; }
 		public RawImage GetImage() { return img; }
 	}
-
-    const int EASY_MODE = 3;
-    const int HARD_MODE = 4;
-    const int LIMIT_TIME = 30;
-
+	   
 	public Text txtCountDown;
 	public CountDown countDown;
 	public Image imgTime;
@@ -88,7 +84,7 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 	void Start()
 	{		
 		_Init();
-		txtCountDown.text = LIMIT_TIME.ToString ();
+		txtCountDown.text = Info.PICTURE_PUZZLE_LIMIT_TIME.ToString ();
 	}		
 
 	void Update()
@@ -97,7 +93,7 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 			return;
 
 		float elapsed = countDown.GetElapsed ();
-		float fill = (LIMIT_TIME - elapsed) / (float)LIMIT_TIME;
+		float fill = (Info.PICTURE_PUZZLE_LIMIT_TIME - elapsed) / (float)Info.PICTURE_PUZZLE_LIMIT_TIME;
 		imgTime.fillAmount = fill;
 	}
 
@@ -114,7 +110,7 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 				Destroy (child.gameObject);
 		}
 
-		mode = EASY_MODE; //Info.GameDiscountWon == 0 ? EASY_MODE : HARD_MODE;
+		mode = Info.PICTURE_PUZZLE_MODE;
         array = new int[mode, mode];
 
 		float cellSize = img.rectTransform.rect.height / (float)mode;
@@ -181,7 +177,7 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 		grid.enabled = false;
 
 		start = true;
-		countDown.Set (LIMIT_TIME, () => _FailEndGame ());
+		countDown.Set (Info.PICTURE_PUZZLE_LIMIT_TIME, () => _FailEndGame ());
 	}
 
 	void _ClopClip(Texture tex)

@@ -83,7 +83,6 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
             Info.AddGameCount(gameCnt, true);
 			Info.tokyoLiveCnt = msg.pop_int32 ();
             Info.showTokyoLive = false;
-			Debug.Log ("Info.tokyoLiveCnt: " + Info.tokyoLiveCnt);
 
 			int existUser = msg.pop_int32 ();
 			if (existUser == 1) {

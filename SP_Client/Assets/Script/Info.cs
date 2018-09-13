@@ -9,10 +9,21 @@ using UnityEngine.EventSystems;
 
 public partial class Info : MonoBehaviour {
     
+	// Game Info
+	public static int EMOJI_DOWN_THE_HILL_FINISH_POINT = 20;
+	public static int EMOJI_SLIDING_DOWN_FINISH_POINT = 12;
+	public static int CRASH_CAT_LIMIT_TIME = 20;
+	public static int FLAPPY_BIRD_LIMIT_TIME = 30;
+	public static int PICTURE_PUZZLE_MODE = 3;
+	public static int PICTURE_PUZZLE_LIMIT_TIME = 30;
+	public static int PAIR_CARD_MODE = 18;
+	public static int PAIR_CARD_LIMIT_TIME = 30;
+
 	public const int TOKYOLIVE_MAX_COUNT = 3;
 	public static int TOKYOLIVE_PREV_SEC = 20;
 	static int[] TOKYOLIVE_START_TIME = { 0, 30 };
 
+	// user Info
     public static byte TableNum = 0;
     public static byte PersonCnt = 0;
     public static ECustomerType ECustomer = ECustomerType.MAN;
@@ -22,8 +33,7 @@ public partial class Info : MonoBehaviour {
 	public static short GameDiscountWon = -1;	   
     const int GAMEPLAY_MIN_COUNT = 0;
     const int GAMEPLAY_MAX_COUNT = 50;
-
-    // 
+	    
     public static int orderCnt = 0;
 
 	// TokyoLive Info

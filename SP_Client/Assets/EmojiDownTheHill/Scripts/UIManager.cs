@@ -13,9 +13,6 @@ namespace Emoji2
 {
     public class UIManager : MonoBehaviour
     {
-		const int EASY_FINISH_POINT = 20;
-		const int HARD_FINISH_POINT = 60;
-
         [Header("Object References")]
         public GameManager gameManager;
         public SelectCharacter characterSprite;
@@ -64,7 +61,7 @@ namespace Emoji2
         // Use this for initialization
         void Start()
         {
-			finishPoint = Info.GameDiscountWon == (short)EDiscount.e1000won ? EASY_FINISH_POINT : HARD_FINISH_POINT;
+			finishPoint = Info.EMOJI_DOWN_THE_HILL_FINISH_POINT;
 			score.text = "0 / " + finishPoint.ToString ();
 
             scoreAnimator = score.GetComponent<Animator>();
