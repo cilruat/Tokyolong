@@ -14,6 +14,7 @@ public class PageLogin : PageBase {
     string IP = "";
     string PORT = "";
 
+	bool successConnect = false;
 	string tableNo = "";
     byte howMany = 0;
     ECustomerType eType = ECustomerType.MAN;
@@ -53,12 +54,31 @@ public class PageLogin : PageBase {
 	void _ShowLoginBox()
 	{		
 		UITweenAlpha.Start (objLoginBox, 1f, TWParam.New (1f).Curve (TWCurve.CurveLevel2));
+
+		if (Info.TableNum != 0)
+			StartCoroutine (_AutoLogin ());
 	}
 
     void _EnterCustomer()
     {
         NetworkManager.Instance. EnterCostomer_REQ(howMany, (byte)eType);
     }		
+
+	IEnumerator _AutoLogin()
+	{
+		float timeToStart = Time.timeSinceLevelLoad;
+		while (true) {			
+			if (successConnect)
+				break;
+			
+			if (Time.timeSinceLevelLoad > timeToStart + 3f) {
+				timeToStart = Time.timeSinceLevelLoad;
+				OnLogin ();
+			}				
+
+			yield return null;
+		}
+	}
 
 	public void OnLogin()
 	{
@@ -70,6 +90,7 @@ public class PageLogin : PageBase {
 
 	public void SuccessConnect()
 	{
+		successConnect = true;
 		string desc = "정상적으로 서버에 접속하였습니다\n" + "테이블 넘버: " + tableNo;
 		SystemMessage.Instance.Add (desc);
 
