@@ -10,10 +10,10 @@ using UnityEngine.EventSystems;
 public partial class Info : MonoBehaviour {
     
 	// Game Info
-	public static int EMOJI_DOWN_THE_HILL_FINISH_POINT = 20;
-	public static int EMOJI_SLIDING_DOWN_FINISH_POINT = 12;
+	public static int EMOJI_DOWN_THE_HILL_FINISH_POINT = 30;
+	public static int EMOJI_SLIDING_DOWN_FINISH_POINT = 18;
 	public static int CRASH_CAT_LIMIT_TIME = 20;
-	public static int FLAPPY_BIRD_LIMIT_TIME = 20;
+	public static int FLAPPY_BIRD_LIMIT_TIME = 25;
 	public static int PICTURE_PUZZLE_MODE = 3;
 	public static int PICTURE_PUZZLE_LIMIT_TIME = 30;
 	public static int PAIR_CARD_MODE = 18;
