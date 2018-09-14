@@ -75,10 +75,12 @@ public class FlappyScript : MonoBehaviour
 		GameStateManager.GameState = GameState.Playing;
 
 		finishLimitTime = Info.FLAPPY_BIRD_LIMIT_TIME;
-		txtTime.text = finishLimitTime.ToString ();
+		txtTime.text = Info.practiceGame ? "∞" : finishLimitTime.ToString ();
 
 		limitTime.transform.parent.gameObject.SetActive (true);
-		limitTime.Set (finishLimitTime, () => StartCoroutine (_SuccessEndGame ()));
+
+		if (Info.practiceGame == false)
+			limitTime.Set (finishLimitTime, () => StartCoroutine (_SuccessEndGame ()));
 	}
 
 	IEnumerator _SuccessEndGame ()
@@ -146,6 +148,9 @@ public class FlappyScript : MonoBehaviour
             {
                 BoostOnYAxis();
             }
+
+			if (Info.practiceGame)
+				return;
 
 			float elapsed = limitTime.GetElapsed();
 			float fill = (finishLimitTime - elapsed) / (float)finishLimitTime;

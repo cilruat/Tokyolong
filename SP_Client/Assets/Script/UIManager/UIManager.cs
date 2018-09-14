@@ -67,7 +67,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 
         Application.targetFrameRate = 60;
 
-        Info.RunInGameScene = Info.isCheckScene("Game");
+		Info.RunInGameScene = Info.isCheckScene ("Game") || Info.isCheckScene ("PracticeGame");
 
 		if (PageBase.Instance != null )
 			isMouseClickEff = true;

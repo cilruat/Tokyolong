@@ -26,7 +26,7 @@ public class PagePairCards : SingletonMonobehaviour<PagePairCards> {
 
 	void Awake()
 	{
-		txtCountDown.text = Info.PAIR_CARD_LIMIT_TIME.ToString ();
+		txtCountDown.text = Info.practiceGame ? "∞" : Info.PAIR_CARD_LIMIT_TIME.ToString ();
 		_SetCards ();
 	}		
 
@@ -34,7 +34,10 @@ public class PagePairCards : SingletonMonobehaviour<PagePairCards> {
 	{
 		if (start == false || end)
 			return;
-		
+
+		if (Info.practiceGame)
+			return;
+
 		float elapsed = countDown.GetElapsed ();
 		float fill = (Info.PAIR_CARD_LIMIT_TIME - elapsed) / (float)Info.PAIR_CARD_LIMIT_TIME;
 		imgTime.fillAmount = fill;
@@ -138,7 +141,9 @@ public class PagePairCards : SingletonMonobehaviour<PagePairCards> {
 		objHide.SetActive (false);
 
 		start = true;
-		countDown.Set (Info.PAIR_CARD_LIMIT_TIME, () => _FailEndGame ());
+
+		if (Info.practiceGame == false)
+			countDown.Set (Info.PAIR_CARD_LIMIT_TIME, () => _FailEndGame ());
 	}
 
 	List<KeyValuePair<int,int>> listChecks = new List<KeyValuePair<int, int>>();
@@ -224,18 +229,27 @@ public class PagePairCards : SingletonMonobehaviour<PagePairCards> {
 
 		yield return new WaitForSeconds (.25f);
 
-		objSendServer.SetActive (true);
-		yield return new WaitForSeconds (1f);
+		if (Info.practiceGame)
+			_ReturnPractiveGame ();
+		else {
+			objSendServer.SetActive (true);
+			yield return new WaitForSeconds (1f);
 
-		if (Info.TableNum == 0)
-			ReturnHome ();
-		else
-			NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+			if (Info.TableNum == 0)
+				ReturnHome ();
+			else
+				NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+		}			
 	}
 
 	void _FailEndGame()
 	{
 		objGameOver.SetActive (true);
+	}
+
+	void _ReturnPractiveGame()
+	{
+		SceneChanger.LoadScene ("PracticeGame", objBoard);
 	}
 
 	public void ReturnHome()

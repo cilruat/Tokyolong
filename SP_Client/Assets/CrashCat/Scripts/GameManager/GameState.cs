@@ -110,7 +110,7 @@ namespace CrashCat
         public void StartGame()
         {
 			finishLimitTime = Info.CRASH_CAT_LIMIT_TIME;
-			txtTime.text = finishLimitTime.ToString();
+			txtTime.text = Info.practiceGame ? "∞" : finishLimitTime.ToString();
 
             canvas.gameObject.SetActive(true);
             pauseMenu.gameObject.SetActive(false);
@@ -134,7 +134,8 @@ namespace CrashCat
 
         public void RealStart()
         {
-			limitTime.Set (finishLimitTime, () => StartCoroutine (_SuccessEndGame ()));
+			if (Info.practiceGame == false)
+				limitTime.Set (finishLimitTime, () => StartCoroutine (_SuccessEndGame ()));
         }
 
 		IEnumerator _SuccessEndGame ()
@@ -338,6 +339,9 @@ namespace CrashCat
     		else
     		{
     			m_CountdownRectTransform.localScale = Vector3.zero;
+
+				if (Info.practiceGame)
+					return;
 
                 float elapsed = limitTime.GetElapsed();
 				float fill = (finishLimitTime - elapsed) / (float)finishLimitTime;

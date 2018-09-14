@@ -40,7 +40,6 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
     string[] question1 = { "", "", "", "" };
     string[] question2 = { "", "", "", "" };
 
-	bool cheat = false;
 	bool showTime = false;
 	bool nextQuestion = false;
     	
@@ -59,7 +58,6 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 
 	public void PrevSet(bool cheat = false)
 	{
-		this.cheat = cheat;
 		UITweenAlpha.Start (gameObject, 0f, 1f, TWParam.New (1f).Curve (TWCurve.CurveLevel2).Speed (TWSpeed.Slower));
 
 		_RandQuestion(ref question1, ref answer1);
@@ -72,19 +70,19 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 		selectAnswer = 0;
 
 		UIManager.Instance.PlayMusic (UIManager.Instance.clipTokyoLive, 3f);
-		countDownPrev.Set (Info.TOKYOLIVE_PREV_SEC, () => NetworkManager.Instance.TokyoLive_REQ ());
+
+		if (cheat) {
+			Info.tokyoLiveCnt += 1;
+			countDownPrev.Set (Info.TOKYOLIVE_PREV_SEC, () => OnStart ());
+		}
+		else
+			countDownPrev.Set (Info.TOKYOLIVE_PREV_SEC, () => NetworkManager.Instance.TokyoLive_REQ ());
 
 		_Init ();
 	}
 
 	void Update()
-	{
-		if (cheat) {
-			cheat = false;
-			Info.tokyoLiveCnt += 1;
-			StartCoroutine (_CheatStart ());
-		}			
-
+	{		
 		if (showTime == false)
 			return;
 
@@ -120,13 +118,7 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 		}
 
 		objSendServer.SetActive (false);
-	}
-		
-	IEnumerator _CheatStart()
-	{
-		yield return new WaitForSeconds (5f);
-		OnStart ();
-	}
+	}		
 
 	public void OnStart()
 	{

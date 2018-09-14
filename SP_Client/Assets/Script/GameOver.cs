@@ -15,6 +15,6 @@ public class GameOver : MonoBehaviour {
 
 	void _ReturnHome()
 	{
-		SceneChanger.LoadScene ("Main", objBoard);
+		SceneChanger.LoadScene (Info.practiceGame ? "PracticeGame" : "Main", objBoard);
 	}
 }

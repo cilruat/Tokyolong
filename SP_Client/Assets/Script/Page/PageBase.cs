@@ -16,6 +16,7 @@ public class PageBase : SingletonMonobehaviour<PageBase> {
 	protected virtual void Awake()
 	{
 		Application.runInBackground = true;
+		Info.RunInGameScene = Info.isCheckScene ("Game") || Info.isCheckScene ("PracticeGame");
 
 		if (startFirstBoard == false)
 			return;

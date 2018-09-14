@@ -62,7 +62,7 @@ namespace Emoji2
         void Start()
         {
 			finishPoint = Info.EMOJI_DOWN_THE_HILL_FINISH_POINT;
-			score.text = "0 / " + finishPoint.ToString ();
+			score.text = Info.practiceGame ? "0" : "0 / " + finishPoint.ToString ();
 
             scoreAnimator = score.GetComponent<Animator>();
 
@@ -101,10 +101,15 @@ namespace Emoji2
         void OnScoreUpdated(int newScore)
         {
             scoreAnimator.Play("NewScore");
-			score.text = ScoreManager.Instance.Score.ToString () + " / " + finishPoint.ToString();
 
-			if (ScoreManager.Instance.Score >= finishPoint)
-				StartCoroutine (_SuccessEndGame ());
+			if (Info.practiceGame)
+				score.text = ScoreManager.Instance.Score.ToString ();
+			else {
+				score.text = ScoreManager.Instance.Score.ToString () + " / " + finishPoint.ToString ();
+
+				if (ScoreManager.Instance.Score >= finishPoint)
+					StartCoroutine (_SuccessEndGame ());
+			}			
         }
 
 		IEnumerator _SuccessEndGame()

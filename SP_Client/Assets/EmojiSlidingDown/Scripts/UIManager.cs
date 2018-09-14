@@ -68,7 +68,7 @@ namespace Emoji
         void Start()
         {
 			finishPoint = Info.EMOJI_SLIDING_DOWN_FINISH_POINT;
-			score.text = "0 / " + finishPoint.ToString ();
+			score.text = Info.practiceGame ? "0" : "0 / " + finishPoint.ToString ();
 
             scoreAnimator = score.GetComponent<Animator>();
             Reset();
@@ -107,10 +107,15 @@ namespace Emoji
         void OnScoreUpdated(int newScore)
         {
             scoreAnimator.Play("NewScore");
-			score.text = ScoreManager.Instance.Score.ToString () + " / " + finishPoint.ToString();
 
-			if (ScoreManager.Instance.Score >= finishPoint)
-				StartCoroutine (_SuccessEndGame ());
+			if (Info.practiceGame)
+				score.text = ScoreManager.Instance.Score.ToString ();
+			else {
+				score.text = ScoreManager.Instance.Score.ToString () + " / " + finishPoint.ToString();
+
+				if (Info.practiceGame == false && ScoreManager.Instance.Score >= finishPoint)
+					StartCoroutine (_SuccessEndGame ());
+			}
         }
 
 		IEnumerator _SuccessEndGame()

@@ -84,12 +84,15 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 	void Start()
 	{		
 		_Init();
-		txtCountDown.text = Info.PICTURE_PUZZLE_LIMIT_TIME.ToString ();
+		txtCountDown.text = Info.practiceGame ? "∞" : Info.PICTURE_PUZZLE_LIMIT_TIME.ToString ();
 	}		
 
 	void Update()
 	{
 		if (start == false || end)
+			return;
+
+		if (Info.practiceGame)
 			return;
 
 		float elapsed = countDown.GetElapsed ();
@@ -177,7 +180,9 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 		grid.enabled = false;
 
 		start = true;
-		countDown.Set (Info.PICTURE_PUZZLE_LIMIT_TIME, () => _FailEndGame ());
+
+		if (Info.practiceGame == false)
+			countDown.Set (Info.PICTURE_PUZZLE_LIMIT_TIME, () => _FailEndGame ());
 	}
 
 	void _ClopClip(Texture tex)
@@ -343,18 +348,27 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 		ShiningGraphic.Start (img);
 		yield return new WaitForSeconds (1f);
 
-		objSendServer.SetActive (true);
-		yield return new WaitForSeconds (1f);
+		if (Info.practiceGame)
+			_ReturnPractiveGame ();
+		else {
+			objSendServer.SetActive (true);
+			yield return new WaitForSeconds (1f);
 
-		if (Info.TableNum == 0)
-			ReturnHome ();
-		else
-			NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+			if (Info.TableNum == 0)
+				ReturnHome ();
+			else
+				NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+		}			
 	}
 
 	void _FailEndGame()
 	{
 		objGameOver.SetActive (true);
+	}
+
+	void _ReturnPractiveGame()
+	{
+		SceneChanger.LoadScene ("PracticeGame", objBoard);
 	}
 
 	public void ReturnHome()
