@@ -15,6 +15,7 @@ public enum eUI
     eHowToUse,
     eShowLog,
 	eTokyoLive,
+	eSurprise,
 
 	eNone = 100,
 }
@@ -40,6 +41,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
     public ClickStar clickStarB;
 
 	public AudioClip clipTokyoLive;
+	public AudioClip clipSurprise;
 
 	public AudioSource audioSound;
 	public AudioSource audioBell;
@@ -81,6 +83,15 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 			dicObject.Add (listUI [i].ui, listUI [i].obj);
 	}		
 
+	public void SetCamera()
+	{
+		if (canvas == null)
+			return;
+
+		if (canvas.worldCamera == null)
+			canvas.worldCamera = Camera.main;
+	}
+
     public void Show(int pageIdx) { Show((eUI)pageIdx); }
 	public GameObject Show(eUI page)
 	{
@@ -88,6 +99,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 		case eUI.eWaiting:		elapsedTime = 0f;	waiting = true;		break;
 		case eUI.eShowLog:		break;
         case eUI.eTokyoLive:    Info.showTokyoLive = true; curUI = page;	break;
+		case eUI.eSurprise:		curUI = page;		break;
 		default:
 			curUI = page;
 			objShadow.SetActive (true);
@@ -229,6 +241,13 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 					page.PrevSet (true);
 			}
 
+			if (Input.GetKeyDown (KeyCode.S)) {
+				GameObject obj = UIManager.Instance.Show (eUI.eSurprise);
+				UISurprisePSY uiSurprise = obj.GetComponent<UISurprisePSY>();
+				if(uiSurprise)
+					uiSurprise.PrevSet ();
+			}
+
 			if (Input.GetKeyDown (KeyCode.Z))
 				PlayMusic (clipTokyoLive, 3f);
 
@@ -284,7 +303,9 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 			return;
 
 		audioMusic.volume = 1f;
-		audioMusic.PlayOneShot(clip, volumeScale);
+		audioMusic.clip = clip;
+		audioMusic.Play ();
+		//audioMusic.PlayOneShot(clip, volumeScale);
 	}
 
 	public void StopMusic()

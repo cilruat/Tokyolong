@@ -30,8 +30,8 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 	List<MusicElt> listMusic = new List<MusicElt>();
 
     void Awake()
-    {
-        SetData(Info.adminTablePacking, Info.adminOrderPacking, Info.adminMusicPacking);
+    {		
+    	SetData(Info.adminTablePacking, Info.adminOrderPacking, Info.adminMusicPacking);
     }
 
 	void LoadTable()
@@ -57,31 +57,37 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
     {
         LoadTable();
 
-        JsonData tableJson = JsonMapper.ToObject(tablePacking);
-        for (int i = 0; i < tableJson.Count; i++)
-            SetLogin(int.Parse(tableJson[i].ToString()));
+		if (string.IsNullOrEmpty (tablePacking) == false) {
+			JsonData tableJson = JsonMapper.ToObject(tablePacking);
+			for (int i = 0; i < tableJson.Count; i++)
+				SetLogin(int.Parse(tableJson[i].ToString()));
+		}        
 
-        JsonData orderJson = JsonMapper.ToObject(orderPacking);
-        for (int i = 0; i < orderJson.Count; i++)
-        {
-            byte type = byte.Parse(orderJson[i]["type"].ToString());
-            int id = byte.Parse(orderJson[i]["id"].ToString());
-            byte tableNo = byte.Parse(orderJson[i]["tableNo"].ToString());
-            string packing = orderJson[i]["packing"].ToString();
+		if (string.IsNullOrEmpty (orderPacking) == false) {
+			JsonData orderJson = JsonMapper.ToObject(orderPacking);
+			for (int i = 0; i < orderJson.Count; i++)
+			{
+				byte type = byte.Parse(orderJson[i]["type"].ToString());
+				int id = byte.Parse(orderJson[i]["id"].ToString());
+				byte tableNo = byte.Parse(orderJson[i]["tableNo"].ToString());
+				string packing = orderJson[i]["packing"].ToString();
 
-            SetOrder(new RequestOrder(type, id, tableNo, packing));
-        }
+				SetOrder(new RequestOrder(type, id, tableNo, packing));
+			}
+		}        
 
-        JsonData musicJson = JsonMapper.ToObject(musicPacking);
-        for (int i = 0; i < musicJson.Count; i++)
-        {
-            int id = byte.Parse(musicJson[i]["id"].ToString());
-            byte tableNo = byte.Parse(musicJson[i]["tableNo"].ToString());
-            string title = musicJson[i]["title"].ToString();
-            string singer = musicJson[i]["singer"].ToString();
+		if (string.IsNullOrEmpty (musicPacking) == false) {
+			JsonData musicJson = JsonMapper.ToObject(musicPacking);
+			for (int i = 0; i < musicJson.Count; i++)
+			{
+				int id = byte.Parse(musicJson[i]["id"].ToString());
+				byte tableNo = byte.Parse(musicJson[i]["tableNo"].ToString());
+				string title = musicJson[i]["title"].ToString();
+				string singer = musicJson[i]["singer"].ToString();
 
-            SetRequestMusic(new RequestMusicInfo(id, tableNo, title, singer));
-        }
+				SetRequestMusic(new RequestMusicInfo(id, tableNo, title, singer));
+			}
+		}        
 
         Info.adminTablePacking = "";
         Info.adminOrderPacking = "";

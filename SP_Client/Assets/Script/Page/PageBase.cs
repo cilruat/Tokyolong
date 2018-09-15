@@ -26,6 +26,8 @@ public class PageBase : SingletonMonobehaviour<PageBase> {
 				boards [i].blocksRaycasts = i == 0;
 			}
 		}
+
+		UIManager.Instance.SetCamera ();
 	}		
 
 	void _OnChangeBoard(bool isNext)
