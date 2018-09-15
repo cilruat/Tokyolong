@@ -73,6 +73,7 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 	public GameObject objTxtReady;
 	public GameObject objTxtGo;
 	public GameObject objGameOver;
+	public GameObject objQuit;
 
 	bool start = false;
 	bool end = false;
@@ -85,6 +86,8 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 	{		
 		_Init();
 		txtCountDown.text = Info.practiceGame ? "∞" : Info.PICTURE_PUZZLE_LIMIT_TIME.ToString ();
+
+		objQuit.SetActive (Info.practiceGame);
 	}		
 
 	void Update()
@@ -349,7 +352,7 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 		yield return new WaitForSeconds (1f);
 
 		if (Info.practiceGame)
-			_ReturnPractiveGame ();
+			ReturnPractiveGame ();
 		else {
 			objSendServer.SetActive (true);
 			yield return new WaitForSeconds (1f);
@@ -366,7 +369,7 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 		objGameOver.SetActive (true);
 	}
 
-	void _ReturnPractiveGame()
+	public void ReturnPractiveGame()
 	{
 		SceneChanger.LoadScene ("PracticeGame", objBoard);
 	}
@@ -374,5 +377,5 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 	public void ReturnHome()
 	{
 		SceneChanger.LoadScene ("Main", objBoard);
-	}
+	}		
 }

@@ -24,14 +24,12 @@ public class CheckPattern : MonoBehaviour
 	}
 
 	PATTERN[] pattern =
-	{
+	{		
 		new PATTERN (0, PASS, 0, PASS),
 		new PATTERN (0, LEFT, 0, DOWN),	
 		new PATTERN (0, RIGHT, 1, DOWN),
-		new PATTERN (0, LEFT, 2, DOWN),
+		new PATTERN (0, RIGHT, 2, UPPER),
 		new PATTERN (3, LEFT, 3, UPPER),
-		new PATTERN (0, RIGHT, 4, UPPER),
-		new PATTERN (5, LEFT, 5, UPPER),
 	};
 
 	List<Vector2> approval = new List<Vector2>();

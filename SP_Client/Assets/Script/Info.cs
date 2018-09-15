@@ -163,4 +163,36 @@ public partial class Info : MonoBehaviour {
 
         orderCnt = Mathf.Clamp(value, GAMEPLAY_MIN_COUNT, GAMEPLAY_MAX_COUNT);
     }
+
+	const int SURPRISE_REMAIN_MIN = 10;
+	public static int surpriseCnt = 0;
+	public static float loopSurpriseRemainTime = 0f;
+	public static bool waitSurprise = false;
+
+	public static void UpdateSurpriseRemainTime()
+	{
+		if (surpriseCnt <= 0)
+			return;
+
+		if (NetworkManager.isSending)
+			return;
+
+		if (UIManager.Instance.IsActive (eUI.eSurprise))
+			return;
+
+		if (waitSurprise) {
+			if (showTokyoLive)
+				return;
+
+			if (SceneChanger.CheckGameScene(SceneManager.GetActiveScene().name))
+				return;
+
+			NetworkManager.Instance.Surprise_REQ ();
+			return;
+		}
+
+		loopSurpriseRemainTime += Time.deltaTime;
+		if (SURPRISE_REMAIN_MIN <= Mathf.FloorToInt ((loopSurpriseRemainTime) / 60))
+			waitSurprise = true;
+	}
 }

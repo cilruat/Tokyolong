@@ -17,6 +17,7 @@ public class PagePairCards : SingletonMonobehaviour<PagePairCards> {
 	public GameObject objTxtReady;
 	public GameObject objTxtGo;
 	public GameObject objGameOver;
+	public GameObject objQuit;
 	public List<Texture> listCards = new List<Texture> ();
 
 	public bool start = false;
@@ -28,6 +29,8 @@ public class PagePairCards : SingletonMonobehaviour<PagePairCards> {
 	{
 		txtCountDown.text = Info.practiceGame ? "∞" : Info.PAIR_CARD_LIMIT_TIME.ToString ();
 		_SetCards ();
+
+		objQuit.SetActive (Info.practiceGame);
 	}		
 
 	void Update()
@@ -230,7 +233,7 @@ public class PagePairCards : SingletonMonobehaviour<PagePairCards> {
 		yield return new WaitForSeconds (.25f);
 
 		if (Info.practiceGame)
-			_ReturnPractiveGame ();
+			ReturnPractiveGame ();
 		else {
 			objSendServer.SetActive (true);
 			yield return new WaitForSeconds (1f);
@@ -247,7 +250,7 @@ public class PagePairCards : SingletonMonobehaviour<PagePairCards> {
 		objGameOver.SetActive (true);
 	}
 
-	void _ReturnPractiveGame()
+	public void ReturnPractiveGame()
 	{
 		SceneChanger.LoadScene ("PracticeGame", objBoard);
 	}

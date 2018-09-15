@@ -83,6 +83,8 @@ namespace SP_Server
         TABLE_PRICE_CONFIRM_ACK,
 		TOKYOLIVE_REQ,
 		TOKYOLIVE_ACK,
+		SURPRISE_REQ,
+		SURPRISE_ACK,
         //-------------------------------------
         // 게임 프로토콜.
         //-------------------------------------        
