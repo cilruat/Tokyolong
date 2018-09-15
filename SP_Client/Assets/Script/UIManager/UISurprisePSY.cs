@@ -12,11 +12,14 @@ public class UISurprisePSY : MonoBehaviour {
 
 	public void PrevSet()
 	{
-		float randDiscount = Random.Range (0f, 1f);
+		/*float randDiscount = Random.Range (0f, 1f);
 		if (randDiscount <= .9f)	discount = 1000;
 		else						discount = 2000;
 
-		Debug.Log ("discount: " + discount + ", rand: " + randDiscount);
+		Debug.Log ("discount: " + discount + ", rand: " + randDiscount);*/
+
+		discount = 1000;
+		Info.GameDiscountWon = discount == 1000 ? (short)EDiscount.e1000won : (short)EDiscount.e2000won;
 		txtDiscount.text = discount.ToString () + "￦";
 
 		StartCoroutine (_OnShow (true));

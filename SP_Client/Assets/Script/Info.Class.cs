@@ -78,6 +78,9 @@ public partial class Info : MonoBehaviour
         GameDiscountWon = -1;
 		tokyoLiveCnt = 0;
         showTokyoLive = false;
+		surpriseCnt = 0;
+		loopSurpriseRemainTime = 0f;
+		waitSurprise = false;
 
         myInfo = null;
         dictUserInfo.Clear();

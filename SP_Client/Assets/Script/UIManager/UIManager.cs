@@ -96,10 +96,20 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 	public GameObject Show(eUI page)
 	{
 		switch (page) {
-		case eUI.eWaiting:		elapsedTime = 0f;	waiting = true;		break;
+		case eUI.eWaiting:		
+			elapsedTime = 0f;	
+			waiting = true;		
+			break;
 		case eUI.eShowLog:		break;
-        case eUI.eTokyoLive:    Info.showTokyoLive = true; curUI = page;	break;
-		case eUI.eSurprise:		curUI = page;		break;
+        case eUI.eTokyoLive:    
+			Info.showTokyoLive = true; 	
+			curUI = page;	
+			break;
+		case eUI.eSurprise:
+			Info.waitSurprise = false;
+			Info.loopSurpriseRemainTime = 0f;
+			curUI = page;	
+			break;
 		default:
 			curUI = page;
 			objShadow.SetActive (true);
@@ -278,6 +288,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 
 		if (Info.TableNum != (byte)0 && Info.isCheckScene ("Login") == false) {
 			Info.UpdateTokyoLiveTime ();
+			Info.UpdateSurpriseRemainTime ();
 		}
     }
 

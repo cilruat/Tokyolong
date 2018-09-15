@@ -56,7 +56,10 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         case PROTOCOL.SET_RANDOM_DISCOUNT_PROB_ACK: SetDiscountProb_ACK(msg);   	break;
         case PROTOCOL.TABLE_PRICE_CONFIRM_ACK:   	TablePriceConfirm_ACK(msg);    	break;
 		case PROTOCOL.TOKYOLIVE_ACK:				TokyoLive_ACK (msg);			break;
+		case PROTOCOL.SURPRISE_ACK:					Surprise_ACK (msg);				break;
 		}
+
+		isSending = false;
 	}
 
 	void Failed(PROTOCOL id)
@@ -83,6 +86,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
             Info.AddGameCount(gameCnt, true);
 			Info.tokyoLiveCnt = msg.pop_int32 ();
             Info.showTokyoLive = false;
+			Info.surpriseCnt = msg.pop_int32 ();
+			Info.waitSurprise = false;
 
 			int existUser = msg.pop_int32 ();
 			if (existUser == 1) {
@@ -318,6 +323,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     void OrderConfirmNOT(CPacket msg)
     {
         ERequestOrderType type = (ERequestOrderType)msg.pop_byte();
+		Info.surpriseCnt = msg.pop_int32 ();
+
         switch (type)
         {
             case ERequestOrderType.eOrder:      UIManager.Instance.ShowOrderAlarm();    break;
@@ -447,5 +454,15 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		Info.tokyoLiveCnt = msg.pop_int32();
 		if (PageTokyoLive.Instance)
 			PageTokyoLive.Instance.OnStart ();
+	}
+
+	void Surprise_ACK(CPacket msg)
+	{
+		Info.surpriseCnt = msg.pop_int32 ();
+
+		GameObject obj = UIManager.Instance.Show (eUI.eSurprise);
+		UISurprisePSY uiSurprise = obj.GetComponent<UISurprisePSY>();
+		if(uiSurprise)
+			uiSurprise.PrevSet ();
 	}
 }

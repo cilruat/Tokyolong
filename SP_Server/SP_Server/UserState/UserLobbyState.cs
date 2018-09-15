@@ -101,6 +101,7 @@ namespace SP_Server.UserState
                         {                            
                             send_msg.push(owner.mainFrm.GetGameCount(tableNum));
                             send_msg.push(owner.info.tokyoLiveCnt);
+                            send_msg.push(owner.info.surpriseCnt);
 
                             send_msg.push(existUser ? 1 : 0);
 
@@ -359,8 +360,17 @@ namespace SP_Server.UserState
                             if (other.tableNum != reqOrderTableNo)
                                 continue;
 
+                            int tableTotalPrice = owner.mainFrm.GetTablePrice((int)reqOrderTableNo);
+                            other.info.surpriseCnt = (int)(tableTotalPrice / 10000);
+                            other.info.surpriseCnt -= other.info.saveSurpriseCnt;
+                            if (other.info.surpriseCnt < 0)
+                                other.info.surpriseCnt = 0;
+
+                            other.info.saveSurpriseCnt += other.info.surpriseCnt;
+
                             other_msg = CPacket.create((short)PROTOCOL.ORDER_CONFIRM_NOT);
                             other_msg.push(reqType);
+                            other_msg.push(other.info.surpriseCnt);
                             other.send(other_msg);
                             break;
                         }
@@ -540,7 +550,18 @@ namespace SP_Server.UserState
                         send_msg = CPacket.create((short)PROTOCOL.TOKYOLIVE_ACK);
                         send_msg.push(tokyoLiveCnt);
                         break;
+                    case PROTOCOL.SURPRISE_REQ:
+                        tableNo = msg.pop_byte();
+                        --owner.info.surpriseCnt;
+                        if (owner.info.surpriseCnt < 0)
+                            owner.info.surpriseCnt = 0;
 
+                        owner.mainFrm.DataUserInfoSave();
+
+                        int surpriseCnt = owner.info.surpriseCnt;
+                        send_msg = CPacket.create((short)PROTOCOL.SURPRISE_ACK);
+                        send_msg.push(surpriseCnt);
+                        break;
                     default:
                         break;
                 }

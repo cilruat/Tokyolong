@@ -6,6 +6,7 @@ using SP_Server;
 
 public partial class NetworkManager : SingletonMonobehaviour<NetworkManager> 
 {
+	public static bool isSending = false;
 	void send(CPacket msg)
 	{
 		if (UIManager.Instance.IsActive (eUI.eWaiting) == false) {
@@ -18,6 +19,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         Debug.Log(((PROTOCOL)msg.protocol_id).ToString());
         #endif
 
+		isSending = true;
 		this.sending_queue.Enqueue(msg);
 	}
 
@@ -216,6 +218,14 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 	public void TokyoLive_REQ()
 	{
 		CPacket msg = CPacket.create((short)PROTOCOL.TOKYOLIVE_REQ);
+		msg.push(Info.TableNum);
+
+		send(msg);
+	}
+
+	public void Surprise_REQ()
+	{
+		CPacket msg = CPacket.create((short)PROTOCOL.SURPRISE_REQ);
 		msg.push(Info.TableNum);
 
 		send(msg);
