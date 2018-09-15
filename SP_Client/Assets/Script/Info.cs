@@ -164,7 +164,7 @@ public partial class Info : MonoBehaviour {
         orderCnt = Mathf.Clamp(value, GAMEPLAY_MIN_COUNT, GAMEPLAY_MAX_COUNT);
     }
 
-	const int SURPRISE_REMAIN_MIN = 1;
+	const int SURPRISE_REMAIN_MIN = 10;
 	public static int surpriseCnt = 0;
 	public static float loopSurpriseRemainTime = 0f;
 	public static bool waitSurprise = false;
