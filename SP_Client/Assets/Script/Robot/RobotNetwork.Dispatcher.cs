@@ -31,8 +31,6 @@ public partial class RobotNetwork : MonoBehaviour
 		case PROTOCOL.REQUEST_MUSIC_ACK:	RequestMusicACK (msg);		break;
 		case PROTOCOL.REQUEST_MUSIC_LIST_ACK: RequestMusicListACK (msg);    break;
 		case PROTOCOL.SLOT_START_ACK:			SlotStartACK (msg);			break;
-        case PROTOCOL.REPORT_OFFLINE_GAME_ACK:	ReportOfflineGameACK (msg);	break;
-		case PROTOCOL.UNFINISH_GAME_LIST_ACK:	UnfinishGameListACK(msg);	break;
         case PROTOCOL.TABLE_DISCOUNT_INPUT_ACK:     TableDiscountInputACK (msg);   break;
         case PROTOCOL.GET_RANDOM_DISCOUNT_PROB_ACK: GetDiscountProbACK (msg);      break;
         case PROTOCOL.SET_RANDOM_DISCOUNT_PROB_ACK: SetDiscountProbACK (msg);      break;
@@ -51,6 +49,8 @@ public partial class RobotNetwork : MonoBehaviour
 	{
         byte tableNo = msg.pop_byte ();
 		numLogined++;
+
+		EnterCostomer_REQ (tableNo);
 	}
 
 	void EnterCustormerACK(CPacket msg)
@@ -100,15 +100,7 @@ public partial class RobotNetwork : MonoBehaviour
 
         if (Info.listGameCnt_Robot[idRobot] < 0)
             Info.listGameCnt_Robot[idRobot] = 0;
-	}
-
-    void ReportOfflineGameACK(CPacket msg)
-	{
-	}
-
-	void UnfinishGameListACK(CPacket msg)
-	{
-	}		
+	}		   
 
     public void TableDiscountInputACK(CPacket msg)
     {

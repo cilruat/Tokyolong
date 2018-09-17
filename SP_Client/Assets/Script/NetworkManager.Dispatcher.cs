@@ -46,10 +46,6 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         case PROTOCOL.TABLE_ORDER_INPUT_ACK:    TableOrderInputACK(msg);    break;
         case PROTOCOL.TABLE_ORDER_INPUT_NOT:    TableOrderInputNOT(msg);    break;
 		case PROTOCOL.SLOT_START_ACK:			SlotStartACK (msg);			break;
-		case PROTOCOL.REPORT_OFFLINE_GAME_ACK:	ReportOfflineGameACK ();	break;
-		case PROTOCOL.UNFINISH_GAME_LIST_ACK:	UnfinishGameListACK(msg);	break;
-		case PROTOCOL.UNFINISH_GAME_CONFIRM_ACK:	UnfinishGameConfirmNOT (msg);	break;
-		case PROTOCOL.UNFINISH_GAME_CONFIRM_NOT:	UnfinishGameConfirmNOT (msg);	break;
         case PROTOCOL.TABLE_DISCOUNT_INPUT_ACK:     TableDiscountInputACK(msg);     break;
         case PROTOCOL.TABLE_DISCOUNT_INPUT_NOT:     TableDiscountInputNOT(msg);     break;
         case PROTOCOL.GET_RANDOM_DISCOUNT_PROB_ACK: GetDiscountProb_ACK(msg);   	break;
@@ -375,35 +371,6 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         short discountType = msg.pop_int16();
 
         ((PageGame)PageBase.Instance).FinishStart (discountType);
-	}
-
-	void ReportOfflineGameACK()	
-	{
-		NetworkManager.Instance.UnfinishGamelist_REQ (Info.TableNum);
-	}
-
-	void UnfinishGameListACK(CPacket msg)
-	{
-		string packing = msg.pop_string ();
-		byte tableNo = msg.pop_byte ();
-
-		if (Info.isCheckScene ("Admin"))
-			PageAdmin.Instance.ShowUnfinishGameList (packing, tableNo);
-		else
-			((PageGame)PageBase.Instance).RefreshUnfinishList (packing);
-	}
-
-	void UnfinishGameConfirmNOT(CPacket msg)
-	{
-		int id = msg.pop_int32 ();
-        if (Info.isCheckScene("Admin"))
-            PageAdmin.Instance.RemoveUnfinishGame(id);
-        else
-        {
-            UIManager.Instance.ShowDiscountAlarm();
-            if(Info.isCheckScene("Game"))
-                ((PageGame)PageBase.Instance).RemoveUnfinishGame(id);
-        }
 	}
 
     void TableDiscountInputACK(CPacket msg)

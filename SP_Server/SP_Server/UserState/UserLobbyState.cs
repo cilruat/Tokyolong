@@ -432,55 +432,7 @@ namespace SP_Server.UserState
                         send_msg = CPacket.create((short)PROTOCOL.SLOT_START_ACK);
                         send_msg.push(owner.info.GetGameCount());
                         send_msg.push(ranDiscountIdx);
-                        break;
-                    case PROTOCOL.REPORT_OFFLINE_GAME_REQ:
-                        tableNo = msg.pop_byte();
-                        byte gameType = msg.pop_byte();
-                        byte gameKind = msg.pop_byte();
-                        byte gameDiscount = msg.pop_byte();
-
-                        ++owner.info.gameInfo.gameID;
-                        Unfinish unfinish = new Unfinish(owner.info.gameInfo.gameID, gameType, gameKind, gameDiscount);
-                        owner.info.gameInfo.listUnfinish.Add(unfinish);
-                        owner.mainFrm.SetUnfinishGame(tableNo, unfinish);
-
-                        send_msg = CPacket.create((short)PROTOCOL.REPORT_OFFLINE_GAME_ACK);
-                        break;
-                    case PROTOCOL.UNFINISH_GAME_LIST_REQ:
-                        tableNo = msg.pop_byte();
-
-                        List<Unfinish> listUnfinish = owner.mainFrm.GetUnfinishList(tableNo);
-                        JsonData listUnfinishJson = JsonMapper.ToJson(listUnfinish);
-
-                        send_msg = CPacket.create((short)PROTOCOL.UNFINISH_GAME_LIST_ACK);
-                        send_msg.push(listUnfinishJson.ToString());
-                        send_msg.push(tableNo);
-                        break;
-                    case PROTOCOL.UNFINISH_GAME_CONFIRM_REQ:
-                        tableNo = msg.pop_byte();
-                        int id = msg.pop_int32();
-                        short sDis = msg.pop_int16();
-
-                        if (sDis > -1)
-                            owner.mainFrm.SetDiscount(tableNo, sDis);
-
-                        owner.mainFrm.RemoveUnfinishGame(tableNo, id);
-
-                        for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
-                        {
-                            User other = owner.mainFrm.ListUser[i];
-                            if (other.tableNum != tableNo)
-                                continue;
-
-                            other_msg = CPacket.create((short)PROTOCOL.UNFINISH_GAME_CONFIRM_NOT);
-                            other_msg.push(id);
-                            other.send(other_msg);
-                            break;
-                        }
-
-                        send_msg = CPacket.create((short)PROTOCOL.UNFINISH_GAME_CONFIRM_ACK);
-                        send_msg.push(id);
-                        break;
+                        break;                    
                     case PROTOCOL.TABLE_DISCOUNT_INPUT_REQ:
                         tableNo = msg.pop_byte();
                         int inputDiscount = msg.pop_int32();

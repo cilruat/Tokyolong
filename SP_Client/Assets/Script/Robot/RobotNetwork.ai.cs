@@ -42,9 +42,8 @@ public partial class RobotNetwork : MonoBehaviour {
 	static void build_ai()
 	{		
 		restTime.Add ( BH.Login,			new JBehaviorProperty( 4f, 8f ) );
-		restTime.Add ( BH.EnterCustomer,			new JBehaviorProperty( 1f, 2f ) );
 
-		for( BH bh = BH.WaiterCall; bh < BH.UnfinishGameList; bh++ )
+		for( BH bh = BH.Order; bh < BH.SetRandomDiscountProb; bh++ )
 		{			
 			restTime.Add( bh, new JBehaviorProperty( 4f, 8f ) );
 			listEnable.Add( bh );
@@ -103,8 +102,6 @@ public partial class RobotNetwork : MonoBehaviour {
 		Info.idRobot = idRobot - RobotMgr.idStart;
 		switch (nowBehavior) {
 		case BH.Login:				Login_REQ ();				break;
-		case BH.EnterCustomer:		EnterCostomer_REQ ();		break;
-		case BH.WaiterCall:			WaiterCall_REQ ();			break;
 		case BH.Order:				Order_REQ ();				break;
 		case BH.OrderDetail:		Order_Detail_REQ ();		break;
 		case BH.Chat:				Chat_REQ ();				break;
@@ -112,11 +109,9 @@ public partial class RobotNetwork : MonoBehaviour {
 		case BH.RequestMusicList:	Request_Music_List_REQ ();	break;
 		case BH.RequestMusic:		Request_Music_REQ ();		break;
 		case BH.SlotStart:			SlotStart_REQ ();			break;
-		case BH.ReportOfflineGame:	ReportOfflineGame_REQ ();	break;
-		case BH.UnfinishGameList:	UnfinishGamelist_REQ ();	break;
         case BH.TableDiscountInput:     TableDiscountInput_REQ ();  break;
-        case BH.GetRandomDiscountProb:  SetDiscountProb_REQ ();     break;
-        case BH.SetRandomDiscountProb:  UnfinishGamelist_REQ ();    break;
+		case BH.GetRandomDiscountProb:  GetDiscountProb_REQ ();     break;
+		case BH.SetRandomDiscountProb:	SetDiscountProb_REQ ();		break;
 		default:
 			break;
 		}
@@ -127,7 +122,6 @@ public partial class RobotNetwork : MonoBehaviour {
 		Login = 0,
 		EnterCustomer,
 
-		WaiterCall,
 		Order,
 		OrderDetail,
 		Chat,
@@ -135,8 +129,6 @@ public partial class RobotNetwork : MonoBehaviour {
 		RequestMusicList,
 		RequestMusic,
 		SlotStart,
-		ReportOfflineGame,
-		UnfinishGameList,
         TableDiscountInput,
         GetRandomDiscountProb,
         SetRandomDiscountProb,

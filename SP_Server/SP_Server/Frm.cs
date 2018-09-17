@@ -89,7 +89,7 @@ namespace SP_Server
 
             service = new CNetworkService(true);
             service.session_created_callback += on_session_created;
-            service.initialize(1000, 8192);
+            service.initialize(1000, 32768);
             service.listen("0.0.0.0", 7979, 100);            
         }        
 
@@ -445,49 +445,7 @@ namespace SP_Server
                 return 0;
 
             return info.discount;
-        }
-
-        public void SetUnfinishGame(int tableNo, Unfinish info)
-        {
-            if (dictUserInfo.ContainsKey(tableNo) == false)
-                return;
-
-            bool exist = dictUserInfo[tableNo].gameInfo.listUnfinish.Exists(x => x.id == info.id);
-            if (exist)
-                return;
-
-            dictUserInfo[tableNo].gameInfo.listUnfinish.Add(info);
-            DataUserInfoSave();
-        }
-
-        public List<Unfinish> GetUnfinishList(int tableNo)
-        {
-            if (dictUserInfo.ContainsKey(tableNo) == false)
-                return new List<Unfinish>();
-
-            return dictUserInfo[tableNo].gameInfo.listUnfinish;
-        }
-
-        public void RemoveUnfinishGame(int tableNo, int id)
-        {
-            if (dictUserInfo.ContainsKey(tableNo) == false)
-                return;
-
-            for (int i = 0; i < dictUserInfo[tableNo].gameInfo.listUnfinish.Count; i++)
-            {
-                Unfinish info = dictUserInfo[tableNo].gameInfo.listUnfinish[i];
-                if (info.id != id)
-                    continue;
-
-                dictUserInfo[tableNo].gameInfo.listUnfinish.RemoveAt(i);
-                break;
-            }
-
-            if (dictUserInfo[tableNo].gameInfo.listUnfinish.Count <= 0)
-                dictUserInfo[tableNo].gameInfo.gameID = -1;
-
-            DataUserInfoSave();
-        }
+        }                
 
         public void RefreshGameCount(int tableNo, int cnt)
         {

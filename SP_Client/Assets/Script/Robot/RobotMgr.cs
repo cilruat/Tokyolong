@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class RobotMgr : MonoBehaviour {
 
-	static public int idStart = 0;
-	static public int numRobots = 50;
+	static public int idStart = 1;
+	static public int numRobots = 40;
 
 	public Text infomation;
 	public Text injected;

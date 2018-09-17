@@ -31,10 +31,10 @@ public partial class RobotNetwork : MonoBehaviour
 		send (msg);
 	}
 
-	public void EnterCostomer_REQ()
+	public void EnterCostomer_REQ(byte tableNo)
 	{
         CPacket msg = CPacket.create((short)PROTOCOL.ENTER_CUSTOMER_REQ);
-		msg.push ((byte)idRobot);
+		msg.push (tableNo);
 		msg.push((byte)Random.Range(1,8));
 		msg.push((byte)Random.Range(0, 3));
 
@@ -115,43 +115,7 @@ public partial class RobotNetwork : MonoBehaviour
 	public void SlotStart_REQ()
 	{
 		CPacket msg = CPacket.create((short)PROTOCOL.SLOT_START_REQ);
-		send (msg);
-	}
-
-	public void ReportOfflineGame_REQ()
-	{
-		CPacket msg = CPacket.create((short)PROTOCOL.REPORT_OFFLINE_GAME_REQ);
 		msg.push ((byte)idRobot);
-
-		byte discount = (byte)Random.Range(0,2);
-		byte gameType = (byte)Random.Range(0, 4);
-		byte gameKind = 0;
-		switch (gameType) {
-		case 0:		
-			gameKind = (byte)Random.Range (0, 4);	
-			break;
-		case 1:		
-		case 2:		
-			gameType = 0;
-			gameKind = (byte)Random.Range (0, 4);
-			break;
-		case 3:
-			gameKind = (byte)Random.Range (0, 5);
-			break;
-		}
-
-		msg.push (gameType);
-		msg.push (gameKind);
-		msg.push (discount);
-
-		send (msg);
-	}
-
-	public void UnfinishGamelist_REQ()
-	{
-		CPacket msg = CPacket.create((short)PROTOCOL.UNFINISH_GAME_LIST_REQ);
-		msg.push ((byte)idRobot);
-
 		send (msg);
 	}		
 

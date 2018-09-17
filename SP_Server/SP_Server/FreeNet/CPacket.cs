@@ -62,7 +62,7 @@ namespace FreeNet
 
 		public CPacket()
 		{
-			this.buffer = new byte[8192];
+			this.buffer = new byte[32768];
 		}
 
 		public Int16 pop_protocol_id()

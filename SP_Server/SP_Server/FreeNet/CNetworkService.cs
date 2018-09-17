@@ -47,7 +47,7 @@ namespace FreeNet
         {
             // configs.
             int max_connections = 10000;
-            int buffer_size = 8192;
+            int buffer_size = 32768;
             initialize(max_connections, buffer_size);
         }
 
@@ -144,7 +144,7 @@ namespace FreeNet
 			SocketAsyncEventArgs receive_event_arg = new SocketAsyncEventArgs();
 			receive_event_arg.Completed += new EventHandler<SocketAsyncEventArgs>(receive_completed);
 			receive_event_arg.UserToken = token;
-			receive_event_arg.SetBuffer(new byte[8192], 0, 8192);
+			receive_event_arg.SetBuffer(new byte[32768], 0, 32768);
 
 			SocketAsyncEventArgs send_event_arg = new SocketAsyncEventArgs();
 			send_event_arg.Completed += new EventHandler<SocketAsyncEventArgs>(send_completed);

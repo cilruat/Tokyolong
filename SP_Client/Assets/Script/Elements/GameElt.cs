@@ -25,7 +25,6 @@ public class GameElt : MonoBehaviour {
 	public void OnConfirm(bool discount)
 	{
 		short sDis = discount ? (short)eDis : (short)-1;
-		NetworkManager.Instance.UnfinishGameConfirm_REQ (tableNo, id, sDis);
 	}
 
 	public int GetID() { return id; }
