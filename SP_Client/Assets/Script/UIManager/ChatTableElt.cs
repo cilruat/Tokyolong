@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class ChatTableElt : MonoBehaviour 
 {
-    public UIChat uiChat;
     public Image imgSelect;
     public Text textTableNo;
     public GameObject objNew;
@@ -27,7 +26,7 @@ public class ChatTableElt : MonoBehaviour
     public void OnSelect()
     {
         OnNewActive(false);
-        uiChat.SelectTable(this.tableNo);
+		this.owner.SelectTable(this.tableNo);
     }
 
     public void OnSelected(bool isSelected)
