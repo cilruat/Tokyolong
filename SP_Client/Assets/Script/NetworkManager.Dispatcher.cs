@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using FreeNet;
 using SP_Server;
+using FlappyBirdStyle;
 
 public partial class NetworkManager : SingletonMonobehaviour<NetworkManager> 
 {
