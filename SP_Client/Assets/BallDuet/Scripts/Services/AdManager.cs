@@ -9,24 +9,23 @@ using UnityEngine.Advertisements;
 using GoogleMobileAds.Api;
 #endif
 
-enum AdType
-{
-    UnityAd,
-    Admob,
-}
-
-[System.Serializable]
-class ShowAdConfig
-{
-    public GameState GamestateForShowAd = GameState.GameOver;
-    public AdType AdType = AdType.Admob;
-    public int GameStateCountForShowAd = 2;
-    public float ShowAdDelay = 1;
-}
-
-
 namespace OnefallGames
 {
+	enum AdType
+	{
+		UnityAd,
+		Admob,
+	}
+
+	[System.Serializable]
+	class ShowAdConfig
+	{
+		public GameState GamestateForShowAd = GameState.GameOver;
+		public AdType AdType = AdType.Admob;
+		public int GameStateCountForShowAd = 2;
+		public float ShowAdDelay = 1;
+	}
+
     public class AdManager : MonoBehaviour
     {
         public static AdManager Instance { get; set; }

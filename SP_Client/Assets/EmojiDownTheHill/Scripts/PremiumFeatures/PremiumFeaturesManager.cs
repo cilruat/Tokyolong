@@ -2,22 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PremiumFeaturesManager : MonoBehaviour
+namespace Emoji2
 {
-    public static PremiumFeaturesManager Instance { get; private set; }
+	public class PremiumFeaturesManager : MonoBehaviour
+	{
+	    public static PremiumFeaturesManager Instance { get; private set; }
 
-    [Header("Check to enable premium features (require EasyMobile plugin)")]
-    public bool enablePremiumFeatures = true;
+	    [Header("Check to enable premium features (require EasyMobile plugin)")]
+	    public bool enablePremiumFeatures = true;
 
-    void Awake()
-    {
-        if (Instance)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            Instance = this;
-        }
-    }
+	    void Awake()
+	    {
+	        if (Instance)
+	        {
+	            Destroy(gameObject);
+	        }
+	        else
+	        {
+	            Instance = this;
+	        }
+	    }
+	}
 }

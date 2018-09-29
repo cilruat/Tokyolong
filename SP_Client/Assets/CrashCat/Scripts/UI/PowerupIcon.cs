@@ -1,21 +1,24 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class PowerupIcon : MonoBehaviour
+namespace CrashCat
 {
-    [HideInInspector]
-    public Consumable linkedConsumable;
+	public class PowerupIcon : MonoBehaviour
+	{
+	    [HideInInspector]
+	    public Consumable linkedConsumable;
 
-    public Image icon;
-    public Slider slider;
+	    public Image icon;
+	    public Slider slider;
 
-	void Start ()
-    { 
-        icon.sprite = linkedConsumable.icon;
+		void Start ()
+	    { 
+	        icon.sprite = linkedConsumable.icon;
+		}
+
+	    void Update()
+	    {
+	        slider.value = 1.0f - linkedConsumable.timeActive / linkedConsumable.duration;
+	    }
 	}
-
-    void Update()
-    {
-        slider.value = 1.0f - linkedConsumable.timeActive / linkedConsumable.duration;
-    }
 }

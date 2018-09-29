@@ -1,10 +1,9 @@
 ﻿using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine;
-using OnefallGames;
 using UnityEngine.UI;
 
-namespace BallDuet
+namespace OnefallGames
 {
 	public class UIManager : MonoBehaviour {
 

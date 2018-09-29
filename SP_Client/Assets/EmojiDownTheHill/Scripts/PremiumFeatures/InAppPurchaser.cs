@@ -5,77 +5,79 @@ using System.Collections;
 using EasyMobile;
 #endif
 
-namespace SgLib
+namespace Emoji2
 {
-    public class InAppPurchaser : MonoBehaviour
-    {
-        [Header("Name of Remove Ads products")]
-        public string removeAds = "Remove_Ads";
+	namespace SgLib
+	{
+	    public class InAppPurchaser : MonoBehaviour
+	    {
+	        [Header("Name of Remove Ads products")]
+	        public string removeAds = "Remove_Ads";
 
-        #if EASY_MOBILE
-        public static InAppPurchaser Instance { get; private set; }
+	        #if EASY_MOBILE
+	        public static InAppPurchaser Instance { get; private set; }
 
-        void OnEnable()
-        {
-            InAppPurchasing.PurchaseCompleted += OnPurchaseCompleted;
-            InAppPurchasing.RestoreCompleted += OnRestoreCompleted;
-        }
+	        void OnEnable()
+	        {
+	            InAppPurchasing.PurchaseCompleted += OnPurchaseCompleted;
+	            InAppPurchasing.RestoreCompleted += OnRestoreCompleted;
+	        }
 
-        void OnDisable()
-        {
-            InAppPurchasing.PurchaseCompleted -= OnPurchaseCompleted;
-            InAppPurchasing.RestoreCompleted -= OnRestoreCompleted;
-        }
+	        void OnDisable()
+	        {
+	            InAppPurchasing.PurchaseCompleted -= OnPurchaseCompleted;
+	            InAppPurchasing.RestoreCompleted -= OnRestoreCompleted;
+	        }
 
-        void Awake()
-        {
-            Instance = this;
-        }
+	        void Awake()
+	        {
+	            Instance = this;
+	        }
 
-        // Buy an IAP product using its name
-        public void Purchase(string productName)
-        {
-            if (InAppPurchasing.IsInitialized())
-            {
-                InAppPurchasing.Purchase(productName);
-            }
-            else
-            {
-                NativeUI.Alert("Service Unavailable", "Please check your internet connection.");
-            }
-        }
+	        // Buy an IAP product using its name
+	        public void Purchase(string productName)
+	        {
+	            if (InAppPurchasing.IsInitialized())
+	            {
+	                InAppPurchasing.Purchase(productName);
+	            }
+	            else
+	            {
+	                NativeUI.Alert("Service Unavailable", "Please check your internet connection.");
+	            }
+	        }
 
-        // Restore purchase
-        public void RestorePurchase()
-        {
-            if (InAppPurchasing.IsInitialized())
-            {
-                InAppPurchasing.RestorePurchases();
-            }
-            else
-            {
-                NativeUI.Alert("Service Unavailable", "Please check your internet connection.");
-            }
-        }
+	        // Restore purchase
+	        public void RestorePurchase()
+	        {
+	            if (InAppPurchasing.IsInitialized())
+	            {
+	                InAppPurchasing.RestorePurchases();
+	            }
+	            else
+	            {
+	                NativeUI.Alert("Service Unavailable", "Please check your internet connection.");
+	            }
+	        }
 
-        // Successful purchase handler
-        void OnPurchaseCompleted(IAPProduct product)
-        {
-            string name = product.Name;
+	        // Successful purchase handler
+	        void OnPurchaseCompleted(IAPProduct product)
+	        {
+	            string name = product.Name;
 
-            if (name.Equals(removeAds))
-            {
-                // Purchase of Remove Ads
-                Advertising.RemoveAds();
-            }
-        }
+	            if (name.Equals(removeAds))
+	            {
+	                // Purchase of Remove Ads
+	                Advertising.RemoveAds();
+	            }
+	        }
 
-        // Successful purchase restoration handler
-        void OnRestoreCompleted()
-        {
-            NativeUI.Alert("Restore Completed", "Your in-app purchases were restored successfully.");
-        }
-        #endif
-    }
+	        // Successful purchase restoration handler
+	        void OnRestoreCompleted()
+	        {
+	            NativeUI.Alert("Restore Completed", "Your in-app purchases were restored successfully.");
+	        }
+	        #endif
+	    }
+	}
 }
-

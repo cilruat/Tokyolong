@@ -1,24 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CharacterManager : MonoBehaviour
+namespace Emoji2
 {
-    public static CharacterManager Instance;
+	public class CharacterManager : MonoBehaviour
+	{
+	    public static CharacterManager Instance;
 
-    public Sprite character;
-    [HideInInspector]	
-    public int index;
+	    public Sprite character;
+	    [HideInInspector]	
+	    public int index;
 
-    void Awake()
-    {
-        if (Instance)
-        {
-            DestroyImmediate(gameObject);
-        }
-        else
-        {
-            Instance = this;
-        }
-    }
+	    void Awake()
+	    {
+	        if (Instance)
+	        {
+	            DestroyImmediate(gameObject);
+	        }
+	        else
+	        {
+	            Instance = this;
+	        }
+	    }
 
+	}
 }
