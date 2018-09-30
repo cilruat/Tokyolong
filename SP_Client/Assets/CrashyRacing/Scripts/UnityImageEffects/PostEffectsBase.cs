@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UnityStandardAssets_ImageEffects
+namespace CrashRacing
 {
     [ExecuteInEditMode]
     [RequireComponent(typeof(Camera))]

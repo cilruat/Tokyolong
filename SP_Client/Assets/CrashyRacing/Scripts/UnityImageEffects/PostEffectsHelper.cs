@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace UnityStandardAssets_ImageEffects
+namespace CrashRacing
 {
     [ExecuteInEditMode]
     [RequireComponent(typeof(Camera))]

@@ -2,7 +2,7 @@
 using System;
 using System.Collections;
 
-namespace SgLib
+namespace CrashRacing
 {
     public class ScoreManager : MonoBehaviour
     {

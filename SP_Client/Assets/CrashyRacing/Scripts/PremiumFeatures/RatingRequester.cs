@@ -7,7 +7,7 @@ using System;
 using EasyMobile;
 #endif
 
-namespace SgLib
+namespace CrashRacing
 {
     public class RatingRequester : MonoBehaviour
     {
