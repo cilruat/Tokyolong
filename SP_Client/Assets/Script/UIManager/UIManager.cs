@@ -161,13 +161,13 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 		return dicObject [curUI];
 	}
 
-	public void ShowChatAlarm()     {   uiAlarm.ShowAlarm(EAlarmType.eMessage,"새로운 메세지가\n도착 했다냥~", _ShowChat);  }
+	public void ShowChatAlarm()     {   uiAlarm.ShowAlarmChat(_ShowChat);  }
 	public void ShowOrderAlarm()    {   uiAlarm.ShowAlarm(EAlarmType.eMessage,"주문이\n접수 됐다냥~", _ShowBillDetail);    }
 	public void ShowDiscountAlarm() {   uiAlarm.ShowAlarm(EAlarmType.eMessage,"할인이\n접수 됐다냥~", _ShowBillDetail);    }
 
     void _ShowChat()
     {
-        uiAlarm.HideAlarm();
+        uiAlarm.HideAlarmChat();
 
         if (curUI != eUI.eNone && curUI != eUI.eChat)
             Hide(curUI);

@@ -21,9 +21,13 @@ public class UIAlarm : MonoBehaviour
 
     public Button btn;
 
+	public Button btnChat;
+	public GameObject objAlarmChat;
+
 	public List<Texture> listAlarmCat;
 
     Coroutine routine = null;
+	Coroutine routineChat = null;
 
 	public void ShowAlarm(EAlarmType type, string text, UnityAction onCallBack)
     {
@@ -39,6 +43,19 @@ public class UIAlarm : MonoBehaviour
 
         routine = StartCoroutine(_ShowAlarm());
     }
+
+	public void ShowAlarmChat(UnityAction onCallBack)
+	{
+		btnChat.onClick.RemoveAllListeners ();
+
+		if (onCallBack != null)
+			btnChat.onClick.AddListener (onCallBack);
+
+		if (routineChat != null)
+			StopCoroutine (routineChat);
+
+		routineChat = StartCoroutine (_ShowAlarmChat ());
+	}
 
     public void HideAlarm()
     {
@@ -67,4 +84,25 @@ public class UIAlarm : MonoBehaviour
 
         routine = null;
     }
+
+	public void HideAlarmChat()
+	{
+		if (routineChat != null)
+		{
+			StopCoroutine(routineChat);
+			routineChat = null;
+		}
+
+		UITweenPosX.Start(objAlarmChat, 50f, -100f, TWParam.New(.5f).Curve(TWCurve.CurveLevel4).Speed(TWSpeed.Faster));
+	}
+
+	IEnumerator _ShowAlarmChat()
+	{
+		UITween tween = UITweenPosX.Start(objAlarmChat, -100, 50f, TWParam.New(.5f).Curve(TWCurve.CurveLevel4).Speed(TWSpeed.Slower));
+
+		while (tween.IsTweening())
+			yield return null;
+
+		routineChat = null;
+	}
 }
