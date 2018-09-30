@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
 using System;
-using SgLib;
 
 #if EASY_MOBILE
 using EasyMobile;

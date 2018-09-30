@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using SgLib;
 
 namespace Emoji2
 {

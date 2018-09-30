@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.SceneManagement;
-using SgLib;
 
 namespace Emoji
 {
