@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections;
 
-namespace SgLib
+namespace Emoji
 {
     public class EditorTools
     {
