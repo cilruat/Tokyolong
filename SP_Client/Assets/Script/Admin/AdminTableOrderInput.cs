@@ -13,6 +13,7 @@ public class AdminTableOrderInput : SingletonMonobehaviour<AdminTableOrderInput>
 
     public AdminTableOrderBill tableOrderBill;
     public GameObject objComplete;
+	public GameObject objCompleteDesc;
 
     Dictionary<EMenuType, MenuElt> dictMenuElt = new Dictionary<EMenuType, MenuElt>();
     Dictionary<EMenuType, List<MenuDetailElt>> dictMenuDetailElt = new Dictionary<EMenuType, List<MenuDetailElt>>();
@@ -75,6 +76,9 @@ public class AdminTableOrderInput : SingletonMonobehaviour<AdminTableOrderInput>
     public void SetTable(byte tableNo)
     {
         this.tableNo = tableNo;
+		waitComplete = false;
+		objComplete.SetActive(false);
+
         tableOrderBill.SetTable(this.tableNo);
         OnSelectMenuElt(EMenuType.eMeal);
     }
@@ -116,17 +120,18 @@ public class AdminTableOrderInput : SingletonMonobehaviour<AdminTableOrderInput>
 
     public void OnCompleteTableOrderInput()
     {
-        UITweenAlpha.Start (objComplete.gameObject, 0f, 1f, TWParam.New (.4f).Curve (TWCurve.CurveLevel2));
-        UITweenScale.Start (objComplete.gameObject, 1.2f, 1f, TWParam.New (.3f).Curve (TWCurve.Bounce));
+		objComplete.SetActive(true);
+		UITweenAlpha.Start (objCompleteDesc.gameObject, 0f, 1f, TWParam.New (.4f).Curve (TWCurve.CurveLevel2));
+		UITweenScale.Start (objCompleteDesc.gameObject, 1.2f, 1f, TWParam.New (.3f).Curve (TWCurve.Bounce));
         StartCoroutine(_DelayComplete());
     }
 
     IEnumerator _DelayComplete()
     {
         yield return new WaitForSeconds (1f);
-
-        waitComplete = false;
+		        
         objComplete.SetActive(false);
         OnClose();
+		waitComplete = false;
     }
 }

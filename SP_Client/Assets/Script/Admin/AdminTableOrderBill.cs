@@ -134,8 +134,8 @@ public class AdminTableOrderBill : MonoBehaviour {
 		}
 
 		JsonData json = JsonMapper.ToJson (list);
-        NetworkManager.Instance.Table_Order_Input_REQ (this.tableNo, json.ToString (), orderCnt);
-        AdminTableOrderInput.Instance.waitComplete = true;
+		AdminTableOrderInput.Instance.waitComplete = true;
+        NetworkManager.Instance.Table_Order_Input_REQ (this.tableNo, json.ToString (), orderCnt);        
 	}
 
     void ResizeScroll()

@@ -136,8 +136,8 @@ public class AdminBillConfirmChange : MonoBehaviour {
         }
 
         JsonData json = JsonMapper.ToJson (list);
-        NetworkManager.Instance.Table_Order_Input_REQ (this.tableNo, json.ToString (), orderCnt);
-        AdminBillConfirm.Instance.waitComplete = true;
+		AdminBillConfirm.Instance.waitComplete = true;
+        NetworkManager.Instance.Table_Order_Input_REQ (this.tableNo, json.ToString (), orderCnt);        
     }
 
     void ResizeScroll()

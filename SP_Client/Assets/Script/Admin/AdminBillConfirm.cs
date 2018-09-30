@@ -10,12 +10,16 @@ public class AdminBillConfirm : SingletonMonobehaviour<AdminBillConfirm> {
 	public AdminBill bill;
     public AdminBillConfirmChange billChange;
     public GameObject objComplete;
+	public GameObject objCompleteDesc;
 
 	byte tableNo = 0;
 
     public void SetInfo(byte tableNo, List<KeyValuePair<EMenuDetail,int>> list, int discount, int extraGameCnt)
 	{
 		this.tableNo = tableNo;
+		waitComplete = false;
+		objComplete.SetActive(false);
+
 		table.text = tableNo.ToString () + "번 테이블";
         tableExtraGameCnt.text = "남은 할인 찬스 : <color='#70ad47'><size=23>" + extraGameCnt.ToString() + "</size></color>";
         bill.CopyBill (list, discount, extraGameCnt);
@@ -24,6 +28,9 @@ public class AdminBillConfirm : SingletonMonobehaviour<AdminBillConfirm> {
 
 	public void OnLogout()
 	{
+		if (waitComplete)
+			return;
+
 		NetworkManager.Instance.Logout_REQ(tableNo);
 	}
 
@@ -36,18 +43,19 @@ public class AdminBillConfirm : SingletonMonobehaviour<AdminBillConfirm> {
     [System.NonSerialized]public bool waitComplete = false;
     public void OnCompleteTableOrderInput()
     {
-        UITweenAlpha.Start (objComplete.gameObject, 0f, 1f, TWParam.New (.4f).Curve (TWCurve.CurveLevel2));
-        UITweenScale.Start (objComplete.gameObject, 1.2f, 1f, TWParam.New (.3f).Curve (TWCurve.Bounce));
+		objComplete.SetActive(true);
+		UITweenAlpha.Start (objCompleteDesc.gameObject, 0f, 1f, TWParam.New (.4f).Curve (TWCurve.CurveLevel2));
+		UITweenScale.Start (objCompleteDesc.gameObject, 1.2f, 1f, TWParam.New (.3f).Curve (TWCurve.Bounce));
         StartCoroutine(_DelayComplete());
     }
 
     IEnumerator _DelayComplete()
     {
         yield return new WaitForSeconds (1f);
-
-        waitComplete = false;
+		        
         objComplete.SetActive(false);
         OnClose();
+		waitComplete = false;
     }
 
     public void OnClose() 
