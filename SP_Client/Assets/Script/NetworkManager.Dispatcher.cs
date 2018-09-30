@@ -235,8 +235,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 			PagePairCards.Instance.ReturnHome ();
 		else if (Info.isCheckScene ("CrashCatMain"))
 			CrashCat.GameManager.instance.ReturnHome ();
-		/*else if (Info.isCheckScene ("EmojiMain"))
-			Emoji.GameManager.Instance.ReturnHome ();*/
+		else if (Info.isCheckScene ("EmojiMain"))
+			Emoji.GameManager.Instance.ReturnHome ();
 		else if (Info.isCheckScene ("Emoji2Main"))
 			Emoji2.GameManager.Instance.ReturnHome ();
 		else if (Info.isCheckScene ("FlappyBirdMasterMain"))
