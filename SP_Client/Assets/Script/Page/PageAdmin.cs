@@ -21,6 +21,8 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 	public GameObject objOrderDetail;
     public GameObject objTableOrderInput;
     public GameObject objTableDiscountInput;
+	public GameObject objTableGameCountInput;
+	public GameObject objTableMove;
 	public UnfinishGameList unfinishGame;
     public AdminSettingDiscountProb settingDiscountProb;
 
@@ -325,4 +327,15 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
     {
         settingDiscountProb.ShowDiscountProb(list);
     }
+
+	public void ShowTableGameCountInput(byte tableNo)
+	{
+		objTableGameCountInput.SetActive (true);
+		AdminTableGameCountInput.Instance.SetInfo (tableNo);
+	}
+
+	public void ShowTableMove(byte tableNo)
+	{
+		objTableMove.SetActive (true);
+	}
 }

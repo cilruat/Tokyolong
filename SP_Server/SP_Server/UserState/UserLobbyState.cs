@@ -514,6 +514,27 @@ namespace SP_Server.UserState
                         send_msg = CPacket.create((short)PROTOCOL.SURPRISE_ACK);
                         send_msg.push(surpriseCnt);
                         break;
+                    case PROTOCOL.GAME_COUNT_INPUT_REQ:
+                        tableNo = msg.pop_byte();
+                        int gameCount = msg.pop_int32();
+
+                        owner.mainFrm.AddGameCount((int)tableNo, gameCount);
+                        owner.mainFrm.RefreshGameCount(tableNo, owner.mainFrm.GetGameCount((int)tableNo));
+
+                        for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
+                        {
+                            User inputTargetUser = owner.mainFrm.ListUser[i];
+                            if (inputTargetUser.tableNum != (int)tableNo)
+                                continue;
+
+                            other_msg = CPacket.create((short)PROTOCOL.GAME_COUNT_INPUT_NOT);
+                            other_msg.push(gameCount);
+                            inputTargetUser.send(other_msg);
+                            break;
+                        }
+
+                        send_msg = CPacket.create((short)PROTOCOL.GAME_COUNT_INPUT_ACK);
+                        break;
                     default:
                         break;
                 }

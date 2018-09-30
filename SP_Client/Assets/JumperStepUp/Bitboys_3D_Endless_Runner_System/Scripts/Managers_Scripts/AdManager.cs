@@ -2,7 +2,9 @@
 using System.Security.Policy;
 using UnityEngine;
 using System.Collections;
+#if UNITY_ADS
 using UnityEngine.Advertisements;
+#endif
 using UnityEngine.UI;
 // 3D ENDLESS RUNNER SYSTEM By BITBOYS STUDIO.
 
@@ -28,7 +30,9 @@ public class AdManager : MonoBehaviour
 
 	void Start() {
 
+		#if UNITY_ADS
 		eggRewardButton.onClick.AddListener(OpenReward); // If we can press the reward button we call the open reward function.
+		#endif
 
 		goldenEggs = FindObjectOfType<GoldeEggCounter> (); // Use this to find the egg counter script.
 
@@ -72,7 +76,9 @@ public class AdManager : MonoBehaviour
 
 			if (eggRewardButton) { // if the ad reward button is active...
 
+				#if UNITY_ADS
 				eggRewardButton.interactable = IsReady (); // we call the is ready bool to set the interactable function to true.
+				#endif
 
 				if (eggRewardButton.interactable) {
 
@@ -88,7 +94,7 @@ public class AdManager : MonoBehaviour
 		}
 	} 
 
-
+	#if UNITY_ADS
 	public void ShowVideoAd(Action<ShowResult> adCallBackAction = null, string zone = "") {
 
 		StartCoroutine(WaitForAdEditor());
@@ -217,7 +223,7 @@ public class AdManager : MonoBehaviour
 			break;
 		}
 	}
-
+	#endif
 
 
 

@@ -44,7 +44,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         case PROTOCOL.ORDER_CONFIRM_ACK:        OrderConfirmACK(msg);       break;
         case PROTOCOL.ORDER_CONFIRM_NOT:        OrderConfirmNOT(msg);       break;
         case PROTOCOL.TABLE_ORDER_CONFIRM_ACK:  TableOrderConfirmACK(msg);  break;
-        case PROTOCOL.TABLE_ORDER_INPUT_ACK:    TableOrderInputACK(msg);    break;
+        case PROTOCOL.TABLE_ORDER_INPUT_ACK:    TableOrderInputACK();    break;
         case PROTOCOL.TABLE_ORDER_INPUT_NOT:    TableOrderInputNOT(msg);    break;
 		case PROTOCOL.SLOT_START_ACK:			SlotStartACK (msg);			break;
         case PROTOCOL.TABLE_DISCOUNT_INPUT_ACK:     TableDiscountInputACK(msg);     break;
@@ -54,6 +54,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         case PROTOCOL.TABLE_PRICE_CONFIRM_ACK:   	TablePriceConfirm_ACK(msg);    	break;
 		case PROTOCOL.TOKYOLIVE_ACK:				TokyoLive_ACK (msg);			break;
 		case PROTOCOL.SURPRISE_ACK:					Surprise_ACK (msg);				break;
+		case PROTOCOL.GAME_COUNT_INPUT_ACK:			GameCountInputACK ();			break;
+		case PROTOCOL.GAME_COUNT_INPUT_NOT:			GameCountInputNOT (msg);		break;
 		}
 
 		isSending = false;
@@ -338,7 +340,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         PageAdmin.Instance.ShowBillConfirm (tableNo, orderPacking, discount, extraGameCnt);
     }
 
-    void TableOrderInputACK(CPacket msg)
+    void TableOrderInputACK()
     {
         if(PageAdmin.Instance.objTableOrderInput.activeSelf)
             AdminTableOrderInput.Instance.OnCompleteTableOrderInput();
@@ -353,14 +355,15 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		if (cnt < 0) {
             Info.AddGameCount(cnt);
 			if (Info.isCheckScene ("Main"))
-				((PageMain)PageBase.Instance).RefreshGamePlay ();
-			else if (Info.isCheckScene ("Game"))
-				((PageGame)PageBase.Instance).RefreshPlayCnt ();
+				((PageMain)PageBase.Instance).RefreshGamePlay ();			
 		} else {
             Info.AddOrderCount(cnt);
 			if (Info.isCheckScene ("Main"))
-				((PageMain)PageBase.Instance).StartFlyChance ();
+				((PageMain)PageBase.Instance).StartFlyChance ();			
 		}
+
+		if (Info.isCheckScene ("Game"))
+			((PageGame)PageBase.Instance).RefreshPlayCnt ();
 
         UIManager.Instance.ShowOrderAlarm();
     }
@@ -432,5 +435,27 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		UISurprisePSY uiSurprise = obj.GetComponent<UISurprisePSY>();
 		if(uiSurprise)
 			uiSurprise.PrevSet ();
+	}
+
+	void GameCountInputACK()
+	{
+		AdminTableGameCountInput.Instance.InputComplete ();
+	}
+
+	void GameCountInputNOT(CPacket msg)
+	{
+		int cnt = msg.pop_int32 ();
+		if (cnt < 0) {
+			Info.AddGameCount(cnt);
+			if (Info.isCheckScene ("Main"))
+				((PageMain)PageBase.Instance).RefreshGamePlay ();			
+		} else {
+			Info.AddOrderCount(cnt);
+			if (Info.isCheckScene ("Main"))
+				((PageMain)PageBase.Instance).StartFlyChance ();			
+		}
+
+		if (Info.isCheckScene ("Game"))
+			((PageGame)PageBase.Instance).RefreshPlayCnt ();
 	}
 }

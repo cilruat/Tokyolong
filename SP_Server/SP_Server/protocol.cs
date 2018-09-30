@@ -78,6 +78,9 @@ namespace SP_Server
 		TOKYOLIVE_ACK,
 		SURPRISE_REQ,
 		SURPRISE_ACK,
+		GAME_COUNT_INPUT_REQ,
+		GAME_COUNT_INPUT_ACK,
+		GAME_COUNT_INPUT_NOT,
         //-------------------------------------
         // 게임 프로토콜.
         //-------------------------------------        

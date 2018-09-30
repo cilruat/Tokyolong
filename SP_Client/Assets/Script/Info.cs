@@ -25,8 +25,8 @@ public partial class Info : MonoBehaviour {
 
 	public static int GamePlayCnt = 0;
 	public static short GameDiscountWon = -1;	   
-	const int GAMEPLAY_MIN_COUNT = 0;
-	const int GAMEPLAY_MAX_COUNT = 50;
+	public static int GAMEPLAY_MIN_COUNT = 0;
+	public static int GAMEPLAY_MAX_COUNT = 50;
 
 	public static bool practiceGame = false;
 

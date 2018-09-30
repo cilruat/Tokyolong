@@ -37,5 +37,17 @@ public class AdminTableMenu : SingletonMonobehaviour<AdminTableMenu> {
         OnClose();
     }
 
+	public void OnTableGameCountInput()
+	{
+		PageAdmin.Instance.ShowTableGameCountInput (tableNo);
+		OnClose ();
+	}
+
+	public void OnTableMove()
+	{
+		PageAdmin.Instance.ShowTableMove (tableNo);
+		OnClose ();
+	}
+
 	public void OnClose() {	gameObject.SetActive (false); }
 }

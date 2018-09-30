@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_PURCHASING
 using UnityEngine.Purchasing;
+#endif
 // 3D ENDLESS RUNNER SYSTEM By BITBOYS STUDIO.
 
 //This script is a modified version of the Unity IAP documentation original.
+#if UNITY_PURCHASING
 public class IAPManager : MonoBehaviour, IStoreListener{
 
 	public static IAPManager Instance{set; get;}
-	private GoldeEggCounter goldenEggs;
+	private GoldeEggCounter goldenEggs;	
 	private static IStoreController m_StoreController;          // The Unity Purchasing system.
 	private static IExtensionProvider m_StoreExtensionProvider; // The store-specific Purchasing subsystems
+
 	 public static string PRODUCT_10_GOLDEN_EGGS = "10_golden_eggs";   
 	//public static string kProductIDNonConsumable = "nonconsumable"; // Use this if you want to include purchases of type non consumable, example "REMOVE ADS"
 
@@ -113,7 +117,7 @@ public class IAPManager : MonoBehaviour, IStoreListener{
 				//Debug.Log("BuyProductID FAIL. Not initialized.");
 			}
 		}
-
+		
 
 		public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
 		{
@@ -164,3 +168,4 @@ public class IAPManager : MonoBehaviour, IStoreListener{
 		//	Debug.Log(string.Format("OnPurchaseFailed: FAIL. Product: '{0}', PurchaseFailureReason: {1}", product.definition.storeSpecificId, failureReason));
 		}
 	}
+#endif

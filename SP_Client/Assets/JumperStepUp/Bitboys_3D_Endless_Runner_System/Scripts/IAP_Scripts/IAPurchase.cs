@@ -7,6 +7,6 @@ public class IAPurchase : MonoBehaviour {
 
 	public void BuyTenEggs(){ // Use this in a purchase button to call the iap manager and buy the item in google store.
 
-		IAPManager.Instance.Buy10Eggs ();
+		//IAPManager.Instance.Buy10Eggs ();
 	}
 }
