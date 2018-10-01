@@ -20,33 +20,34 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
 		switch (protocol_id)
 		{
-		case PROTOCOL.FAILED_NOT_NUMBER:	Failed (protocol_id);		break;
-		case PROTOCOL.LOGIN_ACK:			LoginACK (msg);				break;
-		case PROTOCOL.LOGIN_NOT:			LoginNOT (msg);				break;
-        case PROTOCOL.LOGOUT_ACK:			LogoutACK (msg);			break;
-		case PROTOCOL.LOGOUT_NOT:			LogoutNOT (msg);			break;
-		case PROTOCOL.ENTER_CUSTOMER_ACK:	EnterCustormerACK (msg);	break;
-		case PROTOCOL.ENTER_CUSTOMER_NOT:	EnterCustormerNOT (msg);	break;
-		case PROTOCOL.WAITER_CALL_ACK:		WaiterCallACK ();			break;
-		case PROTOCOL.WAITER_CALL_NOT:		WaiterCallNOT (msg);		break;
-		case PROTOCOL.ORDER_ACK:			OrderACK (msg);				break;
-		case PROTOCOL.ORDER_NOT:			OrderNOT (msg);				break;
-        case PROTOCOL.CHAT_ACK:             ChatACK(msg);               break;
-        case PROTOCOL.CHAT_NOT:             ChatNOT(msg);               break;
-        case PROTOCOL.ORDER_DETAIL_ACK:     OrderDetailACK(msg);        break;
-		case PROTOCOL.GAME_DISCOUNT_ACK:	GameDiscountACK (msg);		break;
-		case PROTOCOL.GAME_DISCOUNT_NOT:	GameDiscountNOT (msg);		break;
-		case PROTOCOL.REQUEST_MUSIC_ACK:	RequestMusicACK (msg);		break;
-		case PROTOCOL.REQUEST_MUSIC_NOT:	RequestMusicNOT (msg); 		break;
-		case PROTOCOL.REQUEST_MUSIC_LIST_ACK: RequestMusicListACK (msg);    break;
-        case PROTOCOL.REQUEST_MUSIC_REMOVE_ACK: RequestMusicRemoveACK(msg); break;
-        case PROTOCOL.REQUEST_MUSIC_REMOVE_NOT: RequestMusicRemoveNOT(msg); break;
-        case PROTOCOL.ORDER_CONFIRM_ACK:        OrderConfirmACK(msg);       break;
-        case PROTOCOL.ORDER_CONFIRM_NOT:        OrderConfirmNOT(msg);       break;
-        case PROTOCOL.TABLE_ORDER_CONFIRM_ACK:  TableOrderConfirmACK(msg);  break;
-        case PROTOCOL.TABLE_ORDER_INPUT_ACK:    TableOrderInputACK();    break;
-        case PROTOCOL.TABLE_ORDER_INPUT_NOT:    TableOrderInputNOT(msg);    break;
-		case PROTOCOL.SLOT_START_ACK:			SlotStartACK (msg);			break;
+		case PROTOCOL.FAILED:
+		case PROTOCOL.FAILED_NOT_NUMBER:			Failed (protocol_id);			break;
+		case PROTOCOL.LOGIN_ACK:					LoginACK (msg);					break;
+		case PROTOCOL.LOGIN_NOT:					LoginNOT (msg);					break;
+        case PROTOCOL.LOGOUT_ACK:					LogoutACK (msg);				break;
+		case PROTOCOL.LOGOUT_NOT:					LogoutNOT (msg);				break;
+		case PROTOCOL.ENTER_CUSTOMER_ACK:			EnterCustormerACK (msg);		break;
+		case PROTOCOL.ENTER_CUSTOMER_NOT:			EnterCustormerNOT (msg);		break;
+		case PROTOCOL.WAITER_CALL_ACK:				WaiterCallACK ();				break;
+		case PROTOCOL.WAITER_CALL_NOT:				WaiterCallNOT (msg);			break;
+		case PROTOCOL.ORDER_ACK:					OrderACK (msg);					break;
+		case PROTOCOL.ORDER_NOT:					OrderNOT (msg);					break;
+        case PROTOCOL.CHAT_ACK:             		ChatACK(msg);               	break;
+        case PROTOCOL.CHAT_NOT:             		ChatNOT(msg);               	break;
+        case PROTOCOL.ORDER_DETAIL_ACK:     		OrderDetailACK(msg);        	break;
+		case PROTOCOL.GAME_DISCOUNT_ACK:			GameDiscountACK (msg);			break;
+		case PROTOCOL.GAME_DISCOUNT_NOT:			GameDiscountNOT (msg);			break;
+		case PROTOCOL.REQUEST_MUSIC_ACK:			RequestMusicACK (msg);			break;
+		case PROTOCOL.REQUEST_MUSIC_NOT:			RequestMusicNOT (msg); 			break;
+		case PROTOCOL.REQUEST_MUSIC_LIST_ACK: 		RequestMusicListACK (msg);    	break;
+        case PROTOCOL.REQUEST_MUSIC_REMOVE_ACK: 	RequestMusicRemoveACK(msg); 	break;
+        case PROTOCOL.REQUEST_MUSIC_REMOVE_NOT: 	RequestMusicRemoveNOT(msg); 	break;
+        case PROTOCOL.ORDER_CONFIRM_ACK:        	OrderConfirmACK(msg);       	break;
+        case PROTOCOL.ORDER_CONFIRM_NOT:        	OrderConfirmNOT(msg);       	break;
+        case PROTOCOL.TABLE_ORDER_CONFIRM_ACK:  	TableOrderConfirmACK(msg);  	break;
+        case PROTOCOL.TABLE_ORDER_INPUT_ACK:    	TableOrderInputACK();    		break;
+        case PROTOCOL.TABLE_ORDER_INPUT_NOT:    	TableOrderInputNOT(msg);    	break;
+		case PROTOCOL.SLOT_START_ACK:				SlotStartACK (msg);				break;
         case PROTOCOL.TABLE_DISCOUNT_INPUT_ACK:     TableDiscountInputACK(msg);     break;
         case PROTOCOL.TABLE_DISCOUNT_INPUT_NOT:     TableDiscountInputNOT(msg);     break;
         case PROTOCOL.GET_RANDOM_DISCOUNT_PROB_ACK: GetDiscountProb_ACK(msg);   	break;
@@ -56,6 +57,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		case PROTOCOL.SURPRISE_ACK:					Surprise_ACK (msg);				break;
 		case PROTOCOL.GAME_COUNT_INPUT_ACK:			GameCountInputACK ();			break;
 		case PROTOCOL.GAME_COUNT_INPUT_NOT:			GameCountInputNOT (msg);		break;
+		case PROTOCOL.TABLE_MOVE_ACK:				TableMoveACK (msg);				break;
+		case PROTOCOL.TABLE_MOVE_NOT:				TableMoveNOT ();				break;
 		}
 
 		isSending = false;
@@ -65,6 +68,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 	{
 		switch(id)
 		{
+		case PROTOCOL.FAILED:				SystemMessage.Instance.Add ("동작을 실패했어요");		break;
 		case PROTOCOL.FAILED_NOT_NUMBER:	SystemMessage.Instance.Add ("숫자로 입력해주세요");		break;
 		}
 	}
@@ -457,5 +461,18 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
 		if (Info.isCheckScene ("Game"))
 			((PageGame)PageBase.Instance).RefreshPlayCnt ();
+	}
+
+	void TableMoveACK(CPacket msg)
+	{
+		byte tableNo = msg.pop_byte ();
+		AdminTableMove.Instance.MoveComplete ();
+		NetworkManager.Instance.Logout_REQ (tableNo);
+	}
+
+	void TableMoveNOT()
+	{
+		NetworkManager.Instance.disconnect ();
+		SceneChanger.LoadScene ("Login", null);
 	}
 }

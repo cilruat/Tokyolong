@@ -6,7 +6,7 @@ using LitJson;
 
 public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 
-	const int TABLE_NUM = 41;
+	public const int TABLE_NUM = 41;
 
 	public GameObject page;
 	public RectTransform rtScrollTable;
@@ -142,6 +142,19 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 
 		if (objBillConfirm.activeSelf)  
 			objBillConfirm.SetActive (false);
+	}
+
+	public bool CheckTableLogin(int tableNo)
+	{
+		for (int i = 0; i < listTable.Count; i++) {
+			if (listTable [i].GetTableNo () != tableNo)
+				continue;
+
+			if (listTable [i].IsLogin ())
+				return true;
+		}
+
+		return false;
 	}
 
 	public void Urgency(int tableNo)
@@ -337,5 +350,6 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 	public void ShowTableMove(byte tableNo)
 	{
 		objTableMove.SetActive (true);
+		AdminTableMove.Instance.SetInfo (tableNo);
 	}
 }

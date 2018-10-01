@@ -62,6 +62,28 @@ namespace SP_Server
             this.saveSurpriseCnt = 0;
         }
 
+        public void Copy(UserInfo target, int tableNum)
+        {
+            this.tableNum = tableNum;
+            this.peopleCnt = target.peopleCnt;
+            this.customerType = target.customerType;
+            this.gameInfo = new GameInfo();
+            this.gameInfo.gameCnt = target.gameInfo.gameCnt;
+            
+            this.menus = new List<SendMenu>();
+            for (int i = 0; i < target.menus.Count; i++)
+            {
+                SendMenu targetMenu = target.menus[i];
+                SendMenu sendMenu = new SendMenu(targetMenu.menu, targetMenu.cnt);
+                this.menus.Add(sendMenu);
+            }
+
+            this.discount = target.discount;
+            this.tokyoLiveCnt = target.tokyoLiveCnt;
+            this.surpriseCnt = target.surpriseCnt;
+            this.saveSurpriseCnt = target.saveSurpriseCnt;
+        }
+
         public void SetDiscount(short sType)
         {
             int oriTotalPrice = 0;

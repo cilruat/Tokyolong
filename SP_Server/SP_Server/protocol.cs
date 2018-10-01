@@ -24,6 +24,7 @@ namespace SP_Server
 		//-------------------------------------
 		// 실패 프로토콜.
 		//-------------------------------------
+		FAILED,
         FAILED_DB,
 		FAILED_NOT_NUMBER,
 
@@ -81,6 +82,9 @@ namespace SP_Server
 		GAME_COUNT_INPUT_REQ,
 		GAME_COUNT_INPUT_ACK,
 		GAME_COUNT_INPUT_NOT,
+		TABLE_MOVE_REQ,
+		TABLE_MOVE_ACK,
+		TABLE_MOVE_NOT,
         //-------------------------------------
         // 게임 프로토콜.
         //-------------------------------------        

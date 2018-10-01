@@ -535,6 +535,47 @@ namespace SP_Server.UserState
 
                         send_msg = CPacket.create((short)PROTOCOL.GAME_COUNT_INPUT_ACK);
                         break;
+                    case PROTOCOL.TABLE_MOVE_REQ:
+                        tableNo = msg.pop_byte();
+                        int moveTableNo = msg.pop_int32();
+
+                        UserInfo prevUser = null;
+                        foreach (UserInfo e in owner.mainFrm.dictUserInfo.Values)
+                        {                            
+                            if (e.IsAdmin())            continue;
+                            if (e.tableNum != tableNo)  continue;
+
+                            prevUser = e;
+                            break;
+                        }
+
+                        send_msg = CPacket.create((short)PROTOCOL.FAILED);
+                        if (prevUser == null)
+                            break;
+
+                        UserInfo afterUser = null;
+                        if (owner.mainFrm.AddUserInfo(moveTableNo, ref afterUser))
+                            break;
+
+                        for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
+                        {
+                            User moveUser = owner.mainFrm.ListUser[i];
+                            if (moveUser.tableNum != moveTableNo)
+                                continue;
+
+                            send_msg = CPacket.create((short)PROTOCOL.TABLE_MOVE_ACK);
+                            send_msg.push(tableNo);
+
+                            afterUser = new UserInfo();
+                            afterUser.Copy(prevUser, moveTableNo);
+                            owner.mainFrm.SetUserInfo(moveTableNo, afterUser);                            
+
+                            other_msg = CPacket.create((short)PROTOCOL.TABLE_MOVE_NOT);
+                            moveUser.send(other_msg);
+                            break;
+                        }
+
+                        break;
                     default:
                         break;
                 }

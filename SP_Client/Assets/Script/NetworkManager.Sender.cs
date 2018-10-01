@@ -202,11 +202,20 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		send(msg);
 	}
 
-	public void Game_Count_Input_REQ(byte tableNo, int gameCnt)
+	public void GameCountInput_REQ(byte tableNo, int gameCnt)
 	{
 		CPacket msg = CPacket.create((short)PROTOCOL.GAME_COUNT_INPUT_REQ);
 		msg.push(tableNo);
 		msg.push(gameCnt);
+
+		send(msg);
+	}
+
+	public void TableMove_REQ(byte tableNo, int moveTableNo)
+	{
+		CPacket msg = CPacket.create((short)PROTOCOL.TABLE_MOVE_REQ);
+		msg.push(tableNo);
+		msg.push(moveTableNo);
 
 		send(msg);
 	}

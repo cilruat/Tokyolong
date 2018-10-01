@@ -68,7 +68,7 @@ public class AdminTableGameCountInput : SingletonMonobehaviour<AdminTableGameCou
 
 	public void OnConfirm()
 	{
-		NetworkManager.Instance.Game_Count_Input_REQ (this.tableNo, this.inputCount);
+		NetworkManager.Instance.GameCountInput_REQ (this.tableNo, this.inputCount);
 		_init ();
 	}
 

@@ -71,7 +71,7 @@ public class PageLogin : PageBase {
 			if (successConnect)
 				break;
 			
-			if (Time.timeSinceLevelLoad > timeToStart + 3f) {
+			if (Time.timeSinceLevelLoad > timeToStart + 1.5f) {
 				timeToStart = Time.timeSinceLevelLoad;
 				OnLogin ();
 			}				

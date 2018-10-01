@@ -40,7 +40,10 @@ public class SceneChanger : SingletonMonobehaviour<SceneChanger> {
 
 	void _LoadScene()
 	{
-		UITweenAlpha.Start (objHide, 1f, 0f, TWParam.New (1f).Curve (TWCurve.CurveLevel2)).AddCallback (_StartCallBack);
+		if (objHide != null)
+			UITweenAlpha.Start (objHide, 1f, 0f, TWParam.New (1f).Curve (TWCurve.CurveLevel2)).AddCallback (_StartCallBack);
+		else
+			_StartCallBack ();
 	}
 
 	void _StartCallBack()

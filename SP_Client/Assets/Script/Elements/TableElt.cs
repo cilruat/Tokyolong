@@ -78,6 +78,7 @@ public class TableElt : MonoBehaviour {
 		PageAdmin.Instance.ShowTableMenu (tableNo);
 	}
 		
+	public bool IsLogin() { return isLogin; }
 	public byte GetTableNo() { return this.tableNo; }
 	public bool GetUrgency() { return isUrgency; }
 }
