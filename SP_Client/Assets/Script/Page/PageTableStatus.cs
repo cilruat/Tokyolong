@@ -162,7 +162,7 @@ public class PageTableStatus : PageBase {
     {
         if (selectTableSpot == -1)
         {
-            SystemMessage.Instance.Add ("대상 테이블을 선택해 주세요");
+            SystemMessage.Instance.Add ("대상 테이블을 선택해 주세요!!");
             return;
         }
 
@@ -172,7 +172,7 @@ public class PageTableStatus : PageBase {
             case ETableDetail.Like:
             case ETableDetail.Gift:
             case ETableDetail.Battle:
-                SystemMessage.Instance.Add ("현재 기능은 미구현 상태입니다");
+                SystemMessage.Instance.Add ("추후 업데이트 예정이예요~");
                 break;
             case ETableDetail.Chat:
                 GameObject obj = UIManager.Instance.Show(eUI.eChat);

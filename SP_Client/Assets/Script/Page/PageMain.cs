@@ -12,11 +12,13 @@ public class PageMain : PageBase {
 		eGame,
 		eService,
 		eShowChat,
-		eCall = 5,
+		eNotice = 5,
 		eBill,
 		eTableSet,
         eRequestMusic,
         eHowToUse,
+		eRoulette = 10,
+		eFestival,
 	}
 
     public CanvasGroup[] cgBoard;
@@ -56,16 +58,18 @@ public class PageMain : PageBase {
 
 		EMenu e = (EMenu)idx;
 		switch (e) {
-            case EMenu.eChat:       SceneChanger.LoadScene("TableStatus", curBoardObj());   break;
-            case EMenu.eOrder:      SceneChanger.LoadScene ("Order", curBoardObj());        break;
-            case EMenu.eGame:		SceneChanger.LoadScene ("Game", curBoardObj());         break;
-            case EMenu.eService:	SceneChanger.LoadScene ("Service", curBoardObj());		break;
-            case EMenu.eShowChat:   UIManager.Instance.Show(eUI.eChat);                     break;
-		    case EMenu.eCall:		NetworkManager.Instance.WaiterCall_REQ ();  		    break;
-            case EMenu.eBill:       NetworkManager.Instance.Order_Detail_REQ(); 		    break;
-		    case EMenu.eTableSet:   UIManager.Instance.Show (eUI.eTableSetting);		    break;
-            case EMenu.eRequestMusic: NetworkManager.Instance.Request_Music_List_REQ();     break;
-            case EMenu.eHowToUse:   UIManager.Instance.Show(eUI.eHowToUse);                 break;
+        case EMenu.eChat:       	SceneChanger.LoadScene("TableStatus", curBoardObj());   	break;
+        case EMenu.eOrder:      	SceneChanger.LoadScene ("Order", curBoardObj());        	break;
+        case EMenu.eGame:			SceneChanger.LoadScene ("Game", curBoardObj());         	break;
+        case EMenu.eService:		SceneChanger.LoadScene ("Service", curBoardObj());			break;
+        case EMenu.eShowChat:   	UIManager.Instance.Show(eUI.eChat);                     	break;
+		case EMenu.eNotice:			SceneChanger.LoadScene ("Notice", curBoardObj());  			break;
+        case EMenu.eBill:       	NetworkManager.Instance.Order_Detail_REQ(); 		    	break;
+	    case EMenu.eTableSet:   	UIManager.Instance.Show (eUI.eTableSetting);		    	break;
+        case EMenu.eRequestMusic: 	NetworkManager.Instance.Request_Music_List_REQ();     		break;
+        case EMenu.eHowToUse:   	UIManager.Instance.Show(eUI.eHowToUse);                 	break;
+		case EMenu.eRoulette:		SystemMessage.Instance.Add ("추후 업데이트 예정이예요~");	/*SceneChanger.LoadScene("Roulette", curBoardObj());*/   		break;
+		case EMenu.eFestival:		SystemMessage.Instance.Add ("추후 업데이트 예정이예요~");	break;
 		}
 	}
 
