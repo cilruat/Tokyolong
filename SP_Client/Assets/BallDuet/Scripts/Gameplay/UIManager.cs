@@ -34,6 +34,17 @@ namespace OnefallGames
 	    [SerializeField] private AnimationClip servicesBtns_Hide;
 	    [SerializeField] private Animator servicesAnim;
 
+		public GameObject tapToStart;
+		public RawImage imgVictory;
+		public GameObject objVictory;
+		public GameObject objSendServer;
+		public GameObject objGameOver;
+		public GameObject objReady;
+		public GameObject objGo;
+		public GameObject objBoard;
+
+		int finishPoint = 0;
+
 	    private void OnEnable()
 	    {
 	        GameManager.GameStateChanged += GameManager_GameStateChanged;
@@ -78,6 +89,8 @@ namespace OnefallGames
 	            DestroyImmediate(Instance.gameObject);
 	            Instance = this;
 	        }
+
+			ScoreManager.ScoreUpdated += OnScoreUpdated;
 	    }
 
 	    void OnDestroy()
@@ -86,14 +99,15 @@ namespace OnefallGames
 	        {
 	            Instance = null;
 	        }
-	    }
 
-
-
+			ScoreManager.ScoreUpdated -= OnScoreUpdated;
+	    }			
 
 	    // Use this for initialization
 	    void Start () {
-
+			finishPoint = Info.RING_DING_DONG_FINISH_POINT;
+			scoreTxt.text = Info.practiceGame ? "0" : "0 / " + finishPoint.ToString ();
+			/*
 	        if (!GameManager.isRestart) //This is the first load
 	        {
 	            gameplayUI.SetActive(false);
@@ -105,22 +119,83 @@ namespace OnefallGames
 	        }
 
 	        servicesAnim.Play(servicesBtns_Show.name);
+	        */
 	    }
 		
 		// Update is called once per frame
 		void Update () {
 
-	        UpdateMusicButtons();
+	        /*UpdateMusicButtons();
 	        UpdateMuteButtons();
 
-	        scoreTxt.text = "SCORE: " + ScoreManager.Instance.Score.ToString();
+	        scoreTxt.text = ScoreManager.Instance.Score.ToString();
 	        bestScoreTxt.text = ScoreManager.Instance.BestScore.ToString();
-	        currentScoreTxt.text = ScoreManager.Instance.Score.ToString();
-
+	        currentScoreTxt.text = ScoreManager.Instance.Score.ToString();*/
 	    }
 
+		void OnScoreUpdated(int score)
+		{
+			if (Info.practiceGame)
+				scoreTxt.text = score.ToString ();
+			else {
+				scoreTxt.text = score.ToString () + " / " + finishPoint.ToString();
+
+				if (Info.practiceGame == false && score >= finishPoint)
+					StartCoroutine (_SuccessEndGame ());
+			}
+		}
+
+		IEnumerator _SuccessEndGame()
+		{			
+			PlayerController.Instance.PlayerDie ();
+
+			ShiningGraphic.Start (imgVictory);
+			objVictory.SetActive (true);
+			yield return new WaitForSeconds (4f);
+
+			UITweenAlpha.Start (objVictory, 1f, 0f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
+			UITweenAlpha.Start (objSendServer, 0f, 1f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
+
+			yield return new WaitForSeconds (1f);
+
+			if (Info.TableNum == 0)
+				ReturnHome ();
+			else
+				NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+		}
+
+		public void ReturnHome()
+		{
+			SceneChanger.LoadScene ("Main", objBoard);
+		}
 
 	    ////////////////////////////Publish functions
+		public void StartGame()
+		{
+			StartCoroutine (_StartGame ());
+		}
+
+		IEnumerator _StartGame()
+		{
+			UITweenAlpha.Start (tapToStart, 1f, 0f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2).DisableOnFinish ());
+			yield return new WaitForSeconds (.5f);
+
+			UITweenAlpha.Start(objReady, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+
+			yield return new WaitForSeconds (1f);
+			UITweenAlpha.Start(objReady, 1f, 0f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+
+			yield return new WaitForSeconds (.25f);
+			UITweenAlpha.Start(objGo, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+
+			yield return new WaitForSeconds (1f);
+			UITweenAlpha.Start(objGo, 1f, 0f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+
+			yield return new WaitForSeconds (.3f);
+
+			GameManager.Instance.PlayingGame();
+		}
+
 	    public void PlayButtonSound()
 	    {
 	        SoundManager.Instance.PlaySound(SoundManager.Instance.button);
@@ -134,7 +209,8 @@ namespace OnefallGames
 	    public void PlayBtn()
 	    {
 	        StartCoroutine(HandlePlayBtn());
-	    }
+	    }			
+
 	    public void RestartBtn()
 	    {
 	        StartCoroutine(HandleRestartBtn());
@@ -228,13 +304,14 @@ namespace OnefallGames
 	    private IEnumerator ShowGameOverUI(float delay)
 	    {
 	        yield return new WaitForSeconds(delay);
+			objGameOver.SetActive (true);
 
-	        gameplayUI.SetActive(false);
+	        /*gameplayUI.SetActive(false);
 	        gameOverUI.SetActive(true);
 	        bestScoreTxt.gameObject.SetActive(true);
 	        playBtn.SetActive(false);
 	        restartBtn.SetActive(true);
-	        servicesAnim.Play(servicesBtns_Show.name);
+	        servicesAnim.Play(servicesBtns_Show.name);*/
 	    }
 
 	    private IEnumerator ReviveCountDown()

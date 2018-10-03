@@ -107,22 +107,13 @@ namespace OnefallGames
 
 	        if (GameManager.Instance.GameState == GameState.Playing)
 	        {
-	            if (Input.GetMouseButton(0) && !touchDisable)
-	            {
-	                if (EventSystem.current.currentSelectedGameObject == null)
-	                {
-	                    touchDisable = true;
-	                    float x = Camera.main.ScreenToViewportPoint(Input.mousePosition).x;
-	                    if (x <= 0.5f)//Rotating left
-	                    {
-	                        StartCoroutine(Rotating(false));
-	                    }
-	                    else //Rotating right
-	                    {
-	                        StartCoroutine(Rotating(true));
-	                    }
-	                }          
-	            }
+				if (Input.GetKeyDown (KeyCode.LeftArrow) && !touchDisable) {
+					touchDisable = true;
+					StartCoroutine (Rotating (false));
+				} else if (Input.GetKeyDown (KeyCode.RightArrow) && !touchDisable) {
+					touchDisable = true;
+					StartCoroutine (Rotating (true));
+				}
 	        }   
 		}
 
@@ -152,7 +143,7 @@ namespace OnefallGames
 	        StartCoroutine(IncreasingMovingPoint());
 	    }
 
-	    void PlayerDie()
+	    public void PlayerDie()
 	    {
 	        //Fire event
 	        PlayerState = PlayerState.Die;
@@ -169,7 +160,6 @@ namespace OnefallGames
 	        playerExplode.gameObject.SetActive(true);
 	        playerExplode.Play();
 	        yield return new WaitForSeconds(playerExplode.main.startLifetimeMultiplier);
-	        playerExplode.gameObject.SetActive(false);
 	    }
 
 	    private IEnumerator IncreasingMovingPoint()
@@ -241,6 +231,9 @@ namespace OnefallGames
 	        List<Vector2> listPositions = new List<Vector2>();
 	        while (true)
 	        {
+				if (playerState == PlayerState.Die)
+					yield break;
+
 	            listPositions.Clear();
 	            Vector2 startPoint = transform.position;
 	            Vector2 endPoint = startPoint + Vector2.right * GameManager.Instance.PillarSpace;
@@ -275,6 +268,8 @@ namespace OnefallGames
 	            {
 	                ScoreManager.Instance.AddScore(1);
 	                SoundManager.Instance.PlaySound(SoundManager.Instance.bounce);
+					GameManager.Instance.CreatePillar();
+					GameManager.Instance.CreateMountain();
 	            }
 	        }
 	    }

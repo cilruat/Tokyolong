@@ -32,7 +32,8 @@ public class SceneChanger : SingletonMonobehaviour<SceneChanger> {
             sceneName == "Emoji2Main"        		||
             sceneName == "AvoidBullets"      		||
             sceneName == "AvoidGame"         		||
-            sceneName == "AvoidMain"         )
+            sceneName == "AvoidMain"         		||
+			sceneName == "BallDuetMain"				)
             return true;
         else
             return false;

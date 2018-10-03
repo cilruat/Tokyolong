@@ -24,12 +24,11 @@ namespace OnefallGames
 	    {
 	        if (GameManager.Instance.GameState == GameState.Playing)
 	        {
-	            float x = Camera.main.WorldToViewportPoint(transform.position).x;
-	            if (x <= -0.2f)
-	            {
-	                GameManager.Instance.CreatePillar();
-	                gameObject.SetActive(false);
-	            }
+	            //float x = Camera.main.WorldToViewportPoint(transform.position).x;
+				float cameraX = Camera.main.transform.position.x;
+				float dist = cameraX - transform.position.x;
+	            if (dist > 50f)
+	                gameObject.SetActive(false);	            
 	        }
 	    }
 
