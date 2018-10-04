@@ -5,6 +5,8 @@ using UnityEngine.UI;
 // 3D ENDLESS RUNNER SYSTEM By BITBOYS STUDIO.
 public class PauseMenu : MonoBehaviour {
 
+	public static PauseMenu Instance { private set; get; }
+
 	[Header("Pause Menu Manager and Countdown Manager")]
 
 	public bool isPaused; // Used to store if we have paused the game or not.
@@ -14,6 +16,7 @@ public class PauseMenu : MonoBehaviour {
 	private CamShake shake; // Call the camera shake effect script.
 	private LevelManager manager; // Call the level manager script.
 	private UIController uIControl; // Usted to connect with the UI controller script.
+	private GameOverMenu endGameMenu;
 	public GameObject number3; // The countdown number 3 image.
 	public GameObject number2;// The countdown number 2 image
 	public GameObject number1;// The countdown number 1 image
@@ -25,15 +28,45 @@ public class PauseMenu : MonoBehaviour {
 	public AudioSource countdownAudioSource; // The audio source that controls the countdown sound
 	public AudioClip countdownSfx; // The countdown audio clip.
 
+	public GameObject tapToStart;
+	public RawImage imgVictory;
+	public GameObject objVictory;
+	public GameObject objSendServer;
+	public GameObject objGameOver;
+	public GameObject objReady;
+	public GameObject objGo;
+	public GameObject objBoard;
+	public Text txtTime;
+	public Image imgTime;
+	public CountDown limitTime;
+
+	int finishLimitTime = 0;
 
 	void Awake () {
-		
+
+		if (Instance == null)
+			Instance = this;
+		else
+		{
+			DestroyImmediate(Instance.gameObject);
+			Instance = this;
+		}	
+
 		// We need to set a reference to the variables that we have write to call some scripts that we need to use in this script.
 		player = FindObjectOfType<CharController> (); 
 		shake = FindObjectOfType<CamShake> ();	
 		manager = FindObjectOfType<LevelManager> ();
 		uIControl = FindObjectOfType<UIController> ();
+		endGameMenu = FindObjectOfType<GameOverMenu> ();
 
+		finishLimitTime = Info.EGG_MON_FINISH_POINT;
+		txtTime.text = Info.practiceGame ? "∞" : finishLimitTime.ToString();
+	}
+
+	void OnDestroy()
+	{
+		if (Instance == this)
+			Instance = null;
 	}
 
 	void Update(){
@@ -47,6 +80,15 @@ public class PauseMenu : MonoBehaviour {
 		} else {
 
 			countdownAudioSource.volume = 1;
+		}
+
+		if (manager.gamePlaying) {
+			if (Info.practiceGame)
+				return;
+
+			float elapsed = limitTime.GetElapsed();
+			float fill = (finishLimitTime - elapsed) / (float)finishLimitTime;
+			imgTime.fillAmount = fill;
 		}
 	}
 
@@ -198,7 +240,7 @@ public class PauseMenu : MonoBehaviour {
 	}
 
 	public IEnumerator Countdown()
-	{
+	{		
 		if (manager.startMusicAudioSource.isPlaying) {
 
 			manager.startMusicAudioSource.Stop (); // Stop the break music.
@@ -258,4 +300,82 @@ public class PauseMenu : MonoBehaviour {
 
 	}
 
+	public void StartGame()
+	{
+		StartCoroutine (_StartGame ());
+	}
+
+	IEnumerator _StartGame()
+	{		
+		manager.GameReady ();
+
+		UITweenAlpha.Start (tapToStart, 1f, 0f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2).DisableOnFinish ());
+		yield return new WaitForSeconds (.5f);
+
+		UITweenAlpha.Start(objReady, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+
+		yield return new WaitForSeconds (1f);
+		UITweenAlpha.Start(objReady, 1f, 0f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+
+		yield return new WaitForSeconds (.25f);
+		UITweenAlpha.Start(objGo, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+
+		yield return new WaitForSeconds (1f);
+		UITweenAlpha.Start(objGo, 1f, 0f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+
+		yield return new WaitForSeconds (.3f);
+
+		manager.GameStart ();
+
+		if (Info.practiceGame == false)
+			limitTime.Set (finishLimitTime, () => StartCoroutine (_SuccessEndGame ()));
+	}
+
+	public void SuccessEndGame()
+	{
+		StartCoroutine (_SuccessEndGame ());
+	}
+
+	IEnumerator _SuccessEndGame()
+	{			
+		manager.gamePlaying = false;
+		player.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+		player.gameObject.SetActive (false);
+		endGameMenu.GameOver ();
+		shake.ShakeCamera (0.35f, 0.3f);
+		player.loosingCoins = false;
+		Instantiate(player.dieParticles, player.transform.position, Quaternion.identity);
+		player.runAudioSource.Stop ();
+		limitTime.Stop ();
+
+		ShiningGraphic.Start (imgVictory);
+		objVictory.SetActive (true);
+		yield return new WaitForSeconds (4f);
+
+		UITweenAlpha.Start (objVictory, 1f, 0f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
+		UITweenAlpha.Start (objSendServer, 0f, 1f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
+
+		yield return new WaitForSeconds (1f);
+
+		if (Info.TableNum == 0)
+			ReturnHome ();
+		else
+			NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+	}
+
+	public void ReturnHome()
+	{
+		SceneChanger.LoadScene ("Main", objBoard);
+	}
+
+	public void GameOver()
+	{
+		limitTime.Stop ();
+		StartCoroutine (_GameOver ());
+	}
+
+	IEnumerator _GameOver(){
+		yield return new WaitForSeconds (1f);
+		objGameOver.SetActive (true);
+	}
 }

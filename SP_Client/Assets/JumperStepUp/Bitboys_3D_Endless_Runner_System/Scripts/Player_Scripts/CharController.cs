@@ -33,6 +33,7 @@ public class CharController : MonoBehaviour { // Please be carefull editing this
 	private CamShake shake; // Call the shake camera effect script.
 	private UiCoinSpawner uiCoin;
 	private GameOverMenu endGameMenu;
+	private PauseMenu pauseMenu;
 
 
 	private Rigidbody rb; // The character Rigidbody component.
@@ -85,6 +86,7 @@ public class CharController : MonoBehaviour { // Please be carefull editing this
 		manager = FindObjectOfType<LevelManager> ();
 		uiCoin = FindObjectOfType<UiCoinSpawner> ();
 		endGameMenu = FindObjectOfType<GameOverMenu> ();
+		pauseMenu = FindObjectOfType<PauseMenu> ();
 	}
 	
 	void FixedUpdate(){
@@ -167,7 +169,7 @@ public class CharController : MonoBehaviour { // Please be carefull editing this
 			 
 			//CHARACTER TOUCH CONTROL (EDITOR AND MOBILE DEVICES)
 
-			if (isGrounded && Input.GetMouseButtonDown (0)) { // Only if the player is touching the ground we can call the Jump void function and perform a Jump when touch the screen.
+			if (isGrounded && (Input.GetKeyDown (KeyCode.RightArrow) || Input.GetKeyDown (KeyCode.LeftArrow) || Input.GetKeyDown (KeyCode.UpArrow))) { // Only if the player is touching the ground we can call the Jump void function and perform a Jump when touch the screen.
 
 				Jump (); // Call the Jump function
 
@@ -177,7 +179,7 @@ public class CharController : MonoBehaviour { // Please be carefull editing this
 
 			}
 
-			if (falling && !isDoubleJumping && Input.GetMouseButtonDown (0)) { // If the character is falling and we touch the screen we can perform an Air Jump.
+			if (falling && !isDoubleJumping && (Input.GetKeyDown (KeyCode.RightArrow) || Input.GetKeyDown (KeyCode.LeftArrow) || Input.GetKeyDown (KeyCode.UpArrow))) { // If the character is falling and we touch the screen we can perform an Air Jump.
 
 				DoubleJump (); // Call the Air jump function
 
@@ -449,8 +451,8 @@ public class CharController : MonoBehaviour { // Please be carefull editing this
 		endGameMenu.GameOver (); // Call the game over script to indicate that the game has stopped.
 		shake.ShakeCamera (0.35f, 0.3f); // This will shake the camera when the character collides with an enemy.
 		loosingCoins = false;// if the character is loosing coins at the same moment that it dies, we set the loosing coins to false to avoid bad behaviors.
-
-	}
+		pauseMenu.GameOver ();
+	}		
 
 	IEnumerator LooseCoins(){ // This coroutine is started when the player collides with a bad coin object. See further.
 

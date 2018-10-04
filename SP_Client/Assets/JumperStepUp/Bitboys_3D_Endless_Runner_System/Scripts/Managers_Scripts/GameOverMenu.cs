@@ -234,10 +234,10 @@ public class GameOverMenu : MonoBehaviour {
 
 	public void GameOver(){ // this function is called when the player collides with an enemy and we want to stop the game.
 
-		StartCoroutine (StopGame ()); 
+		//StartCoroutine (StopGame ()); 
 		deadAudioSource.PlayOneShot (deadSfx, 1f); // play the dead sound.
-		pauseButton.GetComponent<Image> ().raycastTarget = false; // Disable the pause button to avoid touches when game is over.
-		pauseButton.GetComponent<FadeTexture> ().FadeOut(); // make the pause button invisible calling its fade script.
+		/*pauseButton.GetComponent<Image> ().raycastTarget = false; // Disable the pause button to avoid touches when game is over.
+		pauseButton.GetComponent<FadeTexture> ().FadeOut(); // make the pause button invisible calling its fade script.*/
 
 	}
 

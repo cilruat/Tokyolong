@@ -150,8 +150,7 @@ namespace OnefallGames
 	        GameState = GameState.Playing;
 	        gameState = GameState.Playing;
 
-	        //Add another actions here
-	        StartBackgroundMusic(0.5f);
+	        //Add another actions here	        
 	        StartCoroutine(UpdateMountainColor());
 
 	        //Reset IsPause variable
@@ -216,7 +215,7 @@ namespace OnefallGames
 	        SceneManager.LoadScene(sceneName);
 	    }
 
-	    void StartBackgroundMusic(float delay)
+	    public void StartBackgroundMusic(float delay)
 	    {
 	        StartCoroutine(PlayBackgroundMusic(delay));
 	    }

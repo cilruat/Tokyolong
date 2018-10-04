@@ -46,6 +46,7 @@ public class UISurprisePSY : MonoBehaviour {
 		case 4:		sceneName = "PicturePuzzle";		break;
 		case 5:		sceneName = "PairCards";			break;
 		case 6:		sceneName = "BallDuetMain";			break;
+		case 7:		sceneName = "JumperStepUpMain";		break;
 		}
 
 		OnClose ();

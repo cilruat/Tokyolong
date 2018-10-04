@@ -249,6 +249,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 			FlappyScript.instance.ReturnHome ();
 		else if (Info.isCheckScene ("BallDuetMain"))
 			OnefallGames.UIManager.Instance.ReturnHome ();
+		else if (Info.isCheckScene ("JumperStepUpMain"))
+			PauseMenu.Instance.ReturnHome ();
 	}
 
 	void GameDiscountNOT(CPacket msg)

@@ -177,6 +177,8 @@ namespace OnefallGames
 
 		IEnumerator _StartGame()
 		{
+			GameManager.Instance.StartBackgroundMusic(0f);
+
 			UITweenAlpha.Start (tapToStart, 1f, 0f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2).DisableOnFinish ());
 			yield return new WaitForSeconds (.5f);
 
