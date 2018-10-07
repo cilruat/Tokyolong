@@ -24,6 +24,7 @@ public partial class Info : MonoBehaviour {
 	public static int HAMMER_FINISH_POINT = 30;
 	public static int TWO_CARS_FINISH_POINT = 20;
 	public static int BRIDGES_FINISH_POINT = 20;
+	public static int CRASH_RACING_LIMIT_TIME = 25;
 
 	public const int TOKYOLIVE_MAX_COUNT = 3;
 	public static int TOKYOLIVE_PREV_SEC = 20;
@@ -218,7 +219,8 @@ public partial class Info : MonoBehaviour {
 			sceneName == "JumperStepUpMain"			||
 			sceneName == "HammerMain"				||
 			sceneName == "TwoCarsMain"				||
-			sceneName == "BridgesMain"				)
+			sceneName == "BridgesMain"				||
+			sceneName == "CrashRacingMain"			)
 			return true;
 		else
 			return false;
@@ -239,6 +241,7 @@ public partial class Info : MonoBehaviour {
 		case 8:		sceneName = "HammerMain";			break;
 		case 9:		sceneName = "TwoCarsMain";			break;
 		case 10:	sceneName = "BridgesMain";			break;
+		case 11:	sceneName = "CrashRacingMain";		break;
 		}
 
 		SceneChanger.LoadScene (sceneName, obj);
@@ -272,7 +275,9 @@ public partial class Info : MonoBehaviour {
 			TwoCars.Managers.UI.ReturnHome ();
 		else if (Info.isCheckScene ("BridgesMain"))
 			Bridges.UIManager.Instance.ReturnHome ();
+		else if (Info.isCheckScene ("CrashRacingMain"))
+			CrashRacing.UIManager.Instance.ReturnHome ();
 	}
 
-	public static int TotalGameCount() { return 11; }
+	public static int TotalGameCount() { return 12; }
 }

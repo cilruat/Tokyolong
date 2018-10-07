@@ -77,6 +77,9 @@ namespace CrashRacing
 
 	    void FixedUpdate()
 	    {
+			if (UIManager.Instance.isStop)
+				return;
+			
 	        //Move player and particle
 	        if (GameManager.Instance.GameState == GameState.Playing)
 	        {
@@ -87,12 +90,32 @@ namespace CrashRacing
 
 	    // Update is called once per frame
 	    void Update()
-	    {
-	        if (GameManager.Instance.GameState.Equals(GameState.Playing))
+	    {			
+			if (GameManager.Instance.GameState.Equals(GameState.Playing) && UIManager.Instance.isStop == false)
 	        {
 	            if (finishTurn)
 	            {
-	                if (Input.GetMouseButtonDown(0) && GameManager.Instance.GameState.Equals(GameState.Playing))
+					if (GameManager.Instance.GameState.Equals (GameState.Playing) == false)
+						return;
+
+					if (Input.GetKeyDown (KeyCode.UpArrow)) {
+						timeAtMouseUp = Time.time;
+
+						if (!particle.gameObject.activeInHierarchy)
+							particle.gameObject.SetActive (true);
+						
+						currentSpeed += GameManager.Instance.increaseSpeedFactor * Time.deltaTime;
+					} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
+						StartCoroutine(TurnLeft());
+						StartCoroutine(Rotate(-GameManager.Instance.rotateAngle));
+						cameraController.MoveLeft();
+					} else if (Input.GetKeyDown (KeyCode.RightArrow)) {
+						StartCoroutine(TurnRight());
+						StartCoroutine(Rotate(GameManager.Instance.rotateAngle));
+						cameraController.MoveRight();
+					}
+
+	                /*if (Input.GetMouseButtonDown(0) && GameManager.Instance.GameState.Equals(GameState.Playing))
 	                {
 	                    mouseDownPosition = Input.mousePosition; //Get mouse down position
 	                }
@@ -134,7 +157,7 @@ namespace CrashRacing
 	                            cameraController.MoveLeft();
 	                        }
 	                    }
-	                }
+	                }*/
 	            }
 
 	            currentTime = Time.time;
@@ -255,6 +278,9 @@ namespace CrashRacing
 
 	    void OnCollisionEnter(Collision col)
 	    {
+			if (UIManager.Instance.isStop)
+				return;
+			
 	        if (GameManager.Instance.GameState.Equals(GameState.Playing))
 	        {
 	            if (col.gameObject.CompareTag("Car")) //Hit another car
@@ -273,6 +299,7 @@ namespace CrashRacing
 	                    SoundManager.Instance.PlaySound(SoundManager.Instance.gameOver);
 	                    Die();
 	                    PlayerDied();
+						UIManager.Instance.limitTime.Stop ();
 	                    cameraController.ShakeCamera();
 	                    if (particle.gameObject.activeInHierarchy)
 	                        particle.gameObject.SetActive(false);

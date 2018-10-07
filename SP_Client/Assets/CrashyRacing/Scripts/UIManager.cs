@@ -13,6 +13,8 @@ namespace CrashRacing
 {
 	public class UIManager : MonoBehaviour
 	{
+		public static UIManager Instance { get; private set; }
+
 	    [Header("Object References")]
 	    public PlayerController playerController;
 	    public GameObject mainCanvas;
@@ -56,6 +58,20 @@ namespace CrashRacing
 	    public GameObject shareUI;
 	    public ShareUIController shareUIController;
 
+		public GameObject tapToStart;
+		public RawImage imgVictory;
+		public GameObject objVictory;
+		public GameObject objSendServer;
+		public GameObject objGameOver;
+		public GameObject objReady;
+		public GameObject objGo;
+		public Text txtTime;
+		public Image imgTime;
+		public CountDown limitTime;
+
+		public bool isStop = false;
+		int finishLimitTime = 0;
+
 	    Animator scoreAnimator;
 	    Animator dailyRewardAnimator;
 	    bool isWatchAdsForCoinBtnActive;
@@ -74,6 +90,27 @@ namespace CrashRacing
 	        ScoreManager.ScoreUpdated -= OnScoreUpdated;
 	    }
 
+		void Awake()
+		{
+			if (Instance)
+			{
+				DestroyImmediate(gameObject);
+			}
+			else
+			{
+				Instance = this;
+				DontDestroyOnLoad(gameObject);
+			}
+		}
+
+		void OnDestroy()
+		{
+			if (Instance == this)
+			{
+				Instance = null;
+			}
+		}
+
 	    // Use this for initialization
 	    void Start()
 	    {
@@ -82,11 +119,23 @@ namespace CrashRacing
 
 	        Reset();
 	        ShowStartUI();
+
+			finishLimitTime = Info.CRASH_RACING_LIMIT_TIME;
+			txtTime.text = Info.practiceGame ? "∞" : finishLimitTime.ToString();
 	    }
 
 	    // Update is called once per frame
 	    void Update()
 	    {
+			if (Info.practiceGame)
+				return;
+
+			float elapsed = limitTime.GetElapsed();
+			float fill = (finishLimitTime - elapsed) / (float)finishLimitTime;
+			imgTime.fillAmount = fill;
+
+			return;
+
 	        if (GameManager.Instance.GameState == GameState.Playing)
 	        {
 	            timeCount += Time.deltaTime;
@@ -146,6 +195,63 @@ namespace CrashRacing
 	        scoreAnimator.Play("NewScore");
 	    }
 
+		IEnumerator _StartGame()
+		{
+			UITweenAlpha.Start (tapToStart, 1f, 0f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2).DisableOnFinish ());
+			yield return new WaitForSeconds (.5f);
+
+			UITweenAlpha.Start(objReady, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+
+			yield return new WaitForSeconds (1f);
+			UITweenAlpha.Start(objReady, 1f, 0f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+
+			yield return new WaitForSeconds (.25f);
+			UITweenAlpha.Start(objGo, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+
+			yield return new WaitForSeconds (1f);
+			UITweenAlpha.Start(objGo, 1f, 0f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+
+			yield return new WaitForSeconds (.3f);
+
+			GameManager.Instance.StartGame();
+
+			if (Info.practiceGame == false)
+				limitTime.Set (finishLimitTime, () => StartCoroutine (_SuccessEndGame ()));
+		}
+
+		IEnumerator _SuccessEndGame()
+		{
+			isStop = true;
+			limitTime.Stop ();
+
+			GameObject cars = GameManager.Instance.activeCarManager.transform.gameObject;
+			for (int i = 0; i < cars.transform.childCount; i++) {
+				GameObject theCar = cars.transform.GetChild(i).gameObject;
+				theCar.GetComponent<CarController>().stopMoving = true;    
+				theCar.GetComponent<CarController> ().stopTurn = true;
+			}
+
+			ShiningGraphic.Start (imgVictory);
+			objVictory.SetActive (true);
+			yield return new WaitForSeconds (4f);
+
+			UITweenAlpha.Start (objVictory, 1f, 0f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
+			UITweenAlpha.Start (objSendServer, 0f, 1f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
+
+			yield return new WaitForSeconds (1f);
+
+			if (Info.TableNum == 0)
+				ReturnHome ();
+			else
+				NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+		}
+
+		public void ReturnHome()
+		{
+			SceneChanger.LoadScene ("Main", mainCanvas);
+		}
+
+
 	    void Reset()
 	    {
 	        mainCanvas.SetActive(true);
@@ -160,7 +266,7 @@ namespace CrashRacing
 	        velocityBoard.SetActive(false);
 
 	        // Enable or disable premium stuff
-	        bool enablePremium = IsPremiumFeaturesEnabled();
+	        /*bool enablePremium = IsPremiumFeaturesEnabled();
 	        leaderboardBtn.SetActive(enablePremium);
 	        iapPurchaseBtn.SetActive(enablePremium);
 	        removeAdsBtn.SetActive(enablePremium);
@@ -173,12 +279,13 @@ namespace CrashRacing
 
 	        // These premium feature buttons are hidden by default
 	        // and shown when certain criteria are met (e.g. rewarded ad is loaded)
-	        watchRewardedAdBtn.gameObject.SetActive(false);
+	        watchRewardedAdBtn.gameObject.SetActive(false);*/
 	    }
 
 	    public void StartGame()
 	    {
-	        GameManager.Instance.StartGame();
+	        //GameManager.Instance.StartGame();
+			StartCoroutine(_StartGame());
 	    }
 
 	    public void EndGame()
@@ -192,7 +299,9 @@ namespace CrashRacing
 	    }
 
 	    public void ShowStartUI()
-	    {	        
+	    {	
+			return;
+
 	        settingsUI.SetActive(false);      
 	        header.SetActive(true);
 	        title.SetActive(true);
@@ -212,6 +321,8 @@ namespace CrashRacing
 
 	    public void ShowGameUI()
 	    {
+			return;
+
 	        header.SetActive(true);
 	        title.SetActive(false);
 	        score.gameObject.SetActive(true);
@@ -225,7 +336,10 @@ namespace CrashRacing
 	    }
 
 	    public void ShowGameOverUI()
-	    {
+	    {			
+			objGameOver.SetActive (true);
+			return;
+			
 	        header.SetActive(true);
 	        title.SetActive(false);
 	        score.gameObject.SetActive(true);

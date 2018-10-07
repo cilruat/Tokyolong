@@ -29,7 +29,7 @@ namespace CrashRacing
 	        {
 	            return _gameState;
 	        }
-	        private set
+	        set
 	        {
 	            if (value != _gameState)
 	            {
@@ -159,6 +159,9 @@ namespace CrashRacing
 	        CreateTreeAndRock(listTreeAndRockLeft, firstPath);
 
 	        StartCoroutine(CheckAndDisableMovePath());
+
+			if (SoundManager.Instance.background != null)
+				SoundManager.Instance.PlayMusic(SoundManager.Instance.background);
 	    }
 
 	    // Update is called once per frame
@@ -190,11 +193,7 @@ namespace CrashRacing
 	    public void StartGame()
 	    {
 	        ReplacePlayerMesh();
-	        GameState = GameState.Playing;
-	        if (SoundManager.Instance.background != null)
-	        {
-	            SoundManager.Instance.PlayMusic(SoundManager.Instance.background);
-	        }
+	        GameState = GameState.Playing;	        
 	        StartCoroutine(CountScore());
 	    }
 
@@ -213,9 +212,7 @@ namespace CrashRacing
 	    public void GameOver()
 	    {
 	        if (SoundManager.Instance.background != null)
-	        {
 	            SoundManager.Instance.StopMusic();
-	        }
 
 	        SoundManager.Instance.PlaySound(SoundManager.Instance.gameOver);
 	        GameState = GameState.GameOver;
