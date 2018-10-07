@@ -18,10 +18,12 @@ public partial class Info : MonoBehaviour {
 	public static int PICTURE_PUZZLE_LIMIT_TIME = 30;
 	public static int PAIR_CARD_MODE = 18;
 	public static int PAIR_CARD_LIMIT_TIME = 30;
+
 	public static int RING_DING_DONG_FINISH_POINT = 20;
 	public static int EGG_MON_FINISH_POINT = 20;
 	public static int HAMMER_FINISH_POINT = 30;
 	public static int TWO_CARS_FINISH_POINT = 20;
+	public static int BRIDGES_FINISH_POINT = 20;
 
 	public const int TOKYOLIVE_MAX_COUNT = 3;
 	public static int TOKYOLIVE_PREV_SEC = 20;
@@ -215,7 +217,8 @@ public partial class Info : MonoBehaviour {
 			sceneName == "BallDuetMain"				||
 			sceneName == "JumperStepUpMain"			||
 			sceneName == "HammerMain"				||
-			sceneName == "TwoCarsMain"				)
+			sceneName == "TwoCarsMain"				||
+			sceneName == "BridgesMain"				)
 			return true;
 		else
 			return false;
@@ -235,6 +238,7 @@ public partial class Info : MonoBehaviour {
 		case 7:		sceneName = "JumperStepUpMain";		break;
 		case 8:		sceneName = "HammerMain";			break;
 		case 9:		sceneName = "TwoCarsMain";			break;
+		case 10:	sceneName = "BridgesMain";			break;
 		}
 
 		SceneChanger.LoadScene (sceneName, obj);
@@ -266,7 +270,9 @@ public partial class Info : MonoBehaviour {
 			Hammer.UIManager.Instance.ReturnHome ();
 		else if (Info.isCheckScene ("TwoCarsMain"))
 			TwoCars.Managers.UI.ReturnHome ();
+		else if (Info.isCheckScene ("BridgesMain"))
+			Bridges.UIManager.Instance.ReturnHome ();
 	}
 
-	public static int TotalGameCount() { return 10; }
+	public static int TotalGameCount() { return 11; }
 }

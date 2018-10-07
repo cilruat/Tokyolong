@@ -14,6 +14,7 @@ namespace Bridges
 	public class UIManager : MonoBehaviour
 	{
 	    public static bool firstLoad = true;
+		public static UIManager Instance { get; private set; }
 
 	    [Header("Object References")]
 	    public GameManager gameManager;
@@ -55,6 +56,16 @@ namespace Bridges
 	    public GameObject shareUI;
 	    public ShareUIController shareUIController;
 
+		public GameObject tapToStart2;
+		public RawImage imgVictory;
+		public GameObject objVictory;
+		public GameObject objSendServer;
+		public GameObject objGameOver;
+		public GameObject objReady;
+		public GameObject objGo;
+
+		int finishPoint = 0;
+
 	    Animator scoreAnimator;
 	    Animator dailyRewardAnimator;
 	    bool isWatchAdsForCoinBtnActive;
@@ -71,6 +82,27 @@ namespace Bridges
 	        ScoreManager.ScoreUpdated -= OnScoreUpdated;
 	    }
 
+		void Awake()
+		{
+			if (Instance)
+			{
+				DestroyImmediate(gameObject);
+			}
+			else
+			{
+				Instance = this;
+				DontDestroyOnLoad(gameObject);
+			}
+		}
+
+		void OnDestroy()
+		{
+			if (Instance == this)
+			{
+				Instance = null;
+			}
+		}
+
 	    // Use this for initialization
 	    void Start()
 	    {
@@ -79,11 +111,16 @@ namespace Bridges
 
 	        Reset();
 	        ShowStartUI();
+
+			finishPoint = Info.BRIDGES_FINISH_POINT;
+			score.text = Info.practiceGame ? "0" : "0 / " + finishPoint.ToString ();
 	    }
 
 	    // Update is called once per frame
 	    void Update()
 	    {
+			return;
+
 	        if (mainCanvas.activeSelf)
 	        {
 	            score.text = ScoreManager.Instance.Score.ToString();
@@ -130,10 +167,64 @@ namespace Bridges
 	        }
 	    }
 
+		IEnumerator _StartGame()
+		{
+			UITweenAlpha.Start (tapToStart2, 1f, 0f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2).DisableOnFinish ());
+			yield return new WaitForSeconds (.5f);
+
+			UITweenAlpha.Start(objReady, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+
+			yield return new WaitForSeconds (1f);
+			UITweenAlpha.Start(objReady, 1f, 0f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+
+			yield return new WaitForSeconds (.25f);
+			UITweenAlpha.Start(objGo, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+
+			yield return new WaitForSeconds (1f);
+			UITweenAlpha.Start(objGo, 1f, 0f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+
+			yield return new WaitForSeconds (.3f);
+
+			gameManager.StartGame();
+		}
+
 	    void OnScoreUpdated(int newScore)
 	    {
-	        scoreAnimator.Play("NewScore");
+			scoreAnimator.Play("NewScore");
+
+			if (Info.practiceGame)
+				score.text = newScore.ToString ();
+			else {
+				score.text = newScore.ToString () + " / " + finishPoint.ToString ();
+
+				if (Info.practiceGame == false && newScore >= finishPoint)
+					StartCoroutine (_SuccessEndGame ());
+			}
 	    }
+
+		IEnumerator _SuccessEndGame()
+		{
+			gameManager.gameOver = true;
+
+			ShiningGraphic.Start (imgVictory);
+			objVictory.SetActive (true);
+			yield return new WaitForSeconds (4f);
+
+			UITweenAlpha.Start (objVictory, 1f, 0f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
+			UITweenAlpha.Start (objSendServer, 0f, 1f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
+
+			yield return new WaitForSeconds (1f);
+
+			if (Info.TableNum == 0)
+				ReturnHome ();
+			else
+				NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+		}
+
+		public void ReturnHome()
+		{
+			SceneChanger.LoadScene ("Main", mainCanvas);
+		}
 
 	    void Reset()
 	    {
@@ -153,34 +244,37 @@ namespace Bridges
 	        settingsCanvas.SetActive(false);
 
 	        // Enable or disable premium stuff
-	        bool enablePremium = PremiumFeaturesManager.Instance.enablePremiumFeatures;
+	        /*bool enablePremium = PremiumFeaturesManager.Instance.enablePremiumFeatures;
 	        leaderboardBtn.SetActive(enablePremium);
 	        iapPurchaseBtn.SetActive(enablePremium);
 	        removeAdsBtn.SetActive(enablePremium);
-	        restorePurchaseBtn.SetActive(enablePremium);
+	        restorePurchaseBtn.SetActive(enablePremium);*/
 
 	        // Hide Share screnenshot by default
-	        shareUI.SetActive(false);
+	        //shareUI.SetActive(false);
 
 	        // These premium feature buttons are hidden by default
 	        // and shown when certain criteria are met (e.g. rewarded ad is loaded)
-	        continueByAdsBtn.SetActive(false);
-	        watchForCoinsBtn.gameObject.SetActive(false);
+	        /*continueByAdsBtn.SetActive(false);
+	        watchForCoinsBtn.gameObject.SetActive(false);*/
 	    }
 
 	    public void ShowStartUI()
 	    {
 	        mainCanvas.SetActive(true);
 	        settingsCanvas.SetActive(false);
+			score.gameObject.SetActive(true);
 
-	        header.SetActive(true);
+	        /*header.SetActive(true);
 	        title.gameObject.SetActive(true);
 	        tapToStart.SetActive(true);
-	        characterSelectBtn.SetActive(true);    
+	        characterSelectBtn.SetActive(true);*/
 	    }
 
 	    public void ShowGameUI()
-	    {
+	    {			
+			return;
+
 	        header.SetActive(true);
 	        title.gameObject.SetActive(false);
 	        score.gameObject.SetActive(true);
@@ -199,12 +293,17 @@ namespace Bridges
 
 	    public void ShowResumeUI()
 	    {
+			return;
+
 	        tapToContinue.SetActive(true);
 	        score.gameObject.SetActive(true);
 	    }
 
 	    public void ShowGameOverUI()
 	    {
+			objGameOver.SetActive (true);
+			return;
+
 	        header.SetActive(true);
 	        title.gameObject.SetActive(false);
 	        score.gameObject.SetActive(true);
@@ -266,7 +365,8 @@ namespace Bridges
 
 	    public void StartGame()
 	    {
-	        gameManager.StartGame();
+	        //gameManager.StartGame();
+			StartCoroutine(_StartGame());
 	    }
 
 	    public void ResumeLostGameByCoins()
@@ -394,7 +494,7 @@ namespace Bridges
 
 	    public void ShowShareUI()
 	    {
-	        StartCoroutine(CRShowShareUI());
+	        //StartCoroutine(CRShowShareUI());
 	    }
 
 	    IEnumerator CRShowShareUI()

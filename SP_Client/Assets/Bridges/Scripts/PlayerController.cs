@@ -153,12 +153,13 @@ namespace Bridges
 	            }
 
 	            //Mouse down -> rotate all bridge
-	            if (Input.GetMouseButtonDown(0) && !touchDisable)
-	            {
-	                SoundManager.Instance.PlaySound(SoundManager.Instance.rotateBridge);
-	                touchDisable = true;
-	                gameManager.RotateAllBridge();
-	            }
+				if ((Input.GetKeyDown (KeyCode.LeftArrow) ||
+				    Input.GetKeyDown (KeyCode.RightArrow) ||
+				    Input.GetKeyDown (KeyCode.UpArrow)) && !touchDisable) {
+					SoundManager.Instance.PlaySound (SoundManager.Instance.rotateBridge);
+					touchDisable = true;
+					gameManager.RotateAllBridge ();
+				}
 
 	            // Move player forward
 	            float actualSpeed = isOnPlane && isFixingPosition ? speed / 2 : speed;

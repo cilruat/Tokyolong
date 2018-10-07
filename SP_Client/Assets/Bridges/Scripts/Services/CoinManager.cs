@@ -38,7 +38,8 @@ namespace Bridges
         public void Reset()
         {
             // Initialize coins
-            Coins = PlayerPrefs.GetInt(COINS, INITIAL_COINS);
+            //Coins = PlayerPrefs.GetInt(COINS, INITIAL_COINS);
+			Coins = 0;
         }
 
         public void AddCoins(int amount)

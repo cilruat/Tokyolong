@@ -99,6 +99,7 @@ namespace Bridges
 
 	        CRPrepareGame();
 	        StartCoroutine(CheckAndRefeshPath());
+			SoundManager.Instance.PlayMusic(SoundManager.Instance.background);
 	    }
 
 	    void Update()
@@ -134,8 +135,7 @@ namespace Bridges
 
 	    public void StartGame()
 	    {
-	        NewGameEvent(GameEvent.Start);
-	        SoundManager.Instance.PlayMusic(SoundManager.Instance.background);
+	        NewGameEvent(GameEvent.Start);	        
 	    }
 
 	    void PlayerController_PlayerFall()
@@ -157,14 +157,14 @@ namespace Bridges
 	        #endif
 
 	        // Must not recover before and score must have some score already
-	        bool canRecoverGame = (haveEnoughCoins || canWatchAd) && !lostGameRecovered && (ScoreManager.Instance.Score > 0);
+	        /*bool canRecoverGame = (haveEnoughCoins || canWatchAd) && !lostGameRecovered && (ScoreManager.Instance.Score > 0);
 
 	        if (canRecoverGame)
 	        {
 	            PreGameOver();
 	            StartCoroutine(ShowPreGameOverUI(1f, haveEnoughCoins, canWatchAd));
 	        }
-	        else
+	        else*/
 	        {
 	            GameOver();
 	        }

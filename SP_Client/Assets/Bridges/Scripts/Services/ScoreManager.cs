@@ -54,6 +54,7 @@ namespace Bridges
 
             // Fire event
             ScoreUpdated(Score);
+			return;
 
             if (Score > HighScore)
             {
