@@ -10,13 +10,13 @@ namespace TwoCars
 		#region implemented abstract members of _StatesBase
 		public override void OnActivate ()
 		{
-	        Managers.UI.panel.SetActive(false);
+	        //Managers.UI.panel.SetActive(false);
 	        Managers.UI.ActivateUI(Menus.INGAME);
-	        Managers.Difficulty.ResetDifficulty();
+	        /*Managers.Difficulty.ResetDifficulty();
 	        Managers.Game.isGameActive = true;
 	        Managers.Input.isActive= true;
 	        Managers.Score.ResetScore();
-	        Managers.Spawner.StartSpawning();
+	        Managers.Spawner.StartSpawning();*/
 
 	        gamePlayDuration = Time.time;
 

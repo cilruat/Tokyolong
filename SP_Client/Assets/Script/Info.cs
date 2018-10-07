@@ -21,6 +21,7 @@ public partial class Info : MonoBehaviour {
 	public static int RING_DING_DONG_FINISH_POINT = 20;
 	public static int EGG_MON_FINISH_POINT = 20;
 	public static int HAMMER_FINISH_POINT = 30;
+	public static int TWO_CARS_FINISH_POINT = 20;
 
 	public const int TOKYOLIVE_MAX_COUNT = 3;
 	public static int TOKYOLIVE_PREV_SEC = 20;
@@ -85,7 +86,7 @@ public partial class Info : MonoBehaviour {
 		if (UIManager.Instance.IsActive (eUI.eTokyoLive))
 			return;
 
-        if (SceneChanger.CheckGameScene(SceneManager.GetActiveScene().name))
+        if (CheckGameScene(SceneManager.GetActiveScene().name))
             return;
 
 		_CheckTokyoLivePrevStart ();
@@ -187,7 +188,7 @@ public partial class Info : MonoBehaviour {
 			if (showTokyoLive)
 				return;
 
-			if (SceneChanger.CheckGameScene(SceneManager.GetActiveScene().name))
+			if (CheckGameScene(SceneManager.GetActiveScene().name))
 				return;
 
 			NetworkManager.Instance.Surprise_REQ ();
@@ -198,4 +199,74 @@ public partial class Info : MonoBehaviour {
 		if (SURPRISE_REMAIN_MIN <= Mathf.FloorToInt ((loopSurpriseRemainTime) / 60))
 			waitSurprise = true;
 	}
+
+	public static bool CheckGameScene(string sceneName)
+	{
+		if (sceneName == "PicturePuzzle"     		||
+			sceneName == "PairCards"         		||
+			sceneName == "CrashCatMain"      		||
+			sceneName == "CrashCatStart"     		||
+			sceneName == "FlappyBirdMasterMain"    	||
+			sceneName == "EmojiMain"         		||
+			sceneName == "Emoji2Main"        		||
+			sceneName == "AvoidBullets"      		||
+			sceneName == "AvoidGame"         		||
+			sceneName == "AvoidMain"         		||
+			sceneName == "BallDuetMain"				||
+			sceneName == "JumperStepUpMain"			||
+			sceneName == "HammerMain"				||
+			sceneName == "TwoCarsMain"				)
+			return true;
+		else
+			return false;
+	}
+
+	public static void PlayGame(int idx, GameObject obj)
+	{
+		string sceneName = "";
+		switch (idx) {
+		case 0:		sceneName = "PicturePuzzle";		break;
+		case 1:		sceneName = "PairCards";			break;
+		case 2:		sceneName = "EmojiMain";			break;
+		case 3:		sceneName = "Emoji2Main";			break;
+		case 4:		sceneName = "FlappyBirdMasterMain";	break;
+		case 5:		sceneName = "CrashCatStart";		break;
+		case 6:		sceneName = "BallDuetMain";			break;
+		case 7:		sceneName = "JumperStepUpMain";		break;
+		case 8:		sceneName = "HammerMain";			break;
+		case 9:		sceneName = "TwoCarsMain";			break;
+		}
+
+		SceneChanger.LoadScene (sceneName, obj);
+	}
+
+	public static void AfterDiscountBehavior()
+	{
+		Info.GameDiscountWon = -1;
+
+		if (Info.isCheckScene ("TokyoLive"))
+			PageTokyoLive.Instance.OnClose ();
+		else if (Info.isCheckScene ("PicturePuzzle"))
+			PagePicturePuzzle.Instance.ReturnHome ();
+		else if (Info.isCheckScene ("PairCards"))
+			PagePairCards.Instance.ReturnHome ();
+		else if (Info.isCheckScene ("CrashCatMain"))
+			CrashCat.GameManager.instance.ReturnHome ();
+		else if (Info.isCheckScene ("EmojiMain"))
+			Emoji.GameManager.Instance.ReturnHome ();
+		else if (Info.isCheckScene ("Emoji2Main"))
+			Emoji2.GameManager.Instance.ReturnHome ();
+		else if (Info.isCheckScene ("FlappyBirdMasterMain"))
+			FlappyBirdStyle.FlappyScript.instance.ReturnHome ();
+		else if (Info.isCheckScene ("BallDuetMain"))
+			OnefallGames.UIManager.Instance.ReturnHome ();
+		else if (Info.isCheckScene ("JumperStepUpMain"))
+			PauseMenu.Instance.ReturnHome ();
+		else if (Info.isCheckScene ("HammerMain"))
+			Hammer.UIManager.Instance.ReturnHome ();
+		else if (Info.isCheckScene ("TwoCarsMain"))
+			TwoCars.Managers.UI.ReturnHome ();
+	}
+
+	public static int TotalGameCount() { return 10; }
 }

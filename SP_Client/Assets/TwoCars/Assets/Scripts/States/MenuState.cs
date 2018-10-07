@@ -10,7 +10,7 @@ namespace TwoCars
 		public override void OnActivate ()
 		{		
 			Debug.Log ("<color=green>Menu State</color> OnActive");
-	        Managers.UI.panel.SetActive(false);
+	        //Managers.UI.panel.SetActive(false);
 	        Managers.UI.ActivateUI (Menus.MAIN);
 	        Managers.Game.isGameActive = false;
 	        Managers.Input.isActive = false;

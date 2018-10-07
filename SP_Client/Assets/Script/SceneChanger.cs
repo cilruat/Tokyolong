@@ -11,7 +11,7 @@ public class SceneChanger : SingletonMonobehaviour<SceneChanger> {
 	public static void LoadScene(string name, GameObject obj)
     {
         if (Info.RunInGameScene == false)
-            UIManager.Instance.isMouseClickEff = !CheckGameScene(name);
+            UIManager.Instance.isMouseClickEff = !Info.CheckGameScene(name);
 
         if (name == "Login")
             UIManager.Instance.Hide_All();
@@ -19,27 +19,7 @@ public class SceneChanger : SingletonMonobehaviour<SceneChanger> {
         nextName = name;
 		objHide = obj;
 		SceneChanger.Instance._LoadScene();
-    }
-
-    public static bool CheckGameScene(string sceneName)
-    {
-        if (sceneName == "PicturePuzzle"     		||
-            sceneName == "PairCards"         		||
-            sceneName == "CrashCatMain"      		||
-            sceneName == "CrashCatStart"     		||
-            sceneName == "FlappyBirdMasterMain"    	||
-            sceneName == "EmojiMain"         		||
-            sceneName == "Emoji2Main"        		||
-            sceneName == "AvoidBullets"      		||
-            sceneName == "AvoidGame"         		||
-            sceneName == "AvoidMain"         		||
-			sceneName == "BallDuetMain"				||
-			sceneName == "JumperStepUpMain"			||
-			sceneName == "HammerMain"				)
-            return true;
-        else
-            return false;
-    }
+    }		   
 
 	void _LoadScene()
 	{

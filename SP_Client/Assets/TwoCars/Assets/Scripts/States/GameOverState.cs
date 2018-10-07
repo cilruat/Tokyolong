@@ -11,7 +11,8 @@ namespace TwoCars
 	        Managers.Game.isGameActive = false;
 	        Managers.Score.CheckHighScore();
 	        Managers.Game.stats.numberOfGames++;
-	        Managers.UI.popUps.ActivateGameOverPopUp();
+	        //Managers.UI.popUps.ActivateGameOverPopUp();
+			Managers.UI.GameOver();
 	        Managers.Audio.PlayLoseSound();
 	        Managers.Spawner.StopSpawning();
 	        Managers.Anal.SendScoreAnalytic();

@@ -38,6 +38,9 @@ namespace TwoCars
 
 	    void Update()
 	    {
+			if (Managers.UI.isStop)
+				return;
+
 	        Move();
 	    }
 

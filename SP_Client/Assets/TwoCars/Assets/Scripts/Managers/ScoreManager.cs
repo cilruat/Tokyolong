@@ -35,7 +35,8 @@ namespace TwoCars
 		public void OnScore(int scoreIncreaseAmount)
 		{	
 			currentScore += scoreIncreaseAmount;
-	        Managers.UI.inGameUI.UpdateScoreUI();
+	        //Managers.UI.inGameUI.UpdateScoreUI();
+			Managers.UI.SetScore(currentScore);
 	        Managers.Game.stats.totalScore += scoreIncreaseAmount;
 	    }
 

@@ -19,8 +19,8 @@ public class ResetPosition : MonoBehaviour {
     /// </summary>
     void Update()
     {
-        if (transform.position.y <= -18.5f)
-            transform.position = new Vector2(0, 18.5f);
+        if (transform.position.y <= -18.8f)
+			transform.position = new Vector2(0, 18.8f);
     }
 
 }

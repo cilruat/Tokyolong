@@ -29,7 +29,7 @@ public class UISurprisePSY : MonoBehaviour {
 
 	public void OnStart()
 	{
-		int range = discount == 1000 ? 9 : 4;
+		int range = discount == 1000 ? Info.TotalGameCount () : 4;
 		int randGame = Random.Range (0, range);
 
 		_GoGame (randGame);
@@ -37,21 +37,8 @@ public class UISurprisePSY : MonoBehaviour {
 
 	void _GoGame(int idx)
 	{
-		string sceneName = "";
-		switch (idx) {
-		case 0:		sceneName = "EmojiMain";			break;
-		case 1:		sceneName = "Emoji2Main";			break;
-		case 2:		sceneName = "FlappyBirdMasterMain";	break;
-		case 3:		sceneName = "CrashCatStart";		break;
-		case 4:		sceneName = "PicturePuzzle";		break;
-		case 5:		sceneName = "PairCards";			break;
-		case 6:		sceneName = "BallDuetMain";			break;
-		case 7:		sceneName = "JumperStepUpMain";		break;
-		case 8:		sceneName = "HammerMain";			break;
-		}
-
 		OnClose ();
-		SceneChanger.LoadScene (sceneName, gameObject);
+		Info.PlayGame (idx, gameObject);
 	}
 
 	public void OnClose()

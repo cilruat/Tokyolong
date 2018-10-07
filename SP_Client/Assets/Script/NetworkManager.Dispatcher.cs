@@ -231,28 +231,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
 	void GameDiscountACK(CPacket msg)
 	{
-		Info.GameDiscountWon = -1;
-
-		if (Info.isCheckScene ("TokyoLive"))
-			PageTokyoLive.Instance.OnClose ();
-		else if (Info.isCheckScene ("PicturePuzzle"))
-			PagePicturePuzzle.Instance.ReturnHome ();
-		else if (Info.isCheckScene ("PairCards"))
-			PagePairCards.Instance.ReturnHome ();
-		else if (Info.isCheckScene ("CrashCatMain"))
-			CrashCat.GameManager.instance.ReturnHome ();
-		else if (Info.isCheckScene ("EmojiMain"))
-			Emoji.GameManager.Instance.ReturnHome ();
-		else if (Info.isCheckScene ("Emoji2Main"))
-			Emoji2.GameManager.Instance.ReturnHome ();
-		else if (Info.isCheckScene ("FlappyBirdMasterMain"))
-			FlappyScript.instance.ReturnHome ();
-		else if (Info.isCheckScene ("BallDuetMain"))
-			OnefallGames.UIManager.Instance.ReturnHome ();
-		else if (Info.isCheckScene ("JumperStepUpMain"))
-			PauseMenu.Instance.ReturnHome ();
-		else if (Info.isCheckScene ("HammerMain"))
-			Hammer.UIManager.Instance.ReturnHome ();
+		Info.AfterDiscountBehavior ();
 	}
 
 	void GameDiscountNOT(CPacket msg)
