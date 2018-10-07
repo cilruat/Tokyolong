@@ -25,7 +25,8 @@ public class PagePracticeGame : PageBase {
 		case 4:		sceneName = "FlappyBirdMasterMain";	break;
 		case 5:		sceneName = "CrashCatStart";		break;
 		case 6:		sceneName = "BallDuetMain";			break;
-		case 7:		sceneName = "JumperStepUpMain";			break;			
+		case 7:		sceneName = "JumperStepUpMain";		break;
+		case 8:		sceneName = "HammerMain";			break;
 		}
 
 		Info.practiceGame = true;

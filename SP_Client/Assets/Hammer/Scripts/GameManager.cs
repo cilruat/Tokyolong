@@ -30,7 +30,8 @@ namespace Hammer
 	        set
 	        {
 	            _score = value;
-	            scoreText.text = _score.ToString();
+	            //scoreText.text = _score.ToString();
+				UIManager.Instance.SetScore(_score);
 	        }
 	    }
 
@@ -48,7 +49,7 @@ namespace Hammer
 	        get
 	        {
 	            BlockType bt = BlockType.Simple;
-	            if (Random.Range(1, 100) > 50)
+	            //if (Random.Range(1, 100) > 5)
 	            {
 	                bt = Random.Range(1, 100) > 50 ? BlockType.LeftHazard : BlockType.RightHazard;
 	            }

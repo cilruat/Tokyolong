@@ -29,7 +29,7 @@ public class UISurprisePSY : MonoBehaviour {
 
 	public void OnStart()
 	{
-		int range = discount == 1000 ? 7 : 4;
+		int range = discount == 1000 ? 9 : 4;
 		int randGame = Random.Range (0, range);
 
 		_GoGame (randGame);
@@ -47,6 +47,7 @@ public class UISurprisePSY : MonoBehaviour {
 		case 5:		sceneName = "PairCards";			break;
 		case 6:		sceneName = "BallDuetMain";			break;
 		case 7:		sceneName = "JumperStepUpMain";		break;
+		case 8:		sceneName = "HammerMain";			break;
 		}
 
 		OnClose ();

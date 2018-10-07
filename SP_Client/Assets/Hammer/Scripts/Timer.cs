@@ -30,7 +30,7 @@ namespace Hammer
 	    }
 	    [HideInInspector]
 	    public bool displayed;
-	    private void Update()
+	    /*private void Update()
 	    {
 	        if (pause)
 	        {
@@ -63,7 +63,7 @@ namespace Hammer
 	            }
 	        }
 	        image.fillAmount = ((showTime % 60) / 20f);
-	    }
+	    }*/
 
 	    public void IncrementTimer()
 	    {

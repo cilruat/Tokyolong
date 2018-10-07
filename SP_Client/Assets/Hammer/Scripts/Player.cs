@@ -20,13 +20,17 @@ namespace Hammer
 
 	    private void Update()
 	    {
-	        if (UIManager.Instance.gameOverScreen.activeInHierarchy)
+			if (UIManager.Instance.isStart == false)
+				return;
+
+			if (UIManager.Instance.objGameOver.activeInHierarchy)
 	            return;
-	        if (Input.GetKeyDown(KeyCode.A))
+			
+			if (Input.GetKeyDown(KeyCode.LeftArrow))
 	        {
 	            AttackOnClick(true);
 	        }
-	        if (Input.GetKeyDown(KeyCode.D))
+			if (Input.GetKeyDown(KeyCode.RightArrow))
 	        {
 	            AttackOnClick(false);
 	        }
@@ -45,8 +49,8 @@ namespace Hammer
 	            else
 	                GameManager.Instance.timer.IncrementTimer();
 
-	            transform.localScale = isLeft ? leftP : rightP;
-	            rb.position = GetPlayerPos(isLeft);
+	            transform.localScale = isLeft ? leftP : rightP;	            
+				transform.position = GetPlayerPos(isLeft);
 	            if (GameManager.Instance.IsCurrentBlockHazard(isLeft))
 	            {
 	                Over();

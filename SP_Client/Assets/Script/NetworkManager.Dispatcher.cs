@@ -251,6 +251,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 			OnefallGames.UIManager.Instance.ReturnHome ();
 		else if (Info.isCheckScene ("JumperStepUpMain"))
 			PauseMenu.Instance.ReturnHome ();
+		else if (Info.isCheckScene ("HammerMain"))
+			Hammer.UIManager.Instance.ReturnHome ();
 	}
 
 	void GameDiscountNOT(CPacket msg)

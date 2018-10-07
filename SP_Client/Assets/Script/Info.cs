@@ -20,6 +20,7 @@ public partial class Info : MonoBehaviour {
 	public static int PAIR_CARD_LIMIT_TIME = 30;
 	public static int RING_DING_DONG_FINISH_POINT = 20;
 	public static int EGG_MON_FINISH_POINT = 20;
+	public static int HAMMER_FINISH_POINT = 30;
 
 	public const int TOKYOLIVE_MAX_COUNT = 3;
 	public static int TOKYOLIVE_PREV_SEC = 20;

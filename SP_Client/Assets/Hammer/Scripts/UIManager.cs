@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,16 +13,32 @@ namespace Hammer
 	    public AudioSource bgMusic, effectSource;
 	    public Text scoreGameOver, higScoreGameOver;
 
+		public GameObject tapToStart;
+		public RawImage imgVictory;
+		public GameObject objVictory;
+		public GameObject objSendServer;
+		public GameObject objGameOver;
+		public GameObject objReady;
+		public GameObject objGo;
+		public GameObject objBoard;
+		public Text scoreTxt;
+
+		public bool isStart = false;
+		int finishPoint = 0;
+
 	    private void Awake()
 	    {
 	        PlayGameManager.Instance.Authenticate();
 	    }
 	    private void Start()
 	    {
-	        _highScore = PlayerPrefs.GetInt(HIGH_SCORE, 0);
+			finishPoint = Info.HAMMER_FINISH_POINT;
+			scoreTxt.text = Info.practiceGame ? "0" : "0 / " + finishPoint.ToString ();
+
+	        /*_highScore = PlayerPrefs.GetInt(HIGH_SCORE, 0);
 	        _totemsBroken = PlayerPrefs.GetInt(TOTEMS_BROKEN, 0);
 	        Volume = PlayerPrefs.GetInt(VOLUME, 1) == 1;
-	        soundTgl.onValueChanged.AddListener(soundToggleClicked);
+	        soundTgl.onValueChanged.AddListener(soundToggleClicked);*/
 	    }
 	    public void PlayClick()
 	    {
@@ -34,18 +51,78 @@ namespace Hammer
 	    public void StartGame()
 	    {
 	        PlayClick();
-	        mainMenu.SetActive(false);
+	        /*mainMenu.SetActive(false);
 	        gameOverScreen.SetActive(false);
-	        gameUI.SetActive(true);
+	        gameUI.SetActive(true);*/
 	        GameManager.Instance.InitGame();
-
+			StartCoroutine (_StartGame ());
 	    }
+
+		IEnumerator _StartGame()
+		{
+			UITweenAlpha.Start (tapToStart, 1f, 0f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2).DisableOnFinish ());
+			yield return new WaitForSeconds (.5f);
+
+			UITweenAlpha.Start(objReady, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+
+			yield return new WaitForSeconds (1f);
+			UITweenAlpha.Start(objReady, 1f, 0f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+
+			yield return new WaitForSeconds (.25f);
+			UITweenAlpha.Start(objGo, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+
+			yield return new WaitForSeconds (1f);
+			UITweenAlpha.Start(objGo, 1f, 0f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+
+			yield return new WaitForSeconds (.3f);
+
+			isStart = true;
+		}
+
 	    public void GameOver()
 	    {
-	        GameManager.Instance.GameOver();
+	        /*GameManager.Instance.GameOver();
 	        ComputeScore();
-	        gameOverScreen.SetActive(true);
+	        gameOverScreen.SetActive(true);*/
+			objGameOver.SetActive (true);
 	    }
+
+		public void SetScore(int score)
+		{
+			if (Info.practiceGame)
+				scoreTxt.text = score.ToString ();
+			else {
+				scoreTxt.text = score.ToString () + " / " + finishPoint.ToString ();
+
+				if (Info.practiceGame == false && score >= finishPoint)
+					StartCoroutine (_SuccessEndGame ());
+			}
+		}
+
+		IEnumerator _SuccessEndGame()
+		{
+			isStart = false;
+
+			ShiningGraphic.Start (imgVictory);
+			objVictory.SetActive (true);
+			yield return new WaitForSeconds (4f);
+
+			UITweenAlpha.Start (objVictory, 1f, 0f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
+			UITweenAlpha.Start (objSendServer, 0f, 1f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
+
+			yield return new WaitForSeconds (1f);
+
+			if (Info.TableNum == 0)
+				ReturnHome ();
+			else
+				NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+		}
+
+		public void ReturnHome()
+		{
+			SceneChanger.LoadScene ("Main", objBoard);
+		}
+
 	    static int _totemsBroken = 0;
 	    public static int TotemsBroken
 	    {
