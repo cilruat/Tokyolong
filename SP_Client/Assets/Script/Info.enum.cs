@@ -142,7 +142,9 @@ public enum EWinWaiter
 {
 	eRockPaperScissors,
     PunchKing,
-    HammerKing
+    HammerKing,
+	CrocodileRoullet,
+	RussianRoullet
 }
 
 public enum EPuzzleGame
