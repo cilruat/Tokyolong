@@ -32,9 +32,10 @@ public partial class PageGame : PageBase {
 	int curGameType = -1;
 	int curGame = -1;
 
-	short runInGameDiscount = (short)EDiscount.e1000won;
-	int runInGameType = (int)EGameType.eTabletGame;
-	int runInGame = 0;
+	[Header("Test Run In Info")]
+	public EDiscount runInGameDiscount = EDiscount.e1000won;
+	public EGameType runInGameType = EGameType.eTabletGame;
+	public int runInGame = 0;
 
 	protected override void Awake ()
 	{
@@ -98,7 +99,7 @@ public partial class PageGame : PageBase {
 	int _GetGameTypeIdx(float percent)
 	{
 		if (Info.RunInGameScene || isForceSelectGame) {
-			return runInGameType;
+			return (int)runInGameType;
 		} else {
 			if (percent <= .1f)			return 0;
 			else if (percent > .75f)	return 1;
@@ -149,7 +150,7 @@ public partial class PageGame : PageBase {
 		}
 
 		if (Info.RunInGameScene)
-			FinishStart(runInGameDiscount);
+			FinishStart((short)runInGameDiscount);
         else
             NetworkManager.Instance.SlotStart_REQ();
 	}
@@ -196,8 +197,8 @@ public partial class PageGame : PageBase {
         }
 
 		int stopIdx = UnityEngine.Random.Range (0, randRange);
-		if (Info.RunInGameScene || isForceSelectGame)
-			stopIdx = runInGame;
+		/*if (Info.RunInGameScene || isForceSelectGame)
+			stopIdx = runInGame;*/
 
 		curGame = stopIdx;
 
@@ -330,14 +331,18 @@ public partial class PageGame : PageBase {
             }
             else if (curGameType == (int)EGameType.eTabletGame)
             {
-                switch ((ETabletGame)curGame)
-                {
-                    case ETabletGame.CrashCat:      sceneName = "CrashCatStart";     		break;
-                    case ETabletGame.FlappyBird:    sceneName = "FlappyBirdMasterMain";   	break;
-                    case ETabletGame.DownHill:      sceneName = "Emoji2Main";       		break;
-                    case ETabletGame.SlidingDown:   sceneName = "EmojiMain";        		break;
-                    //case ETabletGame.AvoidObject:   sceneName = "AvoidMain";     break;
-                }
+				switch ((ETabletGame)curGame) {
+				case ETabletGame.CrashCat:			sceneName = "CrashCatStart";			break;
+				case ETabletGame.FlappyBird:		sceneName = "FlappyBirdMasterMain";		break;
+				case ETabletGame.DownHill:			sceneName = "Emoji2Main";				break;
+				case ETabletGame.SlidingDown:		sceneName = "EmojiMain";				break;
+				case ETabletGame.RingDingDong:		sceneName = "BallDuetMain";				break;
+				case ETabletGame.EggMon:			sceneName = "JumperStepUpMain";			break;
+				case ETabletGame.Hammer:			sceneName = "HammerMain";				break;
+				case ETabletGame.TwoCars:			sceneName = "TwoCarsMain";				break;
+				case ETabletGame.Bridges:			sceneName = "BridgesMain";				break;
+				case ETabletGame.CrashRacing:		sceneName = "CrashRacingMain";			break;
+				}
             }
 
             SceneChanger.LoadScene (sceneName, curBoardObj ());			
