@@ -77,7 +77,7 @@ namespace CrashRacing
             else
             {
                 Instance = this;
-                DontDestroyOnLoad(gameObject);
+                //DontDestroyOnLoad(gameObject);
             }
 #if !EASY_MOBILE_PRO
             sharedImageFormat = SharedImageType.PNG;

@@ -21,7 +21,7 @@ public class CGTSoundManager : MonoBehaviour {
         else if (instance != this)
             Destroy(gameObject);
 
-        GameObject.DontDestroyOnLoad(gameObject);
+        //GameObject.DontDestroyOnLoad(gameObject);
     }
 
     void Start()

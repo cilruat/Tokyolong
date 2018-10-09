@@ -115,7 +115,7 @@ namespace OnefallGames
             else
             {
                 Instance = this;
-                DontDestroyOnLoad(gameObject);
+                //DontDestroyOnLoad(gameObject);
             }
         }
 

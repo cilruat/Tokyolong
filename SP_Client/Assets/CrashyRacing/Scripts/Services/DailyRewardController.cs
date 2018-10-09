@@ -49,7 +49,7 @@ namespace CrashRacing
             else
             {
                 Instance = this;
-                DontDestroyOnLoad(gameObject);
+                //DontDestroyOnLoad(gameObject);
             }
         }
 

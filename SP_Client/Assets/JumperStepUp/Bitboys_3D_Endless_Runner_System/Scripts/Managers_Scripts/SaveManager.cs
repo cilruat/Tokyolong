@@ -15,7 +15,7 @@ public class SaveManager : MonoBehaviour {
 	void Start(){
 
 		if (manager == null) {
-			DontDestroyOnLoad (gameObject);
+			//DontDestroyOnLoad (gameObject);
 			manager = this;
 		} else if(manager != this){
 

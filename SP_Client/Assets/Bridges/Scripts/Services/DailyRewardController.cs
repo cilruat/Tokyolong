@@ -36,7 +36,7 @@ namespace SgLib
             else
             {
                 Instance = this;
-                DontDestroyOnLoad(gameObject);
+                //DontDestroyOnLoad(gameObject);
             }
         }
 

@@ -195,7 +195,7 @@ namespace AssetBundles
 		static public AssetBundleLoadManifestOperation Initialize (string manifestAssetBundleName)
 		{
 			var go = new GameObject("AssetBundleManager", typeof(AssetBundleManager));
-			DontDestroyOnLoad(go);
+			//DontDestroyOnLoad(go);
 		
 #if UNITY_EDITOR
             Log(LogType.Info, "Simulation Mode: " + (SimulateAssetBundleInEditor ? "Enabled" : "Disabled"));

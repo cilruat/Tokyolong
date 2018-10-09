@@ -45,7 +45,7 @@ using UnityEngine;
 		/// </summary>
 		public virtual void Awake ()
 		{
-			DontDestroyOnLoad (this.gameObject);
+			//DontDestroyOnLoad (this.gameObject);
 			if (_instance == null) 
 			{
 				_instance = this as T;

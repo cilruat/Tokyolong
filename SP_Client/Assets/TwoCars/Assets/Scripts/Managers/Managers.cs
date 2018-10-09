@@ -99,7 +99,7 @@ namespace TwoCars
 			_spawnManager = GetComponent<SpawnManager> ();
 	        _difficultyManager = GetComponent<DifficultyManager>();
 
-			DontDestroyOnLoad(gameObject);
+			//DontDestroyOnLoad(gameObject);
 		}
 	}
 }
