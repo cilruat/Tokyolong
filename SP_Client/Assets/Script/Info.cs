@@ -248,9 +248,7 @@ public partial class Info : MonoBehaviour {
 	}
 
 	public static void AfterDiscountBehavior()
-	{
-		Info.GameDiscountWon = -1;
-
+	{		
 		if (Info.isCheckScene ("TokyoLive"))
 			PageTokyoLive.Instance.OnClose ();
 		else if (Info.isCheckScene ("PicturePuzzle"))

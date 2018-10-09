@@ -221,12 +221,16 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     {
         string menuPacking = msg.pop_string();
 		int discountPrice = msg.pop_int32();
-        if (UIManager.Instance.IsActive(eUI.eBillDetail))
-            return;
-        
-        GameObject obj = UIManager.Instance.Show(eUI.eBillDetail);
-        UIBillDetail uiBillDetail = obj.GetComponent<UIBillDetail>();
-		uiBillDetail.SetBill(menuPacking, discountPrice);
+
+		/*if (UIManager.Instance.IsActive (eUI.eDiscountAni) || Info.GameDiscountWon > -1) {
+			GameObject obj = UIManager.Instance.GetCurUI ();
+			UIDiscountAnimation uiDiscountAni = obj.GetComponent<UIDiscountAnimation> ();
+			uiDiscountAni.SetInfo (menuPacking, discountPrice);
+		} else*/ if (UIManager.Instance.IsActive (eUI.eBillDetail) == false) {
+			GameObject obj = UIManager.Instance.Show(eUI.eBillDetail);
+			UIBillDetail uiBillDetail = obj.GetComponent<UIBillDetail>();
+			uiBillDetail.SetBill(menuPacking, discountPrice);
+		}               
     }
 
 	void GameDiscountACK(CPacket msg)

@@ -16,6 +16,7 @@ public enum eUI
     eShowLog,
 	eTokyoLive,
 	eSurprise,
+	eDiscountAni,
 
 	eNone = 100,
 }
@@ -266,6 +267,18 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 
 			if (Input.GetKeyDown (KeyCode.C))
 				PlayBell ();
+
+			if (Input.GetKeyDown (KeyCode.D))
+			{
+				if(IsActive(eUI.eDiscountAni))
+					Hide(eUI.eDiscountAni);
+				else
+				{
+					GameObject obj = Show (eUI.eDiscountAni);
+					UIDiscountAnimation ui = obj.GetComponent<UIDiscountAnimation>();
+					ui.SendREQ();
+				}					
+			}
             #endif
 		}
 
