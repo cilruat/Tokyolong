@@ -123,7 +123,7 @@ public enum EMenuDetail : int
 /// </summary>
 public enum EDiscount
 {
-	e1000won,
+	e1000won = 0,
 	e5000won,
     eHalf,
     eAll,
