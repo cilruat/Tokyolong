@@ -32,7 +32,7 @@ public class ShowLogElt : MonoBehaviour
         }
 
         if(string.IsNullOrEmpty(color) == false)
-            strLog = color + strLog + "</color>";
+			strLog = color + strLog + "[LogType:" + log.type + "]</color>";
 
         textLog.text = strLog;
     }

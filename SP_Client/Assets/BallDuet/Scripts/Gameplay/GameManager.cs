@@ -135,9 +135,6 @@ namespace OnefallGames
 	        {
 	            CreateMountain();
 	        }
-
-	        if (isRestart)
-	            PlayingGame();
 	    }
 
 
@@ -200,7 +197,6 @@ namespace OnefallGames
 
 	        //Add another actions here
 	        StopBackgroundMusic(0.5f);
-	        isRestart = true;
 	    }
 
 
