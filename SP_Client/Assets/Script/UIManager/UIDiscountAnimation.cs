@@ -60,9 +60,10 @@ public class UIDiscountAnimation : MonoBehaviour {
 
 	public void TestAnimating()
 	{
+		UIManager.Instance.PlayMusic (UIManager.Instance.clipMagnificent);
 		tween = UITweenAlpha.Start (gameObject, 0f, 1f, TWParam.New (1f).Curve (TWCurve.CurveLevel2).Speed (TWSpeed.Slower));
 
-		Info.GameDiscountWon = 0;
+		Info.GameDiscountWon = 1;
 
 		int total = 40000;
 		int discountPrice = 5000;
@@ -105,33 +106,44 @@ public class UIDiscountAnimation : MonoBehaviour {
 
 		yield return new WaitForSeconds (1f);
 
-		for (int i = 0; i < listCalc.Count; i++)
-			Debug.Log ("listCalc: " + listCalc [i]);
-
-		for (int i = 0; i < listDis.Count; i++)
-			Debug.Log ("listDis: " + listDis [i]);
-
 		int counting = 0;
 		while (true) {
 			listCalc [counting] -= 1;
-			listDis [counting] += 1;
+			if (listCalc [counting] == -1)
+				listCalc [counting] = 9;
 
-			txtCalc.text = Info.MakeMoneyString (listCalc [counting]);
-			txtDiscount.text = Info.MakeMoneyString (listDis [counting]);
+			listDis [counting] += 1;
+			if (listDis [counting] == 10)
+				listDis [counting] = 0;
+
+			int numCalc = 0;
+			for (int i = 0; i < listCalc.Count; i++)
+				numCalc += listCalc [i] * (int)Mathf.Pow(10, i);
+
+			int numDis = 0;
+			for (int i = 0; i < listDis.Count; i++)
+				numDis += listDis [i] * (int)Mathf.Pow(10, i);
+
+			txtCalc.text = Info.MakeMoneyString (numCalc);
+			txtDiscount.text = Info.MakeMoneyString (numDis);
+
+			if (numCalc == afterCalc && numDis == afterDiscount)
+				break;
+
+			float waitTime = .01f;
+			if (counting > 0)
+				waitTime += .05f;
 
 			if (listCalc [counting] == 0)
 				++counting;
 
-			if (counting > listCalc.Count)
-				yield break;
-
-			Debug.Log ("counting: " + counting);
-			yield return new WaitForSeconds (.001f);
+			yield return new WaitForSeconds (waitTime);
 		}
 
 		txtCalc.text = Info.MakeMoneyString (afterCalc);
 		txtDiscount.text = Info.MakeMoneyString (afterDiscount);
 
+		UIManager.Instance.StopMusic ();
 		Info.GameDiscountWon = -1;
 	}
 }

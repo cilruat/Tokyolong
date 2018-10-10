@@ -43,6 +43,8 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 
 	public AudioClip clipTokyoLive;
 	public AudioClip clipSurprise;
+	public AudioClip clipCelebration;
+	public AudioClip clipMagnificent;
 
 	public AudioSource audioSound;
 	public AudioSource audioBell;
