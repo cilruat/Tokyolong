@@ -276,7 +276,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 				{
 					GameObject obj = Show (eUI.eDiscountAni);
 					UIDiscountAnimation ui = obj.GetComponent<UIDiscountAnimation>();
-					ui.SendREQ();
+					ui.TestAnimating();
 				}					
 			}
             #endif

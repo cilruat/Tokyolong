@@ -21,9 +21,6 @@ public class UIDiscountAnimation : MonoBehaviour {
 
 	public void SetInfo(string meuPacking, int discountPrice)
 	{
-		// test
-		Info.GameDiscountWon = 0;
-
 		tween = UITweenAlpha.Start (gameObject, 0f, 1f, TWParam.New (1f).Curve (TWCurve.CurveLevel2).Speed (TWSpeed.Slower));
 
 		JsonData json = JsonMapper.ToObject (meuPacking);
@@ -61,8 +58,39 @@ public class UIDiscountAnimation : MonoBehaviour {
 		StartCoroutine (_Animating (prevDiscount, prevCalc));
 	}
 
+	public void TestAnimating()
+	{
+		tween = UITweenAlpha.Start (gameObject, 0f, 1f, TWParam.New (1f).Curve (TWCurve.CurveLevel2).Speed (TWSpeed.Slower));
+
+		Info.GameDiscountWon = 0;
+
+		int total = 40000;
+		int discountPrice = 5000;
+
+		afterDiscount = Mathf.Min (total, discountPrice + (Info.GamePlayCnt * 100));
+		afterCalc = Mathf.Max (0, total - discountPrice);
+
+		int discountApply = 0;
+		switch ((EDiscount)Info.GameDiscountWon) {
+		case EDiscount.e1000won:	discountApply = 1000;		break;
+		case EDiscount.e5000won:	discountApply = 5000;		break;
+		case EDiscount.eHalf:		discountApply = 1000;		break;
+		case EDiscount.eAll:		discountApply = 1000;		break;
+		}
+
+		int prevDiscount = Mathf.Max (0, afterDiscount - discountApply);
+		int prevCalc = afterCalc + discountApply;
+
+		txtTotal.text = Info.MakeMoneyString (total);
+
+		StartCoroutine (_Animating (prevDiscount, prevCalc));
+	}
+
 	IEnumerator _Animating(int discount, int calc)
 	{
+		txtCalc.text = Info.MakeMoneyString (calc);
+		txtDiscount.text = Info.MakeMoneyString (discount);
+
 		List<int> listCalc = new List<int> ();
 		while (calc != 0) {
 			listCalc.Add (calc % 10);
@@ -73,10 +101,7 @@ public class UIDiscountAnimation : MonoBehaviour {
 		while (discount != 0) {
 			listDis.Add (discount % 10);
 			discount /= 10;
-		}
-
-		txtCalc.text = Info.MakeMoneyString (calc);
-		txtDiscount.text = Info.MakeMoneyString (discount);
+		}			
 
 		yield return new WaitForSeconds (1f);
 
