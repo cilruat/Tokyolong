@@ -19,9 +19,9 @@ public partial class Info : MonoBehaviour {
 	public static int PAIR_CARD_MODE = 18;
 	public static int PAIR_CARD_LIMIT_TIME = 30;
 
-	public static int RING_DING_DONG_FINISH_POINT = 20;
+	public static int RING_DING_DONG_FINISH_POINT = 30;
 	public static int EGG_MON_FINISH_POINT = 20;
-	public static int HAMMER_FINISH_POINT = 30;
+	public static int HAMMER_FINISH_POINT = 60;
 	public static int TWO_CARS_FINISH_POINT = 20;
 	public static int BRIDGES_FINISH_POINT = 20;
 	public static int CRASH_RACING_LIMIT_TIME = 25;
