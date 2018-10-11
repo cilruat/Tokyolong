@@ -63,7 +63,7 @@ public class UIDiscountAnimation : MonoBehaviour {
 		UIManager.Instance.PlayMusic (UIManager.Instance.clipMagnificent);
 		tween = UITweenAlpha.Start (gameObject, 0f, 1f, TWParam.New (1f).Curve (TWCurve.CurveLevel2).Speed (TWSpeed.Slower));
 
-		Info.GameDiscountWon = 1;
+		Info.GameDiscountWon = 0;
 
 		int total = 40000;
 		int discountPrice = 5000;
@@ -105,7 +105,9 @@ public class UIDiscountAnimation : MonoBehaviour {
 		}			
 
 		yield return new WaitForSeconds (1f);
+		UITween uiScale = UITweenScale.Start (txtCalc.gameObject, 1f, 1.025f, TWParam.New (.5f).Loop(TWLoop.PingPong).Curve (TWCurve.Shake));
 
+		int rotate = 0;
 		int counting = 0;
 		while (true) {
 			listCalc [counting] -= 1;
@@ -132,18 +134,39 @@ public class UIDiscountAnimation : MonoBehaviour {
 
 			float waitTime = .01f;
 			if (counting > 0)
-				waitTime += .05f;
+				waitTime += .02f;
 
-			if (listCalc [counting] == 0)
-				++counting;
+			if (listCalc [counting] == 0) {
+				++rotate;
+
+				if (rotate == 2) {
+					rotate = 0;
+					++counting;
+				}					
+			}
 
 			yield return new WaitForSeconds (waitTime);
 		}
 
+		if (uiScale)
+			uiScale.StopTween ();
+
+		UITween uiColor = UITweenColor.Start (txtCalc.gameObject, Color.white, Color.red, TWParam.New (.3f).Loop(TWLoop.PingPong).Curve (TWCurve.Linear));
+
 		txtCalc.text = Info.MakeMoneyString (afterCalc);
 		txtDiscount.text = Info.MakeMoneyString (afterDiscount);
 
-		UIManager.Instance.StopMusic ();
 		Info.GameDiscountWon = -1;
+
+		yield return new WaitForSeconds (1.5f);
+
+		if (uiColor)
+			uiColor.StopTween ();
+
+		UIManager.Instance.MuteMusic ();
+		UITweenAlpha.Start (gameObject, 1f, 0f, TWParam.New (1f).Curve (TWCurve.CurveLevel2).Speed (TWSpeed.Slower));
+		yield return new WaitForSeconds (.8f);
+
+		UIManager.Instance.Hide (eUI.eDiscountAni);
 	}
 }
