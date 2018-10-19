@@ -310,4 +310,10 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 		objSelect [answer - 1].SetActive (true);
 		selectAnswer = answer;
 	}
+
+	public void OnCloseGame()
+	{
+		_Init ();
+		_EndGame (false);
+	}
 }
