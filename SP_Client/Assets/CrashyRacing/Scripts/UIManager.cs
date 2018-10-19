@@ -73,7 +73,7 @@ namespace CrashRacing
 		int finishLimitTime = 0;
 
 	    Animator scoreAnimator;
-	    Animator dailyRewardAnimator;
+	    //Animator dailyRewardAnimator;
 	    bool isWatchAdsForCoinBtnActive;
 	    float timeCount;
 	    float maxSpeed;
@@ -115,7 +115,7 @@ namespace CrashRacing
 	    void Start()
 	    {
 	        scoreAnimator = score.GetComponent<Animator>();
-	        dailyRewardAnimator = dailyRewardBtn.GetComponent<Animator>();
+	        //dailyRewardAnimator = dailyRewardBtn.GetComponent<Animator>();
 
 	        Reset();
 	        ShowStartUI();
@@ -136,7 +136,7 @@ namespace CrashRacing
 
 			return;
 
-	        if (GameManager.Instance.GameState == GameState.Playing)
+	        /*if (GameManager.Instance.GameState == GameState.Playing)
 	        {
 	            timeCount += Time.deltaTime;
 	            if (timeCount > 0.25f)
@@ -171,7 +171,7 @@ namespace CrashRacing
 	        {
 	            UpdateSoundButtons();
 	            UpdateMusicButtons();
-	        }
+	        }*/
 	    }
 
 	    void GameManager_GameStateChanged(GameState newState, GameState oldState)
@@ -302,28 +302,28 @@ namespace CrashRacing
 	    {	
 			return;
 
-	        settingsUI.SetActive(false);      
+	        /*settingsUI.SetActive(false);      
 	        header.SetActive(true);
 	        title.SetActive(true);
 	        playBtn.SetActive(true);
 	        restartBtn.SetActive(false);
 	        menuButtons.SetActive(true);
 	        shareUI.SetActive(false);
-	        velocityBoard.SetActive(false);
+	        velocityBoard.SetActive(false);*/
 
 	        // If first launch: show "WatchForCoins" and "DailyReward" buttons if the conditions are met
-	        if (GameManager.GameCount == 0)
+	        /*if (GameManager.GameCount == 0)
 	        {
 	            ShowWatchForCoinsBtn();
 	            ShowDailyRewardBtn();
-	        }
+	        }*/
 	    }
 
 	    public void ShowGameUI()
 	    {
 			return;
 
-	        header.SetActive(true);
+	        /*header.SetActive(true);
 	        title.SetActive(false);
 	        score.gameObject.SetActive(true);
 	        playBtn.SetActive(false);
@@ -332,7 +332,7 @@ namespace CrashRacing
 	        watchRewardedAdBtn.SetActive(false);
 	        shareUI.SetActive(false);
 	        velocityNote.SetActive(false);
-	        velocityBoard.SetActive(true);
+	        velocityBoard.SetActive(true);*/
 	    }
 
 	    public void ShowGameOverUI()
@@ -340,7 +340,7 @@ namespace CrashRacing
 			objGameOver.SetActive (true);
 			return;
 			
-	        header.SetActive(true);
+	        /*header.SetActive(true);
 	        title.SetActive(false);
 	        score.gameObject.SetActive(true);
 	        newBestScore.SetActive(ScoreManager.Instance.HasNewHighScore);
@@ -350,10 +350,10 @@ namespace CrashRacing
 	        menuButtons.SetActive(true);
 	        settingsUI.SetActive(false);
 	        velocityText.text = ((int)maxSpeed).ToString();
-	        velocityNote.SetActive(true);
+	        velocityNote.SetActive(true);*/
 
 	        // Show 'daily reward' button
-	        ShowDailyRewardBtn();
+	        //ShowDailyRewardBtn();
 
 	        // Show these if premium features are enabled (and relevant conditions are met)
 	        /*if (IsPremiumFeaturesEnabled())

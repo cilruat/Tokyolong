@@ -16,8 +16,8 @@ public class PlayGameManager
         PlayGamesPlatform.Activate();
 #endif
     }
-    private bool mAuthenticating = false;
-    private string mAuthProgressMessage = "Signing In.";
+    //private bool mAuthenticating = false;
+    //private string mAuthProgressMessage = "Signing In.";
 
     public static PlayGameManager Instance
     {

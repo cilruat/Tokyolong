@@ -61,7 +61,7 @@ namespace Bridges
 	    private int pathNumber;
 	    private int pathCounter = 0;
 	    private int turn = 1;
-	    private bool lostGameRecovered;
+	    //private bool lostGameRecovered;
 
 	    void OnEnable()
 	    {
@@ -142,11 +142,11 @@ namespace Bridges
 	    {
 	        SoundManager.Instance.StopMusic();
 
-	        bool haveEnoughCoins = false;
-	        bool canWatchAd = false;
+	        /*bool haveEnoughCoins = false;
+	        bool canWatchAd = false;*/
 
 	        // Need to have enough coins
-	        haveEnoughCoins = CoinManager.Instance.Coins >= coinsToRecover;
+	        //haveEnoughCoins = CoinManager.Instance.Coins >= coinsToRecover;
 
 	        // Or ad is ready to watch
 	        #if EASY_MOBILE
@@ -189,7 +189,7 @@ namespace Bridges
 	        }
 
 	        playerController.BackToLastPlane();
-	        lostGameRecovered = true;
+	        //lostGameRecovered = true;
 	    }
 
 	    void CRPrepareGame()

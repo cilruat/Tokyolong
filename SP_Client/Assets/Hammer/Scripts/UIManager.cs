@@ -240,11 +240,11 @@ namespace Hammer
 	    public void OnClickRate()
 	    {
 
-	        string rateURL = "http://gameslyce.com/";
-	        string androidPackageName = "com.newgengames.dartsmathstrainerpro",
-	            iOSStoreAppID = "145789999";
+	        string rateURL = "http://gameslyce.com/";	        
 
 	#if UNITY_ANDROID
+			string androidPackageName = "com.newgengames.dartsmathstrainerpro",
+						iOSStoreAppID = "145789999";
 	        rateURL = "market://details?id=" + androidPackageName;
 	#elif UNITY_IOS
 	            rateURL = "itms-apps://itunes.apple.com/app/" + iOSStoreAppID;

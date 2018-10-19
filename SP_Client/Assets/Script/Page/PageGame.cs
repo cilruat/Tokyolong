@@ -12,7 +12,7 @@ public enum ESlotType
 	eGame,
 }
 
-public partial class PageGame : PageBase {
+public class PageGame : PageBase {
 		
 	public CanvasGroup[] cgBoards;
 	public Text[] txtPlayCnt;

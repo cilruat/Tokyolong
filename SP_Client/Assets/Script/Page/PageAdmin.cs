@@ -23,7 +23,6 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
     public GameObject objTableDiscountInput;
 	public GameObject objTableGameCountInput;
 	public GameObject objTableMove;
-	public UnfinishGameList unfinishGame;
     public AdminSettingDiscountProb settingDiscountProb;
 
 	UITween tweenUrgency = null;
@@ -311,25 +310,13 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
     {
         objTableOrderInput.SetActive (true);
         AdminTableOrderInput.Instance.SetTable(tableNo);
-    }
-
-	public void ShowUnfinishGameList(string packing, byte tableNo)
-	{
-		AdminTableMenu.Instance.OnClose ();
-		unfinishGame.SetInfo (packing, tableNo);
-		unfinishGame.gameObject.SetActive (true);
-	}
+    }		
 
     public void ShowTableDiscountInput(byte tableNo, int tablePrice, int tableDiscount)
     {
         objTableDiscountInput.SetActive (true);
         AdminTableDiscountInput.Instance.SetTable(tableNo, tablePrice, tableDiscount);
     }
-
-	public void RemoveUnfinishGame(int id)
-	{
-		unfinishGame.RemoveUnfinish (id);
-	}
 
     public void OnSettingDiscountProb()
     {

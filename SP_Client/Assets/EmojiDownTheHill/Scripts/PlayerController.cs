@@ -31,7 +31,7 @@ namespace Emoji2
         // aka the move up speed;
         bool firstClick = true;
         bool isReadyToPlay = false;
-        bool isJumpingToTheRight = true;
+        //bool isJumpingToTheRight = true;
         bool isReadyForNextJump = false;
         bool isReadyForNextLoop = false;
     	
@@ -62,7 +62,7 @@ namespace Emoji2
 					firstClick = false;
 					isReadyToPlay = true;
 					isReadyForNextJump = true;
-					isJumpingToTheRight = true;
+					//isJumpingToTheRight = true;
 				}
 			} else if (newState == GameState.GameOver) {
 				isReadyToPlay = false;
@@ -97,12 +97,12 @@ namespace Emoji2
                 {
 					if (Input.GetKeyDown (KeyCode.LeftArrow)) {
 						direction = -1;
-						isJumpingToTheRight = false;
+						//isJumpingToTheRight = false;
 					}
 
 					if (Input.GetKeyDown (KeyCode.RightArrow)) {
 						direction = 1;
-						isJumpingToTheRight = true;
+						//isJumpingToTheRight = true;
 					}
                 }
             }

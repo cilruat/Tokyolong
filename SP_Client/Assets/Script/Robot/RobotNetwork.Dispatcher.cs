@@ -81,7 +81,7 @@ public partial class RobotNetwork : MonoBehaviour
 
 	void RequestMusicListACK(CPacket msg)
 	{		
-        string packing = msg.pop_string ();
+        //string packing = msg.pop_string ();
 	}
 
     void RequestMusicACK(CPacket msg)
@@ -90,13 +90,13 @@ public partial class RobotNetwork : MonoBehaviour
         if (isAdd == false)
             return;
 
-        string packing = msg.pop_string ();
+        //string packing = msg.pop_string ();
     }
 
 	void SlotStartACK(CPacket msg)
 	{
         Info.listGameCnt_Robot[idRobot] = msg.pop_byte ();
-        short discountType = msg.pop_int16();
+        //short discountType = msg.pop_int16();
 
         if (Info.listGameCnt_Robot[idRobot] < 0)
             Info.listGameCnt_Robot[idRobot] = 0;

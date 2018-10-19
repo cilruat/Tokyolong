@@ -13,7 +13,7 @@ namespace Bridges
         public static event Action<int> CoinsUpdated = delegate {};
 
         [SerializeField]
-        int INITIAL_COINS = 100;
+        //int INITIAL_COINS = 100;
         const string COINS = "COINS";
         // key name to store high score in PlayerPrefs
 

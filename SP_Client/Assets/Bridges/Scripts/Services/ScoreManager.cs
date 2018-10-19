@@ -8,9 +8,9 @@ namespace Bridges
     {
         public static ScoreManager Instance { get; private set; }
 
-        public int Score { get; private set; }
+        public int Score { get; set; }
 
-        public int HighScore { get; private set; }
+        public int HighScore { get; set; }
 
         public bool HasNewHighScore { get; private set; }
 

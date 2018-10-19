@@ -50,7 +50,6 @@ public class PagePairCards : SingletonMonobehaviour<PagePairCards> {
 	{		
 		int cnt = Info.PAIR_CARD_MODE;
 
-		int prev_pairNum = 0;
 		int pairNum = 0;
 		Texture tex = null;
 		for (int i = 0; i < cnt; i++) {
@@ -70,8 +69,6 @@ public class PagePairCards : SingletonMonobehaviour<PagePairCards> {
 			CardElt elt = rt.GetComponent<CardElt> ();
 			elt.SetIdx (i, pairNum);
 			elt.SetImg (tex);
-
-			prev_pairNum = pairNum;
 
 			listElt.Add (elt);
 		}

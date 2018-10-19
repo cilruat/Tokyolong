@@ -194,7 +194,7 @@ namespace AssetBundles
 		// Load AssetBundleManifest.
 		static public AssetBundleLoadManifestOperation Initialize (string manifestAssetBundleName)
 		{
-			var go = new GameObject("AssetBundleManager", typeof(AssetBundleManager));
+			new GameObject("AssetBundleManager", typeof(AssetBundleManager));
 			//DontDestroyOnLoad(go);
 		
 #if UNITY_EDITOR

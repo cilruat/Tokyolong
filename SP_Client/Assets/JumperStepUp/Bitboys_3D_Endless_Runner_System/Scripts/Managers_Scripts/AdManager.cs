@@ -14,7 +14,7 @@ public class AdManager : MonoBehaviour
 {
 	[Header("Unity Goole Video Ads Manager")]
 
-	private GoldeEggCounter goldenEggs; // Call the egg counter
+	//private GoldeEggCounter goldenEggs; // Call the egg counter
 	public Button eggRewardButton; // The video button
 	public GameObject EggRewardPanel; // The panel that will appear if the player end viewing the ad video.
 	public GameObject ExtraEggText; // The extra egg text image
@@ -34,10 +34,7 @@ public class AdManager : MonoBehaviour
 		eggRewardButton.onClick.AddListener(OpenReward); // If we can press the reward button we call the open reward function.
 		#endif
 
-		goldenEggs = FindObjectOfType<GoldeEggCounter> (); // Use this to find the egg counter script.
-
-
-
+		//goldenEggs = FindObjectOfType<GoldeEggCounter> (); // Use this to find the egg counter script.
 	}
 
 	void Update() {

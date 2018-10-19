@@ -67,7 +67,7 @@ namespace Bridges
 		int finishPoint = 0;
 
 	    Animator scoreAnimator;
-	    Animator dailyRewardAnimator;
+	    //Animator dailyRewardAnimator;
 	    bool isWatchAdsForCoinBtnActive;
 
 	    void OnEnable()
@@ -107,7 +107,7 @@ namespace Bridges
 	    void Start()
 	    {
 	        scoreAnimator = score.GetComponent<Animator>();
-	        dailyRewardAnimator = dailyRewardBtn.GetComponent<Animator>();
+	        //dailyRewardAnimator = dailyRewardBtn.GetComponent<Animator>();
 
 	        Reset();
 	        ShowStartUI();
@@ -121,7 +121,7 @@ namespace Bridges
 	    {
 			return;
 
-	        if (mainCanvas.activeSelf)
+	        /*if (mainCanvas.activeSelf)
 	        {
 	            score.text = ScoreManager.Instance.Score.ToString();
 	            bestScore.text = ScoreManager.Instance.HighScore.ToString();
@@ -148,7 +148,7 @@ namespace Bridges
 	        {
 	            UpdateMuteButtons();
 	            UpdateMusicButtons();
-	        }
+	        }*/
 	    }
 
 	    void GameManager_NewGameEvent(GameEvent e)
@@ -275,12 +275,12 @@ namespace Bridges
 	    {			
 			return;
 
-	        header.SetActive(true);
+	        /*header.SetActive(true);
 	        title.gameObject.SetActive(false);
 	        score.gameObject.SetActive(true);
 	        tapToStart.SetActive(false);
 	        tapToContinue.SetActive(false);
-	        characterSelectBtn.SetActive(false);
+	        characterSelectBtn.SetActive(false);*/
 	    }
 
 	    public void ShowContinueLostGameUI(bool canUseCoins, bool canWatchAd)
@@ -295,8 +295,8 @@ namespace Bridges
 	    {
 			return;
 
-	        tapToContinue.SetActive(true);
-	        score.gameObject.SetActive(true);
+	        /*tapToContinue.SetActive(true);
+	        score.gameObject.SetActive(true);*/
 	    }
 
 	    public void ShowGameOverUI()
@@ -304,7 +304,7 @@ namespace Bridges
 			objGameOver.SetActive (true);
 			return;
 
-	        header.SetActive(true);
+	        /*header.SetActive(true);
 	        title.gameObject.SetActive(false);
 	        score.gameObject.SetActive(true);
 	        tapToStart.SetActive(false);
@@ -312,7 +312,7 @@ namespace Bridges
 
 	        continueLostGame.SetActive(false);
 	        watchForCoinsBtn.gameObject.SetActive(false);
-	        settingsCanvas.SetActive(false);
+	        settingsCanvas.SetActive(false);*/
 
 	        // Only show "watch for coins button" if a rewarded ad is loaded and premium features are enabled
 	#if EASY_MOBILE
@@ -328,7 +328,7 @@ namespace Bridges
 	#endif
 
 	        // Not showing the daily reward button if the feature is disabled
-	        if (!DailyRewardController.Instance.disable)
+	        /*if (!DailyRewardController.Instance.disable)
 	        {
 	            dailyRewardBtn.SetActive(true);
 	        }
@@ -336,7 +336,7 @@ namespace Bridges
 	        if (IsPremiumFeaturesEnabled())
 	        {
 	            ShowShareUI();
-	        }
+	        }*/
 	    }
 
 	    public void ShowSettingsUI()

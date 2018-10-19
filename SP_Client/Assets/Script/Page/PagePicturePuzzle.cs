@@ -312,7 +312,6 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 	void _CheckEndGame()
 	{
 		bool finish = true;
-		int calc = mode * mode;
 		for (int i = 0; i < mode; i++) {
 			for (int j = 0; j < mode; j++) {
 				if (i == mode - 1 && j == mode - 1) {

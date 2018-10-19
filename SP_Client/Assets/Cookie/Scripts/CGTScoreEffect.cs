@@ -11,11 +11,11 @@ public class CGTScoreEffect : MonoBehaviour {
 
     public int ScoreValue { get; set; }
 
-    private Animator animator;
+    //private Animator animator;
 
     void Awake()
     {
-        animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
     }
 
     void Start ()

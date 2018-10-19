@@ -55,7 +55,7 @@ public class CGTCookieManager : MonoBehaviour {
     public int clickValue = 1;
 
     private int cookiesScore = 0;
-    private float cookisBps = 0.0f;
+    //private float cookisBps = 0.0f;
     private float currentBonus;
     private float levelBonus = 10.0f;
     private float levelBonusMulti = 1.0f;
@@ -225,7 +225,7 @@ public class CGTCookieManager : MonoBehaviour {
         float spawnObjectXPos = Random.Range(-2.25f, 2.25f);
         Vector3 spawnObjectPos = new Vector3(spawnObjectXPos, spawnLine.position.y, 0);
         spawnSmallCookie = spawnCookieObjects[Random.Range(0, spawnCookieObjects.Length)];
-        GameObject newSmallCookie = (GameObject)(Instantiate(spawnSmallCookie, spawnObjectPos, Quaternion.identity));
+        Instantiate(spawnSmallCookie, spawnObjectPos, Quaternion.identity);
     }
 
     public void CreateBonusCookie()
@@ -233,7 +233,7 @@ public class CGTCookieManager : MonoBehaviour {
         float spawnObjectXPos = Random.Range(-2.0f, 2.0f);
         Vector3 spawnObjectPos = new Vector3(spawnObjectXPos, spawnLine.position.y, 0);
         spawnBonusCookie = spawnBonusObjects[Random.Range(0, spawnBonusObjects.Length)];
-        GameObject newBonusCookie = (GameObject)(Instantiate(spawnBonusCookie, spawnObjectPos, Quaternion.identity));
+        Instantiate(spawnBonusCookie, spawnObjectPos, Quaternion.identity);
     }
 
     void LoadGameData()
