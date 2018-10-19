@@ -101,9 +101,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 				Info.SetLoginedOtherUser (packing);
 
 				SceneChanger.LoadScene ("Main", PageBase.Instance.curBoardObj ());
-			}
-			else
-				PageLogin.Instance.OnNext ();
+			} else
+				((PageLogin)PageBase.Instance).SuccessLogin ();
 		}
 	}
 

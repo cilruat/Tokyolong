@@ -24,7 +24,7 @@ public class PageLogin : PageBase {
 		base.boards = this.cgBoards;
 		base.Awake ();
 		base.acFinal = _EnterCustomer;
-		base.acFinalIdx = 4;
+		base.acFinalIdx = 2;
 
         string path = Application.dataPath;
         int lastIdx = path.LastIndexOf(@"/");
@@ -108,6 +108,19 @@ public class PageLogin : PageBase {
 		}
 
 		NetworkManager.Instance.Login_REQ (tableNo);
+	}
+
+	public void SuccessLogin()
+	{
+		howMany = 1;
+		eType = (ECustomerType)Random.Range (0, 3);
+
+		OnNext ();
+
+		if (waitRoutine != null)
+			StopCoroutine(waitRoutine);
+
+		waitRoutine = StartCoroutine(WaitShowNoticeAndHome());
 	}
 
     public void OnSelect(int number)

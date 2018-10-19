@@ -148,23 +148,26 @@ public enum EWinWaiter
 }
 
 public enum EPuzzleGame
-{
-	ePicturePuzzle,
-	ePairCards
+{	
+	ePairCards,
+	ePressNumber,
+	eFindDiffPicture,
+	//ePicturePuzzle,
 }
 
 public enum ETabletGame
 {
-    CrashCat = 0,
-    FlappyBird,
-	SlidingDown,
+	CrashCat = 0,
+	FlappyBird,
+	CatchMole,
+    /*SlidingDown,
     DownHill, 
     RingDingDong,
 	EggMon = 5,
 	Hammer,
 	TwoCars,
 	Bridges,
-	CrashRacing
+	CrashRacing*/
 }
 
 public partial class Info : MonoBehaviour {

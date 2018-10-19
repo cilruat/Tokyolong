@@ -70,18 +70,14 @@ public partial class PageGame : PageBase {
 				break;
                 case 1:
                 if (discountType == (short)EDiscount.e1000won)
-                {
-                    float percent = UnityEngine.Random.Range(0f, 1f);
-                    stopIdx = _GetGameTypeIdx(percent);
+                {                    
+                    stopIdx = _GetGameTypeIdx();
                 }
                 else
                     stopIdx = 2;
 				curGameType = stopIdx;
 				break;
-			case 2:
-				/*RectTransform[] rtElts = _AllRtElts ();
-				listSlotMachine [i].SetElts (rtElts);*/
-				break;
+			case 2:		break;
 			}				
 
 			listSlotMachine [i].StartSlot (stopIdx);
@@ -96,14 +92,14 @@ public partial class PageGame : PageBase {
 			OnStop ();
 	}
 	
-	int _GetGameTypeIdx(float percent)
+	int _GetGameTypeIdx()
 	{
 		if (Info.RunInGameScene || isForceSelectGame) {
 			return (int)runInGameType;
 		} else {
-			if (percent <= .1f)			return 0;
-			else if (percent > .75f)	return 1;
-			else						return 2;
+			float percent = UnityEngine.Random.Range(0f, 1f);
+			if (percent > .5f)		return 1;
+			else					return 2;
 		}
 	}
 
@@ -325,8 +321,10 @@ public partial class PageGame : PageBase {
             {
                 switch ((EPuzzleGame)curGame)
                 {
-                    case EPuzzleGame.ePicturePuzzle:    sceneName = "PicturePuzzle";    break;
-                    case EPuzzleGame.ePairCards:        sceneName = "PairCards";        break;
+				case EPuzzleGame.ePairCards:        sceneName = "PairCards";        break;
+				case EPuzzleGame.ePressNumber:      sceneName = "PressNumber";      break;
+				case EPuzzleGame.eFindDiffPicture:  sceneName = "FindDiffPicture"; 	break;
+                //case EPuzzleGame.ePicturePuzzle:    sceneName = "PicturePuzzle";    break;                    
                 }
             }
             else if (curGameType == (int)EGameType.eTabletGame)
@@ -334,14 +332,15 @@ public partial class PageGame : PageBase {
 				switch ((ETabletGame)curGame) {
 				case ETabletGame.CrashCat:			sceneName = "CrashCatStart";			break;
 				case ETabletGame.FlappyBird:		sceneName = "FlappyBirdMasterMain";		break;
-				case ETabletGame.DownHill:			sceneName = "Emoji2Main";				break;
+				case ETabletGame.CatchMole:			sceneName = "CatchMole";				break;
+				/*case ETabletGame.DownHill:			sceneName = "Emoji2Main";				break;
 				case ETabletGame.SlidingDown:		sceneName = "EmojiMain";				break;
 				case ETabletGame.RingDingDong:		sceneName = "BallDuetMain";				break;
 				case ETabletGame.EggMon:			sceneName = "JumperStepUpMain";			break;
 				case ETabletGame.Hammer:			sceneName = "HammerMain";				break;
 				case ETabletGame.TwoCars:			sceneName = "TwoCarsMain";				break;
 				case ETabletGame.Bridges:			sceneName = "BridgesMain";				break;
-				case ETabletGame.CrashRacing:		sceneName = "CrashRacingMain";			break;
+				case ETabletGame.CrashRacing:		sceneName = "CrashRacingMain";			break;*/
 				}
             }
 

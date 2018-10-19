@@ -221,7 +221,10 @@ public partial class Info : MonoBehaviour {
 			sceneName == "HammerMain"				||
 			sceneName == "TwoCarsMain"				||
 			sceneName == "BridgesMain"				||
-			sceneName == "CrashRacingMain"			)
+			sceneName == "CrashRacingMain"			||
+			sceneName == "CatchMole"				||
+			sceneName == "PressNumber"				||
+			sceneName == "FindDiffPicture"			)
 			return true;
 		else
 			return false;
@@ -231,18 +234,21 @@ public partial class Info : MonoBehaviour {
 	{
 		string sceneName = "";
 		switch (idx) {
-		case 0:		sceneName = "PicturePuzzle";		break;
-		case 1:		sceneName = "PairCards";			break;
-		case 2:		sceneName = "EmojiMain";			break;
-		case 3:		sceneName = "Emoji2Main";			break;
-		case 4:		sceneName = "FlappyBirdMasterMain";	break;
-		case 5:		sceneName = "CrashCatStart";		break;
-		case 6:		sceneName = "BallDuetMain";			break;
-		case 7:		sceneName = "JumperStepUpMain";		break;
-		case 8:		sceneName = "HammerMain";			break;
-		case 9:		sceneName = "TwoCarsMain";			break;
-		case 10:	sceneName = "BridgesMain";			break;
-		case 11:	sceneName = "CrashRacingMain";		break;
+		case 0:		sceneName = "PairCards";			break;
+		case 1:		sceneName = "FlappyBirdMasterMain";	break;
+		case 2:		sceneName = "CrashCatStart";		break;
+		case 3:		sceneName = "CatchMole";			break;
+		case 4:		sceneName = "PressNumber";			break;
+		case 5:		sceneName = "FindDiffPicture";		break;
+		/*case 6:		sceneName = "PicturePuzzle";		break;
+		case 7:		sceneName = "EmojiMain";			break;
+		case 8:		sceneName = "Emoji2Main";			break;
+		case 9:		sceneName = "BallDuetMain";			break;
+		case 10:	sceneName = "JumperStepUpMain";		break;
+		case 11:	sceneName = "HammerMain";			break;
+		case 12:	sceneName = "TwoCarsMain";			break;
+		case 13:	sceneName = "BridgesMain";			break;
+		case 14:	sceneName = "CrashRacingMain";		break;*/
 		}
 
 		SceneChanger.LoadScene (sceneName, obj);
@@ -276,7 +282,13 @@ public partial class Info : MonoBehaviour {
 			Bridges.UIManager.Instance.ReturnHome ();
 		else if (Info.isCheckScene ("CrashRacingMain"))
 			CrashRacing.UIManager.Instance.ReturnHome ();
+		/*else if (Info.isCheckScene ("CatchMole"))
+			;
+		else if (Info.isCheckScene ("PressNumber"))
+			;
+		else if (Info.isCheckScene ("FindDiffPicture"))
+			;*/
 	}
 
-	public static int TotalGameCount() { return 12; }
+	public static int TotalGameCount() { return 6; }
 }
