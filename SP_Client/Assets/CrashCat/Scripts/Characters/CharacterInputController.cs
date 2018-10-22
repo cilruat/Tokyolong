@@ -155,7 +155,22 @@ namespace CrashCat
 	            character.animator.SetBool(s_MovingHash, false);
 	        }
 	    }
-		
+
+		public void Click(int arrow)
+		{
+			switch (arrow) {
+			case 0:		// Left
+				ChangeLane(-1);
+				break;
+			case 1:		// Right
+				ChangeLane(1);
+				break;
+			case 2:		// Up
+				Jump();
+				break;
+			}
+		}
+
 		protected void Update ()
 	    {
 	#if UNITY_EDITOR || UNITY_STANDALONE

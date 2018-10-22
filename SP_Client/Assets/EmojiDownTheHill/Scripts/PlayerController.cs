@@ -114,6 +114,17 @@ namespace Emoji2
             }
         }
 
+		public void Click(bool left)
+		{
+			if (GameManager.Instance.GameState != GameState.Playing)
+				return;
+
+			if (firstClick)
+				return;
+
+			direction = left ? -1 : 1;
+		}
+
         public float MoveUpSpeed(float timeT, float distanceS)
         {
             return (distanceS / timeT);

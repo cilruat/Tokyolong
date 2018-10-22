@@ -169,7 +169,11 @@ public class CharController : MonoBehaviour { // Please be carefull editing this
 			 
 			//CHARACTER TOUCH CONTROL (EDITOR AND MOBILE DEVICES)
 
-			if (isGrounded && (Input.GetKeyDown (KeyCode.RightArrow) || Input.GetKeyDown (KeyCode.LeftArrow) || Input.GetKeyDown (KeyCode.UpArrow))) { // Only if the player is touching the ground we can call the Jump void function and perform a Jump when touch the screen.
+			if (isGrounded &&
+			    (Input.GetKeyDown (KeyCode.RightArrow) ||
+			    Input.GetKeyDown (KeyCode.LeftArrow) ||
+			    Input.GetKeyDown (KeyCode.UpArrow) ||
+			    Input.GetMouseButtonDown (0))) { // Only if the player is touching the ground we can call the Jump void function and perform a Jump when touch the screen.
 
 				Jump (); // Call the Jump function
 
@@ -179,7 +183,11 @@ public class CharController : MonoBehaviour { // Please be carefull editing this
 
 			}
 
-			if (falling && !isDoubleJumping && (Input.GetKeyDown (KeyCode.RightArrow) || Input.GetKeyDown (KeyCode.LeftArrow) || Input.GetKeyDown (KeyCode.UpArrow))) { // If the character is falling and we touch the screen we can perform an Air Jump.
+			if (falling && !isDoubleJumping &&
+			    (Input.GetKeyDown (KeyCode.RightArrow) ||
+			    Input.GetKeyDown (KeyCode.LeftArrow) ||
+			    Input.GetKeyDown (KeyCode.UpArrow) ||
+			    Input.GetMouseButtonDown (0))) { // If the character is falling and we touch the screen we can perform an Air Jump.
 
 				DoubleJump (); // Call the Air jump function
 

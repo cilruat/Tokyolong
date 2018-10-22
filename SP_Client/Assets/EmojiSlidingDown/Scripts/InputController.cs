@@ -16,6 +16,14 @@ namespace Emoji
 				GameManager.Instance.rotationDirection = -1;
         }
 
+		public void Click(bool left)
+		{
+			if (GameManager.Instance.GameState != GameState.Playing)
+				return;
+
+			GameManager.Instance.rotationDirection = left ? 1 : -1;
+		}
+
         public void OnEnable()
         {
             GameManager.GameStateChanged += OnGameStateChanged;
@@ -32,6 +40,6 @@ namespace Emoji
             {
                 GameManager.Instance.rotationDirection = 0;
             }
-        }
+        }			
     }
 }

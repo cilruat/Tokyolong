@@ -35,6 +35,18 @@ namespace Hammer
 	            AttackOnClick(false);
 	        }
 	    }
+
+		public void Click(bool left)
+		{
+			if (UIManager.Instance.isStart == false)
+				return;
+
+			if (UIManager.Instance.objGameOver.activeInHierarchy)
+				return;
+
+			AttackOnClick (left ? true : false);
+		}
+
 	    public void AttackOnClick(bool isLeft)
 	    {
 	        if (!isInProcess)

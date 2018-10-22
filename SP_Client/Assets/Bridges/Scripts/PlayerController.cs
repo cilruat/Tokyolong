@@ -155,7 +155,8 @@ namespace Bridges
 	            //Mouse down -> rotate all bridge
 				if ((Input.GetKeyDown (KeyCode.LeftArrow) ||
 				    Input.GetKeyDown (KeyCode.RightArrow) ||
-				    Input.GetKeyDown (KeyCode.UpArrow)) && !touchDisable) {
+				    Input.GetKeyDown (KeyCode.UpArrow) ||
+				    Input.GetMouseButtonDown (0)) && !touchDisable) {
 					SoundManager.Instance.PlaySound (SoundManager.Instance.rotateBridge);
 					touchDisable = true;
 					gameManager.RotateAllBridge ();

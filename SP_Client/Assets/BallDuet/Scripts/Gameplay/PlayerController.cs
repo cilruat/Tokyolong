@@ -117,6 +117,18 @@ namespace OnefallGames
 	        }   
 		}
 
+		public void Click(bool left)
+		{
+			if (GameManager.Instance.GameState != GameState.Playing)
+				return;
+
+			if (touchDisable)
+				return;
+
+			touchDisable = true;
+			StartCoroutine (Rotating (left ? false : true));
+		}
+
 	    void PlayerPrepare()
 	    {
 	        //Fire event

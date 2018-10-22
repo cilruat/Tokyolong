@@ -88,6 +88,37 @@ namespace CrashRacing
 	        }
 	    }
 
+		public void Click(int arrow)
+		{
+			if (GameManager.Instance.GameState.Equals (GameState.Playing) && UIManager.Instance.isStop == false) {
+				if (finishTurn) {
+					if (GameManager.Instance.GameState.Equals (GameState.Playing) == false)
+						return;
+					
+					switch (arrow) {
+					case 0:		// Left
+						StartCoroutine(TurnLeft());
+						StartCoroutine(Rotate(-GameManager.Instance.rotateAngle));
+						cameraController.MoveLeft();
+						break;
+					case 1:		// Right
+						StartCoroutine(TurnRight());
+						StartCoroutine(Rotate(GameManager.Instance.rotateAngle));
+						cameraController.MoveRight();
+						break;
+					case 2:		// Up
+						timeAtMouseUp = Time.time;
+
+						if (!particle.gameObject.activeInHierarchy)
+							particle.gameObject.SetActive (true);
+
+						currentSpeed += GameManager.Instance.increaseSpeedFactor * Time.deltaTime;
+						break;
+					}
+				}
+			}
+		}
+
 	    // Update is called once per frame
 	    void Update()
 	    {			

@@ -197,10 +197,11 @@ namespace FlappyBirdStyle
 
 	    bool WasTouchedOrClicked()
 	    {
-			if (Input.GetKeyDown(KeyCode.LeftArrow) || 
-				Input.GetKeyDown(KeyCode.RightArrow) || 
-				Input.GetKeyDown(KeyCode.UpArrow))
-	            return true;
+			if (Input.GetKeyDown (KeyCode.LeftArrow) ||
+			    Input.GetKeyDown (KeyCode.RightArrow) ||
+			    Input.GetKeyDown (KeyCode.UpArrow) ||
+			    Input.GetMouseButtonDown (0))
+				return true;
 	        else
 	            return false;
 	    }
