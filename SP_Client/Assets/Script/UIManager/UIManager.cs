@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using BugSplat;
 
 public enum eUI
 {
@@ -50,6 +51,8 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 	public AudioSource audioBell;
 	public AudioSource audioMusic;
 
+	public Reporter reporter;
+
     [System.NonSerialized]public bool isMouseClickEff = false;
 
 	eUI curUI = eUI.eNone;
@@ -69,6 +72,13 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 		Hide_All ();
 
         VLogSave.Start();
+
+		reporter.Initialize (gameObject);
+		reporter.SetCallback ((success, message) => {
+			Debug.Log("BugSplat Report Posted: " + success + ", BugSplat API Response: " + message);
+		});
+
+		reporter.prompt = false;
 
         Application.targetFrameRate = 60;
 
@@ -231,7 +241,11 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 				UIManager.Instance.ShowLog ();
 
 			if (Input.GetKeyDown (KeyCode.C))
-				showClickA = !showClickA;
+				//showClickA = !showClickA;
+			{
+				int[] i = new int[1];
+				i [1] = 2;
+			}
 
             #if UNITY_EDITOR
 			if (Input.GetKeyDown(KeyCode.P))
@@ -268,7 +282,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 				MuteMusic ();
 
 			if (Input.GetKeyDown (KeyCode.C))
-				PlayBell ();
+				PlayBell ();			
 
 			if (Input.GetKeyDown (KeyCode.D))
 			{
