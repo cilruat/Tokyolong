@@ -101,6 +101,7 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 
 	void _Init()
 	{		
+		showTime = false;
 		txtQuesiton.text = "";
 		selectAnswer = 0;
 
@@ -118,6 +119,7 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 		}
 
 		objSendServer.SetActive (false);
+		objTime.SetActive (false);
 	}		
 
 	public void OnStart()
@@ -313,7 +315,9 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 
 	public void OnCloseGame()
 	{
+		UIManager.Instance.MuteMusic ();
+
 		_Init ();
-		_EndGame (false);
+		OnClose ();
 	}
 }
