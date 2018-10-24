@@ -39,8 +39,8 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
     public UIAlarm uiAlarm;
 
 	public Canvas canvas;
-    public ClickStar clickStarA;
-    public ClickStar clickStarB;
+    public ClickStar clickStar;
+	public ClickStar clickHollWeen;
 
 	public AudioClip clipTokyoLive;
 	public AudioClip clipSurprise;
@@ -219,8 +219,6 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
     const float WAIT_DISCONNECT = 10f;
     float elapsedTime = 0f;
 
-	bool showClickA = false;
-
     void Update()
     {
         if (waiting)
@@ -302,7 +300,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 			if (isMouseClickEff == false)
 				return;
 
-            GameObject showEff = showClickA ? clickStarA.gameObject : clickStarB.gameObject;
+			GameObject showEff = clickHollWeen.gameObject;
             GameObject objEff = null;
 			if (Info.isCheckScene ("Admin"))
 				objEff = Instantiate (showEff, PageAdmin.Instance.transform) as GameObject;
@@ -311,8 +309,8 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 				PlaySound ();
 			}
 
-            ClickStar clickStar = objEff.GetComponent<ClickStar>();
-            clickStar.ShowClickStar(Input.mousePosition);
+            ClickStar click = objEff.GetComponent<ClickStar>();
+			click.ShowClickStar(Input.mousePosition);
 		}
 
 		if (Info.TableNum != (byte)0 && Info.isCheckScene ("Login") == false) {
