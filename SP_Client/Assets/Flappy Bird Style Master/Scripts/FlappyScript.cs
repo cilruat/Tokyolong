@@ -89,6 +89,7 @@ namespace FlappyBirdStyle
 		{
 			GameStateManager.GameState = GameState.Dead;
 			GetComponent<Rigidbody2D> ().gravityScale = 0f;
+			limitTime.Stop ();
 
 			// show sendserver obj
 			ShiningGraphic.Start (imgVictory);
@@ -109,7 +110,6 @@ namespace FlappyBirdStyle
 
 		public void ReturnHome()
 		{
-			Debug.Log ("ReturnHome");
 			SceneChanger.LoadScene ("Main", objBoard);
 		}
 
@@ -288,6 +288,7 @@ namespace FlappyBirdStyle
 	    {
 	        GameStateManager.GameState = GameState.Dead;
 	        DeathGUI.SetActive(true);
+			limitTime.Stop ();
 	        GetComponent<AudioSource>().PlayOneShot(DeathAudioClip);
 	    }
 

@@ -26,6 +26,9 @@ public partial class Info : MonoBehaviour {
 	public static int BRIDGES_FINISH_POINT = 20;
 	public static int CRASH_RACING_LIMIT_TIME = 25;
 
+	public static int CATCH_MOLE_LIMIT_TIME = 30;
+	public static int TOUCH_NUMBER_LIMIT_TIME = 3;
+
 	public const int TOKYOLIVE_MAX_COUNT = 3;
 	public static int TOKYOLIVE_PREV_SEC = 20;
 	static int[] TOKYOLIVE_START_TIME = { 0, 30 };
