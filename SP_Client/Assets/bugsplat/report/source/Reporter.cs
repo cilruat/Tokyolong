@@ -219,9 +219,10 @@ namespace BugSplat
             }
             
             //If not error ignore
-            if(log.type != LogType.Exception) {                
-                return;
-            }
+			if (log.type != LogType.Exception &&
+			   log.type != LogType.Error &&
+			   log.type != LogType.Assert)
+				return;
 
             //Disable detection to avoid recursion loops
             Application.logMessageReceived -= OnUnityLog;
