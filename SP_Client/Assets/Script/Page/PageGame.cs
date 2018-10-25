@@ -326,7 +326,7 @@ public class PageGame : PageBase {
                 {
 				case EPuzzleGame.ePicturePuzzle:    sceneName = "PicturePuzzle";    break;
 				case EPuzzleGame.ePairCards:        sceneName = "PairCards";        break;
-				/*case EPuzzleGame.ePressNumber:      sceneName = "PressNumber";      break;
+				/*case EPuzzleGame.eTouchNumber:      sceneName = "TouchNumber";      break;
 				case EPuzzleGame.eFindDiffPicture:  sceneName = "FindDiffPicture"; 	break;*/
                 }
             }

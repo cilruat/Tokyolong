@@ -151,7 +151,7 @@ public enum EPuzzleGame
 {
 	ePicturePuzzle,
 	ePairCards,
-	/*ePressNumber,
+	/*eTouchNumber,
 	eFindDiffPicture,*/
 }
 

@@ -27,7 +27,8 @@ public partial class Info : MonoBehaviour {
 	public static int CRASH_RACING_LIMIT_TIME = 25;
 
 	public static int CATCH_MOLE_LIMIT_TIME = 30;
-	public static int TOUCH_NUMBER_LIMIT_TIME = 3;
+	public static int TOUCH_NUMBER_LIMIT_TIME = 10;
+	public static int TOUCH_NUMBER_MAX_COUNT = 20;
 
 	public const int TOKYOLIVE_MAX_COUNT = 3;
 	public static int TOKYOLIVE_PREV_SEC = 20;
@@ -226,7 +227,7 @@ public partial class Info : MonoBehaviour {
 			sceneName == "BridgesMain"				||
 			sceneName == "CrashRacingMain"			||
 			sceneName == "CatchMole"				||
-			sceneName == "PressNumber"				||
+			sceneName == "TouchNumber"				||
 			sceneName == "FindDiffPicture"			)
 			return true;
 		else

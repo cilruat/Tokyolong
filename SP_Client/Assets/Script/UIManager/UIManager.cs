@@ -300,6 +300,9 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 			if (isMouseClickEff == false)
 				return;
 
+			if (Info.CheckGameScene (SceneManager.GetActiveScene ().name))
+				return;
+
 			GameObject showEff = clickHollWeen.gameObject;
             GameObject objEff = null;
 			if (Info.isCheckScene ("Admin"))
