@@ -49,13 +49,26 @@ public class PageTouchNumber : SingletonMonobehaviour<PageTouchNumber> {
 			if (page.isStart == false)
 				return;
 
-			if (page.CheckNum (num) == false)				
+			if (page.CheckNum (num) == false) {
+				page.StartCoroutine (_DiffClick ());
 				return;
+			}
 			
 			page.TouchNum (num);
 
 			obj.SetActive (false);
 			UIManager.Instance.PlaySound ();
+		}
+
+		IEnumerator _DiffClick()
+		{
+			Color backUp = img.color;
+			UITween tween = UITweenColor.Start (obj, Color.white, Color.red, TWParam.New (.2f).Curve (TWCurve.CurveLevel2));
+
+			while (tween.IsTweening ())
+				yield return null;
+
+			img.color = backUp;
 		}
 	}
 
@@ -105,7 +118,10 @@ public class PageTouchNumber : SingletonMonobehaviour<PageTouchNumber> {
 
 			RectTransform rt = (RectTransform)obj.transform;
 
-			RectTransform rtParent = listPos [Random.Range (0, listPos.Count)];
+			int inputPos = _CheckInputPos (i + 1);
+			int randPos = inputPos > -1 ? inputPos : Random.Range (0, listPos.Count);
+
+			RectTransform rtParent = listPos [randPos];
 			rt.SetParent (rtParent);
 			rt.InitTransform ();
 
@@ -126,6 +142,20 @@ public class PageTouchNumber : SingletonMonobehaviour<PageTouchNumber> {
 			float waitSec = 1.7f / (float)finishNum;
 			yield return new WaitForSeconds (waitSec);
 		}
+	}
+
+	int _CheckInputPos(int remain)
+	{
+		int emptyCnt = 0;
+		int pos = 0;
+		for (int i = 0; i < listPos.Count; i++) {
+			if (listPos [i].childCount == 0) {
+				pos = i;
+				++emptyCnt;
+			}
+		}
+
+		return remain == emptyCnt ? pos : -1;
 	}
 
 	void Update()
