@@ -93,6 +93,7 @@ public class PageTouchNumber : SingletonMonobehaviour<PageTouchNumber> {
 
 	public List<RectTransform> listPos = new List<RectTransform>();
 
+	bool tapToStart = false;
 	bool isStart = false;
 	int finishLimitTime = 0;
 
@@ -183,11 +184,14 @@ public class PageTouchNumber : SingletonMonobehaviour<PageTouchNumber> {
 
 	public void OnStart()
 	{
-		StartCoroutine (_Start ());
+		if (tapToStart == false)
+			StartCoroutine (_Start ());
 	}
 
 	IEnumerator _Start()
 	{
+		tapToStart = true;
+
 		UITweenAlpha.Start (objStart, 1f, 0f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2).DisableOnFinish ());
 		yield return new WaitForSeconds (.5f);
 
