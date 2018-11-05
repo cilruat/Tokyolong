@@ -29,6 +29,7 @@ public partial class Info : MonoBehaviour {
 	public static int CATCH_MOLE_LIMIT_TIME = 30;
 	public static int TOUCH_NUMBER_LIMIT_TIME = 10;
 	public static int TOUCH_NUMBER_MAX_COUNT = 20;
+	public static int FIND_DIFF_PICTURE_LIMIT_TIME = 30;
 
 	public const int TOKYOLIVE_MAX_COUNT = 3;
 	public static int TOKYOLIVE_PREV_SEC = 20;
