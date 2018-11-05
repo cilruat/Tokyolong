@@ -19,6 +19,7 @@ public class PageFindDiffPicture : SingletonMonobehaviour<PageFindDiffPicture> {
 	public GameObject objBoard;
 	public GameObject objQuit;
 	public GameObject objHide;
+	public GameObject objGrpPic;
 
 	public Transform trFive;
 
@@ -73,7 +74,7 @@ public class PageFindDiffPicture : SingletonMonobehaviour<PageFindDiffPicture> {
 
 	void Update()
 	{
-		if (isStart = false)
+		if (isStart == false)
 			return;
 
 		if (Info.practiceGame)
@@ -89,8 +90,16 @@ public class PageFindDiffPicture : SingletonMonobehaviour<PageFindDiffPicture> {
 	}
 
 	void _CheckPos(Vector3 pos)
-	{
+	{		
+		RaycastHit hit;
 		Ray ray = Camera.main.ScreenPointToRay (pos);
+		if (Physics.Raycast (ray.origin, ray.direction, out hit)) {
+			string tag = hit.collider.gameObject.tag;
+			if (tag != "Picture")
+				return;
+
+			UITweenPosX.Start (objGrpPic, -10f, 0f, TWParam.New (.1f).Curve (TWCurve.Spring));
+		}
 	}
 
 	void _SetAnswer(bool isLeft, Transform parent)
