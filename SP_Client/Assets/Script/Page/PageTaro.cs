@@ -16,7 +16,7 @@ public class PageTaro : SingletonMonobehaviour<PageTaro> {
 
 	public GameObject objCard;
 	public GameObject objBoard;
-	public Image[] imgResult;
+	public Image[] imgResult;	
 	public RectTransform[] rtParent;
 	public CanvasGroup[] cgBoards;
 
