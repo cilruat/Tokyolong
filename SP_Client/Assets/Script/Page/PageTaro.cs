@@ -16,17 +16,18 @@ public class PageTaro : SingletonMonobehaviour<PageTaro> {
 
 	public GameObject objCard;
 	public GameObject objBoard;
-	public Image[] imgResult;	
+	public Text descResult;
+	public Image[] imgResult;
+	public RectTransform[] rtResultBack;
+	public GameObject[] objResultBtns;
 	public RectTransform[] rtParent;
 	public CanvasGroup[] cgBoards;
 
 	const int FIRST_CARD_CNT = 22;
 	const int SECOND_CARD_CNT = 56;
 
-	int firstIdx = -1;
-	int secondIdx = -1;
-	Sprite firstCard = null;
-	Sprite secondCard = null;
+	string firstIdx = "";
+	string secondIdx = "";
 
 	bool isLove = false;
 	bool clicked = false;
@@ -39,6 +40,30 @@ public class PageTaro : SingletonMonobehaviour<PageTaro> {
 	{
 		_DataLoad (@"\Info\TaroLove.csv", true);
 		_DataLoad (@"\Info\TaroMoney.csv", false);
+	}
+
+	void _Init()
+	{
+		firstIdx = "";
+		secondIdx = "";
+
+		for (int i = 0; i < 2; i++) {
+
+			int remove_cnt = 0;
+			Transform parent = rtParent [i].transform;
+			for (int j = 0; j < parent.childCount; j++) {
+				Transform child = parent.GetChild (j);
+				if (child)
+					Destroy (child.gameObject);
+			}
+
+			imgResult [i].sprite = null;
+			imgResult [i].gameObject.SetActive (false);
+			objResultBtns [i].SetActive (false);
+			rtResultBack [i].localEulerAngles = Vector3.zero;
+		}
+
+		descResult.text = "";
 	}
 
 	void _DataLoad(string csv_path, bool isLove)
@@ -72,20 +97,15 @@ public class PageTaro : SingletonMonobehaviour<PageTaro> {
 
 	void _RefreshBoard()
 	{
-		clicked = false;
-
 		switch (eType) {
-		case EShowType.eSelect:		break;
+		case EShowType.eSelect:		_Init ();								break;
 		case EShowType.eFirst:		StartCoroutine (_ShowCard (true));		break;
 		case EShowType.eSecond:		StartCoroutine (_ShowCard (false));		break;
-		case EShowType.eResult:		break;
+		case EShowType.eResult:		StartCoroutine (_ShowResult ()); 		break;
 		}
-	}
 
-	IEnumerator _ShowSelect()
-	{
-		yield break;
-	}
+		clicked = false;
+	}		
 
 	IEnumerator _ShowCard(bool isFirst)
 	{
@@ -110,7 +130,54 @@ public class PageTaro : SingletonMonobehaviour<PageTaro> {
 
 	IEnumerator _ShowResult()
 	{
+		for (int i = 0; i < rtResultBack.Length; i++) {
+			StartCoroutine (_RollingResultCard (rtResultBack [i], i));
+			yield return new WaitForSeconds (.02f);
+		}
+
+		string desc = "검색 결과가 없어용 ㅠㅠ 빨리 준비하도록 할게요 ㅠㅠ";
+		string find = firstIdx + secondIdx + ".jpg";
+		Debug.Log ("find: " + find);
+		if (isLove) {
+			if (dictLove.ContainsKey (find))
+				desc = dictLove [find];
+		} else {
+			if (dictMoney.ContainsKey (find))
+				desc = dictMoney [find];
+		}
+
+		descResult.text = desc;
+		UITweenAlpha.Start (descResult.gameObject, 1f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
+		yield return new WaitForSeconds (.5f);
+
+		for (int i = 0; i < objResultBtns.Length; i++)
+			UITweenAlpha.Start (objResultBtns [i], 1f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
+
 		yield break;
+	}
+
+	IEnumerator _RollingResultCard(RectTransform rt, int idx)
+	{
+		float y = rt.localEulerAngles.y;
+		float end_y = 180f;
+
+		Vector3 start = Vector3.up * y;
+		Vector3 end = Vector3.up * end_y;
+
+		while (true) {
+			Vector3 rot = Vector3.MoveTowards (start, end, 5f);
+			rt.Rotate (rot, Space.Self);
+
+			if (rt.localEulerAngles.y >= end_y * .5f)
+				imgResult [idx].gameObject.SetActive (true);
+
+			if (rt.localEulerAngles.y >= end_y)
+				break;
+
+			yield return null;
+		}
+
+		rt.localEulerAngles = new Vector3 (0f, end_y, 0f);
 	}
 
 	IEnumerator _ClickCard(Image img)
@@ -131,11 +198,11 @@ public class PageTaro : SingletonMonobehaviour<PageTaro> {
 		img.sprite = sprite;
 
 		if (eType == EShowType.eFirst) {
-			firstIdx = randCard;
-			firstCard = sprite;
+			firstIdx = cardNum;
+			imgResult [0].sprite = sprite;
 		} else {
-			secondIdx = randCard;
-			secondCard = sprite;
+			secondIdx = cardNum;
+			imgResult [1].sprite = sprite;
 		}
 
 		yield return new WaitForSeconds (.75f);
@@ -151,15 +218,11 @@ public class PageTaro : SingletonMonobehaviour<PageTaro> {
 
 		this.isLove = isLove;
 		_Move (true);
-	}
+	}		
 
 	public void ReturnRestart()
 	{
-		firstIdx = -1;
-		secondIdx = -1;
-		firstCard = null;
-		secondCard = null;
-
+		clicked = true;
 		_Move (false);
 	}
 
