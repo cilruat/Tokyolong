@@ -37,9 +37,6 @@ namespace CrashCat
     		obj = new GameObject("Collectibles");
     		obj.transform.SetParent(objectRoot);
     		collectibleTransform = obj.transform;
-
-			for (int i = 0; i < possibleObstacles.Length; i++) {
-			}
         }
 
         // Same as GetPointAt but using an interpolation parameter in world units instead of 0 to 1.

@@ -477,7 +477,8 @@ namespace CrashCat
     			for (int i = 0; i < segment.obstaclePositions.Length; ++i)
     			{
 					int randIdx = Random.Range (0, segment.possibleObstacles.Length);
-					if (segment.possibleObstacles [randIdx].name.IndexOf ("ObstacleHighBarrier") > -1)
+					if (segment.possibleObstacles [randIdx].name.IndexOf ("ObstacleHighBarrier") > -1 ||
+						segment.possibleObstacles [randIdx].name.IndexOf ("ObstacleLowBarrier") > -1)
 						continue;
 					
 					segment.possibleObstacles[randIdx].Spawn(segment, segment.obstaclePositions[i]);
