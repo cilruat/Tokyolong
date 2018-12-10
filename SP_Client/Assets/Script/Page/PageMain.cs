@@ -69,8 +69,8 @@ public class PageMain : PageBase {
 	    case EMenu.eTableSet:   	UIManager.Instance.Show (eUI.eTableSetting);		    	break;
         case EMenu.eRequestMusic: 	NetworkManager.Instance.Request_Music_List_REQ();     		break;
         case EMenu.eHowToUse:   	UIManager.Instance.Show(eUI.eHowToUse);                 	break;
-		case EMenu.eRoulette:		SystemMessage.Instance.Add ("추후 업데이트 예정이예요~");	/*SceneChanger.LoadScene("Roulette", curBoardObj());*/   		break;
-		case EMenu.eTaro:			SystemMessage.Instance.Add ("추후 업데이트 예정이예요~");	break;
+		case EMenu.eRoulette:		SystemMessage.Instance.Add ("추후 업데이트 예정이예요~");	break;
+		case EMenu.eTaro:			SceneChanger.LoadScene("Taro", curBoardObj());				break;
 		case EMenu.ePractice:		SceneChanger.LoadScene("PracticeGame", curBoardObj());   	break;
 		}
 	}

@@ -38,8 +38,16 @@ public class PageTaro : SingletonMonobehaviour<PageTaro> {
 
 	void Awake()
 	{
+		StartCoroutine (_DelayFirstShow ());
+
 		_DataLoad (@"\Info\TaroLove.csv", true);
 		_DataLoad (@"\Info\TaroMoney.csv", false);
+	}
+
+	IEnumerator _DelayFirstShow()
+	{
+		yield return null;
+		UITweenAlpha.Start (cgBoards [0].gameObject, 0f, 1f, TWParam.New (1f).Curve (TWCurve.CurveLevel2));
 	}
 
 	void _Init()
