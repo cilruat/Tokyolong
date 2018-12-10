@@ -11,17 +11,19 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 		int col;
 		int row;
 		RawImage img;
+		GameObject sel;
 		Button btn;
 		RectTransform rt;
 		Vector2 ancPos;
 		PagePicturePuzzle page;
 
-		public Clip(int col, int row, RawImage img,
+		public Clip(int col, int row, RawImage img, GameObject sel,
 			Button btn, RectTransform rt, PagePicturePuzzle page)
 		{
 			this.col = col;
 			this.row = row;
 			this.img = img;
+			this.sel = sel;
 			this.btn = btn;
 			this.rt = rt;
 			this.page = page;
@@ -34,6 +36,7 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 		{
 			img.texture = tex;
 			img.uvRect = new Rect (vPos, vSize);
+			sel.SetActive (false);
 		}
 
 		public void RefreshPos(Vector2 pos, int col, int row)
@@ -48,10 +51,8 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 			btn.onClick.AddListener (() => page._OnClick (col, row));
 		}
 
-		public bool Compare(int col, int row)
-		{
-			return this.col == col && this.row == row;
-		}
+		public void Select(bool isSelect) { sel.SetActive (isSelect); }
+		public bool Compare(int col, int row) { return this.col == col && this.row == row; }
 
 		public void SetPos(Vector2 pos)	{ ancPos = pos; }
 		public Vector2 GetPos() { return ancPos; }
@@ -78,7 +79,9 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 	bool start = false;
 	bool end = false;
 	bool startBtnClick = false;
-	int mode = 0;
+	int mode = 0;	
+
+	int selRow = -1, selCol = -1;
     int[,] array;
 	List<Clip> listClip = new List<Clip>();
 
@@ -128,8 +131,6 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
         for (int i = 0; i < mode; i++)
             for (int j = 0; j < mode; j++)
                 array[i, j] = i * mode + j;
-
-        array[mode - 1, mode - 1] = -1;
     }
 
     void _SetImage()
@@ -205,16 +206,17 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 				rt.InitTransform ();
 
 				Clip clip = new Clip (i, j,
-					obj.GetComponent<RawImage> (),
-					obj.GetComponent<Button>(),
-					rt, this);
+					            obj.GetComponent<RawImage> (),
+					            rt.Find ("Select").gameObject,
+					            obj.GetComponent<Button> (),
+					            rt, this);
 
 				float x = j * size;
 				float y = (mode - 1 - i) * size;
 				Vector2 vPos = new Vector2 (x, y);
 				Vector2 vSize = new Vector2 (size, size);
 
-				Texture t = (total - 1 > idx) ? tex : null;
+				Texture t = (total - 1 >= idx) ? tex : null;
 				clip.SetTex (t, vPos, vSize);
 
 				obj.SetActive (true);
@@ -241,57 +243,48 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
     void _MixClip()
     {
         int row, col;
-        int emptyRow = -1;
-        int emptyCol = -1;
+        int moveRow = -1;
+        int moveCol = -1;
 
         System.Random rand = new System.Random();
 
-        for (int i = 0; i < 1000; i++)
+        for (int i = 0; i < 100; i++)
         {
 			row = rand.Next (mode);
 			col = rand.Next (mode);
 
-            if (_FindEmptyIdx(row, col, ref emptyRow, ref emptyCol))
-                _MoveImg(row, col, emptyRow, emptyCol);
-        }
-    }          
+			moveRow = rand.Next (mode);
+			moveCol = rand.Next (mode);
+			if (row == moveRow && col == moveCol) {
+				while (true) {
+					moveRow = rand.Next (mode);
+					moveCol = rand.Next (mode);
 
-    bool _FindEmptyIdx(int row, int col, ref int emptyRow, ref int emptyCol)
-    {		
-		for (int i = 0; i < mode; i++) {
-			for (int j = 0; j < mode; j++) {
-				if (array [i, j] == -1) {
-					emptyCol = i;
-					emptyRow = j;
-					break;
+					if (row != moveRow || col != moveCol)
+						break;
 				}
-			}            
-		}
+			}
 
-		int calcCol = Mathf.Abs (col - emptyCol);
-		int calcRow = Mathf.Abs (row - emptyRow);
-		if (calcCol + calcRow == 1)
-			return true;
-
-        return false;
+            _MoveImg(row, col, moveRow, moveCol);
+        }
     }
     
-    void _MoveImg(int row, int col, int emptyRow, int emptyCol)
+    void _MoveImg(int row, int col, int moveRow, int moveCol)
     {
 		int idx = -1;
-		int emptyIdx = -1;
+		int moveIdx = -1;
 		for (int i = 0; i < listClip.Count; i++) {
 			if (listClip [i].Compare (col, row))				idx = i;
-			if (listClip [i].Compare (emptyCol, emptyRow))		emptyIdx = i;
+			if (listClip [i].Compare (moveCol, moveRow))		moveIdx = i;
 		}
 
 		Vector2 pos = listClip [idx].GetPos ();
-		listClip [idx].RefreshPos (listClip [emptyIdx].GetPos (), emptyCol, emptyRow);
-		listClip [emptyIdx].RefreshPos (pos, col, row);
+		listClip [idx].RefreshPos (listClip [moveIdx].GetPos (), moveCol, moveRow);
+		listClip [moveIdx].RefreshPos (pos, col, row);
 
 		int temp = array [col, row];
-		array [col, row] = array [emptyCol, emptyRow];
-		array [emptyCol, emptyRow] = temp;
+		array [col, row] = array [moveCol, moveRow];
+		array [moveCol, moveRow] = temp;
     }
 
 	void _OnClick(int col, int row)
@@ -299,14 +292,24 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 		if (start == false || end)
 			return;
 
-		int emptyRow = -1;
-		int emptyCol = -1;
+		if (selRow == -1 || selCol == -1) {
+			selRow = row;
+			selCol = col;
 
-		if (_FindEmptyIdx (row, col, ref emptyRow, ref emptyCol)) {
-			_MoveImg (row, col, emptyRow, emptyCol);
+			Clip clip = listClip.Find (x => x.Compare (col, row));
+			if (clip != null)	clip.Select (true);
+		} else {
+			Clip clip = listClip.Find (x => x.Compare (selCol, selRow));
+			if (clip != null)	clip.Select (false);
 
-			_CheckEndGame ();
-		}
+			if (selRow != row || selCol != col) {
+				_MoveImg (selRow, selCol, row, col);
+				_CheckEndGame ();
+			}
+
+			selRow = -1;
+			selCol = -1;
+		}			
 	}
 
 	void _CheckEndGame()
@@ -314,13 +317,8 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 		bool finish = true;
 		for (int i = 0; i < mode; i++) {
 			for (int j = 0; j < mode; j++) {
-				if (i == mode - 1 && j == mode - 1) {
-					if (array [i, j] != -1)
-						finish = false;
-				} else {
-					if (array [i, j] != i * mode + j)
-						finish = false;
-				}
+				if (array [i, j] != i * mode + j)
+					finish = false;
 			}
 		}
 
