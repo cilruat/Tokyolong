@@ -217,19 +217,19 @@ public class PageFindDiffPicture : SingletonMonobehaviour<PageFindDiffPicture> {
 
 		ShiningGraphic.Start (imgLeft);
 		ShiningGraphic.Start (imgRight);
-		yield return new WaitForSeconds (.5f);
 
-		objVictory.SetActive (true);
-		yield return new WaitForSeconds (4f);
-
-		UITweenAlpha.Start (objVictory, 1f, 0f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
-		UITweenAlpha.Start (objSendServer, 0f, 1f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
-
-		yield return new WaitForSeconds (1f);
-
-		if (Info.practiceGame)
+		if (Info.practiceGame) {
+			yield return new WaitForSeconds (1f);
 			ReturnPractiveGame ();
+		}
 		else {
+			objVictory.SetActive (true);
+			yield return new WaitForSeconds (4f);
+
+			UITweenAlpha.Start (objVictory, 1f, 0f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
+			UITweenAlpha.Start (objSendServer, 0f, 1f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
+			yield return new WaitForSeconds (1f);
+
 			if (Info.TableNum == 0)
 				ReturnHome ();
 			else
