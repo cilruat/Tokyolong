@@ -10,8 +10,8 @@ public class UIDiscountAnimation : MonoBehaviour {
 	public Text txtDiscount;
 	public Text txtCalc;
 
-	int afterDiscount = 0;
-	int afterCalc = 0;
+	int curDiscount = 0;
+	int curCalc = 0;
 	UITween tween = null;
 
 	public void SendREQ()
@@ -19,11 +19,11 @@ public class UIDiscountAnimation : MonoBehaviour {
 		NetworkManager.Instance.Order_Detail_REQ();
 	}
 
-	public void SetInfo(string meuPacking, int discountPrice)
+	public void SetInfo(string menuPacking, int discountPrice)
 	{
 		tween = UITweenAlpha.Start (gameObject, 0f, 1f, TWParam.New (1f).Curve (TWCurve.CurveLevel2).Speed (TWSpeed.Slower));
 
-		JsonData json = JsonMapper.ToObject (meuPacking);
+		JsonData json = JsonMapper.ToObject (menuPacking);
 
 		int total = 0;
 		for (int i = 0; i < json.Count; i++) 
@@ -39,22 +39,22 @@ public class UIDiscountAnimation : MonoBehaviour {
 			total += price;
 		}
 
-		afterDiscount = Mathf.Min (total, discountPrice + (Info.GamePlayCnt * 100));
-		afterCalc = Mathf.Max (0, total - discountPrice);
+		curDiscount = Mathf.Min (total, discountPrice);
+		curCalc = Mathf.Max (0, total - discountPrice);
 
 		int discountApply = 0;
 		switch ((EDiscount)Info.GameDiscountWon) {
+		case EDiscount.e500won:		discountApply = 500;		break;
 		case EDiscount.e1000won:	discountApply = 1000;		break;
+		case EDiscount.e2000won:	discountApply = 2000;		break;
 		case EDiscount.e5000won:	discountApply = 5000;		break;
-		case EDiscount.eHalf:		discountApply = 1000;		break;
-		case EDiscount.eAll:		discountApply = 1000;		break;
+		case EDiscount.eAll:		discountApply = curCalc;	break;
 		}
 
-		int prevDiscount = Mathf.Max (0, afterDiscount - discountApply);
-		int prevCalc = afterCalc + discountApply;
+		int prevDiscount = Mathf.Max (0, curDiscount - discountApply);
+		int prevCalc = Mathf.Min (curCalc + discountApply, total);
 
 		txtTotal.text = Info.MakeMoneyString (total);
-
 		StartCoroutine (_Animating (prevDiscount, prevCalc));
 	}
 
@@ -68,84 +68,57 @@ public class UIDiscountAnimation : MonoBehaviour {
 		int total = 40000;
 		int discountPrice = 5000;
 
-		afterDiscount = Mathf.Min (total, discountPrice + (Info.GamePlayCnt * 100));
-		afterCalc = Mathf.Max (0, total - discountPrice);
+		curDiscount = Mathf.Min (total, discountPrice);
+		curCalc = Mathf.Max (0, total - discountPrice);
 
 		int discountApply = 0;
 		switch ((EDiscount)Info.GameDiscountWon) {
+		case EDiscount.e500won:		discountApply = 500;		break;
 		case EDiscount.e1000won:	discountApply = 1000;		break;
+		case EDiscount.e2000won:	discountApply = 2000;		break;
 		case EDiscount.e5000won:	discountApply = 5000;		break;
-		case EDiscount.eHalf:		discountApply = 1000;		break;
-		case EDiscount.eAll:		discountApply = 1000;		break;
+		case EDiscount.eAll:		discountApply = curCalc;	break;
 		}
 
-		int prevDiscount = Mathf.Max (0, afterDiscount - discountApply);
-		int prevCalc = afterCalc + discountApply;
+		int prevDiscount = Mathf.Max (0, curDiscount - discountApply);
+		int prevCalc = Mathf.Min (curCalc + discountApply, total);
 
 		txtTotal.text = Info.MakeMoneyString (total);
-
 		StartCoroutine (_Animating (prevDiscount, prevCalc));
 	}
 
-	IEnumerator _Animating(int discount, int calc)
+	IEnumerator _Animating(int prevDiscount, int prevCalc)
 	{
-		txtCalc.text = Info.MakeMoneyString (calc);
-		txtDiscount.text = Info.MakeMoneyString (discount);
-
-		List<int> listCalc = new List<int> ();
-		while (calc != 0) {
-			listCalc.Add (calc % 10);
-			calc /= 10;
-		}
-
-		List<int> listDis = new List<int> ();
-		while (discount != 0) {
-			listDis.Add (discount % 10);
-			discount /= 10;
-		}			
+		txtCalc.text = Info.MakeMoneyString (prevCalc);
+		txtDiscount.text = Info.MakeMoneyString (prevDiscount);
 
 		yield return new WaitForSeconds (1f);
 		UITween uiScale = UITweenScale.Start (txtCalc.gameObject, 1f, 1.025f, TWParam.New (.5f).Loop(TWLoop.PingPong).Curve (TWCurve.Shake));
 
-		int rotate = 0;
-		int counting = 0;
+		float limitTime = 3f;
+
+		float value1 = curDiscount;
+		float prevValue1 = prevDiscount;
+		float distance1 = Mathf.Abs (prevValue1 - value1);
+
+		float value2 = curCalc;
+		float prevValue2 = prevCalc;
+		float distance2 = Mathf.Abs (prevValue2 - value2);
+
 		while (true) {
-			listCalc [counting] -= 1;
-			if (listCalc [counting] == -1)
-				listCalc [counting] = 9;
+			float dis1 = distance1 * (Time.deltaTime / limitTime);
+			prevValue1 = GetMovedValue (prevValue1, value1, dis1);
+			txtDiscount.text = Info.MakeMoneyString ((int)prevValue1);
 
-			listDis [counting] += 1;
-			if (listDis [counting] == 10)
-				listDis [counting] = 0;
+			float dis2 = distance2 * (Time.deltaTime / limitTime);
+			prevValue2 = GetMovedValue (prevValue2, value2, dis2);
+			txtCalc.text = Info.MakeMoneyString ((int)prevValue2);
 
-			int numCalc = 0;
-			for (int i = 0; i < listCalc.Count; i++)
-				numCalc += listCalc [i] * (int)Mathf.Pow(10, i);
-
-			int numDis = 0;
-			for (int i = 0; i < listDis.Count; i++)
-				numDis += listDis [i] * (int)Mathf.Pow(10, i);
-
-			txtCalc.text = Info.MakeMoneyString (numCalc);
-			txtDiscount.text = Info.MakeMoneyString (numDis);
-
-			if (numCalc == afterCalc && numDis == afterDiscount)
+			if (limitTime <= 0f)
 				break;
 
-			float waitTime = .01f;
-			if (counting > 0)
-				waitTime += .02f;
-
-			if (listCalc [counting] == 0) {
-				++rotate;
-
-				if (rotate == 2) {
-					rotate = 0;
-					++counting;
-				}					
-			}
-
-			yield return new WaitForSeconds (waitTime);
+			limitTime -= Time.deltaTime;
+			yield return null;
 		}
 
 		if (uiScale)
@@ -153,12 +126,12 @@ public class UIDiscountAnimation : MonoBehaviour {
 
 		UITween uiColor = UITweenColor.Start (txtCalc.gameObject, Color.white, Color.red, TWParam.New (.3f).Loop(TWLoop.PingPong).Curve (TWCurve.Linear));
 
-		txtCalc.text = Info.MakeMoneyString (afterCalc);
-		txtDiscount.text = Info.MakeMoneyString (afterDiscount);
+		txtCalc.text = Info.MakeMoneyString (curCalc);
+		txtDiscount.text = Info.MakeMoneyString (curDiscount);
 
 		Info.GameDiscountWon = -1;
 
-		yield return new WaitForSeconds (1.5f);
+		yield return new WaitForSeconds (1f);
 
 		if (uiColor)
 			uiColor.StopTween ();
@@ -168,5 +141,21 @@ public class UIDiscountAnimation : MonoBehaviour {
 		yield return new WaitForSeconds (.8f);
 
 		UIManager.Instance.Hide (eUI.eDiscountAni);
+		Info.AfterDiscountBehavior ();
+	}
+
+	float GetMovedValue(float start, float end, float distance)
+	{
+		if (start == end)
+			return end;
+
+		float value = Mathf.Abs (start - end);
+		if (value < distance)
+			return end;
+
+		if (start < end)
+			return start + distance;
+
+		return start - distance;
 	}
 }

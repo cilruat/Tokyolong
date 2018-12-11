@@ -36,7 +36,6 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         case PROTOCOL.CHAT_NOT:             		ChatNOT(msg);               	break;
         case PROTOCOL.ORDER_DETAIL_ACK:     		OrderDetailACK(msg);        	break;
 		case PROTOCOL.GAME_DISCOUNT_ACK:			GameDiscountACK (msg);			break;
-		case PROTOCOL.GAME_DISCOUNT_NOT:			GameDiscountNOT (msg);			break;
 		case PROTOCOL.REQUEST_MUSIC_ACK:			RequestMusicACK (msg);			break;
 		case PROTOCOL.REQUEST_MUSIC_NOT:			RequestMusicNOT (msg); 			break;
 		case PROTOCOL.REQUEST_MUSIC_LIST_ACK: 		RequestMusicListACK (msg);    	break;
@@ -221,11 +220,11 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         string menuPacking = msg.pop_string();
 		int discountPrice = msg.pop_int32();
 
-		/*if (UIManager.Instance.IsActive (eUI.eDiscountAni) || Info.GameDiscountWon > -1) {
+		if (UIManager.Instance.IsActive (eUI.eDiscountAni)) {
 			GameObject obj = UIManager.Instance.GetCurUI ();
 			UIDiscountAnimation uiDiscountAni = obj.GetComponent<UIDiscountAnimation> ();
 			uiDiscountAni.SetInfo (menuPacking, discountPrice);
-		} else*/ if (UIManager.Instance.IsActive (eUI.eBillDetail) == false) {
+		} else if (UIManager.Instance.IsActive (eUI.eBillDetail) == false) {
 			GameObject obj = UIManager.Instance.Show(eUI.eBillDetail);
 			UIBillDetail uiBillDetail = obj.GetComponent<UIBillDetail>();
 			uiBillDetail.SetBill(menuPacking, discountPrice);
@@ -234,19 +233,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
 	void GameDiscountACK(CPacket msg)
 	{
-		Info.AfterDiscountBehavior ();
-	}
-
-	void GameDiscountNOT(CPacket msg)
-	{
-        byte type = msg.pop_byte();
-        int orderId = msg.pop_int32();
-        byte tableNo = msg.pop_byte ();
-        string packing = msg.pop_string ();
-
-        RequestOrder reqOrder = new RequestOrder(type, orderId, tableNo, packing);
-
-        PageAdmin.Instance.SetOrder (reqOrder);
+		GameObject obj = UIManager.Instance.Show (eUI.eDiscountAni);
+		UIDiscountAnimation ui = obj.GetComponent<UIDiscountAnimation> ();
+		ui.SendREQ ();
 	}
 
 	void RequestMusicListACK(CPacket msg)
