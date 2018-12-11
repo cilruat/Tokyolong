@@ -79,7 +79,7 @@ public class Bill : MonoBehaviour {
 
         totalPrice.text = Info.MakeMoneyString (billTotalPrice);
 
-        billTotalDiscount = Mathf.Min(billTotalPrice, discountPrice + (Info.GamePlayCnt * 100));
+        billTotalDiscount = Mathf.Min(billTotalPrice, discountPrice);
 
         if(textDiscountPrice != null)
             textDiscountPrice.text = "-"+Info.MakeMoneyString(billTotalDiscount);

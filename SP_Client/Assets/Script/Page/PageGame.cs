@@ -169,7 +169,9 @@ public class PageGame : PageBase {
 		RectTransform[] rtElts = null;
 
 		switch (Info.GameDiscountWon) {
+		case (short)EDiscount.e500won:
 		case (short)EDiscount.e1000won:
+		case (short)EDiscount.e2000won:
 			if (curGameType == (int)EGameType.eWinWaiter) {
 				randRange = Enum.GetValues (typeof(EWinWaiter)).Length;
 				rtElts = rtWinWaiter;
@@ -182,7 +184,6 @@ public class PageGame : PageBase {
 			}
 			break;
 		case (short)EDiscount.e5000won:
-		case (short)EDiscount.eHalf:
 		case (short)EDiscount.eAll:
 			randRange = Enum.GetValues(typeof(ETabletGame)).Length;
 			rtElts = rtTabletGame;
@@ -326,8 +327,8 @@ public class PageGame : PageBase {
                 {
 				case EPuzzleGame.ePicturePuzzle:    sceneName = "PicturePuzzle";    break;
 				case EPuzzleGame.ePairCards:        sceneName = "PairCards";        break;
-				/*case EPuzzleGame.eTouchNumber:      sceneName = "TouchNumber";      break;
-				case EPuzzleGame.eFindDiffPicture:  sceneName = "FindDiffPicture"; 	break;*/
+				case EPuzzleGame.eTouchNumber:      sceneName = "TouchNumber";      break;
+				case EPuzzleGame.eFindDiffPicture:  sceneName = "FindDiffPicture"; 	break;
                 }
             }
             else if (curGameType == (int)EGameType.eTabletGame)
@@ -335,14 +336,14 @@ public class PageGame : PageBase {
 				switch ((ETabletGame)curGame) {
 				case ETabletGame.CrashCat:			sceneName = "CrashCatStart";			break;
 				case ETabletGame.FlappyBird:		sceneName = "FlappyBirdMasterMain";		break;
-				case ETabletGame.DownHill:			sceneName = "Emoji2Main";				break;
+				/*case ETabletGame.DownHill:			sceneName = "Emoji2Main";				break;
 				case ETabletGame.SlidingDown:		sceneName = "EmojiMain";				break;
 				case ETabletGame.RingDingDong:		sceneName = "BallDuetMain";				break;
 				case ETabletGame.EggMon:			sceneName = "JumperStepUpMain";			break;
 				case ETabletGame.Hammer:			sceneName = "HammerMain";				break;
 				case ETabletGame.TwoCars:			sceneName = "TwoCarsMain";				break;
 				case ETabletGame.Bridges:			sceneName = "BridgesMain";				break;
-				case ETabletGame.CrashRacing:		sceneName = "CrashRacingMain";			break;
+				case ETabletGame.CrashRacing:		sceneName = "CrashRacingMain";			break;*/
 				}
             }
 

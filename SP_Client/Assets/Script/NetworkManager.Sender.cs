@@ -171,10 +171,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     public void SetDiscountProb_REQ(List<float> list)
     {
         CPacket msg = CPacket.create((short)PROTOCOL.SET_RANDOM_DISCOUNT_PROB_REQ);
-        msg.push(list[0]);
-        msg.push(list[1]);
-        msg.push(list[2]);
-        msg.push(list[3]);
+		for (int i = 0; i < list.Count; i++)
+			msg.push (list [i]);
+		
         send(msg);
     }
 

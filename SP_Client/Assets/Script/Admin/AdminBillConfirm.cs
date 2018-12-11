@@ -21,7 +21,7 @@ public class AdminBillConfirm : SingletonMonobehaviour<AdminBillConfirm> {
 		objComplete.SetActive(false);
 
 		table.text = tableNo.ToString () + "번 테이블";
-        tableExtraGameCnt.text = "남은 할인 찬스 : <color='#70ad47'><size=23>" + extraGameCnt.ToString() + "</size></color>";
+        //tableExtraGameCnt.text = "남은 할인 찬스 : <color='#70ad47'><size=23>" + extraGameCnt.ToString() + "</size></color>";
         bill.CopyBill (list, discount, extraGameCnt);
         billChange.SetTable(tableNo);
 	}

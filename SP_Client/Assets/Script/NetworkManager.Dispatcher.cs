@@ -392,7 +392,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     {
         List<float> listProb = new List<float>();
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 5; i++)
             listProb.Add(msg.pop_float());
 
         PageAdmin.Instance.ShowSettingDiscountProb(listProb);

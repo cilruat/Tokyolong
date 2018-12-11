@@ -95,15 +95,11 @@ namespace SP_Server
 
             switch (type)
             {
-                case EDiscount.e1000won: calcDiscount = 1000;   break;
-                case EDiscount.e5000won: calcDiscount = 5000;   break;
-                case EDiscount.eHalf:
-                case EDiscount.eAll:
-
-                    int price = oriTotalPrice - discount;
-                    calcDiscount = type == EDiscount.eAll ? price : (int)(price * .5f);
-                    calcDiscount = Math.Min(price, calcDiscount);
-                    break;
+                case EDiscount.e500won:     calcDiscount = 500;     break;
+                case EDiscount.e1000won:    calcDiscount = 1000;    break;
+                case EDiscount.e2000won:    calcDiscount = 2000;    break;
+                case EDiscount.e5000won:    calcDiscount = 5000;    break;
+                case EDiscount.eAll:        calcDiscount = oriTotalPrice - discount;    break;
             }
 
             discount = Math.Min(oriTotalPrice, discount + calcDiscount);

@@ -140,15 +140,12 @@ public partial class Info : MonoBehaviour {
 	{
 		int cnt = 0;
 		switch (eType) {
-		case EMenuType.eSozu:
-		case EMenuType.eBear:
-		case EMenuType.eSake:
-		case EMenuType.eFruitSozu:
-		case EMenuType.eFruitMakgeolli:
-		case EMenuType.eGin:	cnt = 1;	break;
-		case EMenuType.eMeal:
-		case EMenuType.eDrink:	cnt = 0;	break;
-		default:				cnt = 2;	break;
+		case EMenuType.eTop:
+		case EMenuType.ePochakaya:
+		case EMenuType.eIzakaya:
+		case EMenuType.eWomanTarget:
+		case EMenuType.eSashimiNFruit:
+		case EMenuType.eSoup:			cnt = 2;	break;
 		}
 
 		return cnt;

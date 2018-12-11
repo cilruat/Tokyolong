@@ -47,7 +47,7 @@ public class AdminTableDiscountInput : SingletonMonobehaviour<AdminTableDiscount
 
     public void OnRegister(EDiscount type)
     {
-        if (type == EDiscount.eHalf || type == EDiscount.eAll)
+        if (type == EDiscount.eAll)
         {
             bool isAdd = false;
             for (int i = 0; i < listElt.Count; i++)
@@ -133,10 +133,11 @@ public class AdminTableDiscountInput : SingletonMonobehaviour<AdminTableDiscount
         int discount = 0;
         switch (type)
         {
-            case EDiscount.e1000won:
-            case EDiscount.e5000won:    discount = (Info.GetDiscountPrice(type));         break;
-            case EDiscount.eHalf:       discount = ((oriTablePrice - oriTableDiscount) / 2); break;
-            case EDiscount.eAll:        discount = (oriTablePrice - oriTableDiscount);       break;
+		case EDiscount.e500won:
+        case EDiscount.e1000won:
+		case EDiscount.e2000won:
+        case EDiscount.e5000won:    discount = (Info.GetDiscountPrice(type));		break;
+        case EDiscount.eAll:        discount = (oriTablePrice - oriTableDiscount);	break;
         }
 
         return discount;

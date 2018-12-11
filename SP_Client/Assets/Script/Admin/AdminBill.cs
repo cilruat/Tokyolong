@@ -32,7 +32,7 @@ public class AdminBill : MonoBehaviour {
         billTotalPrice = total;
 		totalPrice.text = Info.MakeMoneyString (total);
 
-        billTotalDiscount = Mathf.Min(billTotalPrice, this.discount + (this.extraGameCnt * 100));
+        billTotalDiscount = Mathf.Min(billTotalPrice, this.discount);
 
         textDiscountPrice.text = "-"+Info.MakeMoneyString(billTotalDiscount);
         textCalcPrice.text = Info.MakeMoneyString(BillTotalPrice);

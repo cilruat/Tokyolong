@@ -56,8 +56,6 @@ public class PageTaro : SingletonMonobehaviour<PageTaro> {
 		secondIdx = "";
 
 		for (int i = 0; i < 2; i++) {
-
-			int remove_cnt = 0;
 			Transform parent = rtParent [i].transform;
 			for (int j = 0; j < parent.childCount; j++) {
 				Transform child = parent.GetChild (j);

@@ -8,9 +8,10 @@ namespace SP_Server
 {
     public enum EDiscount
     {
+        e500won,
         e1000won,
+        e2000won,
         e5000won,
-        eHalf,
         eAll,
         eDirect,
     }

@@ -30,11 +30,12 @@ public class TableDiscountElt : MonoBehaviour {
         this.type = type;
         switch (type)
         {
-            case EDiscount.e1000won:    txtName.text = "1000원 할인";   break;
-            case EDiscount.e5000won:    txtName.text = "5000원 할인";   break;
-            case EDiscount.eHalf:       txtName.text = "반액 할인";     break;
-            case EDiscount.eAll:        txtName.text = "전액 할인";     break;
-            case EDiscount.eDirect:     txtName.text = this.discount + "원 할인";  break;
+		case EDiscount.e500won:		txtName.text = "500원 할인";   break;
+        case EDiscount.e1000won:    txtName.text = "1000원 할인";   break;
+		case EDiscount.e2000won:    txtName.text = "2000원 할인";   break;
+        case EDiscount.e5000won:    txtName.text = "5000원 할인";   break;            
+        case EDiscount.eAll:        txtName.text = "전액 할인";     break;
+        case EDiscount.eDirect:     txtName.text = this.discount + "원 할인";  break;
         }
     }
 
