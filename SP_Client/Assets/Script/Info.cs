@@ -10,30 +10,133 @@ using UnityEngine.EventSystems;
 public partial class Info : MonoBehaviour {
     
 	// Game Info
+	// ---------------------Not Used ---------------------
 	public static int EMOJI_DOWN_THE_HILL_FINISH_POINT = 30;
 	public static int EMOJI_SLIDING_DOWN_FINISH_POINT = 18;
-	public static int CRASH_CAT_LIMIT_TIME = 20;
-	public static int FLAPPY_BIRD_LIMIT_TIME = 25;
-	public static int PICTURE_PUZZLE_MODE = 3;
-	public static int PICTURE_PUZZLE_LIMIT_TIME = 30;
-	public static int PAIR_CARD_MODE = 18;
-	public static int PAIR_CARD_LIMIT_TIME = 30;
-
 	public static int RING_DING_DONG_FINISH_POINT = 30;
 	public static int EGG_MON_FINISH_POINT = 20;
 	public static int HAMMER_FINISH_POINT = 60;
 	public static int TWO_CARS_FINISH_POINT = 20;
 	public static int BRIDGES_FINISH_POINT = 20;
 	public static int CRASH_RACING_LIMIT_TIME = 25;
-
 	public static int CATCH_MOLE_LIMIT_TIME = 30;
-	public static int TOUCH_NUMBER_LIMIT_TIME = 10;
-	public static int TOUCH_NUMBER_MAX_COUNT = 20;
-	public static int FIND_DIFF_PICTURE_LIMIT_TIME = 30;
+	// ---------------------Not Used ---------------------
 
-	public const int TOKYOLIVE_MAX_COUNT = 3;
-	public static int TOKYOLIVE_PREV_SEC = 20;
-	static int[] TOKYOLIVE_START_TIME = { 0, 30 };
+	// ------------------Set Difficulty------------------
+	public static int CRASH_CAT_LIMIT_TIME {
+		get{
+			switch ((EDiscount)GameDiscountWon) {
+			case EDiscount.e500won:
+			case EDiscount.e1000won:	return 15;
+			case EDiscount.e2000won:	return 20;
+			case EDiscount.e5000won:	return 30;
+			case EDiscount.eAll:		return 40;
+			default:					return 40;
+			}
+		}
+	}
+
+	public static int FLAPPY_BIRD_LIMIT_TIME {
+		get{
+			switch ((EDiscount)GameDiscountWon) {
+			case EDiscount.e500won:
+			case EDiscount.e1000won:	return 20;
+			case EDiscount.e2000won:	return 25;
+			case EDiscount.e5000won:	return 30;
+			case EDiscount.eAll:		return 40;
+			default:					return 40;
+			}
+		}
+	}
+
+	public static int PICTURE_PUZZLE_MODE {
+		get{
+			switch ((EDiscount)GameDiscountWon) {
+			case EDiscount.e500won:
+			case EDiscount.e1000won:	return 3;
+			case EDiscount.e2000won:	
+			case EDiscount.e5000won:	return 4;
+			case EDiscount.eAll:		return 5;
+			default:					return 5;
+			}
+		}
+	}
+	public static int PICTURE_PUZZLE_LIMIT_TIME {
+		get{
+			switch ((EDiscount)GameDiscountWon) {
+			case EDiscount.e500won:
+			case EDiscount.e1000won:	
+			case EDiscount.e2000won:	return 25;
+			case EDiscount.e5000won:	return 20;
+			case EDiscount.eAll:		return 15;
+			default:					return 15;
+			}
+		}
+	}
+
+	public static int PAIR_CARD_MODE {
+		get{
+			switch ((EDiscount)GameDiscountWon) {
+			case EDiscount.e500won:
+			case EDiscount.e1000won:	
+			case EDiscount.e2000won:	return 18;
+			case EDiscount.e5000won:	return 24;
+			case EDiscount.eAll:		return 30;
+			default:					return 30;
+			}
+		}
+	}
+	public static int PAIR_CARD_LIMIT_TIME {
+		get{
+			switch ((EDiscount)GameDiscountWon) {
+			case EDiscount.e500won:
+			case EDiscount.e1000won:	return 30;
+			case EDiscount.e2000won:	
+			case EDiscount.e5000won:	return 25;
+			case EDiscount.eAll:		return 20;
+			default:					return 20;
+			}
+		}
+	}
+
+	public static int TOUCH_NUMBER_LIMIT_TIME {
+		get{
+			switch ((EDiscount)GameDiscountWon) {
+			case EDiscount.e500won:
+			case EDiscount.e1000won:	return 20;
+			case EDiscount.e2000won:	
+			case EDiscount.e5000won:	return 15;
+			case EDiscount.eAll:		return 10;
+			default:					return 10;
+			}
+		}
+	}
+	public static int TOUCH_NUMBER_MAX_COUNT {
+		get{
+			switch ((EDiscount)GameDiscountWon) {
+			case EDiscount.e500won:
+			case EDiscount.e1000won:	
+			case EDiscount.e2000won:	return 15;
+			case EDiscount.e5000won:	return 20;
+			case EDiscount.eAll:		return 25;
+			default:					return 25;
+			}
+		}
+	}
+
+	public static int FIND_DIFF_PICTURE_LIMIT_TIME {
+		get{
+			switch ((EDiscount)GameDiscountWon) {
+			case EDiscount.e500won:
+			case EDiscount.e1000won:	return 30;
+			case EDiscount.e2000won:	
+			case EDiscount.e5000won:	return 25;
+			case EDiscount.eAll:		return 20;
+			default:					return 20;
+			}
+		}
+	}
+	// ------------------Set Difficulty------------------
 
 	public static int GamePlayCnt = 0;
 	public static short GameDiscountWon = -1;	   
@@ -48,10 +151,6 @@ public partial class Info : MonoBehaviour {
     public static ECustomerType ECustomer = ECustomerType.MAN;
 
     public static int orderCnt = 0;
-
-	// TokyoLive Info
-	public static int tokyoLiveCnt = 0;
-    public static bool showTokyoLive = false;
 
     public static bool RunInGameScene = false;
 
@@ -84,57 +183,7 @@ public partial class Info : MonoBehaviour {
 	{
 		GameObject objSelected = EventSystem.current.currentSelectedGameObject;
 		return objSelected != null && objSelected.GetComponent<InputField> () != null;
-	}
-
-	public static void UpdateTokyoLiveTime()
-	{
-		if (tokyoLiveCnt >= TOKYOLIVE_MAX_COUNT)
-			return;
-
-		if (UIManager.Instance.IsActive (eUI.eTokyoLive))
-			return;
-
-        if (CheckGameScene(SceneManager.GetActiveScene().name))
-            return;
-
-		_CheckTokyoLivePrevStart ();
-	}
-
-	static void _CheckTokyoLivePrevStart()
-	{
-		if (_GetTokyoLivePrevTime (TOKYOLIVE_START_TIME [0]) ||
-		    _GetTokyoLivePrevTime (TOKYOLIVE_START_TIME [1])) {
-			if (UIManager.Instance.IsActive (eUI.eTokyoLive))
-				return;
-
-			GameObject obj = UIManager.Instance.Show (eUI.eTokyoLive);
-			PageTokyoLive page = obj.GetComponent<PageTokyoLive> ();
-			if (page)
-				page.PrevSet ();
-		}
-	}
-
-	static bool _GetTokyoLivePrevTime(int startTime)
-	{
-		bool prevStart = false;
-
-		int min = DateTime.Now.Minute;
-		int sec = DateTime.Now.Second;
-
-		int prevMin = startTime == 0 ? 59 : startTime - 1;
-		if (prevMin == min && sec == 60 - TOKYOLIVE_PREV_SEC)
-			prevStart = true;
-
-		return prevStart;
-	}
-
-	public static bool IsStartTokyoLiveTime()
-	{
-		int min = DateTime.Now.Minute;
-		int sec = DateTime.Now.Second;
-		return sec == 0 &&
-		(min == TOKYOLIVE_START_TIME [0] || min == TOKYOLIVE_START_TIME [1]);
-	}
+	}		
 
 	public static int GetGameCntByMenuType(EMenuType eType)
 	{
@@ -190,10 +239,7 @@ public partial class Info : MonoBehaviour {
 		if (UIManager.Instance.IsActive (eUI.eSurprise))
 			return;
 
-		if (waitSurprise) {
-			if (showTokyoLive)
-				return;
-
+		if (waitSurprise) {			
 			if (CheckGameScene(SceneManager.GetActiveScene().name))
 				return;
 
@@ -290,4 +336,22 @@ public partial class Info : MonoBehaviour {
 	}
 
 	public static int TotalGameCount() { return 6; }
+
+	public static Color HexToColor(string hex)
+	{
+		if (hex.IndexOf ("#") > -1)
+			hex.Replace ("#", "");
+
+		if (hex.Length > 6) {
+			int start = hex.Length - 6;
+			hex = hex.Substring (start, 6);
+		}
+
+		int _hex = int.Parse (hex, System.Globalization.NumberStyles.AllowHexSpecifier);
+		int r = _hex >> 16;
+		int g = (_hex & 0x00ff00) >> 8;
+		int b = _hex & 0x0000ff;
+
+		return new Color (r / 255f, g / 255f, b / 255f);
+	}
 }

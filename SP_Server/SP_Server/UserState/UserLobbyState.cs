@@ -99,8 +99,7 @@ namespace SP_Server.UserState
                         }
                         else
                         {                            
-                            send_msg.push(owner.mainFrm.GetGameCount(tableNum));
-                            send_msg.push(owner.info.tokyoLiveCnt);
+                            send_msg.push(owner.mainFrm.GetGameCount(tableNum));                            
                             send_msg.push(owner.info.surpriseCnt);
 
                             send_msg.push(existUser ? 1 : 0);
@@ -485,19 +484,7 @@ namespace SP_Server.UserState
                         send_msg.push(tablePrice);
                         send_msg.push(tableDiscount);
 
-                        break;
-                    case PROTOCOL.TOKYOLIVE_REQ:
-                        tableNo = msg.pop_byte();
-                        if (owner.info.tokyoLiveCnt < Frm.TOKYO_MAX_CNT)
-                        {
-                            ++owner.info.tokyoLiveCnt;
-                            owner.mainFrm.DataUserInfoSave();
-                        }
-
-                        int tokyoLiveCnt = owner.info.tokyoLiveCnt;
-                        send_msg = CPacket.create((short)PROTOCOL.TOKYOLIVE_ACK);
-                        send_msg.push(tokyoLiveCnt);
-                        break;
+                        break;                    
                     case PROTOCOL.SURPRISE_REQ:
                         tableNo = msg.pop_byte();
                         --owner.info.surpriseCnt;

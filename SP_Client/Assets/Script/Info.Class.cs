@@ -60,8 +60,6 @@ public partial class Info : MonoBehaviour
         ECustomer = ECustomerType.MAN;
         GamePlayCnt = 0;
         GameDiscountWon = -1;
-		tokyoLiveCnt = 0;
-        showTokyoLive = false;
 		surpriseCnt = 0;
 		loopSurpriseRemainTime = 0f;
 		waitSurprise = false;

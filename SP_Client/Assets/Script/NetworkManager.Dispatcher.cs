@@ -52,7 +52,6 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         case PROTOCOL.GET_RANDOM_DISCOUNT_PROB_ACK: GetDiscountProb_ACK(msg);   	break;
         case PROTOCOL.SET_RANDOM_DISCOUNT_PROB_ACK: SetDiscountProb_ACK(msg);   	break;
         case PROTOCOL.TABLE_PRICE_CONFIRM_ACK:   	TablePriceConfirm_ACK(msg);    	break;
-		case PROTOCOL.TOKYOLIVE_ACK:				TokyoLive_ACK (msg);			break;
 		case PROTOCOL.SURPRISE_ACK:					Surprise_ACK (msg);				break;
 		case PROTOCOL.GAME_COUNT_INPUT_ACK:			GameCountInputACK ();			break;
 		case PROTOCOL.GAME_COUNT_INPUT_NOT:			GameCountInputNOT (msg);		break;
@@ -86,8 +85,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
             Info.TableNum = byte.Parse (pop_string);
             int gameCnt = msg.pop_int32 ();
             Info.AddGameCount(gameCnt, true);
-			Info.tokyoLiveCnt = msg.pop_int32 ();
-            Info.showTokyoLive = false;
+			        
 			Info.surpriseCnt = msg.pop_int32 ();
 			Info.waitSurprise = false;
 
@@ -360,15 +358,6 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
     void TableDiscountInputACK(CPacket msg)
     {
-        bool isSend = System.Convert.ToBoolean(msg.pop_byte());
-        if (isSend == false)
-        {
-            GameObject objTokyo = UIManager.Instance.GetUI(eUI.eTokyoLive);
-            PageTokyoLive pageTokyo = objTokyo.GetComponent<PageTokyoLive> ();
-            pageTokyo.OnClose();
-            return;
-        }
-
         AdminTableDiscountInput.Instance.OnClose();
     }
 
@@ -399,14 +388,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         int tableDiscount = msg.pop_int32();
 
         PageAdmin.Instance.ShowTableDiscountInput(tableNo, tablePrice, tableDiscount);
-    }
-
-	void TokyoLive_ACK(CPacket msg)
-	{
-		Info.tokyoLiveCnt = msg.pop_int32();
-		if (PageTokyoLive.Instance)
-			PageTokyoLive.Instance.OnStart ();
-	}
+    }		
 
 	void Surprise_ACK(CPacket msg)
 	{

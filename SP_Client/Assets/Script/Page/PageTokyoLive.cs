@@ -71,13 +71,6 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 
 		UIManager.Instance.PlayMusic (UIManager.Instance.clipTokyoLive, 3f);
 
-		if (cheat) {
-			Info.tokyoLiveCnt += 1;
-			countDownPrev.Set (Info.TOKYOLIVE_PREV_SEC, () => OnStart ());
-		}
-		else
-			countDownPrev.Set (Info.TOKYOLIVE_PREV_SEC, () => NetworkManager.Instance.TokyoLive_REQ ());
-
 		_Init ();
 	}
 
@@ -144,7 +137,7 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 
         yield return new WaitForSeconds(.5f);
 
-		int firstDescIdx = Info.tokyoLiveCnt - 1;
+		int firstDescIdx = 0;
 		yield return StartCoroutine (_ShowPrevDesc (first_desc[firstDescIdx]));
 		yield return new WaitForSeconds(1f);
 		yield return StartCoroutine (_ShowQuestion ());
@@ -291,8 +284,6 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 	{
 		UITweenAlpha.Start (gameObject, 1f, 0f, TWParam.New (1f).Curve (TWCurve.CurveLevel2).Speed (TWSpeed.Slower));
 		yield return new WaitForSeconds (.8f);
-
-		UIManager.Instance.Hide (eUI.eTokyoLive);
 
 		imgReady.fillAmount = 1f;
 		objDecoText.SetActive (true);

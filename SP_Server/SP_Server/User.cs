@@ -18,8 +18,7 @@ namespace SP_Server
         public byte customerType;
         public GameInfo gameInfo;
         public List<SendMenu> menus;
-        public int discount;
-        public int tokyoLiveCnt;
+        public int discount;        
         public int surpriseCnt;
         public int saveSurpriseCnt;
 
@@ -30,8 +29,7 @@ namespace SP_Server
             this.customerType = 0;
             this.gameInfo = new GameInfo();
             this.menus = new List<SendMenu>();
-            this.discount = 0;
-            this.tokyoLiveCnt = 0;
+            this.discount = 0;            
             this.surpriseCnt = 0;
             this.saveSurpriseCnt = 0;
         }
@@ -43,8 +41,7 @@ namespace SP_Server
             this.customerType = 0;
             this.gameInfo = new GameInfo();
             this.menus = new List<SendMenu>();
-            this.discount = 0;
-            this.tokyoLiveCnt = 0;
+            this.discount = 0;            
             this.surpriseCnt = 0;
             this.saveSurpriseCnt = 0;
         }
@@ -56,8 +53,7 @@ namespace SP_Server
             this.customerType = customerType;
             this.gameInfo = new GameInfo();
             this.menus = new List<SendMenu>();
-            this.discount = 0;
-            this.tokyoLiveCnt = 0;
+            this.discount = 0;            
             this.surpriseCnt = 0;
             this.saveSurpriseCnt = 0;
         }
@@ -78,8 +74,7 @@ namespace SP_Server
                 this.menus.Add(sendMenu);
             }
 
-            this.discount = target.discount;
-            this.tokyoLiveCnt = target.tokyoLiveCnt;
+            this.discount = target.discount;            
             this.surpriseCnt = target.surpriseCnt;
             this.saveSurpriseCnt = target.saveSurpriseCnt;
         }

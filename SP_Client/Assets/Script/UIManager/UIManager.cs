@@ -15,7 +15,6 @@ public enum eUI
 	eWaiting        = 5,
     eHowToUse,
     eShowLog,
-	eTokyoLive,
 	eSurprise,
 	eDiscountAni,
 
@@ -113,11 +112,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 			elapsedTime = 0f;	
 			waiting = true;		
 			break;
-		case eUI.eShowLog:		break;
-        case eUI.eTokyoLive:    
-			Info.showTokyoLive = true; 	
-			curUI = page;	
-			break;
+		case eUI.eShowLog:		break;        
 		case eUI.eSurprise:
 			Info.waitSurprise = false;
 			Info.loopSurpriseRemainTime = 0f;
@@ -137,9 +132,12 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 	public void Hide(eUI page)
 	{
 		switch (page) {
-		case eUI.eWaiting:		elapsedTime = 0f;	waiting = false;	break;
-		case eUI.eShowLog:		break;
-        case eUI.eTokyoLive:    Info.showTokyoLive = false; curUI = eUI.eNone;	break;
+		case eUI.eWaiting:		
+			elapsedTime = 0f;	
+			waiting = false;	
+			break;
+		case eUI.eShowLog:		
+			break;        
 		default:
 			curUI = eUI.eNone;
 			objShadow.SetActive (false);
@@ -251,20 +249,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 				Info.GamePlayCnt += 1;
 				if (Info.isCheckScene ("Game"))
 					((PageGame)PageBase.Instance).RefreshPlayCnt ();
-			}
-
-			if (Input.GetKeyDown (KeyCode.T)) {
-				if (Info.tokyoLiveCnt >= Info.TOKYOLIVE_MAX_COUNT)
-					return;
-
-				if (UIManager.Instance.IsActive (eUI.eTokyoLive))
-					return;
-
-				GameObject obj = UIManager.Instance.Show (eUI.eTokyoLive);
-				PageTokyoLive page = obj.GetComponent<PageTokyoLive> ();
-				if (page)
-					page.PrevSet (true);
-			}
+			}				
 
 			if (Input.GetKeyDown (KeyCode.S)) {
 				GameObject obj = UIManager.Instance.Show (eUI.eSurprise);
@@ -316,10 +301,8 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 			click.ShowClickStar(Input.mousePosition);
 		}
 
-		if (Info.TableNum != (byte)0 && Info.isCheckScene ("Login") == false) {
-			Info.UpdateTokyoLiveTime ();
+		if (Info.TableNum != (byte)0 && Info.isCheckScene ("Login") == false)			
 			Info.UpdateSurpriseRemainTime ();
-		}
     }
 
 	public void PlaySound()
