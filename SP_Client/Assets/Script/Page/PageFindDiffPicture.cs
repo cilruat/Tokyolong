@@ -21,7 +21,12 @@ public class PageFindDiffPicture : SingletonMonobehaviour<PageFindDiffPicture> {
 	public GameObject objHide;
 	public GameObject objGrpPic;
 
+	public Transform trThree;
 	public Transform trFive;
+	public Transform trSix;
+	public Transform trSeven;
+	public Transform trEight;
+	public Transform trTen;
 
 	Image imgLeft;
 	Image imgRight;
@@ -38,33 +43,54 @@ public class PageFindDiffPicture : SingletonMonobehaviour<PageFindDiffPicture> {
 
 	void Awake()
 	{
-		if (Info.GameDiscountWon == -1)
-			Info.GameDiscountWon = 0;
+		finishLimitTime = Info.FIND_DIFF_PICTURE_LIMIT_TIME;
+		txtTime.text = Info.practiceGame ? "∞" : finishLimitTime.ToString ();
+
+		if (Info.GameDiscountWon == -1) {
+			Info.GameDiscountWon = 2;
+
+			if (objStart.activeSelf == false) {
+				tapToStart = true;
+				isStart = true;
+
+				if (Info.practiceGame == false)
+					limitTime.Set (finishLimitTime, () => _FailEndGame ());
+
+				CanvasGroup cv = objHide.GetComponent<CanvasGroup> ();
+				cv.blocksRaycasts = false;
+			}
+		}			
 
 		rtImgTime = imgTime.rectTransform;
 		timeSize = rtImgTime.rect.width;
 
 		Transform tr = null;
 		switch (Info.GameDiscountWon) {
+		case (short)EDiscount.e500won:		tr = trThree;	finish = 3;		break;
 		case (short)EDiscount.e1000won:		tr = trFive;	finish = 5;		break;
+		case (short)EDiscount.e2000won:		tr = trSix;		finish = 6;		break;
+		case (short)EDiscount.e5000won:
+			int rand = Random.Range (0, 2);
+			tr = rand == 0 ? trSeven : trEight;
+			finish = rand == 0 ? 7 : 8;
+			break;
+		case (short)EDiscount.eAll:			tr = trTen;		finish = 10;	break;
 		}
 
-		int rand = Random.Range (0, tr.childCount);
+		int randPic = Random.Range (0, tr.childCount);
 		Transform findPicture = null;
 
 		for (int i = 0; i < tr.childCount; i++) {
-			if (i != rand)
+			if (i != randPic)
 				continue;
 
 			findPicture = tr.GetChild (i);
+			findPicture.gameObject.SetActive (true);
 			break;
 		}
 
 		_SetAnswer (true, findPicture);
 		_SetAnswer (false, findPicture);
-
-		finishLimitTime = Info.FIND_DIFF_PICTURE_LIMIT_TIME;
-		txtTime.text = Info.practiceGame ? "∞" : finishLimitTime.ToString ();
 
 		_RefreshCount (0);
 		objQuit.SetActive (Info.practiceGame);
