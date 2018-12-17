@@ -40,6 +40,8 @@ public class PageBase : SingletonMonobehaviour<PageBase> {
 			ue.AddListener (acFinal);
 		}
 
+		change = Mathf.Clamp (change, 0, boards.Length - 1);
+
 		Info.AnimateChangeObj (boards [curBoardIdx], boards [change], ue);
 		curBoardIdx = change;
 	}

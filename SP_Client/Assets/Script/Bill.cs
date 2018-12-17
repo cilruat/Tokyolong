@@ -230,7 +230,7 @@ public class Bill : MonoBehaviour {
 
 	void _OrderState(bool complete)
 	{
-		GameObject obj = UIManager.Instance.GetCurUI ();
+		GameObject obj = UIManager.Instance.GetUI (eUI.eBillSending);
 		if (obj == null)
 			return;
 
