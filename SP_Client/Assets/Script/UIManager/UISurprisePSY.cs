@@ -5,22 +5,27 @@ using UnityEngine.UI;
 
 public class UISurprisePSY : MonoBehaviour {
 
+	static public short PROGRESS = -1;
+
 	public SpriteRenderer sprite;
 	public Text txtDiscount;
 
-	int discount = 0;
+	short discount = 0;
 
 	public void PrevSet()
 	{
-		/*float randDiscount = Random.Range (0f, 1f);
-		if (randDiscount <= .9f)	discount = 1000;
-		else						discount = 2000;
+		++PROGRESS;
+		if (PROGRESS > 4)
+			PROGRESS = 4;
 
-		Debug.Log ("discount: " + discount + ", rand: " + randDiscount);*/
+		switch (PROGRESS) {
+		case 0:		discount = 500;		break;
+		case 1:		discount = 1000;	break;
+		case 2:		discount = 2000;	break;
+		case 3:		discount = 5000;	break;
+		}
 
-		discount = 1000;
-		Info.GameDiscountWon = discount == 1000 ? (short)EDiscount.e1000won : (short)EDiscount.e2000won;
-		txtDiscount.text = discount.ToString () + "￦";
+		txtDiscount.text = discount == 4 ? "전액" : discount.ToString () + "￦";
 
 		StartCoroutine (_OnShow (true));
 		UIManager.Instance.PlayMusic (UIManager.Instance.clipSurprise, 3f);
@@ -29,17 +34,12 @@ public class UISurprisePSY : MonoBehaviour {
 
 	public void OnStart()
 	{
-		int range = discount == 1000 ? Info.TotalGameCount () : 4;
-		int randGame = Random.Range (0, range);
-
-		_GoGame (randGame);
-	}
-
-	void _GoGame(int idx)
-	{
+		Info.GameDiscountWon = PROGRESS;
 		OnClose ();
-		Info.PlayGame (idx, gameObject);
-	}
+
+		int randGame = Random.Range (0, Info.TotalGameCount ());
+		Info.PlayGame (randGame, gameObject);
+	}		
 
 	public void OnClose()
 	{		
