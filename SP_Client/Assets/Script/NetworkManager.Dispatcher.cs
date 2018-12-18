@@ -231,6 +231,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
 	void GameDiscountACK(CPacket msg)
 	{
+		UISurprisePSY.Init ();
+
 		GameObject obj = UIManager.Instance.Show (eUI.eDiscountAni);
 		UIDiscountAnimation ui = obj.GetComponent<UIDiscountAnimation> ();
 		ui.SendREQ ();

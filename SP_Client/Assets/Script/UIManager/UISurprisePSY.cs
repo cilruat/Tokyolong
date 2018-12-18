@@ -5,12 +5,15 @@ using UnityEngine.UI;
 
 public class UISurprisePSY : MonoBehaviour {
 
-	static public short PROGRESS = -1;
+	static short PROGRESS = -1;
 
 	public SpriteRenderer sprite;
 	public Text txtDiscount;
 
-	short discount = 0;
+	static public void Init()
+	{
+		PROGRESS = -1;
+	}		
 
 	public void PrevSet()
 	{
@@ -18,6 +21,7 @@ public class UISurprisePSY : MonoBehaviour {
 		if (PROGRESS > 4)
 			PROGRESS = 4;
 
+		short discount = 0;
 		switch (PROGRESS) {
 		case 0:		discount = 500;		break;
 		case 1:		discount = 1000;	break;

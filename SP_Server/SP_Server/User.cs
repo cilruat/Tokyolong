@@ -16,7 +16,7 @@ namespace SP_Server
         public int tableNum;
         public byte peopleCnt;
         public byte customerType;
-        public GameInfo gameInfo;
+        public int gameCnt;
         public List<SendMenu> menus;
         public int discount;        
         public int surpriseCnt;
@@ -26,8 +26,8 @@ namespace SP_Server
         {
             this.tableNum = -1;
             this.peopleCnt = 1;
-            this.customerType = 0;
-            this.gameInfo = new GameInfo();
+            this.customerType = 0;            
+            this.gameCnt = 0;
             this.menus = new List<SendMenu>();
             this.discount = 0;            
             this.surpriseCnt = 0;
@@ -38,8 +38,8 @@ namespace SP_Server
         {
             this.tableNum = tableNum;
             this.peopleCnt = 1;
-            this.customerType = 0;
-            this.gameInfo = new GameInfo();
+            this.customerType = 0;            
+            this.gameCnt = 0;
             this.menus = new List<SendMenu>();
             this.discount = 0;            
             this.surpriseCnt = 0;
@@ -50,8 +50,8 @@ namespace SP_Server
         {
             this.tableNum = tableNum;
             this.peopleCnt = peopleCnt;
-            this.customerType = customerType;
-            this.gameInfo = new GameInfo();
+            this.customerType = customerType;            
+            this.gameCnt = 0;
             this.menus = new List<SendMenu>();
             this.discount = 0;            
             this.surpriseCnt = 0;
@@ -62,9 +62,8 @@ namespace SP_Server
         {
             this.tableNum = tableNum;
             this.peopleCnt = target.peopleCnt;
-            this.customerType = target.customerType;
-            this.gameInfo = new GameInfo();
-            this.gameInfo.gameCnt = target.gameInfo.gameCnt;
+            this.customerType = target.customerType;            
+            this.gameCnt = target.gameCnt;
             
             this.menus = new List<SendMenu>();
             for (int i = 0; i < target.menus.Count; i++)
@@ -116,7 +115,7 @@ namespace SP_Server
 
         public void AddGameCount(int cnt)
         {
-            SetGameCount(gameInfo.gameCnt + cnt);
+            SetGameCount(this.gameCnt + cnt);
         }
 
         public void SetGameCount(int cnt)
@@ -124,12 +123,12 @@ namespace SP_Server
             if (cnt < 0)        cnt = 0;
             else if (cnt > 50)  cnt = 50;
 
-            gameInfo.gameCnt = cnt;
+            this.gameCnt = cnt;
         }
 
         public int GetGameCount()
         {
-            int cnt = gameInfo.gameCnt;
+            int cnt = this.gameCnt;
 
             if (cnt < 0)        cnt = 0;
             else if (cnt > 50)  cnt = 50;
