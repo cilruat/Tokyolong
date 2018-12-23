@@ -17,6 +17,7 @@ public enum eUI
     eShowLog,
 	eSurprise,
 	eDiscountAni,
+	eTokyoLive 		= 10,
 
 	eNone = 100,
 }
@@ -277,6 +278,13 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 					UIDiscountAnimation ui = obj.GetComponent<UIDiscountAnimation>();
 					ui.TestAnimating();
 				}					
+			}
+
+			if(Input.GetKeyDown(KeyCode.T))
+			{
+				GameObject obj = Show (eUI.eTokyoLive);
+				PageTokyoLive ui = obj.GetComponent<PageTokyoLive>();
+				ui.PrevSet();
 			}
             #endif
 		}

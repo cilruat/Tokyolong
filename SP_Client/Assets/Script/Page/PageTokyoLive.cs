@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
    
+	public Text txtDiscount;
 	public Text txtDesc;
     public Text txtQuesiton;
     public Text[] txtChoice; 
@@ -28,10 +29,7 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 	const int LIMIT_TIME_SELECT = 2;
 	const int LIMIT_PREV_TIME = 60;
 
-	string[] first_desc = {
-		"도쿄라이브 대손님퀴즈쇼~\n\n총 2문제가 출제가 되는데\n모두 맞추셔야\n할인이 적용됩니다.\n\n한문제라도 틀리면 즉시 종료!!\n\n그럼 첫번째 문제 나갑니다\n\n고고고!!!",
-		"\n다시 찾아온 도쿄라이브~~\n\n이번에도 모든 문제\n다 맞추실수 있죠~?\n\n그럼 화이팅있게\n첫번째 문제 나갑니다\n\n고고고!!!",
-		"이번이 마지막 퀴즈 할인~~\n\n계속 할인받으신 손님은\n여전히 이번에도 할인 가즈아!!\n\n아니신 손님은\n이번만이라도 흑흑 ㅠㅠ\n\n그럼 첫번째 문제 나갑니다\n\n고고고!!!"};
+	string first_desc = "도쿄라이브 대손님퀴즈쇼~\n\n총 2문제가 출제가 되는데\n모두 맞추셔야\n할인이 적용됩니다.\n\n한문제라도 틀리면 즉시 종료!!\n\n그럼 첫번째 문제 나갑니다\n\n고고고!!!";
 	string[] desc = {		
 		"\n\n역시 대단하시네요~~\n\n바로 이어서\n두번째 문제 나갑니다\n\n고고고!!!",
 		"\n\n\n정말 잘 푸셨어요~\n\n할인 적용됩니다^^*",
@@ -47,36 +45,64 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
     int answer1 = 0;
     int answer2 = 0;
 	int selectAnswer = 0;
-
-    void Awake()
-    {
-		#if UNITY_ANDROID
-		string path = Application.streamingAssetsPath + "/TokyoLive_QuestionBook.csv";
-		#else
-        string path = Application.dataPath;
-        int lastIdx = path.LastIndexOf(@"/");
-        path = path.Substring(0, lastIdx) + @"\Info\TokyoLive_QuestionBook.csv";
-		#endif
-
-        data = CSVReader.Read(path);
-    }
-
+	    
 	public void PrevSet(bool cheat = false)
 	{
 		UITweenAlpha.Start (gameObject, 0f, 1f, TWParam.New (1f).Curve (TWCurve.CurveLevel2).Speed (TWSpeed.Slower));
+		UIManager.Instance.PlayMusic (UIManager.Instance.clipTokyoLive, 3f);
 
-		_RandQuestion(ref question1, ref answer1);
-		_RandQuestion(ref question2, ref answer2);
-
-		showTime = false;
 		nextQuestion = false;
 
 		curStage = 1;
 		selectAnswer = 0;
 
-		UIManager.Instance.PlayMusic (UIManager.Instance.clipTokyoLive, 3f);
-
 		_Init ();
+
+		#if UNITY_EDITOR
+		if (Info.GameDiscountWon == -1)
+			Info.GameDiscountWon = (short)Random.Range(0, 5);
+		#endif
+
+		_CollectQuestion (Info.GameDiscountWon);
+		_RandQuestion(ref question1, ref answer1);
+		_RandQuestion(ref question2, ref answer2);
+
+		string descDiscount = "";
+		switch ((EDiscount)Info.GameDiscountWon) {
+		case EDiscount.e500won:		descDiscount = "500￦";		break;
+		case EDiscount.e1000won:	descDiscount = "1000￦";	break;
+		case EDiscount.e2000won:	descDiscount = "2000￦";	break;
+		case EDiscount.e5000won:	descDiscount = "5000￦";	break;
+		case EDiscount.eAll:		descDiscount = "전액할인";	break;
+		}
+
+		txtDiscount.text = descDiscount;
+		countDownPrev.Set (3, () => OnStart ());
+	}
+
+	void _CollectQuestion(int diffculty)
+	{
+		#if UNITY_ANDROID
+		string path = Application.streamingAssetsPath + "/TokyoLive_QuestionBook.csv";
+		#else
+		string path = Application.dataPath;
+		int lastIdx = path.LastIndexOf(@"/");
+		path = path.Substring(0, lastIdx) + @"\Info\TokyoLive_QuestionBook.csv";
+		#endif
+
+		List<Dictionary<string, object>> q = new List<Dictionary<string, object>>();
+		q = CSVReader.Read(path);
+
+		diffculty += 1;
+		for (int i = 0; i < q.Count; i++) {
+			int diff = int.Parse (q [i] ["Difficulty"].ToString ());
+			if (diff != diffculty)
+				continue;
+
+			data.Add (q [i]);
+		}
+
+		Debug.Log ("Data Count: " + data.Count);
 	}
 
 	void Update()
@@ -102,8 +128,10 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 		showTime = false;
 		txtQuesiton.text = "";
 		selectAnswer = 0;
+		data.Clear ();
 
 		txtDesc.text = "";
+		txtDiscount.text = "";
 		Color descColor = txtDesc.color;
 		txtDesc.color = new Color (descColor.r, descColor.g, descColor.b, 1f);
 		txtDesc.gameObject.SetActive (true);
@@ -129,6 +157,7 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
     IEnumerator _Start()
     {
 		objDecoText.SetActive (false);
+
 		while (true) {
 			imgReady.fillAmount -= Time.deltaTime * 2f;
 			if (imgReady.fillAmount <= 0f)
@@ -137,13 +166,14 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 			yield return null;
 		}
 
+		txtDiscount.text = "";
+
         yield return new WaitForSeconds(.5f);
         UITweenAlpha.Start(objBoard, 0f, 1f, TWParam.New(1f).Curve(TWCurve.CurveLevel2));
 
         yield return new WaitForSeconds(.5f);
 
-		int firstDescIdx = 0;
-		yield return StartCoroutine (_ShowPrevDesc (first_desc[firstDescIdx]));
+		yield return StartCoroutine (_ShowPrevDesc (first_desc));
 		yield return new WaitForSeconds(1f);
 		yield return StartCoroutine (_ShowQuestion ());
 
@@ -205,21 +235,12 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
         if (rand >= data.Count)
             rand -= (rand - data.Count + 1);
 
-        Dictionary<string, object> randQuestion = data[rand];
-
-        int idx = 0;
-        foreach (object obj in randQuestion.Values)
-        {
-            if (idx == randQuestion.Values.Count - 1)
-            {
-                string s = obj.ToString();
-                answer = int.Parse(s);
-            }
-            else
-                question[idx] = obj.ToString();
-            ++idx;
-        }
-
+		question [0] = data [rand] ["Question"].ToString ();
+		question [1] = data [rand] ["Choice1"].ToString ();
+		question [2] = data [rand] ["Choice2"].ToString ();
+		question [3] = data [rand] ["Choice3"].ToString ();
+		answer = int.Parse (data [rand] ["Answer"].ToString ());
+		        
         data.RemoveAt(rand);
     }
 
@@ -292,6 +313,7 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 
 		imgReady.fillAmount = 1f;
 		objDecoText.SetActive (true);
+		UIManager.Instance.Hide (eUI.eTokyoLive);
 	}
 
 	public void OnSelect(int answer)
