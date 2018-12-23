@@ -53,8 +53,9 @@ namespace SP_Server
 
         Random random;
         
-        public List<float> listDiscountProb = new List<float>() { 0.25f, 0.25f, 0.25f, 0.25f };
-        float Discount3Prob { get { return listDiscountProb[3]; } }
+        public List<float> listDiscountProb = new List<float>() { 0.2f, 0.2f, 0.2f, 0.2f, 0.2f };
+        float Discount4Prob { get { return listDiscountProb[4]; } }
+        float Discount3Prob { get { return (Discount4Prob + listDiscountProb[3]); } }
         float Discount2Prob { get { return (Discount3Prob + listDiscountProb[2]); } }
         float Discount1Prob { get { return (Discount2Prob + listDiscountProb[1]); } }
         float Discount0Prob { get { return (Discount1Prob + listDiscountProb[0]); } }        
@@ -603,7 +604,8 @@ namespace SP_Server
             short discountIdx = 0;
 
             float prob = (float)random.NextDouble();
-            if (prob < Discount3Prob)       discountIdx = (short)3;
+            if (prob < Discount4Prob)       discountIdx = (short)4;
+            else if (prob < Discount3Prob)  discountIdx = (short)3;
             else if (prob < Discount2Prob)  discountIdx = (short)2;
             else if (prob < Discount1Prob)  discountIdx = (short)1;
             else if (prob < Discount0Prob)  discountIdx = (short)0;
@@ -613,7 +615,7 @@ namespace SP_Server
 
         public void SetDiscountProb(List<float> list)
         {
-            if (list.Count != 4)
+            if (list.Count != 5)
                 return;
 
             listDiscountProb.Clear();
