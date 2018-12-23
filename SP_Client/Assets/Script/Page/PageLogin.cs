@@ -6,10 +6,11 @@ using UnityEngine.Events;
 
 public class PageLogin : PageBase {
 
-	public InputField inputTable;
 	public Text txtSuccess;
 	public GameObject objLoginBox;
     public CanvasGroup[] cgBoards;
+
+	public InputField inputTable;
 
     string IP = "";
     string PORT = "";
@@ -26,29 +27,50 @@ public class PageLogin : PageBase {
 		base.acFinal = _EnterCustomer;
 		base.acFinalIdx = 2;
 
-        string path = Application.dataPath;
-        int lastIdx = path.LastIndexOf(@"/");
-        path = path.Substring(0, lastIdx) + @"\Info\tableNo.txt";
+		#if UNITY_ANDROID
+		tableNo = PlayerPrefs.GetString ("set_table_no");
+		if (string.IsNullOrEmpty (tableNo))
+			inputTable.gameObject.SetActive (true);
+		else
+		#endif
+			_DataLoad ();
+	}
+
+	void _DataLoad()
+	{
+		#if UNITY_ANDROID
+		inputTable.gameObject.SetActive (false);
+
+		string path = Application.streamingAssetsPath + "/ServerInfo.txt";
+		string server = System.IO.File.ReadAllText(path);
+
+		if (string.IsNullOrEmpty(server))
+		txtSuccess.text = "텍스트 파일을 읽어오지 못했습니다";
+		#else
+		string path = Application.dataPath;
+		int lastIdx = path.LastIndexOf(@"/");
+		path = path.Substring(0, lastIdx) + @"\Info\tableNo.txt";
 		tableNo = System.IO.File.ReadAllText (path);
 
-        path = Application.dataPath;
-        lastIdx = path.LastIndexOf(@"/");
-        path = path.Substring(0, lastIdx) + @"\Info\ServerInfo.txt";
-        string server = System.IO.File.ReadAllText(path);
+		path = Application.dataPath;
+		lastIdx = path.LastIndexOf(@"/");
+		path = path.Substring(0, lastIdx) + @"\Info\ServerInfo.txt";
+		string server = System.IO.File.ReadAllText(path);
 
-        if (string.IsNullOrEmpty(tableNo) || string.IsNullOrEmpty(server))
-            txtSuccess.text = "텍스트 파일을 읽어오지 못했습니다";
-        else
-        {
-            string[] LINE_SPLIT_RE = { "\r\n", "\n\r", "\n", "\r" };
-            string[] serverInfo = server.Split(LINE_SPLIT_RE, System.StringSplitOptions.RemoveEmptyEntries);
-            IP = serverInfo[0];
-            PORT = serverInfo[1];
+		if (string.IsNullOrEmpty(tableNo) || string.IsNullOrEmpty(server))
+			txtSuccess.text = "텍스트 파일을 읽어오지 못했습니다";
+		#endif
+		else
+		{
+			string[] LINE_SPLIT_RE = { "\r\n", "\n\r", "\n", "\r" };
+			string[] serverInfo = server.Split(LINE_SPLIT_RE, System.StringSplitOptions.RemoveEmptyEntries);
+			IP = serverInfo[0];
+			PORT = serverInfo[1];
 
 			_ShowLoginBox ();
-        }
+		}
 
-        MenuData.Load();
+		MenuData.Load();
 	}
 
 	void _ShowLoginBox()
@@ -148,4 +170,15 @@ public class PageLogin : PageBase {
         OnNext();
         waitRoutine = null;
     }
+
+	public void OnSetTableNo()
+	{		
+		string table = inputTable.text;
+		if (string.IsNullOrEmpty (table) == false) {
+			PlayerPrefs.SetString ("set_table_no", table);
+			tableNo = table;
+			_DataLoad ();
+		} else
+			SystemMessage.Instance.Add ("잘못된 테이블 번호입니다");
+	}
 }

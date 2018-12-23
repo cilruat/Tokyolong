@@ -190,10 +190,10 @@ public partial class Info : MonoBehaviour {
 		int cnt = 0;
 		switch (eType) {
 		case EMenuType.eTop:
-		case EMenuType.ePochakaya:
+		case EMenuType.eEasy:
 		case EMenuType.eIzakaya:
 		case EMenuType.eWomanTarget:
-		case EMenuType.eSashimiNFruit:
+		case EMenuType.eHappy:
 		case EMenuType.eSoup:			cnt = 2;	break;
 		}
 

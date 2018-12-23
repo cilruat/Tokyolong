@@ -6,7 +6,11 @@ using LitJson;
 
 public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 
+	#if JUNGGU
 	public const int TABLE_NUM = 41;
+	#elif BUCKGU
+	public const int TABLE_NUM = 50;
+	#endif
 
 	public GameObject page;
 	public RectTransform rtScrollTable;

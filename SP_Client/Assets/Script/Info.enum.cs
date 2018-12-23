@@ -17,10 +17,10 @@ public enum EMenuType : int
 	eNone = -1,
 	eTop = 0,		    // 탑메뉴
 	eMeal,			    // 밥&안주 식사
-	ePochakaya,			// 포차카야
+	eEasy,				// 간편안주
 	eIzakaya,			// 이자카야
 	eWomanTarget,    	// 여심저격
-	eSashimiNFruit = 5, // 회,과일
+	eHappy = 5, 		// 만원의 행복
     eSoup,              // 탕,전골
 	eSozu,              // 소주
 	eBear,              // 맥주
@@ -28,7 +28,7 @@ public enum EMenuType : int
     eFruitSozu = 10,    // 과일 소주
     eFruitMakgeolli,    // 과일 막걸리
     eGin,               // 고급진
-    eDrink,             // 음료&아이스크림
+	eDrink,             // 아이스크림&음료
 }
 
 public enum EMenuDetail : int
@@ -69,7 +69,7 @@ public enum EMenuDetail : int
 	eMenu34     = 34,
 	eMenu35     = 35,
 	eMenu36     = 36,
-    eNone       = 37,
+	eMenu37     = 37,
     eChamSozu               = 38,
     eChamiseul              = 39,
     eCheongha               = 40,
@@ -107,15 +107,12 @@ public enum EMenuDetail : int
     eChocoEmong             = 72,
     eStrawberryEmong        = 73,
 	ePear					= 74,
-	eHungaeSalmonSalad		= 75,
-	eBeefTadakki			= 76,
-	eBagirakSoup			= 77,
-	eMeal					= 78,
+	ePigBar					= 75,
+	eWaterMelonBar			= 76,
+	eMelonBar				= 77,
+	eScrewBar				= 78,
 	eSimsul12				= 79,
-	ePigBar					= 80,
-	eWaterMelonBar			= 81,
-	eMelonBar				= 82,
-	eScrewBar				= 83,
+	eMenu80					= 80,
 }
 
 /// <summary>
@@ -176,20 +173,20 @@ public partial class Info : MonoBehaviour {
         string title = "";
 		switch (eType) 
         {
-            case EMenuType.eTop:            title = "탑";          	break;
-            case EMenuType.eMeal:           title = "밥&사리";     	break;
-            case EMenuType.ePochakaya:      title = "포차카야";     break;
-            case EMenuType.eIzakaya:        title = "이자카야";     break;
-            case EMenuType.eWomanTarget:    title = "여심저격";     break;
-            case EMenuType.eSashimiNFruit:  title = "회&과일";      break;
-            case EMenuType.eSoup:           title = "탕&나베";      break;
-            case EMenuType.eSozu:           title = "소주";         break;
-            case EMenuType.eBear:           title = "맥주";         break;
-            case EMenuType.eSake:           title = "사케";         break;
-            case EMenuType.eFruitSozu:      title = "수제 과일 소주";   	break;
-            case EMenuType.eFruitMakgeolli: title = "수제 과일 막걸리타";	break;
-            case EMenuType.eGin:            title = "고급진";        		break;
-			case EMenuType.eDrink:          title = "아이스크림&음료";      break;
+        case EMenuType.eTop:            title = "탑";          	break;
+        case EMenuType.eMeal:           title = "밥&사리";     	break;
+		case EMenuType.eEasy:      		title = "간편안주";     break;
+        case EMenuType.eIzakaya:        title = "이자카야";     break;
+        case EMenuType.eWomanTarget:    title = "여심저격";     break;
+		case EMenuType.eHappy:  		title = "만원의행복";   break;
+        case EMenuType.eSoup:           title = "탕&나베";      break;
+        case EMenuType.eSozu:           title = "소주";         break;
+        case EMenuType.eBear:           title = "맥주";         break;
+        case EMenuType.eSake:           title = "사케";         break;
+        case EMenuType.eFruitSozu:      title = "수제 과일 소주";   	break;
+        case EMenuType.eFruitMakgeolli: title = "수제 과일 막걸리타";	break;
+        case EMenuType.eGin:            title = "고급진";        		break;
+		case EMenuType.eDrink:          title = "아이스크림&음료";      break;
         }
 
         return title;

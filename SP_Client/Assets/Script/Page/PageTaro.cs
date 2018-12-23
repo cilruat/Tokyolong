@@ -40,8 +40,13 @@ public class PageTaro : SingletonMonobehaviour<PageTaro> {
 	{
 		StartCoroutine (_DelayFirstShow ());
 
+		#if UNITY_ANDROID
+		_DataLoad ("/TaroLove.csv", true);
+		_DataLoad ("/TaroMoney.csv", false);
+		#else
 		_DataLoad (@"\Info\TaroLove.csv", true);
 		_DataLoad (@"\Info\TaroMoney.csv", false);
+		#endif
 	}
 
 	IEnumerator _DelayFirstShow()
@@ -74,10 +79,14 @@ public class PageTaro : SingletonMonobehaviour<PageTaro> {
 
 	void _DataLoad(string csv_path, bool isLove)
 	{
+		#if UNITY_ANDROID
+		string path = Application.streamingAssetsPath + csv_path;
+		#else
 		string path = Application.dataPath;
 		int lastIdx = path.LastIndexOf (@"/");
-
 		path = path.Substring(0, lastIdx) + csv_path;
+		#endif
+
 		List<Dictionary<string, object>> data = new List<Dictionary<string, object>>();
 		data = CSVReader.Read(path);
 

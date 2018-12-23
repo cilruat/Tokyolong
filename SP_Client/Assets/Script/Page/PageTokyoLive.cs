@@ -50,9 +50,14 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 
     void Awake()
     {
+		#if UNITY_ANDROID
+		string path = Application.streamingAssetsPath + "/TokyoLive_QuestionBook.csv";
+		#else
         string path = Application.dataPath;
         int lastIdx = path.LastIndexOf(@"/");
         path = path.Substring(0, lastIdx) + @"\Info\TokyoLive_QuestionBook.csv";
+		#endif
+
         data = CSVReader.Read(path);
     }
 

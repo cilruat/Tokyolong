@@ -29,9 +29,13 @@ public class MenuData
         if (loaded)
             return;
 
+		#if UNITY_ANDROID
+		string path = Application.streamingAssetsPath + "/Menu.csv";
+		#else
         string path = Application.dataPath;
         int lastIdx = path.LastIndexOf(@"/");
         path = path.Substring(0, lastIdx) + @"\Info\Menu.csv";
+		#endif
 
         List<Dictionary<string, object>> data = new List<Dictionary<string, object>>();
         data = CSVReader.Read(path);
