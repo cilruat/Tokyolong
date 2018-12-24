@@ -234,11 +234,12 @@ public class PagePairCards : SingletonMonobehaviour<PagePairCards> {
 		else {
 			objSendServer.SetActive (true);
 			yield return new WaitForSeconds (1f);
+			objSendServer.SetActive (true);
 
 			if (Info.TableNum == 0)
 				ReturnHome ();
 			else
-				NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+				Info.ShowResult ();
 		}			
 	}
 

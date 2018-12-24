@@ -49,27 +49,35 @@ public class UISurpriseResult : MonoBehaviour {
 		++Info.SURPRISE_STEP;
 		Info.GameDiscountWon = Info.SURPRISE_STEP;
 
-		OnClose ();
+		UIManager.Instance.MuteMusic ();
 		StartCoroutine (_OnStart ());
 	}
 
 	IEnumerator _OnStart()
 	{
-		yield return new WaitForSeconds (.8f);
+		UITweenAlpha.Start (gameObject, 1f, 0f, TWParam.New (1f).Curve (TWCurve.CurveLevel2).Speed (TWSpeed.Slower));
+		yield return new WaitForSeconds (.5f);
 
 		int randGame = Random.Range (0, Info.TotalGameCountWithTokyoLive ());
 		if (randGame == Info.TotalGameCountWithTokyoLive () - 1) {
 			GameObject obj = UIManager.Instance.Show (eUI.eTokyoLive);
 			PageTokyoLive ui = obj.GetComponent<PageTokyoLive> ();
 			ui.PrevSet ();
+
+			StartCoroutine (_OnFinishClose (false));
 		} else
 			Info.PlayGame (randGame, gameObject);
+
+		objMiddle.SetActive (false);
+		UIManager.Instance.Hide (eUI.eSurpriseResult);
 	}
 
 	public void OnClose()
 	{
-		if (Info.SURPRISE_STEP > -1)
+		if (Info.SURPRISE_STEP > -1) {
+			UITweenAlpha.Start (objMiddle, 1f, 0f, TWParam.New (1f).Curve (TWCurve.CurveLevel2).Speed (TWSpeed.Slower));
 			NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+		}
 		else
 			FinishClose ();
 	}
@@ -79,16 +87,18 @@ public class UISurpriseResult : MonoBehaviour {
 		_Init ();
 		Info.SURPRISE_STEP = -1;
 
-		StartCoroutine (_OnFinishClose ());
+		StartCoroutine (_OnFinishClose (true));
 	}
 
-	IEnumerator _OnFinishClose()
+	IEnumerator _OnFinishClose(bool afterBehavior)
 	{
 		UIManager.Instance.MuteMusic ();
 		UITweenAlpha.Start (gameObject, 1f, 0f, TWParam.New (1f).Curve (TWCurve.CurveLevel2).Speed (TWSpeed.Slower));
 		yield return new WaitForSeconds (1f);
 
-		Info.AfterDiscountBehavior ();
+		if (afterBehavior)
+			Info.AfterDiscountBehavior ();
+		
 		UIManager.Instance.Hide (eUI.eSurpriseResult);
 	}		
 }

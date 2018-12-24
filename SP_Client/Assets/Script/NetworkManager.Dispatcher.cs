@@ -218,22 +218,32 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         string menuPacking = msg.pop_string();
 		int discountPrice = msg.pop_int32();
 
-		if (UIManager.Instance.IsActive (eUI.eSurpriseResult)) {
+		if (UIManager.Instance.IsActive (eUI.eDiscountAni)) {
+			GameObject obj = UIManager.Instance.GetCurUI ();
+			UIDiscountAnimation uiResult = obj.GetComponent<UIDiscountAnimation> ();
+			uiResult.SetInfo (menuPacking, discountPrice);
+		} else if (UIManager.Instance.IsActive (eUI.eSurpriseResult)) {
 			GameObject obj = UIManager.Instance.GetCurUI ();
 			UISurpriseResult uiResult = obj.GetComponent<UISurpriseResult> ();
-			uiResult.uiDiscount.SetInfo(menuPacking, discountPrice);
+			uiResult.uiDiscount.SetInfo (menuPacking, discountPrice);
 		} else if (UIManager.Instance.IsActive (eUI.eBillDetail) == false) {
-			GameObject obj = UIManager.Instance.Show(eUI.eBillDetail);
-			UIBillDetail uiBillDetail = obj.GetComponent<UIBillDetail>();
-			uiBillDetail.SetBill(menuPacking, discountPrice);
-		}               
+			GameObject obj = UIManager.Instance.Show (eUI.eBillDetail);
+			UIBillDetail uiBillDetail = obj.GetComponent<UIBillDetail> ();
+			uiBillDetail.SetBill (menuPacking, discountPrice);
+		}         
     }
 
 	void GameDiscountACK(CPacket msg)
 	{
-		GameObject obj = UIManager.Instance.Show (eUI.eSurpriseResult);
-		UISurpriseResult uiResult = obj.GetComponent<UISurpriseResult> ();
-		uiResult.uiDiscount.SendREQ ();
+		if (Info.SURPRISE_STEP > -1) {
+			GameObject obj = UIManager.Instance.Show (eUI.eSurpriseResult);
+			UISurpriseResult uiResult = obj.GetComponent<UISurpriseResult> ();
+			uiResult.uiDiscount.SendREQ ();
+		} else {
+			GameObject obj = UIManager.Instance.Show (eUI.eDiscountAni);
+			UIDiscountAnimation ui = obj.GetComponent<UIDiscountAnimation> ();
+			ui.SendREQ ();
+		}
 	}
 
 	void RequestMusicListACK(CPacket msg)
@@ -255,7 +265,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
         string packing = msg.pop_string ();
 
-        if(UIManager.Instance.GetUI (eUI.eMusicRequest).activeSelf)
+		if(UIManager.Instance.IsActive (eUI.eMusicRequest))
         {
             GameObject obj = UIManager.Instance.GetUI (eUI.eMusicRequest);
             UIRequestMusic uiReqMusic = obj.GetComponent<UIRequestMusic> ();
@@ -283,7 +293,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     {
         int removeReqMusicID = msg.pop_int32();
 
-        if(UIManager.Instance.GetUI (eUI.eMusicRequest).activeSelf)
+		if(UIManager.Instance.IsActive (eUI.eMusicRequest))
         {
             GameObject obj = UIManager.Instance.GetUI(eUI.eMusicRequest);
             UIRequestMusic uiReqMusic = obj.GetComponent<UIRequestMusic> ();

@@ -223,7 +223,7 @@ public partial class Info : MonoBehaviour {
         orderCnt = Mathf.Clamp(value, GAMEPLAY_MIN_COUNT, GAMEPLAY_MAX_COUNT);
     }
 
-	const int SURPRISE_REMAIN_MIN = 20;
+	const int SURPRISE_REMAIN_MIN = 1;
 	public static int surpriseCnt = 0;
 	public static float loopSurpriseRemainTime = 0f;
 	public static bool waitSurprise = false;
@@ -244,6 +244,9 @@ public partial class Info : MonoBehaviour {
 			return;
 
 		if (waitSurprise) {			
+			if (SceneManager.GetActiveScene ().name == "Game")
+				return;
+			
 			if (CheckGameScene(SceneManager.GetActiveScene().name))
 				return;
 
@@ -253,7 +256,7 @@ public partial class Info : MonoBehaviour {
 
 		loopSurpriseRemainTime += Time.deltaTime;
 		if (SURPRISE_REMAIN_MIN <= Mathf.FloorToInt ((loopSurpriseRemainTime) / 60))
-			waitSurprise = true;
+			waitSurprise = true;		
 	}
 
 	public static bool CheckGameScene(string sceneName)
@@ -358,5 +361,16 @@ public partial class Info : MonoBehaviour {
 		int b = _hex & 0x0000ff;
 
 		return new Color (r / 255f, g / 255f, b / 255f);
+	}
+
+	public static void ShowResult()
+	{
+		if (Info.SURPRISE_STEP > -1) {
+			GameObject obj = UIManager.Instance.Show (eUI.eSurpriseResult);
+			UISurpriseResult ui = obj.GetComponent<UISurpriseResult>();
+			ui.Show();
+		}
+		else
+			NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
 	}
 }
