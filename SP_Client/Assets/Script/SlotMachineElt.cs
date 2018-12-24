@@ -15,7 +15,7 @@ public class SlotMachineElt : MonoBehaviour {
 
 	bool isAllAnimating = false;
 	bool isStopAnimating = false;
-	int stopIdx = -1;
+	int stopIdx = 0;
 	float StartPosY = 0f;
 	float CutlinePosY = 0f;
 
@@ -105,6 +105,9 @@ public class SlotMachineElt : MonoBehaviour {
 
 	IEnumerator _StopAni(bool isJackpot)
 	{
+		if (rtElts.Length > 0 && stopIdx >= rtElts.Length)
+			stopIdx = rtElts.Length - 1;
+
 		isStopAnimating = true;
 
 		if (rtElts != null) {

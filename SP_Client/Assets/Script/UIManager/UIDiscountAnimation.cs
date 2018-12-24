@@ -164,8 +164,12 @@ public class UIDiscountAnimation : MonoBehaviour {
 		UITweenAlpha.Start (gameObject, 1f, 0f, TWParam.New (1f).Curve (TWCurve.CurveLevel2).Speed (TWSpeed.Slower));
 		yield return new WaitForSeconds (.8f);
 
-		parent.FinishClose ();
-		UIManager.Instance.Hide (eUI.eSurpriseResult);
+		if (UIManager.Instance.IsActive (eUI.eSurpriseResult))
+			parent.FinishClose ();
+		else {
+			UIManager.Instance.Hide (eUI.eDiscountAni);
+			Info.AfterDiscountBehavior ();
+		}
 	}
 
 	float _GetMovedValue(float start, float end, float distance)

@@ -10,6 +10,7 @@ public class GameOver : MonoBehaviour {
 
 	void Start()
 	{
+		Info.SURPRISE_STEP = -1;
 		countDown.Set(3, () => _ReturnHome());
 	}
 

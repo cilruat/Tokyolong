@@ -18,6 +18,7 @@ public enum eUI
 	eSurpriseStart,
 	eSurpriseResult,
 	eTokyoLive		= 10,
+	eDiscountAni,
 
 	eNone = 100,
 }

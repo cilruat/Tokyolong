@@ -154,13 +154,13 @@ namespace CrashCat
 
 			UITweenAlpha.Start (objVictory, 1f, 0f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
 			UITweenAlpha.Start (objSendServer, 0f, 1f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
-
 			yield return new WaitForSeconds (1f);
+			UITweenAlpha.Start (objSendServer, 1f, 0f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
 
 			if (Info.TableNum == 0)
 				GameManager.instance.ReturnHome ();
 			else
-				NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+				Info.ShowResult ();
 		}
 
         public override string GetName()

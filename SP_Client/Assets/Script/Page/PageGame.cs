@@ -200,10 +200,12 @@ public class PageGame : PageBase {
 
 		curGame = stopIdx;
 
+		Debug.Log ("rtElts: " + rtElts.Length + ", stopIdx: " + stopIdx);
+
 		for (int i = 0; i < listSlotMachine.Count; i++) {
 			if (i == listSlotMachine.Count - 1) {
-				listSlotMachine [i].SetStopIdx (stopIdx);
 				listSlotMachine [i].SetElts (rtElts);
+				listSlotMachine [i].SetStopIdx (stopIdx);
 			}
 				
 			listSlotMachine [i].StopSlot (false);

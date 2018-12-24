@@ -18,7 +18,8 @@ public class UISurpriseStart : MonoBehaviour {
 		OnClose ();
 
 		int randGame = Random.Range (0, Info.TotalGameCountWithTokyoLive ());
-		if (randGame == Info.TotalGameCountWithTokyoLive () - 1) {
+		if(true){
+		//if (randGame == Info.TotalGameCountWithTokyoLive () - 1) {
 			GameObject obj = UIManager.Instance.Show (eUI.eTokyoLive);
 			PageTokyoLive ui = obj.GetComponent<PageTokyoLive>();
 			ui.PrevSet();

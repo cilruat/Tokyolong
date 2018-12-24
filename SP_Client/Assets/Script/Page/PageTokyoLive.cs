@@ -289,11 +289,14 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 
 			yield return new WaitForSeconds (1f);
 
-            if (Info.TableNum == 0)
-                OnClose();
-            else
-                NetworkManager.Instance.TableDiscountInput_REQ(Info.TableNum, 500);
+			if (Info.TableNum == 0)
+				OnClose ();
+			else {
+				OnClose ();
+				Info.ShowResult ();
+			}
 		} else {
+			Info.SURPRISE_STEP = -1;
 			yield return StartCoroutine (_ShowPrevDesc (desc [2]));
 			OnClose ();
 		}
