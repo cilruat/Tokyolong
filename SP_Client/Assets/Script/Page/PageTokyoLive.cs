@@ -77,7 +77,7 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 		}
 
 		txtDiscount.text = descDiscount;
-		countDownPrev.Set (3, () => OnStart ());
+		countDownPrev.Set (5, () => OnStart ());
 	}
 
 	void _CollectQuestion(int diffculty)

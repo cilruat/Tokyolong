@@ -223,20 +223,24 @@ public partial class Info : MonoBehaviour {
         orderCnt = Mathf.Clamp(value, GAMEPLAY_MIN_COUNT, GAMEPLAY_MAX_COUNT);
     }
 
-	const int SURPRISE_REMAIN_MIN = 30;
+	const int SURPRISE_REMAIN_MIN = 20;
 	public static int surpriseCnt = 0;
 	public static float loopSurpriseRemainTime = 0f;
 	public static bool waitSurprise = false;
+	public static short SURPRISE_STEP = -1;
 
 	public static void UpdateSurpriseRemainTime()
 	{
 		if (surpriseCnt <= 0)
 			return;
 
+		if (Info.SURPRISE_STEP > -1)
+			return;
+
 		if (NetworkManager.isSending)
 			return;
 
-		if (UIManager.Instance.IsActive (eUI.eSurprise))
+		if (UIManager.Instance.IsActive (eUI.eSurpriseStart))
 			return;
 
 		if (waitSurprise) {			
@@ -336,6 +340,7 @@ public partial class Info : MonoBehaviour {
 	}
 
 	public static int TotalGameCount() { return 6; }
+	public static int TotalGameCountWithTokyoLive() { return TotalGameCount () + 1;	}
 
 	public static Color HexToColor(string hex)
 	{

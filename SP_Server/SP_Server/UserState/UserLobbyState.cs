@@ -357,15 +357,7 @@ namespace SP_Server.UserState
                         {
                             User other = owner.mainFrm.ListUser[i];
                             if (other.tableNum != reqOrderTableNo)
-                                continue;
-
-                            int tableTotalPrice = owner.mainFrm.GetTablePrice((int)reqOrderTableNo);
-                            other.info.surpriseCnt = (int)(tableTotalPrice / 10000);
-                            other.info.surpriseCnt -= other.info.saveSurpriseCnt;
-                            if (other.info.surpriseCnt < 0)
-                                other.info.surpriseCnt = 0;
-
-                            other.info.saveSurpriseCnt += other.info.surpriseCnt;
+                                continue;                                                                                    
 
                             other_msg = CPacket.create((short)PROTOCOL.ORDER_CONFIRM_NOT);
                             other_msg.push(reqType);

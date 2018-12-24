@@ -19,8 +19,7 @@ namespace SP_Server
         public int gameCnt;
         public List<SendMenu> menus;
         public int discount;        
-        public int surpriseCnt;
-        public int saveSurpriseCnt;
+        public int surpriseCnt;        
 
         public UserInfo()
         {
@@ -30,8 +29,7 @@ namespace SP_Server
             this.gameCnt = 0;
             this.menus = new List<SendMenu>();
             this.discount = 0;            
-            this.surpriseCnt = 0;
-            this.saveSurpriseCnt = 0;
+            this.surpriseCnt = 3;
         }
 
         public UserInfo(int tableNum)
@@ -42,8 +40,7 @@ namespace SP_Server
             this.gameCnt = 0;
             this.menus = new List<SendMenu>();
             this.discount = 0;            
-            this.surpriseCnt = 0;
-            this.saveSurpriseCnt = 0;
+            this.surpriseCnt = 3;
         }
 
         public UserInfo(int tableNum, byte peopleCnt, byte customerType)
@@ -54,8 +51,7 @@ namespace SP_Server
             this.gameCnt = 0;
             this.menus = new List<SendMenu>();
             this.discount = 0;            
-            this.surpriseCnt = 0;
-            this.saveSurpriseCnt = 0;
+            this.surpriseCnt = 3;
         }
 
         public void Copy(UserInfo target, int tableNum)
@@ -75,7 +71,6 @@ namespace SP_Server
 
             this.discount = target.discount;            
             this.surpriseCnt = target.surpriseCnt;
-            this.saveSurpriseCnt = target.saveSurpriseCnt;
         }
 
         public void SetDiscount(short sType)

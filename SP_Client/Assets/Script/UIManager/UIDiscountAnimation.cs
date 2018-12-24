@@ -10,6 +10,8 @@ public class UIDiscountAnimation : MonoBehaviour {
 	public Text txtDiscount;
 	public Text txtCalc;
 
+	public UISurpriseResult parent;
+
 	int curDiscount = 0;
 	int curCalc = 0;
 	UITween uiScale = null;
@@ -162,8 +164,8 @@ public class UIDiscountAnimation : MonoBehaviour {
 		UITweenAlpha.Start (gameObject, 1f, 0f, TWParam.New (1f).Curve (TWCurve.CurveLevel2).Speed (TWSpeed.Slower));
 		yield return new WaitForSeconds (.8f);
 
-		UIManager.Instance.Hide (eUI.eDiscountAni);
-		Info.AfterDiscountBehavior ();
+		parent.FinishClose ();
+		UIManager.Instance.Hide (eUI.eSurpriseResult);
 	}
 
 	float _GetMovedValue(float start, float end, float distance)

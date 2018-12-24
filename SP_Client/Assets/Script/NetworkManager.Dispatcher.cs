@@ -218,10 +218,10 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         string menuPacking = msg.pop_string();
 		int discountPrice = msg.pop_int32();
 
-		if (UIManager.Instance.IsActive (eUI.eDiscountAni)) {
+		if (UIManager.Instance.IsActive (eUI.eSurpriseResult)) {
 			GameObject obj = UIManager.Instance.GetCurUI ();
-			UIDiscountAnimation uiDiscountAni = obj.GetComponent<UIDiscountAnimation> ();
-			uiDiscountAni.SetInfo (menuPacking, discountPrice);
+			UISurpriseResult uiResult = obj.GetComponent<UISurpriseResult> ();
+			uiResult.uiDiscount.SetInfo(menuPacking, discountPrice);
 		} else if (UIManager.Instance.IsActive (eUI.eBillDetail) == false) {
 			GameObject obj = UIManager.Instance.Show(eUI.eBillDetail);
 			UIBillDetail uiBillDetail = obj.GetComponent<UIBillDetail>();
@@ -231,11 +231,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
 	void GameDiscountACK(CPacket msg)
 	{
-		UISurprisePSY.Init ();
-
-		GameObject obj = UIManager.Instance.Show (eUI.eDiscountAni);
-		UIDiscountAnimation ui = obj.GetComponent<UIDiscountAnimation> ();
-		ui.SendREQ ();
+		GameObject obj = UIManager.Instance.Show (eUI.eSurpriseResult);
+		UISurpriseResult uiResult = obj.GetComponent<UISurpriseResult> ();
+		uiResult.uiDiscount.SendREQ ();
 	}
 
 	void RequestMusicListACK(CPacket msg)
@@ -396,8 +394,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 	{
 		Info.surpriseCnt = msg.pop_int32 ();
 
-		GameObject obj = UIManager.Instance.Show (eUI.eSurprise);
-		UISurprisePSY uiSurprise = obj.GetComponent<UISurprisePSY>();
+		GameObject obj = UIManager.Instance.Show (eUI.eSurpriseStart);
+		UISurpriseStart uiSurprise = obj.GetComponent<UISurpriseStart>();
 		if(uiSurprise)
 			uiSurprise.PrevSet ();
 	}

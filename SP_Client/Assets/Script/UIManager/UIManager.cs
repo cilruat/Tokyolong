@@ -15,9 +15,9 @@ public enum eUI
 	eWaiting        = 5,
     eHowToUse,
     eShowLog,
-	eSurprise,
-	eDiscountAni,
-	eTokyoLive 		= 10,
+	eSurpriseStart,
+	eSurpriseResult,
+	eTokyoLive		= 10,
 
 	eNone = 100,
 }
@@ -114,7 +114,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 			waiting = true;		
 			break;
 		case eUI.eShowLog:		break;        
-		case eUI.eSurprise:
+		case eUI.eSurpriseStart:
 			Info.waitSurprise = false;
 			Info.loopSurpriseRemainTime = 0f;
 			curUI = page;	
@@ -253,8 +253,8 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 			}				
 
 			if (Input.GetKeyDown (KeyCode.S)) {
-				GameObject obj = UIManager.Instance.Show (eUI.eSurprise);
-				UISurprisePSY uiSurprise = obj.GetComponent<UISurprisePSY>();
+				GameObject obj = UIManager.Instance.Show (eUI.eSurpriseStart);
+				UISurpriseStart uiSurprise = obj.GetComponent<UISurpriseStart>();
 				if(uiSurprise)
 					uiSurprise.PrevSet ();
 			}
@@ -266,25 +266,20 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 				MuteMusic ();
 
 			if (Input.GetKeyDown (KeyCode.C))
-				PlayBell ();			
-
-			if (Input.GetKeyDown (KeyCode.D))
-			{
-				if(IsActive(eUI.eDiscountAni))
-					Hide(eUI.eDiscountAni);
-				else
-				{
-					GameObject obj = Show (eUI.eDiscountAni);
-					UIDiscountAnimation ui = obj.GetComponent<UIDiscountAnimation>();
-					ui.TestAnimating();
-				}					
-			}
+				PlayBell ();
 
 			if(Input.GetKeyDown(KeyCode.T))
 			{
 				GameObject obj = Show (eUI.eTokyoLive);
 				PageTokyoLive ui = obj.GetComponent<PageTokyoLive>();
 				ui.PrevSet();
+			}
+
+			if(Input.GetKeyDown(KeyCode.F))
+			{
+				GameObject obj = Show (eUI.eSurpriseResult);
+				UISurpriseResult ui = obj.GetComponent<UISurpriseResult>();
+				ui.Show();
 			}
             #endif
 		}

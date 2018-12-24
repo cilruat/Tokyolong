@@ -68,13 +68,8 @@ public class PageGame : PageBase {
                 Info.GameDiscountWon = discountType;
                 stopIdx = (short)discountType;
 				break;
-                case 1:
-                if (discountType == (short)EDiscount.e1000won)
-                {                    
-                    stopIdx = _GetGameTypeIdx();
-                }
-                else
-                    stopIdx = 2;
+			case 1:
+				stopIdx = discountType <= (short)EDiscount.e1000won ? _GetGameTypeIdx () : UnityEngine.Random.Range (1, 3);
 				curGameType = stopIdx;
 				break;
 			case 2:		break;
@@ -99,10 +94,8 @@ public class PageGame : PageBase {
 		} else {
 			float percent = UnityEngine.Random.Range(0f, 1f);
 			if (percent <= .1f)			return 0;
-			else if (percent > .75f)	return 1;
+			else if (percent > .55f)	return 1;
 			else						return 2;
-			/*if (percent > .5f)		return 1;
-			else					return 2;*/
 		}
 	}
 
@@ -171,7 +164,6 @@ public class PageGame : PageBase {
 		switch (Info.GameDiscountWon) {
 		case (short)EDiscount.e500won:
 		case (short)EDiscount.e1000won:
-		case (short)EDiscount.e2000won:
 			if (curGameType == (int)EGameType.eWinWaiter) {
 				randRange = Enum.GetValues (typeof(EWinWaiter)).Length;
 				rtElts = rtWinWaiter;
@@ -183,10 +175,16 @@ public class PageGame : PageBase {
 				rtElts = rtTabletGame;
 			}
 			break;
+		case (short)EDiscount.e2000won:
 		case (short)EDiscount.e5000won:
 		case (short)EDiscount.eAll:
-			randRange = Enum.GetValues(typeof(ETabletGame)).Length;
-			rtElts = rtTabletGame;
+			if (curGameType == (int)EGameType.ePuzzleGame) {
+				randRange = Enum.GetValues (typeof(EPuzzleGame)).Length;
+				rtElts = rtPuzzleGame;
+			} else if (curGameType == (int)EGameType.eTabletGame) {
+				randRange = Enum.GetValues(typeof(ETabletGame)).Length;
+				rtElts = rtTabletGame;
+			}
 			break;
 		}			
 
