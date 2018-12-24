@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-public class PageTaro : SingletonMonobehaviour<PageTaro> {
+public class PageTaro : PageBase {
 
 	enum EShowType
 	{
@@ -15,7 +15,7 @@ public class PageTaro : SingletonMonobehaviour<PageTaro> {
 	}
 
 	public GameObject objCard;
-	public GameObject objBoard;
+	public CanvasGroup[] objBoards;
 	public Text descResult;
 	public Image[] imgResult;
 	public RectTransform[] rtResultBack;
@@ -36,8 +36,11 @@ public class PageTaro : SingletonMonobehaviour<PageTaro> {
 	Dictionary<string, string> dictLove = new Dictionary<string, string> ();
 	Dictionary<string, string> dictMoney = new Dictionary<string, string> ();
 
-	void Awake()
+	protected override void Awake()
 	{
+		base.boards = objBoards;
+		base.Awake ();
+
 		StartCoroutine (_DelayFirstShow ());
 
 		#if UNITY_ANDROID
@@ -47,6 +50,8 @@ public class PageTaro : SingletonMonobehaviour<PageTaro> {
 		_DataLoad (@"\Info\TaroLove.csv", true);
 		_DataLoad (@"\Info\TaroMoney.csv", false);
 		#endif
+
+		UIManager.Instance.SetCamera ();
 	}
 
 	IEnumerator _DelayFirstShow()
@@ -239,10 +244,5 @@ public class PageTaro : SingletonMonobehaviour<PageTaro> {
 	{
 		clicked = true;
 		_Move (false);
-	}
-
-	public void ReturnHome()
-	{
-		SceneChanger.LoadScene ("Main", objBoard);
 	}
 }
