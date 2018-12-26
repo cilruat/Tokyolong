@@ -27,7 +27,8 @@ public class UISurpriseStart : MonoBehaviour {
 	}		
 
 	public void OnClose()
-	{		
+	{
+		Info.SURPRISE_STEP = -1;
 		StartCoroutine (_OnClose ());
 	}
 

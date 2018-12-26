@@ -32,6 +32,8 @@ public class VideoControler : MonoBehaviour {
 
 		objPlay.SetActive (true);
 		objPause.SetActive (false);
+
+		Click ();
 	}
 
 	public void Click()

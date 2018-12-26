@@ -69,7 +69,7 @@ public class PageGame : PageBase {
                 stopIdx = (short)discountType;
 				break;
 			case 1:
-				stopIdx = discountType <= (short)EDiscount.e1000won ? _GetGameTypeIdx () : UnityEngine.Random.Range (1, 3);
+				stopIdx = UnityEngine.Random.Range (1, 3);
 				curGameType = stopIdx;
 				break;
 			case 2:		break;

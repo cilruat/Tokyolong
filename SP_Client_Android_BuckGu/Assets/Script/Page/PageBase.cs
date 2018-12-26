@@ -28,6 +28,7 @@ public class PageBase : SingletonMonobehaviour<PageBase> {
 		}
 
 		UIManager.Instance.SetCamera ();
+		UIManager.Instance.StopMusic ();
 	}		
 
 	void _OnChangeBoard(bool isNext)
