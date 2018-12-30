@@ -27,9 +27,9 @@ public partial class Info : MonoBehaviour {
 		get{
 			switch ((EDiscount)GameDiscountWon) {
 			case EDiscount.e500won:
-			case EDiscount.e1000won:	return 15;
-			case EDiscount.e2000won:	return 20;
-			case EDiscount.e5000won:	return 30;
+			case EDiscount.e1000won:	return 10;
+			case EDiscount.e2000won:	return 15;
+			case EDiscount.e5000won:	return 25;
 			case EDiscount.eAll:		return 40;
 			default:					return 40;
 			}
@@ -40,9 +40,9 @@ public partial class Info : MonoBehaviour {
 		get{
 			switch ((EDiscount)GameDiscountWon) {
 			case EDiscount.e500won:
-			case EDiscount.e1000won:	return 20;
-			case EDiscount.e2000won:	return 25;
-			case EDiscount.e5000won:	return 30;
+			case EDiscount.e1000won:	return 10;
+			case EDiscount.e2000won:	return 15;
+			case EDiscount.e5000won:	return 25;
 			case EDiscount.eAll:		return 40;
 			default:					return 40;
 			}
@@ -227,6 +227,13 @@ public partial class Info : MonoBehaviour {
 	public static int surpriseCnt = 0;
 	public static float loopSurpriseRemainTime = 0f;
 	public static bool waitSurprise = false;
+
+	/*static short _surprise_step = -1;
+	public static short SURPRISE_STEP
+	{
+		set{ _surprise_step = value; Debug.Log ("Set SURPRISE_STEP: " + SURPRISE_STEP); }
+		get{ return _surprise_step; }
+	}*/
 	public static short SURPRISE_STEP = -1;
 
 	public static void UpdateSurpriseRemainTime()

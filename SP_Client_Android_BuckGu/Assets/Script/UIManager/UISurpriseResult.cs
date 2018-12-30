@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UISurpriseResult : MonoBehaviour {
 
@@ -46,6 +47,7 @@ public class UISurpriseResult : MonoBehaviour {
 
 	public void OnStart()
 	{
+		_Init ();
 		++Info.SURPRISE_STEP;
 		Info.GameDiscountWon = Info.SURPRISE_STEP;
 
@@ -58,15 +60,20 @@ public class UISurpriseResult : MonoBehaviour {
 		UITweenAlpha.Start (gameObject, 1f, 0f, TWParam.New (1f).Curve (TWCurve.CurveLevel2).Speed (TWSpeed.Slower));
 		yield return new WaitForSeconds (.5f);
 
-		int randGame = Random.Range (0, Info.TotalGameCountWithTokyoLive ());
-		if (randGame == Info.TotalGameCountWithTokyoLive () - 1) {
-			GameObject obj = UIManager.Instance.Show (eUI.eTokyoLive);
-			PageTokyoLive ui = obj.GetComponent<PageTokyoLive> ();
-			ui.PrevSet ();
+		if (SceneManager.GetActiveScene ().name == "Main") {
+			int randGame = Random.Range (0, Info.TotalGameCountWithTokyoLive ());
+			if (randGame == Info.TotalGameCountWithTokyoLive () - 1) {
+				GameObject obj = UIManager.Instance.Show (eUI.eTokyoLive);
+				PageTokyoLive ui = obj.GetComponent<PageTokyoLive> ();
+				ui.PrevSet ();
 
-			StartCoroutine (_OnFinishClose (false));
-		} else
+				StartCoroutine (_OnFinishClose (false));
+			} else
+				Info.PlayGame (randGame, gameObject);
+		} else {
+			int randGame = Random.Range (0, Info.TotalGameCount ());
 			Info.PlayGame (randGame, gameObject);
+		}
 
 		objMiddle.SetActive (false);
 		UIManager.Instance.Hide (eUI.eSurpriseResult);

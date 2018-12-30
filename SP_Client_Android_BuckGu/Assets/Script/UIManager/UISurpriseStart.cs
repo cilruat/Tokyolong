@@ -12,10 +12,10 @@ public class UISurpriseStart : MonoBehaviour {
 	}
 
 	public void OnStart()
-	{
+	{		
+		OnClose ();
 		Info.SURPRISE_STEP = 0;
 		Info.GameDiscountWon = (short)EDiscount.e500won;
-		OnClose ();
 
 		int randGame = Random.Range (0, Info.TotalGameCountWithTokyoLive ());
 		if (randGame == Info.TotalGameCountWithTokyoLive () - 1) {
