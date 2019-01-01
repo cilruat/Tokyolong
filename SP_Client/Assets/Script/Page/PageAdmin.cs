@@ -73,7 +73,7 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 			for (int i = 0; i < orderJson.Count; i++)
 			{
 				byte type = byte.Parse(orderJson[i]["type"].ToString());
-				int id = byte.Parse(orderJson[i]["id"].ToString());
+				int id = int.Parse(orderJson[i]["id"].ToString());
 				byte tableNo = byte.Parse(orderJson[i]["tableNo"].ToString());
 				string packing = orderJson[i]["packing"].ToString();
 
@@ -85,7 +85,7 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 			JsonData musicJson = JsonMapper.ToObject(musicPacking);
 			for (int i = 0; i < musicJson.Count; i++)
 			{
-				int id = byte.Parse(musicJson[i]["id"].ToString());
+				int id = int.Parse(musicJson[i]["id"].ToString());
 				byte tableNo = byte.Parse(musicJson[i]["tableNo"].ToString());
 				string title = musicJson[i]["title"].ToString();
 				string singer = musicJson[i]["singer"].ToString();
