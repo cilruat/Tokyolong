@@ -10,6 +10,8 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 	public const int TABLE_NUM = 41;
 	#elif BUCKGU
 	public const int TABLE_NUM = 50;
+	#elif DOORYU
+	public const int TABLE_NUM = 30;
 	#endif
 
 	public GameObject page;
