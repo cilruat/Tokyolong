@@ -73,7 +73,7 @@ public class PageMain : PageBase {
 		case EMenu.eRoulette:		SystemMessage.Instance.Add ("추후 업데이트 예정이예요~");	break;
 		case EMenu.eTaro:			SceneChanger.LoadScene("Taro", curBoardObj());				break;
 		case EMenu.ePractice:		SceneChanger.LoadScene("PracticeGame", curBoardObj());   	break;
-		case EMenu.ePvP:			SystemMessage.Instance.Add ("광장코아 오픈 후 업데이트 예정이예요~");	break;
+		case EMenu.ePvP:			SystemMessage.Instance.Add ("추후 업데이트 예정입니다!");	break;
 		}
 	}
 
