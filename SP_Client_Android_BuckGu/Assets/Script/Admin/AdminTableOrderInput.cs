@@ -131,7 +131,7 @@ public class AdminTableOrderInput : SingletonMonobehaviour<AdminTableOrderInput>
         yield return new WaitForSeconds (1f);
 		        
         objComplete.SetActive(false);
-        OnClose();
 		waitComplete = false;
+        OnClose();
     }
 }
