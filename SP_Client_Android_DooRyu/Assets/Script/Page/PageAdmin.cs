@@ -7,11 +7,11 @@ using LitJson;
 public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 
 	#if JUNGGU
-	public const int TABLE_NUM = 41;
+	public const int TABLE_NUM = 50;
 	#elif BUCKGU
 	public const int TABLE_NUM = 50;
 	#elif DOORYU
-	public const int TABLE_NUM = 30;
+	public const int TABLE_NUM = 50;
 	#endif
 
 	public GameObject page;

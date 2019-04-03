@@ -27,8 +27,8 @@ public partial class Info : MonoBehaviour {
 		get{
 			switch ((EDiscount)GameDiscountWon) {
 			case EDiscount.e500won:
-			case EDiscount.e1000won:	return 20;
-			case EDiscount.e2000won:	return 35;
+			case EDiscount.e1000won:	return 25;
+			case EDiscount.e2000won:	return 40;
 			case EDiscount.e5000won:	return 50;
 			case EDiscount.eAll:		return 60;
 			default:					return 60;
@@ -40,7 +40,7 @@ public partial class Info : MonoBehaviour {
 		get{
 			switch ((EDiscount)GameDiscountWon) {
 			case EDiscount.e500won:
-			case EDiscount.e1000won:	return 20;
+			case EDiscount.e1000won:	return 25;
 			case EDiscount.e2000won:	return 30;
 			case EDiscount.e5000won:	return 50;
 			case EDiscount.eAll:		return 60;
@@ -90,11 +90,11 @@ public partial class Info : MonoBehaviour {
 		get{
 			switch ((EDiscount)GameDiscountWon) {
 			case EDiscount.e500won:
-			case EDiscount.e1000won:	return 25;
+			case EDiscount.e1000won:	return 20;
 			case EDiscount.e2000won:	
-			case EDiscount.e5000won:	return 22;
-			case EDiscount.eAll:		return 20;
-			default:					return 20;
+			case EDiscount.e5000won:	return 15;
+			case EDiscount.eAll:		return 15;
+			default:					return 15;
 			}
 		}
 	}
@@ -103,11 +103,11 @@ public partial class Info : MonoBehaviour {
 		get{
 			switch ((EDiscount)GameDiscountWon) {
 			case EDiscount.e500won:
-			case EDiscount.e1000won:	return 20;
+			case EDiscount.e1000won:	return 15;
 			case EDiscount.e2000won:	
-			case EDiscount.e5000won:	return 16;
-			case EDiscount.eAll:		return 13;
-			default:					return 13;
+			case EDiscount.e5000won:	return 12;
+			case EDiscount.eAll:		return 10;
+			default:					return 10;
 			}
 		}
 	}
@@ -223,7 +223,7 @@ public partial class Info : MonoBehaviour {
         orderCnt = Mathf.Clamp(value, GAMEPLAY_MIN_COUNT, GAMEPLAY_MAX_COUNT);
     }
 
-	const int SURPRISE_REMAIN_MIN = 20;
+	const int SURPRISE_REMAIN_MIN = 30;
 	public static int surpriseCnt = 0;
 	public static float loopSurpriseRemainTime = 0f;
 	public static bool waitSurprise = false;
