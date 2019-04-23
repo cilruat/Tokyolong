@@ -1,0 +1,208 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &100000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 400000}
+  - component: {fileID: 11403226}
+  m_Layer: 0
+  m_Name: GameController
+  m_TagString: GameController
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &400000
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 17.4, y: 5, z: 10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &11403226
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2d417fdeabae6e4bbf0207e3d0dd081, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startDelay: 1
+  readyGoEffect: {fileID: 22485230, guid: c335f78e753af8b4a84c0d537dee49e9, type: 2}
+  timeLeft: 30
+  timeText: {fileID: 0}
+  movingTargets:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  movingSpeed: 1
+  maximumTargets: 6
+  targetShowArea: 4
+  showDelay: 3
+  hideDelay: 2
+  leftEdge: {fileID: 0}
+  rightEdge: {fileID: 0}
+  shootButton: Fire1
+  reloadButton: Jump
+  shotObject: {fileID: 467334, guid: fd686395d7510014787932a4493d4eae, type: 2}
+  ammo: 5
+  ammoBar: {fileID: 0}
+  ammoBarWidth: 21
+  crosshair: {fileID: 0}
+  crosshairSpeed: 15
+  hitTargetBonus: 10
+  bonusEffect: {fileID: 22485230, guid: 3d0b667acd54c4346ba54106f835fdfe, type: 2}
+  score: 0
+  scoreText: {fileID: 0}
+  gameSpeed: 1
+  levels:
+  - scoreToNextLevel: 100
+    timeBonus: 0
+    maximumTargets: 3
+    ammo: 5
+    movingSpeed: 1
+  - scoreToNextLevel: 300
+    timeBonus: 3
+    maximumTargets: 4
+    ammo: 5
+    movingSpeed: 1.1
+  - scoreToNextLevel: 600
+    timeBonus: 4
+    maximumTargets: 6
+    ammo: 5
+    movingSpeed: 1.2
+  - scoreToNextLevel: 1000
+    timeBonus: 5
+    maximumTargets: 6
+    ammo: 6
+    movingSpeed: 1.4
+  - scoreToNextLevel: 1500
+    timeBonus: 6
+    maximumTargets: 7
+    ammo: 6
+    movingSpeed: 1.6
+  - scoreToNextLevel: 2000
+    timeBonus: 7
+    maximumTargets: 8
+    ammo: 6
+    movingSpeed: 1.8
+  - scoreToNextLevel: 3000
+    timeBonus: 8
+    maximumTargets: 9
+    ammo: 7
+    movingSpeed: 2
+  - scoreToNextLevel: 4000
+    timeBonus: 10
+    maximumTargets: 10
+    ammo: 7
+    movingSpeed: 2.5
+  - scoreToNextLevel: 6000
+    timeBonus: 12
+    maximumTargets: 11
+    ammo: 7
+    movingSpeed: 3
+  - scoreToNextLevel: 8000
+    timeBonus: 14
+    maximumTargets: 12
+    ammo: 8
+    movingSpeed: 3.5
+  - scoreToNextLevel: 10000
+    timeBonus: 16
+    maximumTargets: 13
+    ammo: 8
+    movingSpeed: 4
+  - scoreToNextLevel: 12000
+    timeBonus: 18
+    maximumTargets: 14
+    ammo: 8
+    movingSpeed: 4
+  - scoreToNextLevel: 14000
+    timeBonus: 20
+    maximumTargets: 16
+    ammo: 9
+    movingSpeed: 4
+  - scoreToNextLevel: 17000
+    timeBonus: 25
+    maximumTargets: 18
+    ammo: 9
+    movingSpeed: 4
+  - scoreToNextLevel: 20000
+    timeBonus: 30
+    maximumTargets: 20
+    ammo: 9
+    movingSpeed: 4
+  - scoreToNextLevel: 25000
+    timeBonus: 40
+    maximumTargets: 20
+    ammo: 10
+    movingSpeed: 5
+  - scoreToNextLevel: 30000
+    timeBonus: 50
+    maximumTargets: 20
+    ammo: 10
+    movingSpeed: 6
+  - scoreToNextLevel: 40000
+    timeBonus: 60
+    maximumTargets: 20
+    ammo: 10
+    movingSpeed: 8
+  currentLevel: 0
+  isEndless: 0
+  gameCanvas: {fileID: 0}
+  progressCanvas: {fileID: 0}
+  pauseCanvas: {fileID: 0}
+  gameOverCanvas: {fileID: 0}
+  victoryCanvas: {fileID: 0}
+  mainMenuLevelName: SGTMenu
+  soundReload: {fileID: 8300000, guid: 699ad6d5060fa41478b02440c28ff811, type: 3}
+  soundLevelUp: {fileID: 8300000, guid: f1a39854c855ffc409001252c472f461, type: 3}
+  soundGameOver: {fileID: 8300000, guid: 7800cf9dfd115fa4cbfba8750803b42b, type: 3}
+  soundVictory: {fileID: 8300000, guid: f7bcbca00640c594986bb6d5a2839c56, type: 3}
+  soundSourceTag: Sound
+  confirmButton: Submit
+  pauseButton: Cancel
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 100000}
+  m_IsPrefabParent: 1
