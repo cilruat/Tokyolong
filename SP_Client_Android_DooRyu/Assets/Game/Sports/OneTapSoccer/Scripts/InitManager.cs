@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+namespace Onetapsoccer
+{
 public class InitManager : MonoBehaviour {
 
 	/// <summary>
@@ -13,5 +14,5 @@ public class InitManager : MonoBehaviour {
 		yield return new WaitForSeconds (0.5f);
 		SceneManager.LoadScene ("Menu");
 	}
-
+	}
 }

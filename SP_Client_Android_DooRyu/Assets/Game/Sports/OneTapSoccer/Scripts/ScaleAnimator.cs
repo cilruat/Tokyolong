@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+namespace Onetapsoccer
+{
 public class ScaleAnimator : MonoBehaviour {
 
 	///*********************************************************
@@ -59,6 +60,5 @@ public class ScaleAnimator : MonoBehaviour {
 			yield return 0;
 		}
 	}
-
-
+	}
 }

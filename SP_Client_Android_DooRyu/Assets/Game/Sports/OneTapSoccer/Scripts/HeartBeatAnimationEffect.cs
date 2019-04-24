@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
-
+namespace Onetapsoccer
+{
 public class HeartBeatAnimationEffect : MonoBehaviour {
 		
 	//***************************************************************************//
@@ -59,5 +60,5 @@ public class HeartBeatAnimationEffect : MonoBehaviour {
 			animationFlag = true;
 		}
 	}
-
+}
 }
