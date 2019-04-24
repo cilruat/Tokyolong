@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+namespace JumperStepUp
+{
 // YOU BETTER RUN By BITBOYS STUDIO.
 public class BurstRotateUI : MonoBehaviour { // This simple script manages the rotation of the UI burst that appears below the new best badge when the player gets a new best score.
 
@@ -12,4 +14,5 @@ public class BurstRotateUI : MonoBehaviour { // This simple script manages the r
 
 		this.transform.Rotate (0, 0, - spinSpeed * Time.deltaTime);
 	}
+}
 }

@@ -2,6 +2,8 @@
 using System.Collections;
 // Sets how long to wait before destroying an object.
 // 3D ENDLESS RUNNER SYSTEM By BITBOYS STUDIO.
+namespace JumperStepUp
+{
 public class DestroyAfterSeconds : MonoBehaviour
 {
 	public float lifetime; // Time to wait before destroy the object.
@@ -10,4 +12,5 @@ public class DestroyAfterSeconds : MonoBehaviour
 	{
 		Destroy (gameObject, lifetime);
 	}
+}
 }

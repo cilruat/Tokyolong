@@ -2,6 +2,8 @@
 using System.Security.Policy;
 using UnityEngine;
 using System.Collections;
+namespace JumperStepUp
+{
 #if UNITY_ADS
 using UnityEngine.Advertisements;
 #endif
@@ -225,6 +227,6 @@ public class AdManager : MonoBehaviour
 
 
 
-
+	}
 
 }

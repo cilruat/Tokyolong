@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+namespace JumperStepUp
+{
 // 3D ENDLESS RUNNER SYSTEM By BITBOYS STUDIO.
 public class GoldeEggCounter : MonoBehaviour {
 
@@ -88,5 +90,5 @@ public class GoldeEggCounter : MonoBehaviour {
 		PlayerPrefs.SetInt ("PlayerGoldenEggs", eggCount);// stores the current lives in the player prefs.
 	}
 
-
+	}
 }

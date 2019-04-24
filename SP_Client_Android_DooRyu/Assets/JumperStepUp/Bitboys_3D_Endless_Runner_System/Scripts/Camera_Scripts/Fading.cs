@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+namespace JumperStepUp
+{
 // 3D ENDLESS RUNNER SYSTEM By BITBOYS STUDIO.
 // This handles the camera fade effect that we use when a scene starts or we change from one scene to another.
 	
@@ -42,5 +44,5 @@ public class Fading : MonoBehaviour {
 		BeginFade(-1);		// call the fade in function
 	}
 }
-
+}
 

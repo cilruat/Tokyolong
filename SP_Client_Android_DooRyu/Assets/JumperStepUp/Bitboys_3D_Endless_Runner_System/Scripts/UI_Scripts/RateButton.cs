@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+namespace JumperStepUp
+{
 // YOU BETTER RUN By BITBOYS STUDIO.
 public class RateButton : MonoBehaviour {
 
@@ -13,5 +15,5 @@ public class RateButton : MonoBehaviour {
 		Application.OpenURL("itms-apps://itunes.apple.com/app/idYOUR_ID");
 		#endif
 	}
-
+	}
 }

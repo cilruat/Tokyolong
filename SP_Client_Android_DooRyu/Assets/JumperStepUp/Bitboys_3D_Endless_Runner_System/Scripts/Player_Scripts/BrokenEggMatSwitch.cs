@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+namespace JumperStepUp
+{
 // YOU BETTER RUN By BITBOYS STUDIO.
 public class BrokenEggMatSwitch : MonoBehaviour { // This script manages the material switching from the broken egg model. This means that that if we use the Character 03, when die, the broken egg will use the Character 03 colors.
 
@@ -78,4 +80,5 @@ public class BrokenEggMatSwitch : MonoBehaviour { // This script manages the mat
 
 		}
 	}
+}
 }

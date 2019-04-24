@@ -3,7 +3,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Runtime.InteropServices;
-namespace admob 
+namespace Onetapsoccerad 
 {
 	public class Admob {
         public delegate void AdmobEventHandler(string eventName, string msg);

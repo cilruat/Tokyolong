@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+namespace JumperStepUp
+{
 // 3D ENDLESS RUNNER SYSTEM By BITBOYS STUDIO.
 public class InternetConnectionCheck : MonoBehaviour { // This script will check for internet connection to avoid Unity Ads problems.
 
@@ -57,5 +59,5 @@ public class InternetConnectionCheck : MonoBehaviour { // This script will check
 		}
 	} 
 
-
+	}
 }

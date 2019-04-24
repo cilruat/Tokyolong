@@ -1,7 +1,7 @@
 ﻿#if UNITY_ANDROID
 using UnityEngine;
 using System.Collections;
-namespace admob
+namespace Onetapsoccerad 
 {
 	public class AdmobListenerProxy : AndroidJavaProxy {
 		private IAdmobListener listener;

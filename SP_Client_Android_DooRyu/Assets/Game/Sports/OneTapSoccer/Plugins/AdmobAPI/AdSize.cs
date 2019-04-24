@@ -1,4 +1,5 @@
-namespace admob {
+namespace Onetapsoccerad 
+{
     public class AdSize {
         private int width;
         private int height;

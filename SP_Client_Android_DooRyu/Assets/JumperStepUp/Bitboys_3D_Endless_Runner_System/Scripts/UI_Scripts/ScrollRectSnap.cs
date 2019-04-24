@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+namespace JumperStepUp
+{
 // YOU BETTER RUN By BITBOYS STUDIO.
 public class ScrollRectSnap : MonoBehaviour { // Please be carefull editing this script to avoid bad behaviors.
 
@@ -296,4 +298,5 @@ public class ScrollRectSnap : MonoBehaviour { // Please be carefull editing this
 
 		}
 	}
+}
 }

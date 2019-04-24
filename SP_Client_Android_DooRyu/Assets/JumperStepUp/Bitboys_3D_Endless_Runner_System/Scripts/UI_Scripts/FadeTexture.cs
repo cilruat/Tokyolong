@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+namespace JumperStepUp
+{
 // YOU BETTER RUN By BITBOYS STUDIO.
 public class FadeTexture : MonoBehaviour {
 
@@ -61,5 +63,6 @@ public class FadeTexture : MonoBehaviour {
 
 		this.gameObject.SetActive (false);
 
+}
 }
 }

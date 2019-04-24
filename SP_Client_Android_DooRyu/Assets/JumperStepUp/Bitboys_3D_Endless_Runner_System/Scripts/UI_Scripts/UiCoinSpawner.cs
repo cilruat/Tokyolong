@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+namespace JumperStepUp
+{
 // YOU BETTER RUN By BITBOYS STUDIO.
 public class UiCoinSpawner : MonoBehaviour { // This script is a custom method created to "instantiate" fake coins that goes flying to the UI everytime the character collides with a real coin in the game.
 	//This was created to avoid to instantiate and destroy many coins at the same time and save performance, reusing the same coins every time.
@@ -115,5 +117,5 @@ public class UiCoinSpawner : MonoBehaviour { // This script is a custom method c
 
 		yield return null;
 }
-
+	}
 }

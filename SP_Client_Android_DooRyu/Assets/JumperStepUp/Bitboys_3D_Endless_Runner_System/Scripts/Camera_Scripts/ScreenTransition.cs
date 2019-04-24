@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+namespace JumperStepUp
+{
 // 3D ENDLESS RUNNER SYSTEM By BITBOYS STUDIO.
 public class ScreenTransition : MonoBehaviour {
 
@@ -135,5 +137,5 @@ public class ScreenTransition : MonoBehaviour {
 		backPanel.gameObject.SetActive (false);
 
 	}
-
+	}
 }

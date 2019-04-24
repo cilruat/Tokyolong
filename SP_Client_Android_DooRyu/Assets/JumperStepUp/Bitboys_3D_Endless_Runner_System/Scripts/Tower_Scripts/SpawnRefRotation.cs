@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+namespace JumperStepUp
+{
 // YOU BETTER RUN By BITBOYS STUDIO.
 public class SpawnRefRotation : MonoBehaviour { // This script is attached to the Level Manager object. It manages the towers rotation.
 
@@ -33,5 +35,5 @@ public class SpawnRefRotation : MonoBehaviour { // This script is attached to th
 		}
 
 	}
-
+	}
 }

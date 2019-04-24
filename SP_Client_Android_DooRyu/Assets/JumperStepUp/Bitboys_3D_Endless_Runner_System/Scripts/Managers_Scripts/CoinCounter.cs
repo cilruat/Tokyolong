@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+namespace JumperStepUp
+{
 
 // 3D ENDLESS RUNNER SYSTEM By BITBOYS STUDIO.
 public class CoinCounter : MonoBehaviour {
@@ -94,5 +95,5 @@ public class CoinCounter : MonoBehaviour {
 			PlayerPrefs.SetInt ("PlayerCurrentCoins", coinCount);// stores the current lives in the player prefs.
 		}
 	}
-
+	}
 }

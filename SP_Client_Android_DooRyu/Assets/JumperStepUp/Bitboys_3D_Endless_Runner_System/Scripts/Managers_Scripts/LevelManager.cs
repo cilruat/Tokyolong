@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+namespace JumperStepUp
+{
 // 3D ENDLESS RUNNER SYSTEM By BITBOYS STUDIO.
 public class LevelManager : MonoBehaviour {
 
@@ -790,7 +792,7 @@ public class LevelManager : MonoBehaviour {
 		yield return null;
 
 	}
-
+	}
 }
 
 

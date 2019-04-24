@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+namespace JumperStepUp
+{
 // 3D ENDLESS RUNNER SYSTEM By BITBOYS STUDIO.
 public class IAPurchase : MonoBehaviour {
 
@@ -9,4 +11,5 @@ public class IAPurchase : MonoBehaviour {
 
 		//IAPManager.Instance.Buy10Eggs ();
 	}
+}
 }

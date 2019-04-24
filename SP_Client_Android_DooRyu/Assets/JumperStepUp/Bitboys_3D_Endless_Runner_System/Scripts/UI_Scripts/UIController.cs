@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+namespace JumperStepUp
+{
 // YOU BETTER RUN By BITBOYS STUDIO.
 public class UIController : MonoBehaviour {
 
@@ -345,5 +347,5 @@ public class UIController : MonoBehaviour {
 
 	}
 
-
+	}
 }

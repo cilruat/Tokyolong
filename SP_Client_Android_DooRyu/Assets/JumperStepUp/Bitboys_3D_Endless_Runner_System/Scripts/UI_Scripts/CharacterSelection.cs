@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+namespace JumperStepUp
+{
 // YOU BETTER RUN By BITBOYS STUDIO.
 public class CharacterSelection : MonoBehaviour {
 
@@ -825,4 +827,5 @@ public class CharacterSelection : MonoBehaviour {
 
 }
 		
+}
 }

@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+namespace JumperStepUp
+{
 // YOU BETTER RUN By BITBOYS STUDIO.
 public class QuitGameButton : MonoBehaviour {
 
@@ -16,4 +18,5 @@ public class QuitGameButton : MonoBehaviour {
 		#endif
 
 	}
+}
 }

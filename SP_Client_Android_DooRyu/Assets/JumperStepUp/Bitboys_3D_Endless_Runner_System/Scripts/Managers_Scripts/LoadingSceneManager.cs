@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+namespace JumperStepUp
+{
 // 3D ENDLESS RUNNER SYSTEM By BITBOYS STUDIO.
 public class LoadingSceneManager : MonoBehaviour
 {
@@ -24,6 +26,6 @@ public class LoadingSceneManager : MonoBehaviour
 		}
 	}
 
-
+	}
 
 }

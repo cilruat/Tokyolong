@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+namespace JumperStepUp
+{
 // YOU BETTER RUN By BITBOYS STUDIO.
 
 public class SwitchButtonSprite : MonoBehaviour {
@@ -54,7 +56,7 @@ public class SwitchButtonSprite : MonoBehaviour {
 
 	}
 
-
+	}
 
 
 }

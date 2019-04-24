@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+namespace JumperStepUp
+{
 // YOU BETTER RUN By BITBOYS STUDIO.
 public class EggUnlockButton : MonoBehaviour {// this script needs to be attached to the character unlock button in the character selection menu.
 
@@ -116,4 +118,5 @@ public class EggUnlockButton : MonoBehaviour {// this script needs to be attache
 			charSelection.SelectCharacter13 ();
 		}
 	}
+}
 }

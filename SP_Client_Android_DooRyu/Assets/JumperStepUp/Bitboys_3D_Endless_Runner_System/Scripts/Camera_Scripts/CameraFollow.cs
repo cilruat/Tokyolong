@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-// 3D ENDLESS RUNNER SYSTEM By BITBOYS STUDIO.
+namespace JumperStepUp
+{
+	// 3D ENDLESS RUNNER SYSTEM By BITBOYS STUDIO.
 public class CameraFollow : MonoBehaviour {
 
 	[Header("Camera - Player Smooth follow movement")]
@@ -19,5 +21,5 @@ public class CameraFollow : MonoBehaviour {
 			transform.position = Vector3.SmoothDamp (this.transform.position, targetPosition, ref velocity, smoothFollow);
 
 	}
-
+	}
 }

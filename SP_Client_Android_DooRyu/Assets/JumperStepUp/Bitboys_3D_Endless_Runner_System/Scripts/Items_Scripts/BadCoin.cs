@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+namespace JumperStepUp
+{
 // 3D ENDLESS RUNNER SYSTEM By BITBOYS STUDIO.
 public class BadCoin : MonoBehaviour {
 
@@ -30,4 +32,5 @@ public class BadCoin : MonoBehaviour {
 		counter.QuitCoins();// the amount of tokens that we have + 1.
 		Destroy (this.gameObject);// Finally we destroy de crate object to make it dissapear.
 	}
+}
 }

@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+namespace JumperStepUp
+{
 // 3D ENDLESS RUNNER SYSTEM By BITBOYS STUDIO.
 public class PlatformBrokenTrigger : MonoBehaviour {
 
@@ -57,4 +59,5 @@ public class PlatformBrokenTrigger : MonoBehaviour {
 		Destroy (this.gameObject, lifetime);
 
 	}
+}
 }

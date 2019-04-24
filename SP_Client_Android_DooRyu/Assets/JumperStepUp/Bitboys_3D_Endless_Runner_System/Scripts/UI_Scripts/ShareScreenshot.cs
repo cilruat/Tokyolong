@@ -2,6 +2,8 @@
 using System.Collections;
 using System.IO;
 using UnityEngine.UI;
+namespace JumperStepUp
+{
 // YOU BETTER RUN By BITBOYS STUDIO.
 public class ShareScreenshot : MonoBehaviour { // We use this script to take a screenshot of the actual screen, late save it in the device, and open the social media icons to select an applicaction and share this screenshot.
 
@@ -58,4 +60,5 @@ public class ShareScreenshot : MonoBehaviour { // We use this script to take a s
 		isProcessing = false;
 		shareButton.enabled = true;
 	}
+}
 }

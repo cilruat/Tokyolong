@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+namespace JumperStepUp
+{
 // Sets that the object must be destroyed when the particle system stops to play.
 // 3D ENDLESS RUNNER SYSTEM By BITBOYS STUDIO.
 public class DestroyFinishedParticles : MonoBehaviour {
@@ -23,4 +25,4 @@ public class DestroyFinishedParticles : MonoBehaviour {
 		Destroy (gameObject);
 	}
 }
-
+}

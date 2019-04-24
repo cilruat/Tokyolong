@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+namespace JumperStepUp
+{
 // 3D ENDLESS RUNNER SYSTEM By BITBOYS STUDIO.
 public class PauseMenu : MonoBehaviour {
 
@@ -378,4 +380,5 @@ public class PauseMenu : MonoBehaviour {
 		yield return new WaitForSeconds (1f);
 		objGameOver.SetActive (true);
 	}
+}
 }

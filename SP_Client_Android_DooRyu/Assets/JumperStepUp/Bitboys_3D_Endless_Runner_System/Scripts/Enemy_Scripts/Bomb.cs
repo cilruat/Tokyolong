@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+namespace JumperStepUp
+{
 // 3D ENDLESS RUNNER SYSTEM By BITBOYS STUDIO.
 [RequireComponent (typeof (Animator))]
 public class Bomb : MonoBehaviour {
@@ -116,7 +118,7 @@ public class Bomb : MonoBehaviour {
 			explodeAudioSource.PlayOneShot (explodeSfx, 1f);
 		}
 	}
-
+	}
 
 
 

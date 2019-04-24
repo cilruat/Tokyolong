@@ -1,4 +1,4 @@
-namespace admob
+namespace Onetapsoccerad 
 {
     // The position of the ad on the screen.
     public class AdPosition

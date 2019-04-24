@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+namespace JumperStepUp
+{
 // YOU BETTER RUN By BITBOYS STUDIO.
 
 [RequireComponent (typeof (Animator))]
@@ -543,4 +545,4 @@ public class CharController : MonoBehaviour { // Please be carefull editing this
 }
 
 }
-
+}

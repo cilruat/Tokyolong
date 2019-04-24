@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+namespace JumperStepUp
+{
 // YOU BETTER RUN By BITBOYS STUDIO.
 public class UICharacterScale : MonoBehaviour { 
 	// In the Shop panel (in the UI) there is an object called "ZoomObject" this object has a collider component attached to it. 
@@ -51,6 +53,6 @@ public class UICharacterScale : MonoBehaviour {
 			scale = false;
 		}
 	}
-
+	}
 
 }

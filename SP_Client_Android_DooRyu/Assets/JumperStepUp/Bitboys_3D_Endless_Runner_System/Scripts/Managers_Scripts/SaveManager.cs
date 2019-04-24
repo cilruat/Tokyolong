@@ -6,7 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System;
 
-namespace Stacktheblock
+namespace JumperStepUp
 {
 // 3D ENDLESS RUNNER SYSTEM By BITBOYS STUDIO.
 public class SaveManager : MonoBehaviour {
