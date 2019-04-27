@@ -2,6 +2,9 @@
 using UnityEngine.UI;
 using System.Collections;
 
+namespace BSK
+{
+
 public class GameController : MonoBehaviour {
 
 	public static GameController data;
@@ -84,5 +87,5 @@ public class GameController : MonoBehaviour {
 		PlayerPrefs.DeleteAll();
 		Application.LoadLevel(Application.loadedLevel);
 	}
-	
+	}
 }

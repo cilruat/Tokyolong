@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+namespace BSK
+{
 public class SoundController : MonoBehaviour {
 	
 	public AudioClip[] ballImpactFloor;
@@ -60,5 +62,5 @@ public class SoundController : MonoBehaviour {
 	public void playGameOver(){
 		thisAudio.PlayOneShot(gameOver);
 	}
-	
+	}
 }

@@ -2,6 +2,8 @@
 using UnityEngine.UI;
 using System.Collections;
 
+namespace BSK
+{
 public class MenuController : MonoBehaviour {
 	
 	public GameObject panelSettings;
@@ -42,4 +44,5 @@ public class MenuController : MonoBehaviour {
 	public void switchShadow(){
 		PlayerPrefs.SetInt("inverseAim", PlayerPrefs.GetInt("inverseAim", 0) == 1 ? 0 : 1);
 	}
+}
 }

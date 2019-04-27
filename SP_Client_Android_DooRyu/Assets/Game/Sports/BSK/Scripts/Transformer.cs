@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+namespace BSK
+{
 //This script is used to work with transform component in any cases. Within this game it is used to animate UI text. Such as balls or score count perform scale "pushes" when you have a goal.
 public class Transformer : MonoBehaviour {
 	
@@ -108,4 +110,5 @@ public class Transformer : MonoBehaviour {
 		}
 			
 	}
+}
 }

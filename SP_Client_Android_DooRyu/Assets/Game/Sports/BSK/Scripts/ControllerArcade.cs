@@ -2,6 +2,8 @@
 using UnityEngine.UI;
 using System.Collections;
 
+namespace BSK
+{
 [RequireComponent (typeof (GameController))]
 public class ControllerArcade : MonoBehaviour {
 	
@@ -304,4 +306,5 @@ public class ControllerArcade : MonoBehaviour {
 		return randPos;
 		
 	}
+}
 }

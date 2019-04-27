@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+namespace BSK
+{
 public class RotateAndLook : MonoBehaviour {
 	
 	//This script is for camera oin menu scene to rotate around the target
@@ -12,4 +14,5 @@ public class RotateAndLook : MonoBehaviour {
 		transform.RotateAround(target.position, Vector3.up, speed * Time.deltaTime);
 		transform.LookAt(target.position);
 	}
+}
 }

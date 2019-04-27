@@ -2,6 +2,8 @@
 using UnityEngine.UI;
 using System.Collections;
 
+namespace BSK
+{
 [RequireComponent (typeof (GameController))]
 public class ControllerTimeAttack : MonoBehaviour {
 	
@@ -266,4 +268,5 @@ public class ControllerTimeAttack : MonoBehaviour {
 		return randPos;
 		
 	}
+}
 }

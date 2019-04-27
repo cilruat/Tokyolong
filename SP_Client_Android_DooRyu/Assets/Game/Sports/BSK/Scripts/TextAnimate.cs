@@ -2,6 +2,8 @@
 using UnityEngine.UI;
 using System.Collections;
 
+namespace BSK
+{
 //This scripts is for all texts that appears for a short time. Used for score pop-ups and bonus alerts.
 public class TextAnimate : MonoBehaviour {
 
@@ -51,4 +53,5 @@ public class TextAnimate : MonoBehaviour {
 		if(rotate)
 			this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.Euler( 0, 0, 0 ), Time.deltaTime*10);
 	}
+}
 }

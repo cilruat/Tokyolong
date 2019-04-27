@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+namespace BSK
+{
 //This script changes camera size position each new throw and turns to camera extra modes
 public class AdaptiveCamera : MonoBehaviour {
 	
@@ -138,4 +140,5 @@ public class AdaptiveCamera : MonoBehaviour {
 			colorChanged = true;
 		}
 	}
+}
 }

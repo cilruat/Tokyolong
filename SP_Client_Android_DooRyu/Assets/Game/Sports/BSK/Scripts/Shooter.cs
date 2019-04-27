@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
+namespace BSK
+{
 //This scripts works with ball throwing system. 
 public class Shooter : MonoBehaviour {
 	
@@ -171,4 +173,5 @@ public class Shooter : MonoBehaviour {
             trajectoryPoints[i].GetComponent<Renderer>().enabled = false;
         }
 	}
+}
 }

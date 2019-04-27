@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+namespace BSK
+{
 //This script works with its ball. Inter alia it sends an events to any listeners about its actions like thorowed, goaled, failed.
 public class Ball : MonoBehaviour {
 	public Material standardMaterial, fadeMaterial;
@@ -174,3 +176,4 @@ public class Ball : MonoBehaviour {
 	
 }
 
+}

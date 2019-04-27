@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+namespace BSK
+{
 //This script made for ball in menu scene that makes it throw automaticly with high chances for goal
 public class AutoThrow : MonoBehaviour {
 	
@@ -76,4 +78,5 @@ public class AutoThrow : MonoBehaviour {
 		audioSource.pitch = 1.15f - speed/50;
 		audioSource.PlayOneShot(clips[Random.Range(0,clips.Length)],speed/8);
 	}
+}
 }

@@ -2,6 +2,8 @@
 using UnityEngine.UI;
 using System.Collections;
 
+namespace BSK
+{
 [RequireComponent (typeof (GameController))]
 public class ControllerDistance : MonoBehaviour {
 	
@@ -139,4 +141,5 @@ public class ControllerDistance : MonoBehaviour {
 		lastRecord = PlayerPrefs.GetInt("distanceBestScore",1);
 		bestDistanceTxt.text = "RECORD - " +lastRecord+"m";
 	}
+}
 }

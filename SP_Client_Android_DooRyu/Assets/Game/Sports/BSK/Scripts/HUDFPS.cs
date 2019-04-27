@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
- 
+
+namespace BSK
+{
 public class HUDFPS : MonoBehaviour 
 {
  
@@ -61,5 +63,6 @@ void Update()
         accum = 0.0F;
         frames = 0;
     }
+}
 }
 }
