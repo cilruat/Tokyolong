@@ -27,11 +27,11 @@ public partial class Info : MonoBehaviour {
 		get{
 			switch ((EDiscount)GameDiscountWon) {
 			case EDiscount.e500won:
-			case EDiscount.e1000won:	return 25;
-			case EDiscount.e2000won:	return 40;
-			case EDiscount.e5000won:	return 50;
-			case EDiscount.eAll:		return 60;
-			default:					return 60;
+			case EDiscount.e1000won:	return 15;
+			case EDiscount.e2000won:	return 25;
+			case EDiscount.e5000won:	return 40;
+			case EDiscount.eAll:		return 50;
+			default:					return 50;
 			}
 		}
 	}
@@ -40,11 +40,11 @@ public partial class Info : MonoBehaviour {
 		get{
 			switch ((EDiscount)GameDiscountWon) {
 			case EDiscount.e500won:
-			case EDiscount.e1000won:	return 25;
+			case EDiscount.e1000won:	return 15;
 			case EDiscount.e2000won:	return 30;
-			case EDiscount.e5000won:	return 50;
-			case EDiscount.eAll:		return 60;
-			default:					return 60;
+			case EDiscount.e5000won:	return 45;
+			case EDiscount.eAll:		return 55;
+			default:					return 55;
 			}
 		}
 	}
@@ -68,8 +68,8 @@ public partial class Info : MonoBehaviour {
 			case EDiscount.e1000won:	
 			case EDiscount.e2000won:	return 20;
 			case EDiscount.e5000won:	return 15;
-			case EDiscount.eAll:		return 12;
-			default:					return 12;
+			case EDiscount.eAll:		return 10;
+			default:					return 10;
 			}
 		}
 	}
@@ -90,9 +90,9 @@ public partial class Info : MonoBehaviour {
 		get{
 			switch ((EDiscount)GameDiscountWon) {
 			case EDiscount.e500won:
-			case EDiscount.e1000won:	return 20;
+			case EDiscount.e1000won:	return 25;
 			case EDiscount.e2000won:	
-			case EDiscount.e5000won:	return 15;
+			case EDiscount.e5000won:	return 20;
 			case EDiscount.eAll:		return 15;
 			default:					return 15;
 			}
@@ -128,7 +128,7 @@ public partial class Info : MonoBehaviour {
 		get{
 			switch ((EDiscount)GameDiscountWon) {
 			case EDiscount.e500won:
-			case EDiscount.e1000won:	return 22;
+			case EDiscount.e1000won:	return 25;
 			case EDiscount.e2000won:	
 			case EDiscount.e5000won:	return 18;
 			case EDiscount.eAll:		return 15;
