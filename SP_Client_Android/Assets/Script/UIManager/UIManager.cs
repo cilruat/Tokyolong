@@ -19,6 +19,7 @@ public enum eUI
 	eSurpriseResult,
 	eTokyoLive		= 10,
 	eDiscountAni,
+	eFirstOrderDesc,
 
 	eNone = 100,
 }
@@ -238,13 +239,6 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 			if (Input.GetKeyDown (KeyCode.L))
 				UIManager.Instance.ShowLog ();
 
-			if (Input.GetKeyDown (KeyCode.C))
-				//showClickA = !showClickA;
-			{
-				int[] i = new int[1];
-				i [1] = 2;
-			}
-
             #if UNITY_EDITOR
 			if (Input.GetKeyDown(KeyCode.P))
 			{
@@ -267,7 +261,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 				MuteMusic ();
 
 			if (Input.GetKeyDown (KeyCode.C))
-				PlayBell ();
+				UIManager.Instance.Show(eUI.eFirstOrderDesc);
 
 			if(Input.GetKeyDown(KeyCode.T))
 			{

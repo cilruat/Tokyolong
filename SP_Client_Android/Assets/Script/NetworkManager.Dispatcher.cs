@@ -164,7 +164,10 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 	{
         int orderCnt = msg.pop_int32();
         Info.AddOrderCount(orderCnt);
-        ((PageOrder)PageBase.Instance).bill.CompleteOrder ();
+		Info.firstOrder = System.Convert.ToBoolean(msg.pop_byte());
+
+		if (Info.isCheckScene ("Order"))
+			((PageOrder)PageBase.Instance).bill.CompleteOrder ();
 	}
 
 	void OrderNOT(CPacket msg)

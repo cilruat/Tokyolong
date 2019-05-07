@@ -76,7 +76,11 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 		case EDiscount.eAll:		descDiscount = "전액할인";	break;
 		}
 
-		txtDiscount.text = descDiscount;
+		if (Info.firstOrder)
+			txtDiscount.text = "소주 한병 무료";
+		else
+			txtDiscount.text = descDiscount;
+		
 		countDownPrev.Set (5, () => OnStart ());
 	}
 
@@ -93,7 +97,11 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 		List<Dictionary<string, object>> q = new List<Dictionary<string, object>>();
 		q = CSVReader.Read(path);
 
-		diffculty += 1;
+		if (Info.firstOrder)
+			diffculty = 3;
+		else
+			diffculty += 1;
+		
 		for (int i = 0; i < q.Count; i++) {
 			int diff = int.Parse (q [i] ["Difficulty"].ToString ());
 			if (diff != diffculty)
@@ -293,7 +301,11 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 				OnClose ();
 			else {
 				OnClose ();
-				Info.ShowResult ();
+
+				if (Info.firstOrder)
+					Info.SendEventMenu ();
+				else
+					Info.ShowResult ();
 			}
 		} else {
 			Info.SURPRISE_STEP = -1;

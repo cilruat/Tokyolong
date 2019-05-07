@@ -236,6 +236,10 @@ namespace SP_Server.UserState
 
                         send_msg = CPacket.create((short)PROTOCOL.ORDER_ACK);
                         send_msg.push(orderCnt);
+                        send_msg.push(Convert.ToByte(owner.info.firstOrder));
+
+                        owner.info.firstOrder = false;
+
                         break;
                     case PROTOCOL.CHAT_REQ:
                         tableNo = msg.pop_byte();

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using LitJson;
 
 public partial class Info : MonoBehaviour {
     
@@ -151,6 +152,7 @@ public partial class Info : MonoBehaviour {
     public static ECustomerType ECustomer = ECustomerType.MAN;
 
     public static int orderCnt = 0;
+	public static bool firstOrder = false;
 
     public static bool RunInGameScene = false;
 
@@ -379,5 +381,17 @@ public partial class Info : MonoBehaviour {
 		}
 		else
 			NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+	}
+
+	public static void SendEventMenu()
+	{
+		int menu = (int)EMenuDetail.eSozuFreeEvent;
+		int cnt = 1;
+		SendMenu send = new SendMenu (menu, cnt);
+
+		List<SendMenu> list = new List<SendMenu> (){ send };
+
+		JsonData json = JsonMapper.ToJson (list);
+		NetworkManager.Instance.Order_REQ (json.ToString (), 0);
 	}
 }

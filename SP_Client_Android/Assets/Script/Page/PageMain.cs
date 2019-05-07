@@ -45,8 +45,21 @@ public class PageMain : PageBase {
 
     void Start()
     {
-        StartFlyChance();
+		StartFlyChance ();
+		StartCoroutine (_FirstOrderTokyoLive ());
     }
+
+	IEnumerator _FirstOrderTokyoLive()
+	{
+		if (Info.firstOrder == false)
+			yield break;
+
+		yield return new WaitForSeconds (.5f);
+
+		GameObject obj = UIManager.Instance.Show (eUI.eFirstOrderDesc);
+		FirstOrderDesc first = obj.GetComponent<FirstOrderDesc> ();
+		first.Show ();
+	}
 
     public void RefreshGamePlay()
     {

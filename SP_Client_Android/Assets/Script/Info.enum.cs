@@ -29,6 +29,7 @@ public enum EMenuType : int
     eFruitMakgeolli,    // 과일 막걸리
     eGin,               // 고급진
 	eDrink,             // 아이스크림&음료
+	eOdeng,             // 오뎅
 }
 
 public enum EMenuDetail : int
@@ -113,6 +114,8 @@ public enum EMenuDetail : int
 	eScrewBar				= 78,
 	eSimsul12				= 79,
 	eMenu80					= 80,
+	eSozuFreeEvent			= 81,
+	eOdeng1					= 82,
 }
 
 /// <summary>
@@ -187,6 +190,7 @@ public partial class Info : MonoBehaviour {
         case EMenuType.eFruitMakgeolli: title = "수제 과일 막걸리타";	break;
         case EMenuType.eGin:            title = "고급진";        		break;
 		case EMenuType.eDrink:          title = "아이스크림&음료";      break;
+		case EMenuType.eOdeng:          title = "오뎅";      	break;
         }
 
         return title;

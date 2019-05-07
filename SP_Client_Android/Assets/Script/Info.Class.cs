@@ -63,6 +63,7 @@ public partial class Info : MonoBehaviour
 		surpriseCnt = 0;
 		loopSurpriseRemainTime = 0f;
 		waitSurprise = false;
+		firstOrder = false;
 
         myInfo = null;
         dictUserInfo.Clear();

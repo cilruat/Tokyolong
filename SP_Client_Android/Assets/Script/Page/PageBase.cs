@@ -56,7 +56,7 @@ public class PageBase : SingletonMonobehaviour<PageBase> {
 
 	public void ReturnHome()
 	{ 
-		SceneChanger.LoadScene ("Main", boards [0].gameObject);
+		SceneChanger.LoadScene ("Main", boards [curBoardIdx].gameObject);
 	}
 
 	public GameObject curBoardObj() 
