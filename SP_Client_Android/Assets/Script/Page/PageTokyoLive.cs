@@ -25,9 +25,9 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 
     List<Dictionary<string, object>> data = new List<Dictionary<string, object>>();
 
-    const int LIMIT_TIME = 15;
+    const int LIMIT_TIME = 10;
 	const int LIMIT_TIME_SELECT = 2;
-	const int LIMIT_PREV_TIME = 60;
+	const int LIMIT_PREV_TIME = 30;
 
 	string first_desc = "도쿄라이브 대손님퀴즈쇼~\n\n총 2문제가 출제가 되는데\n모두 맞추셔야\n할인이 적용됩니다.\n\n한문제라도 틀리면 즉시 종료!!\n\n그럼 첫번째 문제 나갑니다\n\n고고고!!!";
 	string[] desc = {		
