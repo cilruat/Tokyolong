@@ -25,7 +25,7 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 
     List<Dictionary<string, object>> data = new List<Dictionary<string, object>>();
 
-    const int LIMIT_TIME = 10;
+    const int LIMIT_TIME = 5;
 	const int LIMIT_TIME_SELECT = 2;
 	const int LIMIT_PREV_TIME = 30;
 
@@ -77,7 +77,7 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 		}
 
 		if (Info.firstOrder)
-			txtDiscount.text = "소주 한병 무료";
+			txtDiscount.text = "소주 한병 무료 (환불X)";
 		else
 			txtDiscount.text = descDiscount;
 		
