@@ -203,10 +203,10 @@ namespace GameBench
             }
         }
     }
-}
 public enum TurnType
 {
     PaidOnly = 0,
     FreeOnly,
     Both
+}
 }

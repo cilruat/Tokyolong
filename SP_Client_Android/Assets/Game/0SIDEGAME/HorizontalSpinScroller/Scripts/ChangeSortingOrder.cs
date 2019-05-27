@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+namespace GameBench
+{
 [ExecuteInEditMode]
 public class ChangeSortingOrder : MonoBehaviour
 {
@@ -13,4 +15,5 @@ public class ChangeSortingOrder : MonoBehaviour
     {
         Start();
     }
+}
 }

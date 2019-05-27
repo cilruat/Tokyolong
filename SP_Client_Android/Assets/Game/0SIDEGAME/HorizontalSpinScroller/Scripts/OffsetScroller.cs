@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+namespace GameBench
+{
 public class OffsetScroller : MonoBehaviour
 {
 
@@ -23,4 +25,5 @@ public class OffsetScroller : MonoBehaviour
     {
         GetComponent<Renderer>().sharedMaterial.SetTextureOffset("_MainTex", savedOffset);
     }
+}
 }
