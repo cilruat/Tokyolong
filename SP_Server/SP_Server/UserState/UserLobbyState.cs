@@ -247,7 +247,21 @@ namespace SP_Server.UserState
                                 if (data == null)
                                     continue;
 
-
+                                switch (data.category)
+                                {
+                                    case 0: case 1: case 2: case 3:
+                                    case 4: case 5: case 6:
+                                        orderMenu = true;
+                                        break;
+                                    case 7:  case 8:  case 9:
+                                    case 10: case 11: case 12:
+                                        orderDrink = true;
+                                        break;
+                                    case 14:
+                                        if (data.menuID == 92 || data.menuID == 93)
+                                            orderMenu = true;
+                                        break;
+                                }                                
                             }
 
                             if (orderMenu && orderDrink)
