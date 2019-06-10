@@ -46,14 +46,13 @@ public class PageMain : PageBase {
     void Start()
     {
 		StartFlyChance ();
-		StartCoroutine (_FirstOrderTokyoLive ());
+
+		if (Info.firstOrder)
+			StartCoroutine (_FirstOrderTokyoLive ());
     }
 
 	IEnumerator _FirstOrderTokyoLive()
 	{
-		if (Info.firstOrder == false)
-			yield break;
-
 		yield return new WaitForSeconds (.5f);
 
 		GameObject obj = UIManager.Instance.Show (eUI.eFirstOrderDesc);

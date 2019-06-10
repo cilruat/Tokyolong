@@ -234,11 +234,31 @@ namespace SP_Server.UserState
                             Frm.GetAdminUser().send(other_msg);
                         }
 
+                        bool firstOrder = false;
+                        if (owner.info.firstOrder == false)
+                        {
+                            bool orderMenu = false;
+                            bool orderDrink = false;
+                            JsonData json = JsonMapper.ToObject(reqOrder.packing);
+                            for (int i = 0; i < json.Count; i++)
+                            {
+                                int menu = int.Parse(json[i]["menu"].ToString());
+                                MenuData data = MenuData.Get(menu);
+                                if (data == null)
+                                    continue;
+
+
+                            }
+
+                            if (orderMenu && orderDrink)
+                                firstOrder = true;
+                        }
+
                         send_msg = CPacket.create((short)PROTOCOL.ORDER_ACK);
                         send_msg.push(orderCnt);
-                        send_msg.push(Convert.ToByte(owner.info.firstOrder));
+                        send_msg.push(Convert.ToByte(firstOrder));
 
-                        owner.info.firstOrder = false;
+                        owner.info.firstOrder = true;
 
                         break;
                     case PROTOCOL.CHAT_REQ:

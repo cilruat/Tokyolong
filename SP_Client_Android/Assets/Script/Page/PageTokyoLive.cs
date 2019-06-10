@@ -313,6 +313,7 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 			OnClose ();
 		}
 
+		Info.firstOrder = false;
 		yield break;
 	}
 
