@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
+namespace OnetapSoccer
+{
 public class GameController : MonoBehaviour {
 
 	/// <summary>
@@ -201,4 +202,5 @@ public class GameController : MonoBehaviour {
 			GetComponent<AudioSource>().Play();
 		}
 	}
+}
 }
