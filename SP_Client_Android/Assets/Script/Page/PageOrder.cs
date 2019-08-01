@@ -33,7 +33,7 @@ public class PageOrder : PageBase {
 		base.boards = this.cgBoards;
 		base.Awake ();
         base.acFinalIdx = 0;
-        base.acFinal = ShowMenu;
+//        base.acFinal = ShowMenu;
 
 		for (int i = 0; i < menuGroup.Length; i++)
 			menuGroup [i].obj.SetActive (false);
@@ -41,7 +41,8 @@ public class PageOrder : PageBase {
 
     void Start()
     {
-        showRoutine = StartCoroutine(ShowMenu(true));
+//        showRoutine = StartCoroutine(ShowMenu(true));
+		OnTabChange (5);
     }
 
     void ShowMenu()
