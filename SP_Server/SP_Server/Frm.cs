@@ -5,17 +5,17 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using System.Threading;
 using System.Diagnostics;
 using FreeNet;
 using LitJson;
 
 namespace SP_Server
 {
-    public delegate void DelegateWriteLog(string str, string strFunc, string strFile, string strLine);
+    public delegate void DelegateWriteLog(string str, string strFunc, string strFile, string strLine);    
 
     public partial class Frm : Form
     {
@@ -89,8 +89,38 @@ namespace SP_Server
             service = new CNetworkService(true);
             service.session_created_callback += on_session_created;
             service.initialize(1000, 32768);
-            service.listen("0.0.0.0", 7979, 100);            
+            service.listen("0.0.0.0", 7979, 100);
+
+            DateTime NowTime = DateTime.Now;
+            int nowHour = NowTime.Hour;
+            int nowMin = NowTime.Minute;
+
+            int startHour = nowMin >= 30 ? nowHour + 1 : nowHour;
+            int startMin = nowMin >= 30 ? 0 : 30;
+
+            string log = "startHour: " + startHour.ToString() + ", startMin: " + startMin.ToString();
+            WriteLog(log);
+
+            DateTime StartTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, startHour, startMin, 0);
+
+            TimeSpan ts = StartTime - NowTime;
+            TimeSpan period = new TimeSpan(1000 * 60 * 30);
+            
+            System.Threading.Timer timer = new System.Threading.Timer(TimerCallback);
+            timer.Change(ts, period);
         }        
+
+        private delegate void TimerDelegate();
+        private void TimerCallback(object t)
+        {
+            TimerDelegate timer = new TimerDelegate(generateLoopGame);
+            timer.Invoke();
+        }
+
+        private void generateLoopGame()
+        {
+            WriteLog("generateLoopGame");
+        }
 
         void on_session_created(CUserToken token)
         {            
