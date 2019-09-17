@@ -15,11 +15,14 @@ public enum eUI
 	eWaiting        = 5,
     eHowToUse,
     eShowLog,
-	eSurpriseStart,
-	eSurpriseResult,
+	eSurpriseStart,		// Not Used
+	eSurpriseResult,	// Not Used
 	eTokyoLive		= 10,
 	eDiscountAni,
 	eFirstOrderDesc,
+	eOwnerGame,
+	eOwnerQuiz,
+	eOwnerTrick,
 
 	eNone = 100,
 }
@@ -261,7 +264,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 				MuteMusic ();
 
 			if (Input.GetKeyDown (KeyCode.C))
-				UIManager.Instance.Show(eUI.eFirstOrderDesc);
+				UIManager.Instance.Show(eUI.eOwnerGame);
 
 			if(Input.GetKeyDown(KeyCode.T))
 			{
