@@ -240,6 +240,8 @@ public partial class Info : MonoBehaviour {
 
 	public static void UpdateSurpriseRemainTime()
 	{
+		return;
+
 		if (surpriseCnt <= 0)
 			return;
 

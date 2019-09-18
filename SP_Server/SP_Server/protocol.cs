@@ -82,6 +82,7 @@ namespace SP_Server
 		TABLE_MOVE_REQ,
 		TABLE_MOVE_ACK,
 		TABLE_MOVE_NOT,
+        OWNER_GAME_NOT,
         //-------------------------------------
         // 게임 프로토콜.
         //-------------------------------------        

@@ -98,9 +98,6 @@ namespace SP_Server
             int startHour = nowMin >= 30 ? nowHour + 1 : nowHour;
             int startMin = nowMin >= 30 ? 0 : 30;
 
-            string log = "startHour: " + startHour.ToString() + ", startMin: " + startMin.ToString();
-            WriteLog(log);
-
             DateTime StartTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, startHour, startMin, 0);
 
             TimeSpan ts = StartTime - NowTime;
@@ -162,11 +159,16 @@ namespace SP_Server
             switch (str)
             {
                 case "print_user_list":
-                    if(adminUser != null)
-                        WriteLog("[TableNo: " + adminUser.tableNum + "]");
-
+                    bool isEmpty = true;                    
                     for (int i = 0; i < ListUser.Count; i++)
+                    {
                         WriteLog("[TableNo: " + ListUser[i].tableNum + "]");
+                        isEmpty = false;
+                    }
+
+                    if(isEmpty)
+                        WriteLog("접속한 관리자 및 유저가 없습니다..");
+
                     break;
                 case "save":
                     AllDataSave();

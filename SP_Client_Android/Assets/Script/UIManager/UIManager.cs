@@ -97,8 +97,10 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 
 	void collect()
 	{
-		for (int i = 0; i < listUI.Count; i++) 
-			dicObject.Add (listUI [i].ui, listUI [i].obj);
+		for (int i = 0; i < listUI.Count; i++) {
+			if (listUI [i].obj != null)
+				dicObject.Add (listUI [i].ui, listUI [i].obj);
+		}
 	}		
 
 	public void SetCamera()
@@ -156,8 +158,10 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 	public void Hide_All()
 	{
 		objShadow.SetActive (false);
-		foreach (KeyValuePair<eUI, GameObject> pair in dicObject)
-			pair.Value.SetActive (false);
+		foreach (KeyValuePair<eUI, GameObject> pair in dicObject) {
+			if (pair.Value != null)
+				pair.Value.SetActive (false);
+		}
 	}
 
 	public bool IsActive(eUI page)
