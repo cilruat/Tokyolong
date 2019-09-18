@@ -99,9 +99,7 @@ namespace SP_Server.UserState
                         }
                         else
                         {                            
-                            send_msg.push(owner.mainFrm.GetGameCount(tableNum));                            
-                            send_msg.push(owner.info.surpriseCnt);
-
+                            send_msg.push(owner.mainFrm.GetGameCount(tableNum));
                             send_msg.push(existUser ? 1 : 0);
 
                             // 유저 정보가 있는경우 추가 패킷
@@ -398,8 +396,7 @@ namespace SP_Server.UserState
                                 continue;                                                                                    
 
                             other_msg = CPacket.create((short)PROTOCOL.ORDER_CONFIRM_NOT);
-                            other_msg.push(reqType);
-                            other_msg.push(other.info.surpriseCnt);
+                            other_msg.push(reqType);                            
                             other.send(other_msg);
                             break;
                         }
@@ -515,18 +512,6 @@ namespace SP_Server.UserState
                         send_msg.push(tableDiscount);
 
                         break;                    
-                    case PROTOCOL.SURPRISE_REQ:
-                        tableNo = msg.pop_byte();
-                        --owner.info.surpriseCnt;
-                        if (owner.info.surpriseCnt < 0)
-                            owner.info.surpriseCnt = 0;
-
-                        owner.mainFrm.DataUserInfoSave();
-
-                        int surpriseCnt = owner.info.surpriseCnt;
-                        send_msg = CPacket.create((short)PROTOCOL.SURPRISE_ACK);
-                        send_msg.push(surpriseCnt);
-                        break;
                     case PROTOCOL.GAME_COUNT_INPUT_REQ:
                         tableNo = msg.pop_byte();
                         int gameCount = msg.pop_int32();

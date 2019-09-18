@@ -74,14 +74,13 @@ namespace SP_Server
 		SET_RANDOM_DISCOUNT_PROB_ACK,
         TABLE_PRICE_CONFIRM_REQ,
         TABLE_PRICE_CONFIRM_ACK,
-		SURPRISE_REQ,
-		SURPRISE_ACK,
 		GAME_COUNT_INPUT_REQ,
 		GAME_COUNT_INPUT_ACK,
 		GAME_COUNT_INPUT_NOT,
 		TABLE_MOVE_REQ,
 		TABLE_MOVE_ACK,
 		TABLE_MOVE_NOT,
+		OWNER_GAME_NOT,
         //-------------------------------------
         // 게임 프로토콜.
         //-------------------------------------        

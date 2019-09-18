@@ -225,51 +225,6 @@ public partial class Info : MonoBehaviour {
         orderCnt = Mathf.Clamp(value, GAMEPLAY_MIN_COUNT, GAMEPLAY_MAX_COUNT);
     }
 
-	const int SURPRISE_REMAIN_MIN = 30;
-	public static int surpriseCnt = 0;
-	public static float loopSurpriseRemainTime = 0f;
-	public static bool waitSurprise = false;
-
-	/*static short _surprise_step = -1;
-	public static short SURPRISE_STEP
-	{
-		set{ _surprise_step = value; Debug.Log ("Set SURPRISE_STEP: " + SURPRISE_STEP); }
-		get{ return _surprise_step; }
-	}*/
-	public static short SURPRISE_STEP = -1;
-
-	public static void UpdateSurpriseRemainTime()
-	{
-		return;
-
-		if (surpriseCnt <= 0)
-			return;
-
-		if (Info.SURPRISE_STEP > -1)
-			return;
-
-		if (NetworkManager.isSending)
-			return;
-
-		if (UIManager.Instance.IsActive (eUI.eSurpriseStart))
-			return;
-
-		if (waitSurprise) {			
-			if (SceneManager.GetActiveScene ().name == "Game")
-				return;
-			
-			if (CheckGameScene(SceneManager.GetActiveScene().name))
-				return;
-
-			NetworkManager.Instance.Surprise_REQ ();
-			return;
-		}
-
-		loopSurpriseRemainTime += Time.deltaTime;
-		if (SURPRISE_REMAIN_MIN <= Mathf.FloorToInt ((loopSurpriseRemainTime) / 60))
-			waitSurprise = true;		
-	}
-
 	public static bool CheckGameScene(string sceneName)
 	{
 		if (sceneName == "PicturePuzzle"     		||
@@ -376,13 +331,7 @@ public partial class Info : MonoBehaviour {
 
 	public static void ShowResult()
 	{
-		if (Info.SURPRISE_STEP > -1) {
-			GameObject obj = UIManager.Instance.Show (eUI.eSurpriseResult);
-			UISurpriseResult ui = obj.GetComponent<UISurpriseResult>();
-			ui.Show();
-		}
-		else
-			NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+		NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
 	}
 
 	public static void SendEventMenu()

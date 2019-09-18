@@ -116,6 +116,22 @@ namespace SP_Server
 
         private void generateLoopGame()
         {
+            for (int i = 0; i < listUser.Count; i++)
+            {
+                User user = listUser[i];
+
+                if (user.tableNum == 10000 || user.tableNum <= 0)
+                    continue;
+
+                if (user.info.surpriseCnt <= 0)
+                    continue;
+
+                --user.info.surpriseCnt;
+
+                CPacket msg = CPacket.create((short)PROTOCOL.OWNER_GAME_NOT);
+                user.send(msg);
+            }
+
             WriteLog("generateLoopGame");
         }
 

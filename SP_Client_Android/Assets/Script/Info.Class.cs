@@ -60,9 +60,6 @@ public partial class Info : MonoBehaviour
         ECustomer = ECustomerType.MAN;
         GamePlayCnt = 0;
         GameDiscountWon = -1;
-		surpriseCnt = 0;
-		loopSurpriseRemainTime = 0f;
-		waitSurprise = false;
 		firstOrder = false;
 
         myInfo = null;

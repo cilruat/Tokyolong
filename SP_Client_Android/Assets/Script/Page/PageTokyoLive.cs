@@ -308,7 +308,6 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 					Info.ShowResult ();
 			}
 		} else {
-			Info.SURPRISE_STEP = -1;
 			yield return StartCoroutine (_ShowPrevDesc (desc [2]));
 			OnClose ();
 		}

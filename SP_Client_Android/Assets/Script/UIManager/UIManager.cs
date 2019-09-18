@@ -120,12 +120,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 			elapsedTime = 0f;	
 			waiting = true;		
 			break;
-		case eUI.eShowLog:		break;        
-		case eUI.eSurpriseStart:
-			Info.waitSurprise = false;
-			Info.loopSurpriseRemainTime = 0f;
-			curUI = page;	
-			break;
+		case eUI.eShowLog:		break;
 		default:
 			curUI = page;
 			objShadow.SetActive (true);
@@ -254,13 +249,6 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 					((PageGame)PageBase.Instance).RefreshPlayCnt ();
 			}				
 
-			if (Input.GetKeyDown (KeyCode.S)) {
-				GameObject obj = UIManager.Instance.Show (eUI.eSurpriseStart);
-				UISurpriseStart uiSurprise = obj.GetComponent<UISurpriseStart>();
-				if(uiSurprise)
-					uiSurprise.PrevSet ();
-			}
-
 			if (Input.GetKeyDown (KeyCode.Z))
 				PlayMusic (clipTokyoLive, 3f);
 
@@ -275,13 +263,6 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 				GameObject obj = Show (eUI.eTokyoLive);
 				PageTokyoLive ui = obj.GetComponent<PageTokyoLive>();
 				ui.PrevSet();
-			}
-
-			if(Input.GetKeyDown(KeyCode.F))
-			{
-				GameObject obj = Show (eUI.eSurpriseResult);
-				UISurpriseResult ui = obj.GetComponent<UISurpriseResult>();
-				ui.Show();
 			}
             #endif
 		}
@@ -305,9 +286,6 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
             ClickStar click = objEff.GetComponent<ClickStar>();
 			click.ShowClickStar(Input.mousePosition);
 		}
-
-		if (Info.TableNum != (byte)0 && Info.isCheckScene ("Login") == false)			
-			Info.UpdateSurpriseRemainTime ();
     }
 
 	public void PlaySound()

@@ -180,15 +180,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         msg.push(tableNo);
 
         send(msg);
-    }		
-
-	public void Surprise_REQ()
-	{
-		CPacket msg = CPacket.create((short)PROTOCOL.SURPRISE_REQ);
-		msg.push(Info.TableNum);
-
-		send(msg);
-	}
+    }
 
 	public void GameCountInput_REQ(byte tableNo, int gameCnt)
 	{

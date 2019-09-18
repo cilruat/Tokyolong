@@ -52,11 +52,11 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         case PROTOCOL.GET_RANDOM_DISCOUNT_PROB_ACK: GetDiscountProb_ACK(msg);   	break;
         case PROTOCOL.SET_RANDOM_DISCOUNT_PROB_ACK: SetDiscountProb_ACK(msg);   	break;
         case PROTOCOL.TABLE_PRICE_CONFIRM_ACK:   	TablePriceConfirm_ACK(msg);    	break;
-		case PROTOCOL.SURPRISE_ACK:					Surprise_ACK (msg);				break;
 		case PROTOCOL.GAME_COUNT_INPUT_ACK:			GameCountInputACK ();			break;
 		case PROTOCOL.GAME_COUNT_INPUT_NOT:			GameCountInputNOT (msg);		break;
 		case PROTOCOL.TABLE_MOVE_ACK:				TableMoveACK (msg);				break;
 		case PROTOCOL.TABLE_MOVE_NOT:				TableMoveNOT ();				break;
+		case PROTOCOL.OWNER_GAME_NOT:				OwnerGameNOT ();				break;
 		}
 
 		isSending = false;
@@ -86,9 +86,6 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
             int gameCnt = msg.pop_int32 ();
             Info.AddGameCount(gameCnt, true);
 			        
-			Info.surpriseCnt = msg.pop_int32 ();
-			Info.waitSurprise = false;
-
 			int existUser = msg.pop_int32 ();
 			if (existUser == 1) {
 				Info.PersonCnt = msg.pop_byte ();
@@ -225,10 +222,6 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 			GameObject obj = UIManager.Instance.GetCurUI ();
 			UIDiscountAnimation uiResult = obj.GetComponent<UIDiscountAnimation> ();
 			uiResult.SetInfo (menuPacking, discountPrice);
-		} else if (UIManager.Instance.IsActive (eUI.eSurpriseResult)) {
-			GameObject obj = UIManager.Instance.GetCurUI ();
-			UISurpriseResult uiResult = obj.GetComponent<UISurpriseResult> ();
-			uiResult.uiDiscount.SetInfo (menuPacking, discountPrice);
 		} else if (UIManager.Instance.IsActive (eUI.eBillDetail) == false) {
 			GameObject obj = UIManager.Instance.Show (eUI.eBillDetail);
 			UIBillDetail uiBillDetail = obj.GetComponent<UIBillDetail> ();
@@ -238,15 +231,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
 	void GameDiscountACK(CPacket msg)
 	{
-		if (Info.SURPRISE_STEP > -1) {
-			GameObject obj = UIManager.Instance.Show (eUI.eSurpriseResult);
-			UISurpriseResult uiResult = obj.GetComponent<UISurpriseResult> ();
-			uiResult.uiDiscount.SendREQ ();
-		} else {
-			GameObject obj = UIManager.Instance.Show (eUI.eDiscountAni);
-			UIDiscountAnimation ui = obj.GetComponent<UIDiscountAnimation> ();
-			ui.SendREQ ();
-		}
+		GameObject obj = UIManager.Instance.Show (eUI.eDiscountAni);
+		UIDiscountAnimation ui = obj.GetComponent<UIDiscountAnimation> ();
+		ui.SendREQ ();
 	}
 
 	void RequestMusicListACK(CPacket msg)
@@ -314,12 +301,11 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     void OrderConfirmNOT(CPacket msg)
     {
         ERequestOrderType type = (ERequestOrderType)msg.pop_byte();
-		Info.surpriseCnt = msg.pop_int32 ();
-
-        switch (type)
-        {
-            case ERequestOrderType.eOrder:      UIManager.Instance.ShowOrderAlarm();    break;
-        }
+		switch (type) {
+		case ERequestOrderType.eOrder:
+			UIManager.Instance.ShowOrderAlarm ();
+			break;
+		}
     }
 
     void TableOrderConfirmACK(CPacket msg)
@@ -401,17 +387,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         int tableDiscount = msg.pop_int32();
 
         PageAdmin.Instance.ShowTableDiscountInput(tableNo, tablePrice, tableDiscount);
-    }		
-
-	void Surprise_ACK(CPacket msg)
-	{
-		Info.surpriseCnt = msg.pop_int32 ();
-
-		GameObject obj = UIManager.Instance.Show (eUI.eSurpriseStart);
-		UISurpriseStart uiSurprise = obj.GetComponent<UISurpriseStart>();
-		if(uiSurprise)
-			uiSurprise.PrevSet ();
-	}
+    }
 
 	void GameCountInputACK()
 	{
@@ -446,5 +422,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 	{
 		NetworkManager.Instance.disconnect ();
 		SceneChanger.LoadScene ("Login", null);
+	}
+
+	void OwnerGameNOT()
+	{
 	}
 }

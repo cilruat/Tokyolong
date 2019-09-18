@@ -9,10 +9,8 @@ public class GameOver : MonoBehaviour {
 	public CountDown countDown;
 
 	void Start()
-	{
-		Info.SURPRISE_STEP = -1;
+	{		
 		Info.firstOrder = false;
-
 		countDown.Set(3, () => _ReturnHome());
 	}
 
