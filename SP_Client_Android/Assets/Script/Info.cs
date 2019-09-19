@@ -156,6 +156,9 @@ public partial class Info : MonoBehaviour {
 
     public static bool RunInGameScene = false;
 
+	public static bool CheckOwnerEvt = false;
+	public static eUI OwnerUI = eUI.eOwnerGame;
+
 	public static void AnimateChangeObj(CanvasGroup cur, CanvasGroup next, UnityEvent nextCallback = null)
     {
         UITweenAlpha.Start(cur.gameObject, 0f, TWParam.New(1f).Curve(TWCurve.CurveLevel2));
@@ -233,7 +236,8 @@ public partial class Info : MonoBehaviour {
 			sceneName == "CrashCatMain"      		||
 			sceneName == "CrashCatStart"     		||
 			sceneName == "TouchNumber"				||
-			sceneName == "FindDiffPicture"			/*||
+			sceneName == "FindDiffPicture"			||
+			sceneName == "Trickery"					/*||
 			sceneName == "EmojiMain"         		||
 			sceneName == "Emoji2Main"        		||
 			sceneName == "AvoidBullets"      		||
@@ -290,6 +294,9 @@ public partial class Info : MonoBehaviour {
 			PageTouchNumber.Instance.ReturnHome ();
 		else if (Info.isCheckScene ("FindDiffPicture"))
 			PageFindDiffPicture.Instance.ReturnHome ();
+		else if (Info.isCheckScene ("Trickery"))
+			gamemanager.instance.ReturnHome ();
+			
 		/*else if (Info.isCheckScene ("EmojiMain"))
 			Emoji.GameManager.Instance.ReturnHome ();
 		else if (Info.isCheckScene ("Emoji2Main"))

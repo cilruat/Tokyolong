@@ -23,6 +23,7 @@ public enum eUI
 	eOwnerGame,
 	eOwnerQuiz,
 	eOwnerTrick,
+	eTokyoQuiz,
 
 	eNone = 100,
 }
@@ -51,6 +52,9 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 	public AudioClip clipSurprise;
 	public AudioClip clipCelebration;
 	public AudioClip clipMagnificent;
+	public AudioClip clipOwnerGame;
+	public AudioClip clipOwnerQuiz;
+	public AudioClip clipOwnerTrick;
 
 	public AudioSource audioSound;
 	public AudioSource audioBell;
@@ -285,6 +289,27 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 
             ClickStar click = objEff.GetComponent<ClickStar>();
 			click.ShowClickStar(Input.mousePosition);
+		}
+
+		if (Info.CheckOwnerEvt) {
+			if (NetworkManager.isSending)
+				return;
+
+			if (SceneManager.GetActiveScene ().name == "Login")
+				return;
+
+			if (IsActive (Info.OwnerUI))
+				return;
+
+			if (Info.CheckGameScene (SceneManager.GetActiveScene ().name))
+				return;
+
+			GameObject objUI = UIManager.Instance.Show (Info.OwnerUI);
+			OwnerEvent evt = objUI.GetComponent<OwnerEvent> ();
+			evt.Show ();
+
+			Info.CheckOwnerEvt = false;
+			Info.OwnerUI = eUI.eOwnerGame;
 		}
     }
 

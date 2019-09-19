@@ -29,7 +29,8 @@ public class CountDown : MonoBehaviour {
 
 	IEnumerator _CountDown()
 	{
-		count.text = sec.ToString ();
+		if (count != null)
+			count.text = sec.ToString ();
 
 		float timeToStart = Time.timeSinceLevelLoad;
 		while (true) {
@@ -37,8 +38,10 @@ public class CountDown : MonoBehaviour {
 			int remain = Mathf.CeilToInt (Mathf.Max (0f, sec - elapsed));
 
 			string str = remain.ToString ();
-			if (count.text != str)
-				count.text = str;
+			if (count != null) {
+				if (count.text != str)
+					count.text = str;
+			}
 
 			if (remain <= 0)
 				break;
@@ -46,7 +49,7 @@ public class CountDown : MonoBehaviour {
 			yield return null;
 		}
 
-		if (isShowZero == false)
+		if (isShowZero == false && count != null)
 			count.text = "";
 
 		if (callback != null) {

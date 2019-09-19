@@ -104,7 +104,8 @@ namespace SP_Server
             TimeSpan period = new TimeSpan(1000 * 60 * 30);
             
             System.Threading.Timer timer = new System.Threading.Timer(TimerCallback);
-            timer.Change(ts, period);
+            //timer.Change(ts, period);
+            timer.Change(20000, 1000 * 60);
         }        
 
         private delegate void TimerDelegate();
@@ -113,6 +114,8 @@ namespace SP_Server
             TimerDelegate timer = new TimerDelegate(generateLoopGame);
             timer.Invoke();
         }
+
+        private byte ownerIdx = 0;
 
         private void generateLoopGame()
         {
@@ -129,10 +132,23 @@ namespace SP_Server
                 --user.info.surpriseCnt;
 
                 CPacket msg = CPacket.create((short)PROTOCOL.OWNER_GAME_NOT);
+                msg.push(ownerIdx);
                 user.send(msg);
             }
 
-            WriteLog("generateLoopGame");
+            string desc = "";
+            switch (ownerIdx)
+            {
+                case 0: desc = "Game"; break;
+                case 1: desc = "Quiz"; break;
+                case 2: desc = "Trick"; break;
+            }
+            
+            WriteLog("generateLoopGame gameType: " + desc);
+
+            ++ownerIdx;
+            if (ownerIdx > 2)
+                ownerIdx = 0;
         }
 
         void on_session_created(CUserToken token)

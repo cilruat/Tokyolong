@@ -51,19 +51,14 @@ public class cup : MonoBehaviour {
 				gamemanagerscript.insballaddscore(transform.position);
 				gamemanagerscript.moveballback();
 				Invoke("movecupback",0.6f);
-				if(gamemanagerscript.lukecount<1){	
-					gamemanagerscript.goon.SetActive(true);
-					gamemanagerscript.countnumber.GetComponent<Text>().text=gamemanagerscript.lukecount.ToString();
-				}else if (gamemanagerscript.lukecount==1){
-					gamemanagerscript.youwinpanel.SetActive(true);
-				}
+				if (gamemanagerscript.lukecount < 1) {	
+					gamemanagerscript.goon.SetActive (true);
+					gamemanagerscript.countnumber.GetComponent<Text> ().text = gamemanagerscript.lukecount.ToString ();
+				} else if (gamemanagerscript.lukecount == 1)
+					gamemanagerscript.Win ();
 				
-			} else {
-				
-				gamemanagerscript.isgameover=true;
-				gamemanagerscript.gameover.SetActive(true);
-			}
-			
+			} else
+				gamemanagerscript.GameOver ();
 			
 			iTween.MoveBy (gameObject, iTween.Hash ("y", 1, "easetype", iTween.EaseType.easeOutBack, "time", 0.25f));
 			gamemanagerscript.ifcupcanclick = false;

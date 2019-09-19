@@ -56,7 +56,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		case PROTOCOL.GAME_COUNT_INPUT_NOT:			GameCountInputNOT (msg);		break;
 		case PROTOCOL.TABLE_MOVE_ACK:				TableMoveACK (msg);				break;
 		case PROTOCOL.TABLE_MOVE_NOT:				TableMoveNOT ();				break;
-		case PROTOCOL.OWNER_GAME_NOT:				OwnerGameNOT ();				break;
+		case PROTOCOL.OWNER_GAME_NOT:				OwnerGameNOT (msg);				break;
 		}
 
 		isSending = false;
@@ -424,7 +424,18 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		SceneChanger.LoadScene ("Login", null);
 	}
 
-	void OwnerGameNOT()
+	void OwnerGameNOT(CPacket msg)
 	{
+		byte ownerIdx = msg.pop_byte ();
+
+		eUI ownerUI = eUI.eOwnerGame;
+		switch (ownerIdx) {
+		case 0:		ownerUI = eUI.eOwnerGame;	break;
+		case 1:		ownerUI = eUI.eOwnerQuiz;	break;
+		case 2:		ownerUI = eUI.eOwnerTrick;	break;
+		}
+
+		Info.OwnerUI = ownerUI;
+		Info.CheckOwnerEvt = true;
 	}
 }

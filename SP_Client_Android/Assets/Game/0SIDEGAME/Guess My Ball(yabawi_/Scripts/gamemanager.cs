@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class gamemanager : MonoBehaviour {
 
+	public static gamemanager instance;
 
 	public GameObject[] points;   //points of cup
 	private GameObject[] cups;
@@ -28,11 +29,17 @@ public class gamemanager : MonoBehaviour {
 	public int levelindex = 0;
 	private GameObject templevel;
 	public GameObject levelnumber ;
+	public GameObject objCanvas;
+	public GameObject objSendServer;
+	public GameObject objGameover;
 
 	private Vector3 ballinipos;
 
 	// Use this for initialization
 	void Start () {
+		if (instance == null)
+			instance = this;		
+
 		Application.targetFrameRate = 60;
 	    templevel=	Instantiate (levels [levelindex],new Vector3 (2, 0, 0), Quaternion.identity) as GameObject;
 		points = GameObject.FindGameObjectsWithTag("point");
@@ -49,6 +56,7 @@ public class gamemanager : MonoBehaviour {
 		moveballtocup ();
 		yield return new WaitForSeconds(0.7f);
 		ball.GetComponent<SpriteRenderer> ().enabled = false;
+		yield return new WaitForSeconds(0.5f);
 		movecup ();
 		yield return new WaitForSeconds(0.6f);
 		movecup ();
@@ -67,9 +75,7 @@ public class gamemanager : MonoBehaviour {
 	}
 
 	public void Retry(){
-
-	
-		SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex);
+		SceneChanger.LoadScene ("Main", objCanvas);
 	}
 
 	public void GoOnPlay(){
@@ -196,5 +202,36 @@ public class gamemanager : MonoBehaviour {
 
 	}
 
+	public void Win()
+	{
+		youwinpanel.SetActive(true);
 
+		if (levelindex == 2)
+			StartCoroutine (_Win ());
+	}
+
+	IEnumerator _Win()
+	{
+		objSendServer.SetActive (true);
+		yield return new WaitForSeconds (1f);
+		objSendServer.SetActive (false);
+
+		if (Info.TableNum == 0)
+			ReturnHome ();
+		else
+			Info.ShowResult ();
+	}
+
+	public void GameOver()
+	{
+		isgameover=true;
+		gameover.SetActive(true);
+
+		objGameover.SetActive (true);
+	}
+
+	public void ReturnHome()
+	{
+		SceneChanger.LoadScene ("Main", objCanvas);
+	}
 }
