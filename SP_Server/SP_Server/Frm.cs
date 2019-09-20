@@ -104,8 +104,8 @@ namespace SP_Server
             TimeSpan period = new TimeSpan(1000 * 60 * 30);
             
             System.Threading.Timer timer = new System.Threading.Timer(TimerCallback);
-            //timer.Change(ts, period);
-            timer.Change(20000, 1000 * 60);
+            timer.Change(ts, period);
+            //timer.Change(20000, 1000 * 30);
         }        
 
         private delegate void TimerDelegate();

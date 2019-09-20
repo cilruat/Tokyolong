@@ -103,7 +103,19 @@ public class TokyoQuiz : MonoBehaviour {
 
 	public void OnStart()
 	{
-		UIManager.Instance.MuteMusic ();
+		UITweenAlpha.Start (gameObject, 0f, 1f, TWParam.New (1f).Curve (TWCurve.CurveLevel2).Speed (TWSpeed.Slower));
+		UIManager.Instance.PlayMusic (UIManager.Instance.clipTokyoLive, 1f);
+
+		nextQuestion = false;
+		curStage = 1;
+		selectAnswer = 0;
+
+		_Init ();
+
+		_CollectQuestion (2);
+		_RandQuestion (ref question1, ref answer1);
+		_RandQuestion (ref question2, ref answer2);
+
 		StartCoroutine (_Start ());
 	}
 
@@ -115,13 +127,16 @@ public class TokyoQuiz : MonoBehaviour {
 		while (nextQuestion == false)
 			yield return null;			
 
-		UITweenAlpha.Start (objSuccess1, 0f, .5f, TWParam.New (1f).Curve (TWCurve.CurveLevel2));
-		yield return new WaitForSeconds (1f);
+		UITweenAlpha.Start (objSuccess1, 0f, 1f, TWParam.New (1f).Curve (TWCurve.CurveLevel2));
+		yield return new WaitForSeconds (1.5f);
 		yield return StartCoroutine (_ShowQuestion ());
 	}
 
 	IEnumerator _ShowQuestion()
 	{
+		objSuccess1.SetActive (false);
+		objSuccess2.SetActive (false);
+
 		string[] question = curStage == 1 ? question1 : question2;
 		
 		string str = "";
@@ -200,10 +215,15 @@ public class TokyoQuiz : MonoBehaviour {
 	}
 
 	IEnumerator _EndGame(bool right)
-	{		
+	{
+		objSuccess1.SetActive (false);
+		objSuccess2.SetActive (false);
+
+		UIManager.Instance.MuteMusic ();
+
 		if (curStage == 2 && right) {
-			UITweenAlpha.Start (objSuccess2, 0f, .5f, TWParam.New (1f).Curve (TWCurve.CurveLevel2));
-			yield return new WaitForSeconds (1f);
+			UITweenAlpha.Start (objSuccess2, 0f, 1f, TWParam.New (1f).Curve (TWCurve.CurveLevel2));
+			yield return new WaitForSeconds (2f);
 
 			objSendServer.SetActive (true);
 			yield return new WaitForSeconds (1f);
@@ -215,8 +235,8 @@ public class TokyoQuiz : MonoBehaviour {
 				Info.ShowResult ();
 			}
 		} else {
-			UITweenAlpha.Start (objFail, 0f, .5f, TWParam.New (1f).Curve (TWCurve.CurveLevel2));
-			yield return new WaitForSeconds (1f);
+			UITweenAlpha.Start (objFail, 0f, 1f, TWParam.New (1f).Curve (TWCurve.CurveLevel2));
+			yield return new WaitForSeconds (2f);
 			OnClose ();
 		}
 
@@ -233,7 +253,7 @@ public class TokyoQuiz : MonoBehaviour {
 		UITweenAlpha.Start (gameObject, 1f, 0f, TWParam.New (1f).Curve (TWCurve.CurveLevel2).Speed (TWSpeed.Slower));
 		yield return new WaitForSeconds (.8f);
 
-		UIManager.Instance.Hide (eUI.eTokyoLive);
+		UIManager.Instance.Hide (eUI.eTokyoQuiz);
 	}
 
 	public void OnSelect(int answer)

@@ -28,8 +28,10 @@ public class OwnerEvent : MonoBehaviour {
 	IEnumerator _StartEvent()
 	{
 		Info.GameDiscountWon = 0;
-		UIManager.Instance.Hide (uiType);
+		countdown.Stop ();
 		UIManager.Instance.StopMusic ();
+
+		yield return null;
 
 		switch (uiType) {
 		case eUI.eOwnerGame:
@@ -37,12 +39,17 @@ public class OwnerEvent : MonoBehaviour {
 			Info.PlayGame (randGame, gameObject);
 			break;
 		case eUI.eOwnerQuiz:
-			UIManager.Instance.Show (eUI.eTokyoQuiz);
+			GameObject obj = UIManager.Instance.Show (eUI.eTokyoQuiz);
+			TokyoQuiz quiz = obj.GetComponent<TokyoQuiz> ();
+			quiz.OnStart ();
 			break;
 		case eUI.eOwnerTrick:
 			SceneChanger.LoadScene ("Trickery", gameObject);
 			break;
 		}
+
+		yield return null;
+		UIManager.Instance.Hide (uiType);
 	}
 
 	public void Show()
@@ -67,8 +74,8 @@ public class OwnerEvent : MonoBehaviour {
 	public void OnCancel()
 	{
 		Info.GameDiscountWon = -1;
-
 		countdown.Stop ();
+		UIManager.Instance.StopMusic ();
 		UIManager.Instance.Hide (uiType);
 	}
 }

@@ -212,7 +212,9 @@ public class gamemanager : MonoBehaviour {
 
 	IEnumerator _Win()
 	{
+		yield return new WaitForSeconds (1f);
 		objSendServer.SetActive (true);
+
 		yield return new WaitForSeconds (1f);
 		objSendServer.SetActive (false);
 
@@ -227,6 +229,12 @@ public class gamemanager : MonoBehaviour {
 		isgameover=true;
 		gameover.SetActive(true);
 
+		StartCoroutine (_GameOver ());
+	}
+
+	IEnumerator _GameOver()
+	{
+		yield return new WaitForSeconds (1f);
 		objGameover.SetActive (true);
 	}
 

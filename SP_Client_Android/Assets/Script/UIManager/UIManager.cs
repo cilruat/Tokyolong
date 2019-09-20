@@ -260,7 +260,11 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 				MuteMusic ();
 
 			if (Input.GetKeyDown (KeyCode.C))
-				UIManager.Instance.Show(eUI.eOwnerGame);
+			{
+				GameObject obj = UIManager.Instance.Show (eUI.eTokyoQuiz);
+				TokyoQuiz quiz = obj.GetComponent<TokyoQuiz> ();
+				quiz.OnStart ();
+			}
 
 			if(Input.GetKeyDown(KeyCode.T))
 			{
