@@ -101,10 +101,11 @@ namespace SP_Server
             DateTime StartTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, startHour, startMin, 0);
 
             TimeSpan ts = StartTime - NowTime;
-            TimeSpan period = new TimeSpan(1000 * 60 * 30);
-            
+            int totalSec = (int)ts.TotalSeconds * 1000;            
+
             System.Threading.Timer timer = new System.Threading.Timer(TimerCallback);
-            timer.Change(ts, period);
+            timer.Change(totalSec, (int)(1000 * 60 * 30));
+            
             //timer.Change(20000, 1000 * 30);
         }        
 
