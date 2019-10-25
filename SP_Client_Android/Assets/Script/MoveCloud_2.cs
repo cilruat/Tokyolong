@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveCloudM : MonoBehaviour {
+public class MoveCloud_2 : MonoBehaviour {
 	public RectTransform rtLogo;
 
 	void Start()//스타트 코루틴
@@ -12,15 +12,15 @@ public class MoveCloudM : MonoBehaviour {
 
 	IEnumerator Move()
 	{
-		rtLogo.anchoredPosition = new Vector2(610f, 140f);//rt 로고를 정의해주기, 시작하는 위치설정 
+		rtLogo.anchoredPosition = new Vector2(610f, 50f);//rt 로고를 정의해주기, 시작하는 위치설정 
 
 		while (true)
 		{
 			float posX = rtLogo.anchoredPosition.x;//변수들을 정의
-			float elapsed = Time.deltaTime *30f;//초당움직이는 프레임, 프레임은 유니티내부에서 설정 가능
+			float elapsed = Time.deltaTime *50f;//초당움직이는 프레임, 프레임은 유니티내부에서 설정 가능
 			float moveX = Mathf.MoveTowards(posX, -640f, elapsed);//목표방향,계속 쏴주기
 
-			rtLogo.anchoredPosition = new Vector2(moveX, 140f);
+			rtLogo.anchoredPosition = new Vector2(moveX, 50f);
 
 			if (rtLogo.anchoredPosition.x <= -640f)//목표지점까지가면끝입니다
 				break;

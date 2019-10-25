@@ -459,8 +459,8 @@ public class GameController : MonoBehaviour
                 //our Static variable GameVariables.ChillModeScore needs to be set to zero (to make sure it is cleared)
                 GameVariables.ChillModeScore = 0;
 
-                //then we call StartRelaxModeGame() and pass in true(hasTimer), and 90f(TimerTime)
-                StartChillModeGame(true, 90f);
+                //then we call StartRelaxModeGame() and pass in true(hasTimer), and 90f(TimerTime) 90초서 30초 수정해봄
+                StartChillModeGame(true, 30f);
 
                 //break... we are done.
                 break;

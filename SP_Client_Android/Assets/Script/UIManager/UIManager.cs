@@ -282,7 +282,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 			if (Info.CheckGameScene (SceneManager.GetActiveScene ().name))
 				return;
 
-			GameObject showEff = clickStar.gameObject;
+			GameObject showEff = clickHollWeen.gameObject;
             GameObject objEff = null;
 			if (Info.isCheckScene ("Admin"))
 				objEff = Instantiate (showEff, PageAdmin.Instance.transform) as GameObject;
