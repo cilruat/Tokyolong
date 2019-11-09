@@ -1,0 +1,187 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &122910
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 454522}
+  - component: {fileID: 3331842}
+  - component: {fileID: 2309938}
+  m_Layer: 0
+  m_Name: BlueBall_Whole
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &132360
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 428984}
+  - component: {fileID: 5464888}
+  - component: {fileID: 11478152}
+  - component: {fileID: 13600118}
+  m_Layer: 9
+  m_Name: WholeBlueBall
+  m_TagString: Ball
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &428984
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 132360}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 454522}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &454522
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 122910}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 428984}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &2309938
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 122910}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 607497516d9fe97408eec25b39540c45, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &3331842
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 122910}
+  m_Mesh: {fileID: 4300306, guid: 7ecdc7cb13abbcd4aa69a3d36fc1ba7d, type: 3}
+--- !u!54 &5464888
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 132360}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 112
+  m_CollisionDetection: 2
+--- !u!114 &11478152
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 132360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5ea9e3992cd6534e88958182ed10991, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inGameScene: 1
+  sceneToLoadIfNot: 0
+  ballSplatterPrefabs:
+  - {fileID: 158242, guid: 36af8684c7141e14699e9fcc3e773733, type: 2}
+  - {fileID: 109906, guid: e8fed1d4d5c2c7c4c9f7ef9216e13e4e, type: 2}
+  - {fileID: 195280, guid: 8fc928573944c2042bfd04f821059923, type: 2}
+  - {fileID: 115800, guid: 4245eb1a90e9d4a44853764f24078c20, type: 2}
+  - {fileID: 181630, guid: 0ceb9caa1fbd96148a1fff43e6aab251, type: 2}
+  - {fileID: 108620, guid: 3bde9b6daee99db449cb1c636e246203, type: 2}
+  - {fileID: 173738, guid: 09176a0ebf6c4a8409d90b89e9fb9cf6, type: 2}
+  - {fileID: 138534, guid: 57be5bce640a9c145af30e008d372e81, type: 2}
+  ballExplosionParticleSystem: {fileID: 176750, guid: 56c623b23167aff4f95c47b836cec0e8,
+    type: 2}
+  thisObjectsAudioSource: {fileID: 0}
+  splatSounds:
+  - {fileID: 8300000, guid: 37ccd08358465e64e91fdabedec14404, type: 3}
+  - {fileID: 8300000, guid: a89b505e90aacd44cb78bd453103018f, type: 3}
+  - {fileID: 8300000, guid: 752c92ff8157ac74e94ba25b1ff6b2f7, type: 3}
+  templeBellSound: {fileID: 0}
+  minClipPitch: 0.85
+  maxClipPitch: 1.15
+  gibsForVerticalCuts: {fileID: 127702, guid: e9a1f80616a523c4ea05bb08baa2f303, type: 2}
+  gibsForHorizontalCuts: {fileID: 139316, guid: b1aefa03785a1a049ac4871dda3bbe6d,
+    type: 2}
+  gibsFor1DiagonalCuts: {fileID: 125844, guid: b8dbb09e32e0e1a488b7053bfe7a510c, type: 2}
+  gibsForDiagonalCuts: {fileID: 126014, guid: 2e1e15f68f38cbe4bad2a16d9a36d306, type: 2}
+  sliceForVerticalCuts: {fileID: 142168, guid: a9e8c5b38cb5aa84197278b0d6412d19, type: 2}
+  sliceForHorizontalCuts: {fileID: 106984, guid: af667c53281233845abaa778dc612804,
+    type: 2}
+  sliceFor1DiagonalCuts: {fileID: 184376, guid: 898ccca045c046845a1f3c7c7413ce24,
+    type: 2}
+  sliceForDiagonalCuts: {fileID: 194134, guid: 3571ea7a99bbe164895ca221f6f7a1f0, type: 2}
+--- !u!136 &13600118
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 132360}
+  m_Material: {fileID: 13400000, guid: 23759a44c3da7234ba6b24b0355628b0, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 5.5
+  m_Height: 0
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 132360}
+  m_IsPrefabParent: 1
