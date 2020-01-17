@@ -37,7 +37,9 @@ public class PageMind : PageBase {
 				UITweenAlpha.Start (cgTapGroups [i].gameObject, 1f, TWParam.New (1f, 1f).Curve (TWCurve.CurveLevel2));
 				cgTapGroups [i].blocksRaycasts = true;
 			}
-		} else {
+		} 
+
+		else {
 			for (int i = 0; i < cgTapGroups.Length; i++) {
 				cgTapGroups [i].alpha = 0;
 				cgTapGroups [i].blocksRaycasts = false;
