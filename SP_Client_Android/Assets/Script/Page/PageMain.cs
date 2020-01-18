@@ -21,6 +21,7 @@ public class PageMain : PageBase {
 		eTaro,
 		ePractice,
 		eMind,
+		eHitNMiss,
 	}
 
     public CanvasGroup[] cgBoard;
@@ -86,6 +87,7 @@ public class PageMain : PageBase {
 		case EMenu.eTaro:			SceneChanger.LoadScene("Taro", curBoardObj());				break;
 		case EMenu.ePractice:		SceneChanger.LoadScene("PracticeGame", curBoardObj());   	break;
 		case EMenu.eMind:			SceneChanger.LoadScene ("Mind", curBoardObj ());			break;
+		case EMenu.eHitNMiss:			SceneChanger.LoadScene ("HitNMiss", curBoardObj ());			break;
 		}
 	}
 
