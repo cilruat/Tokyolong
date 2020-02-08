@@ -18,6 +18,12 @@ public class Roulllet : MonoBehaviour {
 	float currentTime = 0f;
 	float currentSpeed = 0f;
 
+	private AudioSource ButtonOn; //for use Audio source
+	private AudioSource Plause;
+
+	[SerializeField] private AudioClip clip_1;
+	[SerializeField] private AudioClip plause_1;
+
 
 	void Awake()
 	{
@@ -26,6 +32,10 @@ public class Roulllet : MonoBehaviour {
 
 
 	void Start () {
+
+		ButtonOn = GetComponent<AudioSource> ();
+		Plause = GetComponent<AudioSource> ();
+
 		rollingButton.interactable = rolling == false;
 		contents = new List<Image>();
 
@@ -33,7 +43,6 @@ public class Roulllet : MonoBehaviour {
 		{
 			contents.Add(wheel.GetChild(i).GetComponent<Image>());
 
-            Debug.Log(contents[i].name);
 		}
 	}
 	
@@ -69,6 +78,8 @@ public class Roulllet : MonoBehaviour {
 						targetImg = contents [i];
 					}
 				}
+				Plause.clip = plause_1;
+				Plause.Play ();
 				finalImg.gameObject.SetActive (true);
 				finalImg.sprite = targetImg.sprite;
 				rolling = false;
@@ -79,7 +90,11 @@ public class Roulllet : MonoBehaviour {
 		}
     }
 
-
+	public void PlaySE()
+	{
+		ButtonOn.clip = clip_1;
+		ButtonOn.Play ();
+	}
 
     public void Roll()
 	{

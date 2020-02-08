@@ -91,7 +91,7 @@ public class LottoPicker : MonoBehaviour {
 	}
 
 	// picker move up and down!
-	float speed_Ratio = 1.5f;
+	float speed_Ratio = 0.5f;
 	void Update () {
 		if(_status == STATUS.PLAYING){
 			if(_start){

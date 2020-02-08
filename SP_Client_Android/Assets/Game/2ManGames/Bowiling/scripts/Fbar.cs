@@ -12,7 +12,7 @@ public class Fbar : MonoBehaviour {
 	}
 	
 	void Update () {
-		force += Input.GetAxis("Mouse Y")*speedamount*Time.deltaTime;
+			force += Input.GetAxis("Mouse Y")*speedamount*Time.deltaTime;
 		forcebar.fillAmount = (force)/100;
 		if (force > 100) { force = 100;}
 		if (force < 0) { force = 0;}

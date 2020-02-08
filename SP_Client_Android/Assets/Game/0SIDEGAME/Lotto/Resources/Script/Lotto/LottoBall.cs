@@ -34,7 +34,7 @@ public class LottoBall : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D collision) {
 		if(collision.gameObject.name == "AirOn"){
 			Vector3 dir = new Vector3(UnityEngine.Random.Range(0,100)/100f-50f,UnityEngine.Random.Range(0,100)/100f,0);
-			dir = dir.normalized * 2000;
+			dir = dir.normalized * 500;
 			GetComponent<Rigidbody2D>().AddForce(dir);
 			if(GetComponent<Rigidbody2D>().velocity.magnitude > 10){
 				GetComponent<Rigidbody2D>().velocity = GetComponent<Rigidbody2D>().velocity.normalized*5;
