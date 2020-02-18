@@ -104,10 +104,10 @@ public partial class Info : MonoBehaviour {
 		get{
 			switch ((EDiscount)GameDiscountWon) {
 			case EDiscount.e500won:
-			case EDiscount.e1000won:	return 15;
+			case EDiscount.e1000won:	return 10;
 			case EDiscount.e2000won:	
-			case EDiscount.e5000won:	return 12;
-			case EDiscount.eAll:		return 10;
+			case EDiscount.e5000won:	return 8;
+			case EDiscount.eAll:		return 6;
 			default:					return 10;
 			}
 		}

@@ -12,7 +12,7 @@ public class Shooter : MonoBehaviour {
 
 	private float targetZ = 12.0f;			//screen point z to world point
 	private float shotPowerMin = 3.0f;		//minimum shot power
-	private float shotPowerMax = 12.0f;		//maximum shot power
+	private float shotPowerMax = 8.5f;		//maximum shot power
 	private float offsetY = 100.0f;			//offset Y for trajectory
 	private float shotTimeMin = 0.2f;		//minimum time till to release finger
 	private float shotTimeMax = 0.55f;		//maximum time till to release finger
