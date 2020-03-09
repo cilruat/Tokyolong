@@ -5,7 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
 
-public class Photon_NetworkManager : MonoBehaviourPunCallbacks {
+/*public class Photon_NetworkManager : MonoBehaviourPunCallbacks {
 
 	[Header("DisconnectPanel")]
 	public InputField NickNameInput;
@@ -180,4 +180,4 @@ public class Photon_NetworkManager : MonoBehaviourPunCallbacks {
 		}
 	}
 	#endregion
-}
+}*/
