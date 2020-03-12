@@ -70,6 +70,9 @@ namespace SkyFlightGame
 		public Transform pauseCanvas;
 		public Transform gameOverCanvas;
 
+
+
+
 		// A general use index
 		internal int index = 0;
 
@@ -312,7 +315,7 @@ namespace SkyFlightGame
 				gameOverCanvas.gameObject.SetActive(true);
 				
 				//Write the score text
-				gameOverCanvas.Find("TextScore").GetComponent<Text>().text = "SCORE " + score.ToString();
+				gameOverCanvas.Find("TextScore").GetComponent<Text>().text = "당신의 점수" + score.ToString();
 				
 				//Check if we got a high score
 				if ( score > highScore )    
@@ -328,7 +331,7 @@ namespace SkyFlightGame
 				}
 				
 				//Write the high sscore text
-				gameOverCanvas.Find("TextHighScore").GetComponent<Text>().text = "HIGH SCORE " + highScore.ToString();
+				gameOverCanvas.Find("TextHighScore").GetComponent<Text>().text = "최고점수는 " + highScore.ToString();
 			}
 		}
 		

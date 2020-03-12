@@ -1,0 +1,86 @@
+RuneFire High Scores
+----------------------
+
+RFHighScores v1.0
+    RF Highe Scores provides a framework for local loading, storing and displaying high scores
+    data. Functionality is divided between the main scores manager and score renderer components. Renderers are
+    responsible for displaying the score to the end user and also collecting user input if the player's
+    score is considered high.  
+
+    The power of RFHighScores allows you to:
+    * Control the maximum number of scores. Lower scores are auto-culled from the list.
+    * Limit selectable characters for names/initials collection
+    * Auto-load high scores at start or load later(on demand)
+    * Set default scores in order to seed leader/score boards
+    * Custom set the input submission axis (default is Fire1)
+    * Indicate the default high score name value when a high score is achieved.
+    * Set the file name scores where scores are stored
+    * Create and use custom score renderers, giving you the power to create a truly unique and
+      amazing user experience.
+
+  Two customizable renderers are included:
+    1). Arcade style collection of initials using up/down/left/right/fire(submit)
+    2). Leaderboard style renderer that uses a uGUI InputField to collect a player's name/gamer tag/etc/
+    * The second demo project implements an expanded and customized version of the Arcade style renderer.
+
+  3 Different Demo scenes provide examples of use
+    * RFHighScoreDemo : simple scene demonstrating use of the Arcade style renderer
+    * RFHighScoreDemo2: Scene demonstrating a customized version of the Arcade style rendere plus
+                        event tie-in and consumption
+    * RFHighScoreDemo3: Similar to the first demo, but utilizing the Inputfield style renderer.                  
+
+Use:
+
+1). To insert RFHighScoresManager into your scene, select from the menu: GameObject -> RFLib -> Create RFHighScores
+
+    By default, RFHighScoreRendererTemplate is used to display scores and manage high score input. You may wish to
+    create your own renderer. See 'Creating you own Score Renderers' below.
+
+    Alternatively, you may attach the RFHighScoresViewer component to an inscene game object, then hook up the 
+    renderer (High Score Renderer Prefab in the inspector).
+
+2). Hook up the container transform (High Scores Container). The container will be the parent to the score renderers.
+	For default behavior: Add a uGUI Panel to your scene then  Drag that panel's gameobject from the scene hierarchy 
+	into the High SCores Container field of RFHighScoreViewer.
+
+3). Some portion of your game logic that tallies scores needs to get a reference to the RFHighScoreViewer script,
+    and call AddScore with the new score.  If the score is a high score, it will be auto-added and saved in the High Scores table.
+    The High Score added will also be in "edit" mode, allowing a player to enter his/her initials.
+  
+
+High Score Events:
+    In order to properly manage program flow and allow intersystem interaction, RFHighScoresViewer dispatches RFHighScoreEventData 
+    events of various types ( RFHighScoreEventType ):
+
+	  RFHIGH_SCORE_NEW : Dispatched when a new score is high, and the viewer is in "edit mode"
+	  RFHIGH_SCORE_EDIT_DONE : Dispatched when a new high score is completed edit mode (fire pressed)
+	  RFHIGH_SCORE_EDIT_UPDATE: Dispatched when the renderer calls back to RFHighScoresViewer that some input happened(via callback).
+
+	See RFHighScoreEventData located in RFLib/RFHighScores/Scripts/RFHighScoreEvents.cs for additional information.
+
+	You may "hook up" event handling in the Editor by dragging the game object with the "handler" method into the 
+	RF High Score Event field. In the drop down, select your method under the "Dynamic RFHighScoresEvenData" section.
+
+	When writing your RFHighScoreEventData event handler, the method must have the following signature:
+	public void METHOD_NAME(RFHighScoreEventData highScoreEvent)
+	For example:
+	public void HandleRFHighScoreEvent(RFHighScoreEventData highScoreEvent)
+
+	** See the RFHighScoresDemo scripts for an example of RFHighScoreEventData handling.
+
+Creating your own Score Renderers:
+    You can create your own score rendering prefabs - as simple or as complex as your requirements dictate.
+    Custom rendering prefabs MUST provide a Monobehavior that implements the IRFHighScoreHandler interface.  
+    The methods allow communication between the RFHighScoreViewer instance and a rendered score and allows you 
+    the ability to provide enhanced feedback to players as they enter their high scores data.
+
+	NOTE: In order for the RFHighScoresViewer to dispatch RFHIGH_SCORE_EDIT_UPDATE events, your renderer must maintain a reference
+	      to the callback function passed to EditHighScoreStart, and call the function.  For example, your custom renderer  may 
+	      accept keystrokes, and as the player is pressing keys, you want some other system to react. In your renderer, during 
+	      keystroke check, you'd then make the callback call. In turn, RFHighScoresViewer will fire the RFHIGH_SCORE_EDIT_UPDATE
+	      event, thus allowing listeners(other systems) to react.
+
+
+Questions? Comments? Send an email to: spl@runefire.com with "RFHighScores" as part of the subject.
+
+

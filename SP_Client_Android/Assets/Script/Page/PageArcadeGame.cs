@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PageArcadeGame : PageBase {
 
@@ -9,6 +10,9 @@ public class PageArcadeGame : PageBase {
 	public List<TabButton> tabButtons;
 	public List<GameObject> contentsPanels;
 	public GameObject mainCanvas;
+	public List<GameObject> tabArrow;
+
+	int selected = 0;
 
 	// Why?
 	/*protected override void Awake ()
@@ -16,11 +20,16 @@ public class PageArcadeGame : PageBase {
 		//base.boards = cgBoard;
 		//base.Awake ();
 	}*/
-		
+	private void Start()
+	{
+		ClickTab (selected);
+	}
+
 	public void OnGameBtn(string sceneName)
 	{
 		SceneChanger.LoadScene (sceneName, mainCanvas);
 	}
+
 
 
 	public void ClickTab(int id)
@@ -29,10 +38,14 @@ public class PageArcadeGame : PageBase {
 		{
 			if (i == id) {
 				contentsPanels [i].SetActive (true);
+				tabButtons [i].Selected ();
+				tabArrow [i].SetActive (true);
 			} 
 			else 
 			{
 				contentsPanels [i].SetActive (false);
+				tabButtons [i].DeSelected ();
+				tabArrow [i].SetActive (false);
 			}
 		}
 
