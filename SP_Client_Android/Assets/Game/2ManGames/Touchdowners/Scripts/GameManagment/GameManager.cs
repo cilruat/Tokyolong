@@ -51,8 +51,8 @@ namespace Touchdowners
 
         private void Awake()
         {
-            _leftPlayersArea.OnTouchdownEvent += IncreaseScore;
-            _rightPlayersArea.OnTouchdownEvent += IncreaseScore;
+            _leftPlayersArea.OnGoalEvent += IncreaseScore;
+            _rightPlayersArea.OnGoalEvent += IncreaseScore;
 
             OnGameStartedEvent += () => _canUpdateScore = true;
             OnReturnToStartStateEvent += () => StartCoroutine(CountdownEnumerator());

@@ -25,10 +25,12 @@ public class PageArcadeGame : PageBase {
 		ClickTab (selected);
 	}
 
-	public void OnGameBtn(string sceneName)
+
+	//go to Pop up Panel
+	/*public void OnGameBtn(string sceneName)
 	{
 		SceneChanger.LoadScene (sceneName, mainCanvas);
-	}
+	}*/
 
 
 

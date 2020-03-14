@@ -3,93 +3,117 @@
 namespace Touchdowners
 {
 
-    [RequireComponent(typeof(Rigidbody2D))]
-    [RequireComponent(typeof(BoxCollider2D))]
-    [RequireComponent(typeof(DistanceJoint2D))]
-    public class PlayerHand : MonoBehaviour
-    {
-        [Header("- Player type -")]
-        [SerializeField] private PlayerType _playerType;
+	[RequireComponent(typeof(HingeJoint2D))]
+	[RequireComponent(typeof(Rigidbody2D))]
+	[RequireComponent(typeof(BoxCollider2D))]
+	public class PlayerHand : MonoBehaviour
+	{
+		[Header("- Player type -")]
+		[SerializeField] private PlayerType _playerType;
 
-        [Header("- Ball settings -")]
-        [SerializeField] private Transform _ballPosition;
-        [SerializeField] private Vector2 _throwSpeed;
+		[Header("- Ball settings -")]
+		[SerializeField] private Transform _ballPosition;
+		[SerializeField] private Vector2 _throwSpeed;
 
-        private float _handRotationSpeed = 700f;
+		private float _handRotationSpeed = 700;
 
-        private Rigidbody2D _rb2D;
+		private Collider2D _collider2D;
+		private Rigidbody2D _rb2D;
 
-        private IPlayerInput _input;
-        private bool _containsBall;
-        private Ball _ball;
+		private IPlayerInput _input;
 
-        public PlayerType HandType { get { return _playerType; } }
-        public Transform BallPosition { get { return _ballPosition; } }
+		private Ball _ball;
 
-        #region MonoBehaviour
+		public PlayerType HandType { get { return _playerType; } }
+		public Transform BallPosition { get { return _ballPosition; } }
 
-        private void Awake()
-        {
-            _rb2D = GetComponent<Rigidbody2D>();
-            GetComponent<Collider2D>().isTrigger = true;
+		#region MonoBehaviour
 
-            _rb2D.mass = 0;
-            _rb2D.gravityScale = 0;
+		private void Awake()
+		{
+			_collider2D = GetComponent<Collider2D>();
+			_rb2D = GetComponent<Rigidbody2D>();
 
-            _input = transform.root.GetComponent<Player>().Input;
-        }
+			_collider2D.isTrigger = true;
 
-        private void Update()
-        {
-            if (_input.ThrowBallPressed() && _containsBall)
-                ThrowBall();
+			_input = transform.root.GetComponent<Player>().input;
+		}
 
-            if (_input.MoveLeftPressed())
-                SetHandAngularVelocity(_handRotationSpeed, 10);
-            else if (_input.MoveRightPressed())
-                SetHandAngularVelocity(-_handRotationSpeed, 10);
-            else
-                SetHandAngularVelocity(0, 0.2f);
-        }
+		private void Update()
+		{
+			if (_input.ThrowBallPressed() && _ball != null)
+			{
+				ThrowBall();
+			}
+		}
 
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            if (collision.CompareTag(Tags.Ball))
-            {
-                Ball triggeredBall = collision.GetComponent<Ball>();
+		private void FixedUpdate()
+		{
+			// Hand rotation
+			if (_ball == null)
+			{
+				if (_input.MoveLeftPressed())
+					SetHandAngularVelocity(_handRotationSpeed, 5);
+				else if (_input.MoveRightPressed())
+					SetHandAngularVelocity(-_handRotationSpeed, 5);
+				else
+					SetHandAngularVelocity(0, 0.2f);
+			}
+			else
+			{
+				if (_input.MoveLeftPressed())
+					_rb2D.angularVelocity = _handRotationSpeed;
+				else if (_input.MoveRightPressed())
+					_rb2D.angularVelocity = -_handRotationSpeed;
+				else
+					SetHandAngularVelocity(0, 1f);
+			}
+		}
 
-                if (triggeredBall.CanInteract && _playerType != triggeredBall.PlayerHolderType)
-                    AttachBall(ref triggeredBall);
-            }
-        }
+		private void OnTriggerEnter2D(Collider2D collision)
+		{
+			if (collision.CompareTag(Tags.Ball))
+			{
+				Ball triggeredBall = collision.GetComponent<Ball>();
 
-        private void OnTriggerExit2D(Collider2D collision)
-        {
-            if (collision.CompareTag(Tags.Ball))
-                _containsBall = false;
-        }
+				if (triggeredBall.CanInteract && _playerType != triggeredBall.PlayerHolderType)
+				{
+					AttachBall(triggeredBall);
+				}
+			}
+		}
 
-        #endregion
+		#endregion
 
-        private void SetHandAngularVelocity(float velocity, float lerpSpeed)
-        {
-            _rb2D.angularVelocity = Mathf.Lerp(_rb2D.angularVelocity, velocity, Time.deltaTime * lerpSpeed);
-        }
+		private void SetHandAngularVelocity(float velocity, float lerpSpeed)
+		{
+			_rb2D.angularVelocity = Mathf.Lerp(_rb2D.angularVelocity, velocity, Time.deltaTime * lerpSpeed);
+		}
 
-        private void AttachBall(ref Ball ball)
-        {
-            ball.AttachToHand(this);
-            _ball = ball;
-            _containsBall = true;
-        }
+		public void AttachBall(Ball ball)
+		{
+			ball.AttachToHand(this);
+			_ball = ball;
 
-        private void ThrowBall()
-        {
-            _ball.Throw(_throwSpeed);
-            _ball = null;
-            _containsBall = false;
-        }
+			// In order to collide with ground
+			_collider2D.isTrigger = false;
+		}
 
-    }
+		public void DetachBall()
+		{
+			_ball = null;
+
+			// In order to not to collider with ground
+			_collider2D.isTrigger = true;
+		}
+
+		public void ThrowBall()
+		{
+			_ball.Throw(_throwSpeed);
+
+			DetachBall();
+		}
+
+	}
 
 }

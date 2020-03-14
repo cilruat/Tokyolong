@@ -6,61 +6,29 @@ using UnityEngine.UI;
 
 public class PopupSystem : MonoBehaviour {
 
-
 	public GameObject popup;
 	Animator anim;
-
-	public static PopupSystem instance{ get; private set; }
-	//public Text txtTitle, txtContent;
-	Action onClickOkay, onClickCancel;
-
+	public GameObject mainCanvas;
 
 	private void Awake()
 	{
-		instance = this;
 		anim = popup.GetComponent<Animator> ();
-
 	}
+		
 
-	/*private void Update()
+	public void OpenPopUp()
 	{
-		if (anim.GetCurrentAnimatorStateInfo (0).IsName ("close")) 
-		{
-			if (anim.GetCurrentAnimatorStateInfo (0).normalizedTime >= 1) 
-			{
-				popup.SetActive (false);
-			}
-		}
-	}*/
-
-
-	public void OpenPopUp(/*string title, string contents,*/Action onClickOkay, Action onClickCancel)
-	{
-		//txtTitle.text = title;
-		//txtContent.text = contents;
-		/*realImg = real;
-		gameImg = game;
-		BackImg = Back;*/
-		this.onClickOkay = onClickOkay;
-		this.onClickCancel = onClickCancel;
 		popup.SetActive (true);
 	}
 
-	public void OnnClickOkay()
+	public void OnnClickOkay(string sceneName)
 	{
-		if (onClickOkay != null) 		
-		{
-			onClickOkay ();
-		}
+		SceneChanger.LoadScene (sceneName, mainCanvas);
 		ClosePopup();
 	}
 
 	public void OnClickCancel()
 	{
-		if (onClickCancel != null) 
-		{
-			onClickCancel ();
-		}
 		ClosePopup();
 	}
 
@@ -70,5 +38,6 @@ public class PopupSystem : MonoBehaviour {
 		popup.SetActive (false);
 
 	}
+
 
 }

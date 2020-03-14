@@ -89,8 +89,8 @@ namespace ZigZag
         /// </summary>
         void ExecuteLoadLevel()
         {
-            SceneManager.LoadScene(levelName);
-        }
+			SceneManager.LoadScene("ArcadeGame");
+		}
 
         /// <summary>
         /// Restarts the current level.

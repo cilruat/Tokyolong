@@ -9,11 +9,12 @@ public class RetryButtonEvents : MonoBehaviour
 	public void playgame()
 	{
 	
-	
-
 		SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex);
 	}
 
-
+	public void Endgame()
+	{
+		SceneManager.LoadScene("ArcadeGame");
+	}
 
 }

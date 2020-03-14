@@ -84,10 +84,10 @@ namespace WhackAMole
 		/// <summary>
 		/// Executes the Load Level function
 		/// </summary>
-		void ExecuteLoadLevel()
+		public void ExecuteLoadLevel()
 		{
 			#if UNITY_5_3 || UNITY_5_3_OR_NEWER
-			SceneManager.LoadScene(levelName);
+			SceneManager.LoadScene("ArcadeGame");
 			#else
 			Application.LoadLevel(levelName);
 			#endif

@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
+
 namespace KnifeFlip
 {
 public class OnScreenButtons : MonoBehaviour {
@@ -12,7 +15,9 @@ public class OnScreenButtons : MonoBehaviour {
 
 		void  OnGUI (){
 			if(GUI.Button(new Rect (8,Screen.height - 80,80,80), "", HomeButtonTexture)) {
-				Application.LoadLevel(0);
+				//Application.LoadLevel(0);
+				SceneManager.LoadScene("ArcadeGame");
+
 			}
 
 			if(GUI.Button(new Rect(105,Screen.height - 80,80,80), "", RestartButtonTexture)) {

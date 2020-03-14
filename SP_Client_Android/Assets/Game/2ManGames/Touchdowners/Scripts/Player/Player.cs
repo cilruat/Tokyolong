@@ -9,69 +9,60 @@ namespace Touchdowners
     public class Player : MonoBehaviour
     {
         [Header("- Input -")]
-        [SerializeField] private IPlayerInput _input;
+        public IPlayerInput input;
 
         [Header("- Moving Right -")]
-        [SerializeField] private float _jumpVelocityRight;
-        [SerializeField] private float _velocityRight;
+        public PlayerData playerData;
 
-        [Header("- Moving Left -")]
-        [SerializeField] private float _jumpVelocityLeft;
-        [SerializeField] private float _velocityLeft;
+        private float _minAngleForBalanceInGround = 5;
+        private float _currentMinAngleForBalance;
 
-        // how much time does _jumpVelocityRight/Left will be applied
         private float _jumpingForceTime = 0.1f;
 
-        private bool _canMove = true;
         private bool _isGrounded = true;
 
         private Rigidbody2D _rb2D;
 
-        public IPlayerInput Input { get { return _input; } }
+        public bool AbleToMove { get; set; }
+        public bool AbleToJump { get; set; }
 
         #region MonoBehaviour
-
-        private void OnValidate()
-        {
-            if (_jumpVelocityLeft < 0)
-                _jumpVelocityLeft = 0;
-            if (_jumpVelocityRight < 0)
-                _jumpVelocityRight = 0;
-        }
 
         private void Awake()
         {
             _rb2D = GetComponent<Rigidbody2D>();
 
             SubscribeToGameManagerEvents();
+
+            _currentMinAngleForBalance = _minAngleForBalanceInGround;
+
+            AbleToMove = true;
+            AbleToJump = true;
         }
 
         private void FixedUpdate()
         {
-            if (_canMove)
-            {
-                Move();
+            FindBalance();
 
-                if (_isGrounded)
-                    FindBalance();
-                else
-                {
-                    _jumpingAirTime += Time.deltaTime;
-                    _rb2D.angularVelocity = Mathf.Clamp(_rb2D.angularVelocity, -100, 100);
-                }
+            Move();
+
+            if (!_isGrounded)
+            {
+                _jumpingAirTime += Time.deltaTime;
+                _rb2D.angularVelocity = Mathf.Clamp(_rb2D.angularVelocity, -100, 100);
             }
         }
-        
+
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            if (collision.gameObject.CompareTag(Tags.GroundTag))
+            if (collision.gameObject.CompareTag(Tags.Ground))
                 AnulateGrounding();
         }
 
         private void OnCollisionStay2D(Collision2D collision)
         {
-            if (!_isGrounded && collision.gameObject.CompareTag(Tags.GroundTag))
-                    AnulateGrounding();
+            if (!_isGrounded && collision.gameObject.CompareTag(Tags.Ground))
+                AnulateGrounding();
         }
 
         #endregion
@@ -92,8 +83,10 @@ namespace Touchdowners
 
             GameManager gameManager = GameObject.FindWithTag(Tags.GameManager).GetComponent<GameManager>();
             gameManager.OnReturnToStartStateEvent += ReturnToStartState;
-            gameManager.OnReturnToStartStateEvent += () => _canMove = false;
-            gameManager.OnGameStartedEvent += () => _canMove = true;
+            gameManager.OnReturnToStartStateEvent += () => AbleToMove = false;
+            gameManager.OnReturnToStartStateEvent += () => AbleToJump = false;
+            gameManager.OnGameStartedEvent += () => AbleToMove = true;
+            gameManager.OnGameStartedEvent += () => AbleToJump = true;
         }
 
         private void ReturnToStartState()
@@ -111,15 +104,19 @@ namespace Touchdowners
 
         private void Move()
         {
-            if (_input.MoveLeftPressed())
+            if (input.MoveLeftPressed())
             {
-                Jump(_jumpVelocityLeft);
-                SetVelocityX(_velocityLeft);
+                if (AbleToJump)
+                    Jump(playerData.velocityLeft.y);
+                if (AbleToMove)
+                    SetVelocityX(playerData.velocityLeft.x);
             }
-            else if (_input.MoveRightPressed())
+            else if (input.MoveRightPressed())
             {
-                Jump(_jumpVelocityRight);
-                SetVelocityX(_velocityRight);
+                if (AbleToJump)
+                    Jump(playerData.velocityRight.y);
+                if (AbleToMove)
+                    SetVelocityX(playerData.velocityRight.x);
             }
             else
             {
@@ -128,16 +125,15 @@ namespace Touchdowners
         }
 
         private float _jumpingAirTime;
-        public void Jump(float velocityY)
+        private void Jump(float velocityY)
         {
             if (_jumpingAirTime > _jumpingForceTime)
                 return;
 
-            _isGrounded = false;
-            _rb2D.AddForce(velocityY * Vector2.up);
+            _currentMinAngleForBalance = playerData.minAngleForBalanceInJump;
 
-            if (Mathf.Abs(_rb2D.angularVelocity) < 10)
-                _rb2D.angularVelocity = Random.Range(-200, 200);
+            _isGrounded = false;
+            _rb2D.velocity = new Vector2(_rb2D.velocity.x, velocityY);
         }
 
         private void SetVelocityX(float velocityX)
@@ -150,12 +146,14 @@ namespace Touchdowners
             _isGrounded = true;
             _jumpingAirTime = 0;
 
+            _currentMinAngleForBalance = _minAngleForBalanceInGround;
+
             _wasInBalance = true;
         }
 
         private IEnumerator MoveToBalance()
         {
-            while(_isGrounded)
+            while (_isGrounded)
             {
                 transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.identity, 10f * Time.deltaTime);
                 yield return null;
@@ -165,7 +163,6 @@ namespace Touchdowners
         private Quaternion rightQuaternion = Quaternion.Euler(0, 0, -90);
         private Quaternion _desiredRotation;
 
-        private float _minAngleForBalance = 5;
         private bool _isMovingRight;
         private bool _wasInBalance = true;
 
@@ -174,9 +171,9 @@ namespace Touchdowners
             float angleBetweenPlayerNormal = Quaternion.Angle(transform.rotation, Quaternion.identity);
             float angleBetweenDesiredPositionNormal = Quaternion.Angle(_desiredRotation, Quaternion.identity);
 
-            if (angleBetweenPlayerNormal < _minAngleForBalance)
+            if (angleBetweenPlayerNormal < _currentMinAngleForBalance)
             {
-                if(angleBetweenDesiredPositionNormal < _minAngleForBalance && !_wasInBalance)
+                if (angleBetweenDesiredPositionNormal < _currentMinAngleForBalance && !_wasInBalance)
                 {
                     _rb2D.angularVelocity = 0;
                     _wasInBalance = true;
@@ -198,11 +195,11 @@ namespace Touchdowners
                 }
             }
 
-            if(!_wasInBalance)
+            if (!_wasInBalance)
             {
                 // change moving direction
                 float angleBetweenRotationDesiredRotation = Quaternion.Angle(transform.rotation, _desiredRotation);
-                if(angleBetweenRotationDesiredRotation < _minAngleForBalance)
+                if (angleBetweenRotationDesiredRotation < _currentMinAngleForBalance)
                 {
                     _desiredRotation = Quaternion.Inverse(transform.rotation);
                     _isMovingRight = !_isMovingRight;

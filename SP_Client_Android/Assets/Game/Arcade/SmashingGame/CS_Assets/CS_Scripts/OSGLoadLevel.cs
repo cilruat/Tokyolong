@@ -83,7 +83,7 @@ namespace ObjectSmashingGame
 		/// </summary>
 		void ExecuteLoadLevel()
 		{
-			SceneManager.LoadScene(levelName);
+			SceneManager.LoadScene("ArcadeGame");
 		}
 
 		/// <summary>

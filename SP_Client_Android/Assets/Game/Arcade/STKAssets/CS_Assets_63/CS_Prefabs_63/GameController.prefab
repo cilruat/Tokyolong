@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &100000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 400000}
+  - component: {fileID: 11492798}
+  m_Layer: 0
+  m_Name: GameController
+  m_TagString: GameController
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &400000
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &11492798
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0bbd673ec5a2d94d987ac6510b9adcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraObject: {fileID: 0}
+  towerObject: {fileID: 0}
+  dropButton: Fire1
+  moveSpeed: 1
+  moveSpeedIncrease: 0.15
+  moveRange: 1.2
+  minimumSliceSize: 0.03
+  streakToExpand: 5
+  expandSize: 0.1
+  perfectEffect: {fileID: 468228, guid: 1f367a2f0363e4a47b9b3e89eadc8c57, type: 2}
+  score: 0
+  scoreText: {fileID: 0}
+  highScoreObject: {fileID: 0}
+  readyGoEffect: {fileID: 0}
+  startDelay: 0
+  mainMenuLevelName: STK_StartMenu
+  confirmButton: Submit
+  pauseButton: Cancel
+  gameCanvas: {fileID: 0}
+  pauseCanvas: {fileID: 0}
+  gameOverCanvas: {fileID: 0}
+  soundSlice: {fileID: 8300000, guid: 8b7157d346c0c1c48befb82eb7e3881f, type: 3}
+  soundPerfect: {fileID: 8300000, guid: f7b4eaf48d6c2c148b941bbb4b246c54, type: 3}
+  soundExpand: {fileID: 8300000, guid: 8c3fee8c40bc65047b763b2e299a80a2, type: 3}
+  soundMiss: {fileID: 8300000, guid: 443c5fdcb3bd12841aa4ab75b578aaa8, type: 3}
+  soundGameOver: {fileID: 0}
+  soundSourceTag: Sound
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: perfectEffect
+      value: 
+      objectReference: {fileID: 468228, guid: 1f367a2f0363e4a47b9b3e89eadc8c57, type: 2}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 100000}
+  m_IsPrefabParent: 1

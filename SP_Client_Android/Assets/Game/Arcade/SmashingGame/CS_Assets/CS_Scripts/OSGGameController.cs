@@ -551,7 +551,7 @@ namespace ObjectSmashingGame
 				gameOverCanvas.gameObject.SetActive(true);
 				
 				//Write the score text
-				gameOverCanvas.Find("Base/TextScore").GetComponent<Text>().text = "SCORE " + score.ToString();
+				gameOverCanvas.Find("Base/TextScore").GetComponent<Text>().text = "제 점수는요 " + score.ToString();
 				
 				//Check if we got a high score
 				if ( score > highScore )    
@@ -563,7 +563,7 @@ namespace ObjectSmashingGame
 				}
 				
 				//Write the high sscore text
-				gameOverCanvas.Find("Base/TextHighScore").GetComponent<Text>().text = "HIGH SCORE " + highScore.ToString();
+				gameOverCanvas.Find("Base/TextHighScore").GetComponent<Text>().text = "최고점은요 " + highScore.ToString();
 
 				//If there is a source and a sound, play it from the source
 				if ( soundSource && soundGameOver )    
@@ -595,7 +595,7 @@ namespace ObjectSmashingGame
 				victoryCanvas.gameObject.SetActive(true);
 				
 				//Write the score text
-				victoryCanvas.Find("Base/TextScore").GetComponent<Text>().text = "SCORE " + score.ToString();
+				victoryCanvas.Find("Base/TextScore").GetComponent<Text>().text = "최고점이네요!!! " + score.ToString();
 				
 				//Check if we got a high score
 				if ( score > highScore )    
@@ -608,7 +608,7 @@ namespace ObjectSmashingGame
 				}
 				
 				//Write the high sscore text
-				victoryCanvas.Find("Base/TextHighScore").GetComponent<Text>().text = "HIGH SCORE " + highScore.ToString();
+				victoryCanvas.Find("Base/TextHighScore").GetComponent<Text>().text = "당신의 점수가 최고! " + highScore.ToString();
 				
 				//If there is a source and a sound, play it from the source
 				if ( soundSource && soundVictory )    

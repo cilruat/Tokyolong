@@ -77,7 +77,7 @@ namespace Zigzag
 		// The score and score text of the player
 		public int score = 0;
 		public Transform scoreText;
-		public string scoreTextSuffix = "$";
+		public string scoreTextSuffix = "만원";
 		internal int highScore = 0;
 
         // How many points we need to collect in order to win the level
@@ -533,7 +533,7 @@ namespace Zigzag
 				gameOverCanvas.gameObject.SetActive(true);
 				
 				//Write the score text
-				gameOverCanvas.Find("Base/TextScore").GetComponent<Text>().text = "SCORE " + score.ToString();
+				gameOverCanvas.Find("Base/TextScore").GetComponent<Text>().text = "당신이 모은 돈은 " + score.ToString();
 				
 				//Check if we got a high score
 				if ( score > highScore )    
@@ -545,7 +545,7 @@ namespace Zigzag
                 }
 
                 //Write the high sscore text
-                gameOverCanvas.Find("Base/TextHighScore").GetComponent<Text>().text = "HIGH SCORE " + highScore.ToString();
+                gameOverCanvas.Find("Base/TextHighScore").GetComponent<Text>().text = "최고 기록은 " + highScore.ToString();
 			}
 
             //If there is a source and a sound, play it from the source
@@ -581,7 +581,7 @@ namespace Zigzag
                 victoryCanvas.gameObject.SetActive(true);
 
                 //Write the score text
-                victoryCanvas.Find("Base/TextScore").GetComponent<Text>().text = "SCORE " + score.ToString();
+                victoryCanvas.Find("Base/TextScore").GetComponent<Text>().text = "당신이 모은 돈은 " + score.ToString();
 
                 //Check if we got a high score
                 if (score > highScore)
@@ -593,7 +593,7 @@ namespace Zigzag
                 }
 
                 //Write the high score text
-                victoryCanvas.Find("Base/TextHighScore").GetComponent<Text>().text = "HIGH SCORE " + highScore.ToString();
+                victoryCanvas.Find("Base/TextHighScore").GetComponent<Text>().text = "안전하게 탈출합니다! " + highScore.ToString();
             }
 
             //If there is a source and a sound, play it from the source
@@ -613,8 +613,8 @@ namespace Zigzag
         /// </summary>
         void MainMenu()
         {
-            SceneManager.LoadScene(mainMenuLevelName);
-        }
+			SceneManager.LoadScene("ArcadeGame");
+		}
 
         /// <summary>
         /// Activates the selected player, while deactivating all the others

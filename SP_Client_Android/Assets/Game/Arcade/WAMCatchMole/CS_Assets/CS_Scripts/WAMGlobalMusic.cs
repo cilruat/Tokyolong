@@ -48,8 +48,8 @@ namespace WhackAMole
 		/// </summary>
 		void  Start()
 		{
-			//Don't destroy this object when loading a new scene
-			DontDestroyOnLoad(transform.gameObject);
+			//Don't destroy this object when loading a new scene 씬넘어가면 노래 틀리는거 씬전환시 게임오브젝트 삭제로 해결
+			//DontDestroyOnLoad(transform.gameObject);
 		}
 		
 	}

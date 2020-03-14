@@ -4,13 +4,8 @@ namespace Touchdowners
 {
 
     [RequireComponent(typeof(Collider2D))]
-    public class TouchdownArea : MonoBehaviour
+    public class TouchdownArea : GoalArea
     {
-        // Players area has to be equal to Player type that can touchdown on this area.
-        [SerializeField] private PlayerType _playersArea;
-
-        public delegate void OnTouchdown(PlayerType playersType);
-        public event OnTouchdown OnTouchdownEvent;
 
         private void Awake()
         {
@@ -19,11 +14,13 @@ namespace Touchdowners
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if(other.CompareTag(Tags.Ball))
+            if (other.CompareTag(Tags.Ball))
             {
                 Ball ball = other.GetComponent<Ball>();
-                if(ball.PlayerHolderType == _playersArea && OnTouchdownEvent != null)
-                        OnTouchdownEvent(_playersArea);
+                if (ball.PlayerHolderType == playersWinArea)
+                {
+                    NotifyAboutGoal();
+                }
             }
         }
 
