@@ -254,7 +254,7 @@ public class PlayerManager : MonoBehaviour {
 				print("Level is Finished. Next level ---->>>");
 				if(!levelIsFinished) {
 					//Application.LoadLevel(nextLevelToLoad);
-					SceneManager.LoadScene (nextLevelToLoad);
+					SceneManager.LoadScene ("EscapeSuccess");
 				}
 				break;
 			

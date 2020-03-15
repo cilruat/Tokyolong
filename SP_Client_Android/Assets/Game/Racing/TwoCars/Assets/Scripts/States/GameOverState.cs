@@ -18,17 +18,17 @@ namespace TwoCars
 	        Managers.Anal.SendScoreAnalytic();
 	        Managers.Spawner.ClearObstacles();
 
-	        Debug.Log ("<color=green>Game Over State</color> OnActive");	
+	        //Debug.Log ("<color=green>Game Over State</color> OnActive");	
 		}
 
 		public override void OnDeactivate ()
 		{
-	        Debug.Log ("<color=red>Game Over State</color> OnDeactivate");
+	        //Debug.Log ("<color=red>Game Over State</color> OnDeactivate");
 		}
 
 		public override void OnUpdate ()
 		{
-			Debug.Log ("<color=yellow>Game Over State</color> OnUpdate");
+			//Debug.Log ("<color=yellow>Game Over State</color> OnUpdate");
 		}
 		#endregion
 

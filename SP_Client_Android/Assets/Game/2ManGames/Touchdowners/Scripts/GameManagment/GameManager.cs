@@ -104,7 +104,7 @@ namespace Touchdowners
         {
             Time.timeScale = 1;
 
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene("ArcadeGame");
         }
 
         private IEnumerator CountdownEnumerator()

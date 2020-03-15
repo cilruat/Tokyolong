@@ -12,6 +12,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace TwoCars
 {
@@ -123,16 +124,21 @@ namespace TwoCars
 			UITweenAlpha.Start (objSendServer, 0f, 1f, TWParam.New (.5f).Curve (TWCurve.CurveLevel2));
 
 			yield return new WaitForSeconds (1f);
+			ReturnHome ();
 
-			if (Info.TableNum == 0)
+
+			/*if (Info.TableNum == 0)
 				ReturnHome ();
 			else
 				NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+				*/
 		}
 
 		public void ReturnHome()
 		{
-			SceneChanger.LoadScene ("Main", objBoard);
+			//SceneChanger.LoadScene ("Main", objBoard);
+			SceneManager.LoadScene("ArcadeGame");
+			//SceneChanger.LoadScene("ArcadeGame", objBoard);
 		}
 
 

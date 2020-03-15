@@ -9,7 +9,7 @@ public class BackToButton : MonoBehaviour {
 	/// This class changes the current scene with a predefined scene (via inspector)
 	///*************************************************************************///
 
-	public string backTo; 		//name of the level we want to load
+	//public string backTo; 		//name of the level we want to load
 	public AudioClip tapSfx;
 	private bool canTap = true;
 
@@ -20,7 +20,7 @@ public class BackToButton : MonoBehaviour {
 		
 		//also enable the procedure by pressing "Escape" button on keyboard or handheld devices.
 		if(Input.GetKeyDown(KeyCode.Escape)) 
-			SceneManager.LoadScene (backTo);
+				SceneManager.LoadScene ("ArcadeGame");
 	}
 
 	//Respnd to click/touch inputs
@@ -42,7 +42,7 @@ public class BackToButton : MonoBehaviour {
 				canTap = false;
 				playSFX(tapSfx);
 				yield return new WaitForSeconds(1);
-				SceneManager.LoadScene (backTo);
+				SceneManager.LoadScene ("ArcadeGame");
 			}	
 		}
 	}

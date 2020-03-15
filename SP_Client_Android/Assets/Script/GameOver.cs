@@ -18,4 +18,6 @@ public class GameOver : MonoBehaviour {
 	{
 		SceneChanger.LoadScene (Info.practiceGame ? "PracticeGame" : "Main", objBoard);
 	}
+
+
 }
