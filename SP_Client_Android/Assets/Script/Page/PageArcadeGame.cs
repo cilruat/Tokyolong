@@ -14,16 +14,21 @@ public class PageArcadeGame : PageBase {
 
 	int selected = 0;
 
-	// Why?
-	/*protected override void Awake ()
+
+
+
+	protected override void Awake ()
 	{
-		//base.boards = cgBoard;
-		//base.Awake ();
-	}*/
+		base.boards = cgBoard;
+		base.Awake ();
+	}
+
+
 	private void Start()
 	{
 		ClickTab (selected);
 	}
+
 
 
 	//go to Pop up Panel

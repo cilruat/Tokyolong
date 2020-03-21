@@ -364,7 +364,7 @@ namespace Zigzag
 						//newItem.position.z += itemOffset;
 						newItem.Translate( newStraightSection.right * itemOffset, Space.Self);
 						
-                        if (index > 0 && index < roadSectionLengthTemp - 1)
+                        /*if (index > 0 && index < roadSectionLengthTemp - 1)
                         {
                             //Create a ground detail object ( eock ex ,  bush, cactus, etc)
                             Transform newGroundObject = Instantiate(groundDetails[Mathf.FloorToInt(Random.Range(0, groundDetails.Length))]) as Transform;
@@ -391,7 +391,7 @@ namespace Zigzag
 
                             newGroundObject.Rotate(Vector3.up * Random.Range(0, 360), Space.World);
 
-                        }
+                        }*/
                     }
 					
 					previousWasATurn = false;

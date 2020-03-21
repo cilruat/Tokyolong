@@ -237,7 +237,20 @@ public partial class Info : MonoBehaviour {
 			sceneName == "CrashCatStart"     		||
 			sceneName == "TouchNumber"				||
 			sceneName == "FindDiffPicture"			||
-			sceneName == "Trickery"					/*||
+			sceneName == "Trickery"					||
+			sceneName == "CS_Level5"				||
+			sceneName == "STK_Level9_63"			||
+			sceneName == "TakguMain"				||
+			sceneName == "SFGGame"					||
+			sceneName == "CS_Game"					||
+			sceneName == "2Players_Touchdown"		||
+			sceneName == "TableDemo"				||
+			sceneName == "AirHockeyGame"			||
+			sceneName == "CrazyBallGame"			||
+			sceneName == "WAMGame"					||
+			sceneName == "TwoCarsMain"				
+
+			/*
 			sceneName == "EmojiMain"         		||
 			sceneName == "Emoji2Main"        		||
 			sceneName == "AvoidBullets"      		||
@@ -246,7 +259,6 @@ public partial class Info : MonoBehaviour {
 			sceneName == "BallDuetMain"				||
 			sceneName == "JumperStepUpMain"			||
 			sceneName == "HammerMain"				||
-			sceneName == "TwoCarsMain"				||
 			sceneName == "BridgesMain"				||
 			sceneName == "CrashRacingMain"*/
 			)
