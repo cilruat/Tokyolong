@@ -43,7 +43,10 @@ namespace Takgu
             //set puase canvas deactivated
 			pausecanvas.gameObject.SetActive(false);
             //set timescale to 1
+			//Time.timeScale 은 정적프로퍼터 이기 때문에 모든 씬의 게임 오
             Time.timeScale = 1;
+
+		
             //get the value of highscore
             highscore = PlayerPrefs.GetInt("HighScore", 0);
         }
@@ -68,8 +71,11 @@ namespace Takgu
                 //wait between waves of balls 
                 yield return new WaitForSeconds(waveWait);
                 //increase time speed & set to time scale
-                TimeSpeed += TimeSpeedIncrease;
-                Time.timeScale = TimeSpeed;
+				TimeSpeed += TimeSpeedIncrease;
+				Time.timeScale = TimeSpeed;
+
+
+
                 //increase speed multiplier by 1 & showing its value on speedText
                 speedMultiplier++;
                 speedText.text = "Speed:" + speedMultiplier.ToString() + "x";
@@ -89,7 +95,7 @@ namespace Takgu
         public void GameOver()
         {
             //Pause the time
-            Time.timeScale = 0;
+            //Time.timeScale = 0;
             //activate the gameover canvas
             GameOverCanvas.SetActive(true);
             //fading of canvas is started
@@ -124,11 +130,8 @@ namespace Takgu
 
 		public void  Restart()
 		{
-			#if UNITY_5_3 || UNITY_5_3_OR_NEWER
 			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-			#else
-			Application.LoadLevel(Application.loadedLevelName);
-			#endif
+
 		}
 
 		/// <summary>
@@ -136,11 +139,8 @@ namespace Takgu
 		/// </summary>
 		public void  MainMenu()
 		{
-			#if UNITY_5_3 || UNITY_5_3_OR_NEWER
-			SceneManager.LoadScene("EscapeTakgu");
-			#else
-			Application.LoadLevel(mainMenuLevelName);
-			#endif
+			Time.timeScale = 1;
+			SceneManager.LoadScene("ArcadeGame");
 		}
 
 

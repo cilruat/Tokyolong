@@ -13,7 +13,8 @@ public class InitManager : MonoBehaviour {
 	
 	IEnumerator Start () {
 		yield return new WaitForSeconds (0.5f);
-		SceneManager.LoadScene ("Menu");
+			Time.timeScale = 1;
+			SceneManager.LoadScene ("ArcadeGame");
 	}
 
 }

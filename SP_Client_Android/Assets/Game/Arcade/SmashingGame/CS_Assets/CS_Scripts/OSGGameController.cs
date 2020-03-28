@@ -152,7 +152,7 @@ namespace ObjectSmashingGame
             }
             
             // Disable multitouch so that we don't tap two answers at the same time ( prevents multi-answer cheating, thanks to Miguel Paolino for catching this bug )
-            Input.multiTouchEnabled = false;
+            Input.multiTouchEnabled = true;
 
             //Update the progress in the level
             //InvokeRepeating("UpdateProgress", 0, 0.5f);

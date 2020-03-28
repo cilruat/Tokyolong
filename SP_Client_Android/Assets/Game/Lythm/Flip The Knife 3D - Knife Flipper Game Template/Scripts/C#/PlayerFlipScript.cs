@@ -47,6 +47,7 @@ public class PlayerFlipScript : MonoBehaviour {
 
 	void Update () {
 
+
 		if (!rigidbody.isKinematic)
 			return;
 

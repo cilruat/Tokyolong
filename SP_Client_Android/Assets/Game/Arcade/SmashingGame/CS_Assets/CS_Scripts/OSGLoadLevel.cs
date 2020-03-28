@@ -83,6 +83,8 @@ namespace ObjectSmashingGame
 		/// </summary>
 		void ExecuteLoadLevel()
 		{
+			Time.timeScale = 1;
+
 			SceneManager.LoadScene("ArcadeGame");
 		}
 
@@ -105,6 +107,8 @@ namespace ObjectSmashingGame
 		/// </summary>
 		void ExecuteRestartLevel()
 		{
+			Time.timeScale = 1;
+
 			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		}
 	}

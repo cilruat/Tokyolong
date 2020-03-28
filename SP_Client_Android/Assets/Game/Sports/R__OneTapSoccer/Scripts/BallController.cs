@@ -249,17 +249,17 @@ public class BallController : MonoBehaviour {
 		GameController.playerGoals++;
 
 		//increase player streak by 1
-		GameController.playerGoalStreak++;
+		//GameController.playerGoalStreak++;
 
 		//create goal gfx
 		GameObject g = Instantiate(goalGfx, transform.position + new Vector3(0, 0, -1.5f), Quaternion.Euler(0, 180, 0)) as GameObject;
 		g.name = "GoalGfx";
 
-		if (GameController.playerGoalStreak > 1) {
+		/*if (GameController.playerGoalStreak > 1) {
 			//if player is consecutively scoring goals, we will grant him additional balls as prize!
 			GameController.playerCurrentBalls += GameController.playerGoalStreak - 1;
 			print ("Received " + (GameController.playerGoalStreak - 1).ToString() + " additional balls.");
-		}
+		}*/
 
 		playSfx(goal);
 		createHitGfx();

@@ -16,7 +16,7 @@ namespace Takgu
                 //Change targetPos to mouse position
                 Vector3 targetPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 //move the racket's x positon to targerPos
-                transform.position = Vector3.MoveTowards(transform.position, new Vector3(targetPos.x, -4.5f, 0), 10);
+                transform.position = Vector3.MoveTowards(transform.position, new Vector3(targetPos.x, -6.5f, 0), 10);
             }
         }
     }

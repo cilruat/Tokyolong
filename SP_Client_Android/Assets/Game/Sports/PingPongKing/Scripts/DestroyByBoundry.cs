@@ -8,10 +8,16 @@ namespace Takgu
     /// </summary>
     public class DestroyByBoundry : MonoBehaviour
     {
+
+
+
         void OnTriggerEnter2D(Collider2D other)
         {
+
             //On entering the boundries outside the game area the ball prefab will destroy
-            Destroy(other.gameObject);
+			Destroy(other.gameObject);
+
         }
+
     }
 }

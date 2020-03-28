@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class PageArcadeGame : PageBase {
 
@@ -11,6 +12,7 @@ public class PageArcadeGame : PageBase {
 	public List<GameObject> contentsPanels;
 	public GameObject mainCanvas;
 	public List<GameObject> tabArrow;
+	public List<GameObject> Animation;
 
 	int selected = 0;
 
@@ -47,12 +49,15 @@ public class PageArcadeGame : PageBase {
 				contentsPanels [i].SetActive (true);
 				tabButtons [i].Selected ();
 				tabArrow [i].SetActive (true);
+				Animation [i].SetActive (true);
 			} 
 			else 
 			{
 				contentsPanels [i].SetActive (false);
 				tabButtons [i].DeSelected ();
 				tabArrow [i].SetActive (false);
+				Animation [i].SetActive (false);
+
 			}
 		}
 

@@ -119,7 +119,8 @@ public class UserInputManager : MonoBehaviour {
 						
 				case "Btn-Menu":
 						UnPauseGame ();
-						SceneManager.LoadScene ("Menu");
+						Time.timeScale = 1;
+						SceneManager.LoadScene ("ArcadeGame");
 						break;
 				}
 			}
