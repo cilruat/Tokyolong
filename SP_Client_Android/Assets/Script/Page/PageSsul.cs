@@ -14,8 +14,6 @@ public class PageSsul : PageBase {
 	public GameObject objReturnPrev;
 	public GameObject objReturnFirst;
 
-	public GameObject moveDateMan;
-	public GameObject moveDateGirl;
 
 	CanvasGroup _prevCG;
 	CanvasGroup _curCG;
@@ -28,8 +26,6 @@ public class PageSsul : PageBase {
 		_curCG = cgFirst;
 		_ChangeReturn (true);
 
-		moveDateMan.SetActive (false);
-		moveDateGirl.SetActive (false);
 	}
 
 	void _ChangeShow(CanvasGroup nextCG)
@@ -47,13 +43,7 @@ public class PageSsul : PageBase {
 		objReturnPrev.SetActive (!isHome);
 		objReturnFirst.SetActive (!isHome);
 	}
-
-	void _SetAnim()
-	{
-		moveDateMan.SetActive (true);
-		moveDateGirl.SetActive (true);
-	}
-
+		
 
 	public void OnPrev() 
 	{
