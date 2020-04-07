@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
-
+using UnityEngine.SceneManagement;
 
 public class PageHitNMiss : PageBase {
 
@@ -41,6 +41,11 @@ public class PageHitNMiss : PageBase {
 		objReturnHome.SetActive (isHome);
 		objReturnPrev.SetActive (!isHome);
 		objReturnFirst.SetActive (!isHome);
+	}
+
+	public void LadderGame()
+	{
+		SceneManager.LoadScene ("LadderGame");
 	}
 
 	public void OnPrev() 
