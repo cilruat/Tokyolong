@@ -36,19 +36,9 @@ public class GameManager : MonoBehaviour {
     bool isBlocker;
     bool isEndAll;
 
-	private AudioSource LadderOn; //for use Audio source
-	[SerializeField] private AudioClip LadderClip;
-
-/*#if (UNITY_ANDROID)
-    void Awake() { Screen.SetResolution(1080, 1920, false); }
-#else
-    void Awake() { Screen.SetResolution(540, 960, false); }
-#endif*/
 
     void Start() 
 	{ 
-		LadderOn = GetComponent<AudioSource> ();
-
 		LadderSetting(false); 
 	}
 
@@ -163,8 +153,6 @@ public class GameManager : MonoBehaviour {
                 // MiddlePanel - 전체결과 버튼
             case "Result":
                 for (int i = 0; i < peopleNum; i++) PlayerCs[i].StartCoroutine("Move");
-				LadderOn.clip = LadderClip;
-				LadderOn.Play ();
                 break;
 
 

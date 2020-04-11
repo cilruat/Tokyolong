@@ -19,14 +19,14 @@ public class RollSozu : MonoBehaviour {
 	public float currentSpeed;
 	public Image fillImage;
 
-	private AudioSource SozuOn; //for use Audio source
+	//private AudioSource SozuOn; //for use Audio source
 
-	[SerializeField] private AudioClip sozuclip_1;
+	//[SerializeField] private AudioClip sozuclip_1;
 
 	void Start () {
 		rollingButton.interactable = rolling == false;
 
-		SozuOn = GetComponent<AudioSource> ();
+		//SozuOn = GetComponent<AudioSource> ();
 
 	}
 
@@ -58,8 +58,8 @@ public class RollSozu : MonoBehaviour {
 
 	public void SozuSE()
 	{
-		SozuOn.clip = sozuclip_1;
-		SozuOn.Play ();
+		//SozuOn.clip = sozuclip_1;
+		//SozuOn.Play ();
 	}
 
 

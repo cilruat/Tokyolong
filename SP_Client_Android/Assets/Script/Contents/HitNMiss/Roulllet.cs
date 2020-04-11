@@ -18,10 +18,10 @@ public class Roulllet : MonoBehaviour {
 	float currentTime = 0f;
 	float currentSpeed = 0f;
 
-	private AudioSource ButtonOn; //for use Audio source
+	//private AudioSource ButtonOn; //for use Audio source
 	private AudioSource Plause;
 
-	[SerializeField] private AudioClip clip_1;
+	//[SerializeField] private AudioClip clip_1;
 	[SerializeField] private AudioClip plause_1;
 
 
@@ -33,7 +33,7 @@ public class Roulllet : MonoBehaviour {
 
 	void Start () {
 
-		ButtonOn = GetComponent<AudioSource> ();
+		//ButtonOn = GetComponent<AudioSource> ();
 		Plause = GetComponent<AudioSource> ();
 
 		rollingButton.interactable = rolling == false;
@@ -92,8 +92,8 @@ public class Roulllet : MonoBehaviour {
 
 	public void PlaySE()
 	{
-		ButtonOn.clip = clip_1;
-		ButtonOn.Play ();
+		//ButtonOn.clip = clip_1;
+		//ButtonOn.Play ();
 	}
 
     public void Roll()

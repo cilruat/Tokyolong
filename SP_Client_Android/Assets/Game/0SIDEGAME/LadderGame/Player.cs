@@ -49,7 +49,7 @@ public class Player : MonoBehaviour {
         switch (col.name)
         {
             case "Left": case "Right":
-                yield return new WaitForSeconds(0.05f);
+                yield return new WaitForSeconds(0.001f);
                 if (isHorizontal)
                 {
                     isHorizontal = false;
