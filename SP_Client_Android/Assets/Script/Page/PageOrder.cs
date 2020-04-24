@@ -35,8 +35,8 @@ public class PageOrder : PageBase {
         base.acFinalIdx = 0;
 //        base.acFinal = ShowMenu;
 
-		for (int i = 0; i < menuGroup.Length; i++)
-			menuGroup [i].obj.SetActive (false);
+		/*for (int i = 0; i < menuGroup.Length; i++)
+			menuGroup [i].obj.SetActive (false);*/
 	}
 
     void Start()
