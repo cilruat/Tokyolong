@@ -111,6 +111,8 @@ public class PageOrder : PageBase {
 		bill.SetMenu (eType);
 	}
 
+
+    //슬라이드를 위해 탭체인지를 바꾸어본다 0425
 	public void OnTabChange(int idx)
 	{
 		EMenuType eSelect = (EMenuType)idx;

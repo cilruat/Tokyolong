@@ -7,6 +7,11 @@ using UnityEngine.UI;
 public class NestScroll : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public Scrollbar scrollbar;
+    public Transform contentTr;
+
+    public Slider tabSlider;
+    public RectTransform[] BtnRect;
+    public RectTransform[] BtnImageRect;
 
     const int SIZE = 3;
     float[] pos = new float[SIZE];
@@ -36,6 +41,8 @@ public class NestScroll : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         return 0;
     }
 
+
+    //메서드 씩 =>  괄호안에것을 없앰
     public void OnBeginDrag(PointerEventData eventData)
     {
         curPos = SetPos();
@@ -71,13 +78,54 @@ public class NestScroll : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
                 ++targetIndex;
                 targetPos = curPos + distance;
             }
-
         }
+
+        //목표가 수직스크롤이고, 옆에서 옮겨왔다면 수직스크롤을 맨 위로 올림
+        for (int i = 0; i < SIZE; i++)
+            if (contentTr.GetChild(i).GetComponent<OrderScroll>() && curPos != pos[i] && targetPos == pos[i])
+                contentTr.GetChild(i).GetChild(1).GetComponent<Scrollbar>().value = 1;
+
     }
 
 
     void Update ()
     {
-        if(!isDrag) scrollbar.value = Mathf.Lerp(scrollbar.value, targetPos, 0.1f);	
+        tabSlider.value = scrollbar.value;
+        if (!isDrag)
+
+        {
+            scrollbar.value = Mathf.Lerp(scrollbar.value, targetPos, 0.1f);
+            for (int i = 0; i < SIZE; i++) BtnRect[i].sizeDelta = new Vector2(i == targetIndex ? 200 : 100, BtnRect[i].sizeDelta.y);
+        }
+
+        if (Time.time < 0.1f) return;
+
+        for (int i = 0; i < SIZE; i++)
+        {
+            Vector3 BtnTargetPos = BtnRect[i].anchoredPosition3D;
+            Vector3 BtnTargetScale = Vector3.one;
+            bool textActive = false;
+
+            if(i == targetIndex)
+            {
+                BtnTargetPos.y = -5f;
+                BtnTargetScale = new Vector3(1.3f, 1.3f, 1);
+                textActive = true;
+            }
+
+
+            BtnImageRect[i].anchoredPosition3D = Vector3.Lerp(BtnImageRect[i].anchoredPosition3D, BtnTargetPos, 0.25f);
+            BtnImageRect[i].localScale = Vector3.Lerp(BtnImageRect[i].localScale, BtnTargetScale, 0.25f);
+            BtnImageRect[i].transform.GetChild(0).gameObject.SetActive(textActive);
+        }
+
+
 	}
+
+    public void TabClick(int n)
+    {
+        targetIndex = n;
+        targetPos = pos[n];
+
+    }
 }
