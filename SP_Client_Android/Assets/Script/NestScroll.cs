@@ -108,8 +108,8 @@ public class NestScroll : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
             if(i == targetIndex)
             {
-                BtnTargetPos.y = -5f;
-                BtnTargetScale = new Vector3(1.3f, 1.3f, 1);
+                BtnTargetPos.y = 2f;
+                BtnTargetScale = new Vector3(1.4f, 1.4f, 1);
                 textActive = true;
             }
 

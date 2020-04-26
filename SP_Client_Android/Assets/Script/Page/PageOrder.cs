@@ -42,7 +42,7 @@ public class PageOrder : PageBase {
     void Start()
     {
 //        showRoutine = StartCoroutine(ShowMenu(true));
-		OnTabChange (5);
+		//OnTabChange (12);
     }
 
     void ShowMenu()
