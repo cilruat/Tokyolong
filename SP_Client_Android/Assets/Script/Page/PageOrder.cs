@@ -35,14 +35,14 @@ public class PageOrder : PageBase {
         base.acFinalIdx = 0;
 //        base.acFinal = ShowMenu;
 
-		/*for (int i = 0; i < menuGroup.Length; i++)
-			menuGroup [i].obj.SetActive (false);*/
+		for (int i = 0; i < menuGroup.Length; i++)
+			menuGroup [i].obj.SetActive (false);
 	}
 
     void Start()
     {
 //        showRoutine = StartCoroutine(ShowMenu(true));
-		//OnTabChange (12);
+		OnTabChange (5);
     }
 
     void ShowMenu()
@@ -111,8 +111,6 @@ public class PageOrder : PageBase {
 		bill.SetMenu (eType);
 	}
 
-
-    //슬라이드를 위해 탭체인지를 바꾸어본다 0425
 	public void OnTabChange(int idx)
 	{
 		EMenuType eSelect = (EMenuType)idx;
