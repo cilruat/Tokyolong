@@ -6,14 +6,34 @@ using System;
 
 public class InssaRandomGame : MonoBehaviour {
 
+	public bool isAnim;
+	private Animator anim;
+
 	System.Random InssaRandomizer = new System.Random(); //여기 클래스에서 랜덤 선언?
 
 	Transform RandomPanel;
 
+	public void Awake()
+	{
+		anim = this.GetComponent<Animator> ();
+	}
+
+	IEnumerator WaitForAnimation(Animator anim)
+	{
+		while (false == anim.IsInTransition (0)) 
+		{
+			yield return new WaitForEndOfFrame ();
+		}
+		isAnim = false;
+	}
+
+
 	public void Randomize()
 	{
+		//start anim -> start corutine -> 
+		anim.SetInteger ("Television", 1);
 		RandomPanel = GameObject.Find ("Canvas").gameObject.transform.GetChild (0).gameObject.transform;
-
+		isAnim = true;
 
 		for (int i = 0; i < RandomPanel.childCount; i++) 
 		{
