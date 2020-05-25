@@ -6,8 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class EscapeScene : MonoBehaviour {
 
-	public void MainMenu()
+	public GameObject mainCanvas;
+
+	public void OnSceneChanger(string sceneName)
 	{
-		SceneManager.LoadScene ("ArcadeGame");
+		SceneChanger.LoadScene (sceneName, mainCanvas);
 	}
 }

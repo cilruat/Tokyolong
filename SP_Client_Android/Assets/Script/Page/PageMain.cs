@@ -24,6 +24,7 @@ public class PageMain : PageBase {
 		eHitNMiss,
 		eArcadeGame = 15,
 		eSsul,
+		eInssa,
 	}
 
     public CanvasGroup[] cgBoard;
@@ -92,6 +93,7 @@ public class PageMain : PageBase {
 		case EMenu.eHitNMiss:		SceneChanger.LoadScene ("HitNMiss", curBoardObj ());		break;
 		case EMenu.eArcadeGame:		SceneChanger.LoadScene ("ArcadeGame", curBoardObj ());		break;
 		case EMenu.eSsul:			SceneChanger.LoadScene ("Ssul", curBoardObj ());			break;
+		case EMenu.eInssa:			SceneChanger.LoadScene ("InSsa", curBoardObj ());			break;
 		}
 	}
 

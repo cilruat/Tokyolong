@@ -62,9 +62,7 @@ public class PageHitNMiss : PageBase {
 		_ChangeShow (cgFirst);
 		_ChangeReturn (true);
 	}
-
-
-
+		
 
 
 
