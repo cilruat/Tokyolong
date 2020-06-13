@@ -440,4 +440,33 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		Info.OwnerUI = ownerUI;
 		Info.CheckOwnerEvt = true;
 	}
+
+    void MsgSendACK(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+        SystemMessage.Instance.Add(tableNo.ToString() + "번 테이블에 성공적으로 쪽지를 보냈습니다");
+        //UIMANAGER 끄기
+    }
+
+    void LkeSendACK(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+        SystemMessage.Instance.Add(tableNo.ToString() + "번 테이블에 좋아요해줫어요~♥");
+        //UIMANAGER 끄기
+    }
+
+    void MsgSendNOT(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+        string strMsg = msg.pop_string();
+        //UIMANAGER 서 활동할 내용 작업
+
+    }
+
+    void LkeSendNOT(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+        //UIMANAGER 서 활동할 내용 작업
+    }
+
 }

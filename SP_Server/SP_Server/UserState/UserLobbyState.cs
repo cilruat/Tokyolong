@@ -574,6 +574,31 @@ namespace SP_Server.UserState
                         }
 
                         break;
+
+                    case PROTOCOL.MSG_SEND_REQ:
+                        tableNo = msg.pop_byte();
+                        byte targetTableNo = msg.pop_byte();
+                        string strMsg = msg.pop_string();
+
+                        for(int i = 0; i < owner.mainFrm.ListUser.Count; i++)
+                        {
+                            User inputTargetUser = owner.mainFrm.ListUser[i];
+                            if (inputTargetUser.tableNum != (int)targetTableNo)
+                                continue;
+
+                            other_msg = CPacket.create((short)PROTOCOL.MSG_SEND_NOT);
+                            other_msg.push(tableNo);
+                            other_msg.push(strMsg);
+
+                            inputTargetUser.send(other_msg);
+                            break;
+                        }
+
+                        send_msg = CPacket.create((short)PROTOCOL.MSG_SEND_ACK);
+                        send_msg.push(targetTableNo);
+                        break;
+                        
+
                     default:
                         break;
                 }

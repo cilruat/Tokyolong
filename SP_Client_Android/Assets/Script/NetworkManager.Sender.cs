@@ -199,4 +199,24 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
 		send(msg);
 	}
+
+    public void MSG_SEND_REQ(byte targetTableNo, string strMsg)
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.MSG_SEND_REQ);
+        msg.push(Info.TableNum);
+        msg.push(targetTableNo);
+        msg.push(strMsg);
+
+        send(msg);
+    }
+
+    public void LKE_SEND_REQ(byte targetTableNo)
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.LKE_SEND_REQ);
+        msg.push(Info.TableNum);
+        msg.push(targetTableNo);
+
+        send(msg);
+
+    }
 }
