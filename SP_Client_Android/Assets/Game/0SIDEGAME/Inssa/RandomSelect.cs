@@ -25,7 +25,7 @@ public class RandomSelect : MonoBehaviour
 
     public void ResultSelect()
     {
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 1; i++)
         {
             // 가중치 랜덤을 돌리면서 결과 리스트에 넣어줍니다.
             result.Add(RandomCard()); 
