@@ -53,6 +53,8 @@ public partial class Info : MonoBehaviour
     public static string adminOrderPacking = "";
     public static string adminMusicPacking = "";
 
+	public static string mailTablePacking = "";
+
     public static void Init()
     {
         TableNum = 0;

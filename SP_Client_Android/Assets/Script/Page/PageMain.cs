@@ -25,6 +25,7 @@ public class PageMain : PageBase {
 		eArcadeGame = 15,
 		eSsul,
 		eInssa,
+		eMail,
 	}
 
     public CanvasGroup[] cgBoard;
@@ -94,6 +95,7 @@ public class PageMain : PageBase {
 		case EMenu.eArcadeGame:		SceneChanger.LoadScene ("ArcadeGame", curBoardObj ());		break;
 		case EMenu.eSsul:			SceneChanger.LoadScene ("Ssul", curBoardObj ());			break;
 		case EMenu.eInssa:			SceneChanger.LoadScene ("InSsa", curBoardObj ());			break;
+		case EMenu.eMail:			SceneChanger.LoadScene ("Mail", curBoardObj ());			break;
 		}
 	}
 

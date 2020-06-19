@@ -85,7 +85,10 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
             Info.TableNum = byte.Parse (pop_string);
             int gameCnt = msg.pop_int32 ();
             Info.AddGameCount(gameCnt, true);
-			        
+
+			//추가
+			Info.mailTablePacking = msg.pop_string ();
+
 			int existUser = msg.pop_int32 ();
 			if (existUser == 1) {
 				Info.PersonCnt = msg.pop_byte ();
