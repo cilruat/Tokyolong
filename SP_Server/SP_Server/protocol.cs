@@ -82,12 +82,21 @@ namespace SP_Server
 		TABLE_MOVE_NOT,
         OWNER_GAME_NOT,
 
+        //-------------------------------------
+        // 우편함 프로토콜 
+        //-------------------------------------
         MSG_SEND_REQ,
         MSG_SEND_ACK,
         MSG_SEND_NOT,
         LKE_SEND_REQ,
         LKE_SEND_ACK,
         LKE_SEND_NOT,
+        PRESENT_SEND_REQ,
+        PRESENT_SEND_ACK,
+        PRESENT_SEND_NOT,
+        PLZ_SEND_REQ,
+        PLZ_SEND_ACK,
+        PLZ_SEND_NOT,
 
         //-------------------------------------
         // 게임 프로토콜.
