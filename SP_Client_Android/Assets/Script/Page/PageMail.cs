@@ -89,6 +89,8 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 	//추가 로그아웃하면 테이블의 좋아요, 쪽지목록, 선물목록, 좋아요 목록 지워야할까
 	public void SetLogout(int tableNo)
 	{
+		StopUrgency (tableNo);
+
 		for (int i = 0; i < listTable.Count; i++) {
 			if (listTable [i].GetTableNo () != tableNo)
 				continue;
