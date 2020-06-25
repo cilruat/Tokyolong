@@ -621,7 +621,7 @@ namespace SpeederRunGame
 				}
 				
 				//Write the high sscore text
-				gameOverCanvas.Find("TextHighScore").GetComponent<Text>().text = "HIGH SCORE " + highScore.ToString();
+				gameOverCanvas.Find("TextHighScore").GetComponent<Text>().text = "HIGH SCORE" + highScore.ToString();
 
 				//If there is a source and a sound, play it from the source
 				if ( soundSource && soundGameOver )    

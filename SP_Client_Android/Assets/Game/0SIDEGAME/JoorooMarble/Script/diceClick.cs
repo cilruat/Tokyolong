@@ -29,6 +29,11 @@ public class diceClick : MonoBehaviour
     public List<TEAM> teamList;
 
 	public Slider slider;
+    public int peopleNum;
+    public Text PersonnelText;
+    public GameObject[] Player;
+    public GridLayoutGroup PlayerGl;
+    bool isEndAll;
 
 
     // Use this for initialization
@@ -109,6 +114,33 @@ public class diceClick : MonoBehaviour
         ckfP.text = teamList[tnstj].name + "팀 " + "차례!";
         stackso.text = "누적 소주 : " + stacksoju + "잔";
     }
+
+    public void PeopleSetting()
+    {
+        peopleNum = (int)slider.value;
+        PersonnelText.text = peopleNum + "명";
+
+        isEndAll = false;
+
+
+        PlayerGl.enabled = true;
+
+        for (int i = 0; i < 7; i++)
+        {
+
+            if (i < peopleNum)
+            {
+                Player[i].SetActive(true);
+            }
+            else
+            {
+                Player[i].SetActive(false);
+
+            }
+        }
+    }
+
+
     public void click()
     {
         if (chk)
@@ -184,15 +216,23 @@ public class diceClick : MonoBehaviour
     }
     public void asd()
     {
+        //무브 함수인듯
+        //위치가 13보다 크거나 같으면 12로 맞추고 스코어를 +1점 시키는 부분
         teamList[tnstj].locate += random;
         if (teamList[tnstj].locate >= 13)
         {
             teamList[tnstj].locate -= 12;
             teamList[tnstj].score++;
         }
+
+
         print(teamList[tnstj].name + "team");
+
+        //캔버스에서 트랜스폼형태로 팀리스트 이름붙인 것의 포지션을 찾고 백그라운드에서 찾아라, 그것의 포지션을 찾아서 위치시킨다는 함수네
         GameObject.Find("Canvas").transform.Find(teamList[tnstj].name + "team").transform.position = GameObject.Find("Canvas").transform.Find("background").
             transform.Find(teamList[tnstj].locate + "").transform.Find(teamList[tnstj].name + "pos").transform.position;
+
+        //만약 1~12까지 있으며 각각 거기갈때마다 찬스카드를 활성화시키는데 랜덤 범위로 활성화 시킨다
         switch (teamList[tnstj].locate)
         {
             case 1:
@@ -247,6 +287,9 @@ public class diceClick : MonoBehaviour
             tnstj = 1;
         chk = true;
     }
+
+
+    //클릭하면 없어지는 함수
     public void badcardClick()
     {
         GameObject.Find("Canvas").transform.Find("bad").gameObject.SetActive(false);

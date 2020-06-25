@@ -18,7 +18,7 @@ public class InssaRandomGame : MonoBehaviour {
 
 	public GameObject animPanel;
 	public GameObject TreasureanimPanel;
-	public GameObject Alarm;
+
 
 	public void OnClickRemoteControl()
 	{

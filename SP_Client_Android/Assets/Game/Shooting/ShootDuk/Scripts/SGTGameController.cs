@@ -573,7 +573,7 @@ namespace ShootingGallery
 				gameOverCanvas.gameObject.SetActive(true);
 				
 				//Write the score text
-				gameOverCanvas.Find("TextScore").GetComponent<Text>().text = "SCORE " + score.ToString();
+				gameOverCanvas.Find("TextScore").GetComponent<Text>().text = "내 점수는 " + score.ToString();
 				
 				//Check if we got a high score
 				if ( score > highScore )    
@@ -589,7 +589,7 @@ namespace ShootingGallery
 				}
 				
 				//Write the high sscore text
-				gameOverCanvas.Find("TextHighScore").GetComponent<Text>().text = "HIGH SCORE " + highScore.ToString();
+				gameOverCanvas.Find("TextHighScore").GetComponent<Text>().text = "최고 점수는 " + highScore.ToString();
 
 				//If there is a source and a sound, play it from the source
 				if ( soundSource && soundGameOver )    
@@ -621,7 +621,7 @@ namespace ShootingGallery
 				victoryCanvas.gameObject.SetActive(true);
 				
 				//Write the score text
-				victoryCanvas.Find("TextScore").GetComponent<Text>().text = "SCORE " + score.ToString();
+				victoryCanvas.Find("TextScore").GetComponent<Text>().text = "점수는 " + score.ToString();
 				
 				//Check if we got a high score
 				if ( score > highScore )    
@@ -637,7 +637,7 @@ namespace ShootingGallery
 				}
 				
 				//Write the high sscore text
-				victoryCanvas.Find("TextHighScore").GetComponent<Text>().text = "HIGH SCORE " + highScore.ToString();
+				victoryCanvas.Find("TextHighScore").GetComponent<Text>().text = "최고 점수는 " + highScore.ToString();
 				
 				//If there is a source and a sound, play it from the source
 				if ( soundSource && soundVictory )    
