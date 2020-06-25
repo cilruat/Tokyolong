@@ -72,7 +72,7 @@ public class GameController : MonoBehaviour {
 	
 	public void loadMenu(){
 		Time.timeScale = 1.5f;
-		Application.LoadLevel("Menu");
+		Application.LoadLevel("ArcadeGame");
 	}
 	
 	public void switchAim(){

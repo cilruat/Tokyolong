@@ -83,7 +83,7 @@ namespace ShootingGallery
 		void ExecuteLoadLevel()
 		{
 			#if UNITY_5_3_OR_NEWER
-			SceneManager.LoadScene(levelName);
+			SceneManager.LoadScene("ArcadeGame");
 			#else
 			Application.LoadLevel(levelName);
 			#endif

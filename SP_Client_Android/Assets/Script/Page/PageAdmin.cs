@@ -30,8 +30,11 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 	public GameObject objTableGameCountInput;
 	public GameObject objTableMove;
     public AdminSettingDiscountProb settingDiscountProb;
+    public GameObject objMsgWrite;
 
-	UITween tweenUrgency = null;
+
+
+    UITween tweenUrgency = null;
 	List<TableElt> listTable = new List<TableElt>();
 	List<OrderElt> listOrder = new List<OrderElt>();
 	List<MusicElt> listMusic = new List<MusicElt>();
@@ -345,4 +348,11 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 		objTableMove.SetActive (true);
 		AdminTableMove.Instance.SetInfo (tableNo);
 	}
+
+    public void ShowMsgWrite(byte tableNo)
+    {
+        objMsgWrite.SetActive(true);
+        AdminTableMove.Instance.SetInfo(tableNo);
+
+    }
 }

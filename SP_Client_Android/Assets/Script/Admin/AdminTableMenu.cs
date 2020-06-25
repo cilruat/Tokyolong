@@ -8,6 +8,7 @@ public class AdminTableMenu : SingletonMonobehaviour<AdminTableMenu> {
 	public Text table;
 
 	byte tableNo = 0;
+
 	public void SetInfo (byte tableNo)
 	{
 		this.tableNo = tableNo;
@@ -48,6 +49,13 @@ public class AdminTableMenu : SingletonMonobehaviour<AdminTableMenu> {
 		PageAdmin.Instance.ShowTableMove (tableNo);
 		OnClose ();
 	}
+
+    public void OnMessage()
+    {
+        PageAdmin.Instance.ShowMsgWrite(tableNo);
+        OnClose();
+
+    }
 
 	public void OnClose() {	gameObject.SetActive (false); }
 }

@@ -57,9 +57,17 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		case PROTOCOL.TABLE_MOVE_ACK:				TableMoveACK (msg);				break;
 		case PROTOCOL.TABLE_MOVE_NOT:				TableMoveNOT ();				break;
 		case PROTOCOL.OWNER_GAME_NOT:				OwnerGameNOT (msg);				break;
-		}
+        case PROTOCOL.MSG_SEND_ACK:                 MsgSendACK(msg);                break;
+        case PROTOCOL.MSG_SEND_NOT:                 MsgSendNOT(msg);                break;
+        case PROTOCOL.LKE_SEND_ACK:                 LkeSendACK(msg);                break;
+        case PROTOCOL.LKE_SEND_NOT:                 LkeSendNOT(msg);                break;
+        case PROTOCOL.PRESENT_SEND_ACK:             PresentSendACK(msg);            break;
+        case PROTOCOL.PRESENT_SEND_NOT:             PresentSendNOT(msg);            break;
+        case PROTOCOL.PLZ_SEND_ACK:                 PleaseSendACK(msg);            break;
+        case PROTOCOL.PLZ_SEND_NOT:                 PleaseSendNOT(msg);            break;
+        }
 
-		isSending = false;
+        isSending = false;
 	}
 
 	void Failed(PROTOCOL id)
@@ -85,7 +93,10 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
             Info.TableNum = byte.Parse (pop_string);
             int gameCnt = msg.pop_int32 ();
             Info.AddGameCount(gameCnt, true);
-			        
+
+			//추가
+			Info.mailTablePacking = msg.pop_string ();
+
 			int existUser = msg.pop_int32 ();
 			if (existUser == 1) {
 				Info.PersonCnt = msg.pop_byte ();
@@ -448,12 +459,6 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         //UIMANAGER 끄기
     }
 
-    void LkeSendACK(CPacket msg)
-    {
-        byte tableNo = msg.pop_byte();
-        SystemMessage.Instance.Add(tableNo.ToString() + "번 테이블에 좋아요해줫어요~♥");
-        //UIMANAGER 끄기
-    }
 
     void MsgSendNOT(CPacket msg)
     {
@@ -463,10 +468,66 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
     }
 
+    void LkeSendACK(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+        SystemMessage.Instance.Add(tableNo.ToString() + "번 테이블에 좋아요해줫어요~♥");
+        //UIMANAGER 끄기
+    }
+
     void LkeSendNOT(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
         //UIMANAGER 서 활동할 내용 작업
     }
 
+
+    void PresentSendACK(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+        SystemMessage.Instance.Add(tableNo.ToString() + "번 테이블에 할인포인트를 드렷어요~");
+        //UIMANAGER 끄기
+    }
+
+    void  PresentSendNOT(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+        int gameCnt = msg.pop_int32();
+
+        if (gameCnt < 0)
+        {
+            Info.AddGameCount(gameCnt);
+            if (Info.isCheckScene("Main"))
+                ((PageMain)PageBase.Instance).RefreshGamePlay();
+        }
+        else
+        {
+            Info.AddOrderCount(gameCnt);
+            if (Info.isCheckScene("Main"))
+                ((PageMain)PageBase.Instance).StartFlyChance();
+        }
+
+        if (Info.isCheckScene("Game"))
+            ((PageGame)PageBase.Instance).RefreshPlayCnt();
+    }
+    //UIMANAGER 서 활동할 내용 작업
+
+    void PleaseSendACK(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+        SystemMessage.Instance.Add(tableNo.ToString() + "번 테이블에 조르기합니다~");
+        //UIMANAGER 끄기
+    }
+
+    void PleaseSendNOT(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+        int gameCnt = msg.pop_int32();
+
+    }
+    //UIMANAGER 서 활동할 내용 작업
+
+
 }
+
+

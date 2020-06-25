@@ -96,7 +96,7 @@ namespace SpeederRunGame
 
 			yield return new WaitForSeconds(loadDelay);
 
-			SceneManager.LoadScene(levelName);
+			SceneManager.LoadScene("ArcadeGame");
 		}
 
 		/// <summary>

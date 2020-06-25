@@ -200,7 +200,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		send(msg);
 	}
 
-    public void MSG_SEND_REQ(byte targetTableNo, string strMsg)
+    public void Message_Send_REQ(byte targetTableNo, string strMsg)
     {
         CPacket msg = CPacket.create((short)PROTOCOL.MSG_SEND_REQ);
         msg.push(Info.TableNum);
@@ -210,11 +210,33 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         send(msg);
     }
 
-    public void LKE_SEND_REQ(byte targetTableNo)
+    public void Like_Send_REQ(byte targetTableNo)
     {
         CPacket msg = CPacket.create((short)PROTOCOL.LKE_SEND_REQ);
         msg.push(Info.TableNum);
         msg.push(targetTableNo);
+
+        send(msg);
+
+    }
+
+    public void Prensent_Send_REQ(byte targetTableNo, int gameCnt)
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.PRESENT_SEND_REQ);
+        msg.push(Info.TableNum);
+        msg.push(targetTableNo);
+        msg.push(gameCnt);
+
+        send(msg);
+
+    }
+
+    public void Please_Send_REQ(byte targetTableNo, int gameCnt)
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.PLZ_SEND_REQ);
+        msg.push(Info.TableNum);
+        msg.push(targetTableNo);
+        msg.push(gameCnt);
 
         send(msg);
 

@@ -49,7 +49,7 @@ namespace ShootingGallery
 		void  Start()
 		{
 			//Don't destroy this object when loading a new scene
-			DontDestroyOnLoad(transform.gameObject);
+			//DontDestroyOnLoad(transform.gameObject);
 		}
 		
 	}
