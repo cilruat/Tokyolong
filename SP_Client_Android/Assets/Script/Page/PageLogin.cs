@@ -208,4 +208,10 @@ public class PageLogin : PageBase {
 		} else
 			SystemMessage.Instance.Add ("PORT를 입력하세요");
 	}
+
+	public void ClickedDelete()
+    {
+		PlayerPrefs.DeleteAll();
+    }
+
 }

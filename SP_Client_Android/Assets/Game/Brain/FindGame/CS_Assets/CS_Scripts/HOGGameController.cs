@@ -280,11 +280,11 @@ namespace HiddenObjectGame
 					//Write the find message based on the word, the article(a,an), the number of hidden objects (more than 1), etc
 					if ( numberOfHiddenObjects > 1 )
 					{
-						topBar.Find("Base/FindObjectText").GetComponent<TextMesh>().text = topBar.Find("Base/FindObjectText/Shadow").GetComponent<TextMesh>().text = "FIND " + numberOfHiddenObjects.ToString() + " " + newObject.GetComponent<HOGHiddenObject>().namePlural;
+						topBar.Find("Base/FindObjectText").GetComponent<TextMesh>().text = topBar.Find("Base/FindObjectText/Shadow").GetComponent<TextMesh>().text = "찾으세요~ " + numberOfHiddenObjects.ToString() + " " + newObject.GetComponent<HOGHiddenObject>().namePlural;
 					}
 					else
 					{
-						topBar.Find("Base/FindObjectText").GetComponent<TextMesh>().text = topBar.Find("Base/FindObjectText/Shadow").GetComponent<TextMesh>().text = "FIND " + newObject.GetComponent<HOGHiddenObject>().nameArticle + " " + newObject.GetComponent<HOGHiddenObject>().objectName;
+						topBar.Find("Base/FindObjectText").GetComponent<TextMesh>().text = topBar.Find("Base/FindObjectText/Shadow").GetComponent<TextMesh>().text = "찾으세요~ " + newObject.GetComponent<HOGHiddenObject>().nameArticle + " " + newObject.GetComponent<HOGHiddenObject>().objectName;
 					}
 				}
 				else

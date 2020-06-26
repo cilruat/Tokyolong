@@ -24,6 +24,7 @@ public enum eUI
 	eOwnerQuiz,
 	eOwnerTrick,
 	eTokyoQuiz,
+	eMail,
 
 	eNone = 100,
 }
@@ -195,6 +196,16 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
         UIChat uiChat = Show(eUI.eChat).GetComponent<UIChat>();
         uiChat.ShowChatTable();
     }
+
+	void _ShowMsg()
+    {
+		if (curUI != eUI.eNone && curUI != eUI.eMail)
+			Hide(curUI);
+
+		UIMail uiMail = Show(eUI.eMail).GetComponent<UIMail>();
+		uiMail.ShowMsgTable();
+	}
+
 
     void _ShowBillDetail()
     {

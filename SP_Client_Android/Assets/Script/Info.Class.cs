@@ -9,6 +9,10 @@ public class UserInfo
     public byte peopleCnt = 0;
     public byte customerType = 0;
 
+    public List<byte> listLike = new List<byte>();
+    public List<UserMsgInfo> listMsgInfo = new List<UserMsgInfo>();
+
+
 	public ECustomerType eCustomerType { get { return (ECustomerType)customerType; } }
 
 	public UserInfo (byte tableNo, byte peopleCnt, byte customerType)
@@ -41,6 +45,12 @@ public class UserChat
         this.time = time;
         this.chat = chat;
     }
+}
+
+public class UserMsgInfo
+{
+    public byte tableNo = 0;
+    public string strMsg = "";
 }
 
 public partial class Info : MonoBehaviour 

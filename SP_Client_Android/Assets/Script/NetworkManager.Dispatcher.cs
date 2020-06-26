@@ -464,7 +464,15 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     {
         byte tableNo = msg.pop_byte();
         string strMsg = msg.pop_string();
-        //UIMANAGER 서 활동할 내용 작업
+
+        UserMsgInfo msginfo = new UserMsgInfo();
+        msginfo.tableNo = tableNo;
+        msginfo.strMsg = strMsg;
+
+        //UIMANAGER 서 활동할 내용 작업 , Dispatcher.cs 에서 ChatNOT 참조
+
+        UIManager.Instance.IsActive(eUI.eMail);
+        Info.myInfo.listMsgInfo.Add(msginfo);
 
     }
 

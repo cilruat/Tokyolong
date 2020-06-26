@@ -352,7 +352,7 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
     public void ShowMsgWrite(byte tableNo)
     {
         objMsgWrite.SetActive(true);
-        AdminTableMove.Instance.SetInfo(tableNo);
+		AdminMsgWrite.Instance.SetInfo(tableNo);
 
     }
 }
