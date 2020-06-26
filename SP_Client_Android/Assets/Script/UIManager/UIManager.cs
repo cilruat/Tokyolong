@@ -197,7 +197,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
         uiChat.ShowChatTable();
     }
 
-	void _ShowMsg()
+	public void ShowMsg()
     {
 		if (curUI != eUI.eNone && curUI != eUI.eMail)
 			Hide(curUI);

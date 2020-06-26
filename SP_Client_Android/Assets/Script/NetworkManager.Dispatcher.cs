@@ -470,8 +470,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         msginfo.strMsg = strMsg;
 
         //UIMANAGER 서 활동할 내용 작업 , Dispatcher.cs 에서 ChatNOT 참조
-
-        UIManager.Instance.IsActive(eUI.eMail);
+        UIManager.Instance.ShowMsg();
         Info.myInfo.listMsgInfo.Add(msginfo);
 
     }
