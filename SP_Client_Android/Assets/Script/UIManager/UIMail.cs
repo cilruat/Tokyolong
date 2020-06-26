@@ -47,6 +47,7 @@ public class UIMail : MonoBehaviour {
 
     public void OnCloseContent()
     {
+        countdown.Stop();
         UIManager.Instance.Hide(uiType);
     }
 
