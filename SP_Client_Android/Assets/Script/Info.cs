@@ -249,6 +249,14 @@ public partial class Info : MonoBehaviour {
 			sceneName == "CrazyBallGame"			||
 			sceneName == "WAMGame"					||
 			sceneName == "OneTapSoccer"				||
+			sceneName == "LiveExample-01"			||
+			sceneName == "LiveExample-02"			||
+			sceneName == "LiveExample-03"			||
+			sceneName == "CSHard"					||
+			sceneName == "ECCGameTerrain"			||
+			sceneName == "SRGStage03"				||
+			sceneName == "SGTGame"					||
+			sceneName == "BSKArcade"				||
 			sceneName == "TwoCarsMain"				
 
 			/*

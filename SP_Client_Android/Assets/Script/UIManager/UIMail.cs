@@ -36,7 +36,7 @@ public class UIMail : MonoBehaviour {
     public void OnClose()
     {
         countdown.Stop();
-        UIManager.Instance.Hide(uiType);
+        UIManager.Instance.Hide(eUI.eMail);
     }
 
     public void OnGoMailScene()
@@ -47,8 +47,7 @@ public class UIMail : MonoBehaviour {
 
     public void OnCloseContent()
     {
-        countdown.Stop();
-        UIManager.Instance.Hide(uiType);
+        UIManager.Instance.Hide(eUI.eMail);
     }
 
     //코루틴 들어가고 그런거 없이 Content에 내용만 쪽지에 맞게 적용만한다면 완료되는거 같은데 그다음에 리스트에 넣어주고 ++ 해주고
