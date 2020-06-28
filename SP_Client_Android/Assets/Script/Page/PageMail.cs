@@ -26,7 +26,7 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 	void Awake()
 	{
 		//일단 테이블 정보만
-		SetData (Info.mailTablePacking); 
+		SetData (Info.adminTablePacking); 
 	}
 
 	void LoadTable()

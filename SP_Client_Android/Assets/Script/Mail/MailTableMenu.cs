@@ -9,6 +9,7 @@ public class MailTableMenu : SingletonMonobehaviour<MailTableMenu> {
 	public Text table;
 	byte tableNo = 0;
 
+    public GameObject[] objMenu;
 
 	public void SetInfo (byte tableNo)
 	{
@@ -16,11 +17,17 @@ public class MailTableMenu : SingletonMonobehaviour<MailTableMenu> {
 		table.text = tableNo.ToString () + "번 테이블";
 	}
 
-	public void OnCallConfirm()
-	{
-		PageMail.Instance.StopUrgency (tableNo);
-		OnClose ();
-	}
+    public void OnShow(int state)
+    {
+        for (int i = 0; i < objMenu.Length; i++)
+        {
+            if (i != state)
+                continue;
+
+            objMenu[i].SetActive(true);
+            break;
+        }
+    }
 
 	//정보를 먼저 가지고 와야되는건 Network매니저에서 먼저 작업하고 후처리는 씬에서 작업하고 쏘는듯
 

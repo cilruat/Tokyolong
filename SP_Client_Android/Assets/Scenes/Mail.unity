@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -295,8 +295,8 @@ GameObject:
   - component: {fileID: 26552368}
   - component: {fileID: 26552367}
   - component: {fileID: 26552366}
-  - component: {fileID: 26552365}
   - component: {fileID: 26552364}
+  - component: {fileID: 26552365}
   m_Layer: 5
   m_Name: TableMenu
   m_TagString: Untagged
@@ -364,10 +364,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 26552363}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ba03a929ade3e940b7b8eb4f0ee6e28, type: 3}
+  m_Script: {fileID: 11500000, guid: 187ca08868e1e5240a735a5f2546d279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   table: {fileID: 2005268885}
+  objMenu:
+  - {fileID: 682080814}
+  - {fileID: 1641389261}
+  - {fileID: 1063698135}
+  - {fileID: 239262166}
 --- !u!114 &26552366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2642,7 +2647,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000015258789}
+  m_AnchoredPosition: {x: 0, y: 0.000030517578}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &465922475
@@ -2952,12 +2957,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 26552365}
-        m_MethodName: OnTableDiscountInput
-        m_Mode: 1
+        m_MethodName: OnShow
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -4458,7 +4463,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1638346441}
   m_HandleRect: {fileID: 1638346440}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -6637,12 +6642,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 26552365}
-        m_MethodName: OnTableMove
-        m_Mode: 1
+        m_MethodName: OnShow
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -8753,7 +8758,7 @@ GameObject:
   - component: {fileID: 1125093222}
   - component: {fileID: 1125093221}
   m_Layer: 5
-  m_Name: BtnGameCount
+  m_Name: BtnPlz
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8834,12 +8839,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 26552365}
-        m_MethodName: OnTableGameCountInput
-        m_Mode: 1
+        m_MethodName: OnShow
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -9826,7 +9831,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1199392024}
-        m_MethodName: OnTableMenu
+        m_MethodName: OnMailMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10399,8 +10404,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 26552365}
-        m_MethodName: OnTableOrderInput
-        m_Mode: 1
+        m_MethodName: OnShow
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -13291,13 +13296,13 @@ RectTransform:
   - {fileID: 24647569}
   - {fileID: 904724263}
   - {fileID: 720730299}
-  m_Father: {fileID: 2086463786}
-  m_RootOrder: 2
+  m_Father: {fileID: 2093381918}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 140, y: -15}
-  m_SizeDelta: {x: 280, y: 30}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1616955885
 GameObject:
@@ -17504,7 +17509,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000007052483, y: 0.000045776367}
+  m_AnchoredPosition: {x: -0.00004817293, y: 0.000045776367}
   m_SizeDelta: {x: -34.4, y: 444.4}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2026454967
@@ -18052,7 +18057,6 @@ RectTransform:
   m_Children:
   - {fileID: 2093381918}
   - {fileID: 1935000488}
-  - {fileID: 1609838677}
   m_Father: {fileID: 798229079}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -18169,7 +18173,8 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1609838677}
   m_Father: {fileID: 2086463786}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

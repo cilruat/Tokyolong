@@ -456,7 +456,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     {
         byte tableNo = msg.pop_byte();
         SystemMessage.Instance.Add(tableNo.ToString() + "번 테이블에 성공적으로 쪽지를 보냈습니다");
-        //UIMANAGER 끄기
+
     }
 
 
@@ -471,6 +471,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
         //UIMANAGER 서 활동할 내용 작업 , Dispatcher.cs 에서 ChatNOT 참조
         UIManager.Instance.ShowMsg();
+
         Info.myInfo.listMsgInfo.Add(msginfo);
 
     }

@@ -77,6 +77,26 @@ public class TableElt : MonoBehaviour {
 
 		PageAdmin.Instance.ShowTableMenu (tableNo);
 	}
+
+    public void OnMailMenu()
+    {
+#if !UNITY_EDITOR
+        if (isLogin == false)
+        {
+            SystemMessage.Instance.Add("비어있는 테이블입니다.");
+            return;
+        }
+#endif
+
+        if (PageMail.Instance.objTableMenu == null)
+            return;
+
+        MailTableMenu mail = PageMail.Instance.objTableMenu.GetComponent<MailTableMenu>();
+        if (mail != null)
+            mail.SetInfo(tableNo);
+
+        PageMail.Instance.objTableMenu.SetActive(true);
+    }
 		
 	public bool IsLogin() { return isLogin; }
 	public byte GetTableNo() { return this.tableNo; }

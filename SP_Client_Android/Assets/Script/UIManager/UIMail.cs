@@ -14,6 +14,14 @@ public class UIMail : MonoBehaviour {
 
     public void ShowMsgTable()
     {
+        CanvasGroup cgSelect = objSelect.GetComponent<CanvasGroup>();
+        if (cgSelect != null)
+            cgSelect.alpha = 1f;
+
+        CanvasGroup cgCongent = objSelect.GetComponent<CanvasGroup>();
+        if (cgCongent != null)
+            cgCongent.alpha = 0f;
+
         objSelect.SetActive(true);
         objContent.SetActive(false);
     }
