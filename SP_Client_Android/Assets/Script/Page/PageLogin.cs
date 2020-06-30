@@ -213,8 +213,5 @@ public class PageLogin : PageBase {
     {
 		PlayerPrefs.DeleteAll();
     }
-	public void ClickedSave()
-	{
-		PlayerPrefs.Save();
-	}
+
 }
