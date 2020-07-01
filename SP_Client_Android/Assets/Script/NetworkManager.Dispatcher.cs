@@ -95,7 +95,6 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
             Info.AddGameCount(gameCnt, true);
 
 			//추가
-			Info.mailTablePacking = msg.pop_string ();
 
 			int existUser = msg.pop_int32 ();
 			if (existUser == 1) {
