@@ -94,9 +94,10 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
             int gameCnt = msg.pop_int32 ();
             Info.AddGameCount(gameCnt, true);
 
-			//추가
 
-			int existUser = msg.pop_int32 ();
+            //추가
+
+            int existUser = msg.pop_int32 ();
 			if (existUser == 1) {
 				Info.PersonCnt = msg.pop_byte ();
 				Info.ECustomer = (ECustomerType)msg.pop_byte ();
@@ -104,7 +105,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 				string packing = msg.pop_string ();
 				Info.SetLoginedOtherUser (packing);
 
-				SceneChanger.LoadScene ("Main", PageBase.Instance.curBoardObj ());
+                SceneChanger.LoadScene ("Main", PageBase.Instance.curBoardObj ());
 			} else
 				((PageLogin)PageBase.Instance).SuccessLogin ();
 		}
@@ -113,8 +114,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 	void LoginNOT(CPacket msg)
 	{
 		byte tableNo = msg.pop_byte ();
-		PageAdmin.Instance.SetLogin ((int)tableNo);
-	}
+        PageAdmin.Instance.SetLogin((int)tableNo);
+    }
 
     //Admin In 
     void LogoutACK(CPacket msg)
@@ -124,7 +125,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     }
 
     //Other Users 
-	void LogoutNOT(CPacket msg)
+    void LogoutNOT(CPacket msg)
 	{
 		byte tableNo = msg.pop_byte ();
 

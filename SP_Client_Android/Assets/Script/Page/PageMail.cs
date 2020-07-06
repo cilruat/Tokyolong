@@ -68,6 +68,8 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 				SetLogin (int.Parse (tableJson [i].ToString ()));
 
 		}
+
+		Info.adminTablePacking = "";
 	}
 
 

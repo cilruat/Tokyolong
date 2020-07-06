@@ -53,6 +53,20 @@ public class UserMsgInfo
     public string strMsg = "";
 }
 
+public class UserMail
+{
+    public UserMsgInfo info;
+    public string mail;
+
+
+    public UserMail(UserMsgInfo info, string mail)
+    {
+        this.info = info;
+        this.mail = mail;
+    }
+}
+
+
 public partial class Info : MonoBehaviour 
 {
     public static UserInfo myInfo = null;
