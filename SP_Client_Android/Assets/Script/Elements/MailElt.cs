@@ -15,6 +15,7 @@ public class MailElt : MonoBehaviour {
 
 	public Text textTableNo;
 	public Text textMailMsg;
+	public RectTransform rtElt;
 
 	public void SetMailElt(UserMail strMsg)
     {
@@ -27,5 +28,5 @@ public class MailElt : MonoBehaviour {
 
     }
 
-
+	//MailElt는 현시점 완료된듯
 }
