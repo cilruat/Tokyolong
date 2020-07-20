@@ -11,6 +11,8 @@ public class UIMail : MonoBehaviour {
     public GameObject objSelect;
     public GameObject objContent;
 
+    public MailElt mailElt;
+
 
     public void ShowMsgTable()
     {
@@ -36,9 +38,28 @@ public class UIMail : MonoBehaviour {
     {
         UITweenAlpha.Start(objSelect, 1f, 0f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
         UITweenAlpha.Start(objContent, 0f, 1f, TWParam.New(.5f, .5f).Curve(TWCurve.CurveLevel2));
-
-
     }
+
+
+
+    public void AddMailElt(UserMsgInfo userMsgInfo)
+    {
+        MailElt elt = CreateMailElt();
+        elt.SetMailElt(userMsgInfo);
+    }
+
+    MailElt CreateMailElt()
+    {
+        GameObject newObj = Instantiate(mailElt.gameObject) as GameObject;
+        newObj.transform.InitTransform();
+        MailElt newElt = newObj.GetComponent<MailElt>();
+
+        if (newElt == null)
+            return null;
+
+        return newElt;
+    }
+
 
     public void OnShowContent()
     {

@@ -13,14 +13,14 @@ public class MailElt : MonoBehaviour {
 	//[System.Serializable]
 	//여기서 채팅을 제어한다
 
-	public byte TableNo;
-	public string textMailMsg;
+	public Text TableNo;
+	public Text textMailMsg;
 	public RectTransform rtElt;
 
 	public void SetMailElt(UserMsgInfo msgInfo)
 	{
-		TableNo = msgInfo.tableNo;
-		textMailMsg = msgInfo.strMsg;
+		TableNo.text = string.Format("{0:D2}", msgInfo.tableNo);
+		textMailMsg.text = msgInfo.strMsg;
 
 		//MailElt는 현시점 완료된듯
 	}
