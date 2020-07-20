@@ -462,10 +462,10 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
     void MsgSendNOT(CPacket msg)
     {
-        byte tableNo = msg.pop_byte();
-        string strMsg = msg.pop_string();
+        byte tableNo = msg.pop_byte(); //서버꺼
+        string strMsg = msg.pop_string(); //서버꺼 패킷과 구조를 일치
 
-        UserMsgInfo msginfo = new UserMsgInfo();
+        UserMsgInfo msginfo = new UserMsgInfo(); //클래스를 쓰도록하고
         msginfo.tableNo = tableNo;
         msginfo.strMsg = strMsg;
 
