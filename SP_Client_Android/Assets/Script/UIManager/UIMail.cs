@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UIMail : MonoBehaviour {
 
@@ -11,6 +12,8 @@ public class UIMail : MonoBehaviour {
     public GameObject objSelect;
     public GameObject objContent;
 
+
+    public ScrollRect srBoard;
     public MailElt mailElt;
 
 
@@ -51,6 +54,7 @@ public class UIMail : MonoBehaviour {
     MailElt CreateMailElt()
     {
         GameObject newObj = Instantiate(mailElt.gameObject) as GameObject;
+        newObj.transform.SetParent(srBoard.content);
         newObj.transform.InitTransform();
         MailElt newElt = newObj.GetComponent<MailElt>();
 
