@@ -257,7 +257,8 @@ public partial class Info : MonoBehaviour {
 			sceneName == "SRGStage03"				||
 			sceneName == "SGTGame"					||
 			sceneName == "BSKArcade"				||
-			sceneName == "TwoCarsMain"				
+            sceneName == "Mail"                     ||
+            sceneName == "TwoCarsMain"				
 
 			/*
 			sceneName == "EmojiMain"         		||

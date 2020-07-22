@@ -13,6 +13,7 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 	public GameObject page;
 	public RectTransform rtScrollTable;
 
+    public GameObject objBoard;
 	public GameObject prefabTable;
 	public GameObject objTableBoardCover;
 	public GameObject objTableMenu;
@@ -170,5 +171,11 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 
 
 	// AdminTableMenu 와 같이 스크립트 생성해서 함ㅜ 만ㅡㄹ고 여서 REQ 보내기 작ㅓㅂ등을 하
+
+    public void ReturnHome()
+    {
+        SceneChanger.LoadScene("Main", objBoard);
+
+    }
 
 }
