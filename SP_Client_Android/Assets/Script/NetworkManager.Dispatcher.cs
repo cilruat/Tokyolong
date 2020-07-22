@@ -469,21 +469,20 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         msginfo.tableNo = tableNo;
         msginfo.strMsg = strMsg;
 
+        Info.myInfo.listMsgInfo.Add(msginfo);
+
         //UIMANAGER 서 활동할 내용 작업 , Dispatcher.cs 에서 ChatNOT 참조
 
 
-        if(UIManager.Instance.IsActive(eUI.eMail))
+        /*if(UIManager.Instance.IsActive(eUI.eMail))
         {
             GameObject obj = UIManager.Instance.GetUI(eUI.eMail);
             UIMail uiMail = obj.GetComponent<UIMail>();
             uiMail.AddMailElt(msginfo);
         }
-        else 
-            UIManager.Instance.ShowMsg();
+        else */
 
-
-        Info.myInfo.listMsgInfo.Add(msginfo);
-
+        UIManager.Instance.ShowMsg();
     }
 
     void LkeSendACK(CPacket msg)

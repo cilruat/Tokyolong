@@ -27,25 +27,22 @@ public class MailTableMenu : SingletonMonobehaviour<MailTableMenu> {
             objMenu[i].SetActive(true);
             break;
         }
+
+        // 0: 쪽지 1: 좋아요 2: 선물하기 3:조르기
+        switch (state) {
+            case 0:
+                MailMsgWrite write = objMenu[state].GetComponent<MailMsgWrite>();
+                if (write)
+                    write.SetInfo(tableNo);
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+        }
     }
 
-	//정보를 먼저 가지고 와야되는건 Network매니저에서 먼저 작업하고 후처리는 씬에서 작업하고 쏘는듯
-
-	public void OnMailSend()
-	{
-
-		//네트워큰가
-		PageMail.Instance.SendMSG (tableNo);
-		OnClose ();
-	}
-
-
-
-
-
-
-
-
 	public void OnClose() {	gameObject.SetActive (false); }
-
 }

@@ -26,9 +26,7 @@ public class MailMsgWrite : SingletonMonobehaviour<MailMsgWrite> {
 
         string strMsg = input.text;
         NetworkManager.Instance.Message_Send_REQ(tableNo, strMsg);
-        //보내고나면 비운다
         input.text = string.Empty;
-        //메세지 화면을 끈다 추가할것
         OnClose();
     }
 

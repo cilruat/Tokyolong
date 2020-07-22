@@ -68,10 +68,7 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 			JsonData tableJson = JsonMapper.ToObject (tablePacking);
 			for (int i = 0; i < tableJson.Count; i++)
 				SetLogin (int.Parse (tableJson [i].ToString ()));
-
 		}
-
-		Info.adminTablePacking = "";
 	}
 
 

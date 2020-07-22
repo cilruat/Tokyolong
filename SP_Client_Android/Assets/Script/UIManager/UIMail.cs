@@ -8,17 +8,26 @@ public class UIMail : MonoBehaviour {
 
     public eUI uiType;
 
+    public Text[] txtTableNum;
+    public Text txtDesc;
     public CountDown countdown;
     public GameObject objSelect;
     public GameObject objContent;
 
-
-    public ScrollRect srBoard;
-    public MailElt mailElt;
-
+    string desc = "";
 
     public void ShowMsgTable()
     {
+        byte tableNum = 0;
+        if (Info.myInfo.listMsgInfo.Count > 0)
+        {
+            UserMsgInfo info = Info.myInfo.listMsgInfo[Info.myInfo.listMsgInfo.Count - 1];
+            tableNum = info.tableNo;
+            desc = info.strMsg;
+        }
+
+        txtTableNum[0].text = tableNum.ToString();
+        txtTableNum[1].text = tableNum.ToString();
 
         /*
         CanvasGroup cgSelect = objSelect.GetComponent<CanvasGroup>();
@@ -34,41 +43,14 @@ public class UIMail : MonoBehaviour {
 
         objSelect.SetActive(true);
         objContent.SetActive(false);
-    }
+    }    
 
-    //열때 모양을 결정하주는거랑 시간
-    void _ShowContent()
+    public void OnConfirm()
     {
-        UITweenAlpha.Start(objSelect, 1f, 0f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
-        UITweenAlpha.Start(objContent, 0f, 1f, TWParam.New(.5f, .5f).Curve(TWCurve.CurveLevel2));
-    }
+        txtDesc.text = desc;
 
-
-
-    public void AddMailElt(UserMsgInfo userMsgInfo)
-    {
-        MailElt elt = CreateMailElt();
-        elt.SetMailElt(userMsgInfo);
-    }
-
-    MailElt CreateMailElt()
-    {
-        GameObject newObj = Instantiate(mailElt.gameObject) as GameObject;
-        newObj.transform.SetParent(srBoard.content);
-        newObj.transform.InitTransform();
-        MailElt newElt = newObj.GetComponent<MailElt>();
-
-        if (newElt == null)
-            return null;
-
-        return newElt;
-    }
-
-
-    public void OnShowContent()
-    {
-        countdown.Stop();
-        _ShowContent();
+        objSelect.SetActive(false);
+        objContent.SetActive(true);
     }
 
     public void OnClose()
