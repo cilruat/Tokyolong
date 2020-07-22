@@ -16,6 +16,7 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 	public GameObject prefabTable;
 	public GameObject objTableBoardCover;
 	public GameObject objTableMenu;
+	public GameObject objMsgWrite;
 
 
 	UITween tweenUrgency = null;
@@ -26,7 +27,7 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 	void Awake()
 	{
 		//일단 테이블 정보만
-		SetData (Info.adminTablePacking); 
+		SetData (Info.adminTablePacking);
 	}
 
 	void LoadTable()
@@ -160,9 +161,10 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 
 	//메세지와 좋아요등의 함수를 생성 처리할것
 
-	public void SendMSG(int tableNo)
+	public void SendMSG(byte tableNo)
 	{
-
+		objMsgWrite.SetActive(true);
+		MailMsgWrite.Instance.SetInfo(tableNo);
 	}
 
 

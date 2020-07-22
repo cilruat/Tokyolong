@@ -11,8 +11,6 @@ public class AdminMsgWrite : SingletonMonobehaviour<AdminMsgWrite>
     public InputField input;
 
     byte tableNo = 0;
-    string strMsg;
-
 
     public void SetInfo(byte tableNo)
     {

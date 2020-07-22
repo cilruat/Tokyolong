@@ -77,23 +77,25 @@ namespace SP_Server.UserState
                         send_msg = CPacket.create((short)PROTOCOL.LOGIN_ACK);
                         send_msg.push(tableNoStr);
 
+                        List<int> listUserTableNo = new List<int>();
+                        foreach (UserInfo e in owner.mainFrm.dictUserInfo.Values)
+                        {
+                            UserInfo userInfo = e;
+                            if (userInfo.IsAdmin())
+                                continue;
+
+                            listUserTableNo.Add(userInfo.tableNum);
+                        }
+
+                        send_msg.push((JsonMapper.ToJson(listUserTableNo)).ToString());
+
                         if (tableNoStr == "admin")
                         {
-                            List<int> listUserTableNo = new List<int>();
-
-                            foreach (UserInfo e in owner.mainFrm.dictUserInfo.Values)
-                            {
-                                UserInfo userInfo = e;
-                                if (userInfo.IsAdmin())
-                                    continue;
-
-                                listUserTableNo.Add(userInfo.tableNum);
-                            }
+                            
 
                             List<RequestOrder> listReqOrder = owner.mainFrm.listRequestOrder;
                             List<RequestMusicInfo> listReqMusic = owner.mainFrm.listReqMusicInfo;
-
-                            send_msg.push((JsonMapper.ToJson(listUserTableNo)).ToString());
+                            
                             send_msg.push((JsonMapper.ToJson(listReqOrder)).ToString());
                             send_msg.push((JsonMapper.ToJson(listReqMusic)).ToString());
                         }
