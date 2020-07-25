@@ -115,7 +115,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 	{
 		byte tableNo = msg.pop_byte ();
         PageAdmin.Instance.SetLogin((int)tableNo);
-        PageMail.Instance.SetLogin((int)tableNo);
+        //PageMail.Instance.SetLogin((int)tableNo);
     }
 
     //Admin In 
