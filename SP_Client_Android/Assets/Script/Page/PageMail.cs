@@ -69,11 +69,11 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 			for (int i = 0; i < tableJson.Count; i++)
 				SetLogin (int.Parse (tableJson [i].ToString ()));
 		}
-	}
+    }
 
 
-	//테이블 정보가 같으면 로그인 하고, 다르면 넘어가라
-	public void SetLogin(int tableNo)
+    //테이블 정보가 같으면 로그인 하고, 다르면 넘어가라
+    public void SetLogin(int tableNo)
 	{
 		for (int i = 0; i < listTable.Count; i++) 
 		{

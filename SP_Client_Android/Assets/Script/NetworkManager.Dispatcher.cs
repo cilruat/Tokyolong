@@ -114,8 +114,16 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 	void LoginNOT(CPacket msg)
 	{
 		byte tableNo = msg.pop_byte ();
-        PageAdmin.Instance.SetLogin((int)tableNo);
-        //PageMail.Instance.SetLogin((int)tableNo);
+        //간단해, 어드민이면 어드민 정보를 주고, 어드민이 아니면 메일에 정보를 주면돼, 두개다 같이 넘기면 에러뜬다
+        //어디클래스에서 테이블정보를 똑같이  가져오냐..ㅎㄷㄷ 그것만하면되는디
+        //byte로 된거 양식없니
+        if(tableNo == Info.AdminTableNum)
+        {
+            PageAdmin.Instance.SetLogin((int)tableNo);
+        }
+        else
+        PageMail.Instance.SetLogin((int)tableNo);
+
     }
 
     //Admin In 

@@ -146,7 +146,8 @@ public partial class Info : MonoBehaviour {
 
 	public static bool practiceGame = false;
 
-	// user Info
+    // user Info
+    public static int AdminTableNum = 10000;
     public static byte TableNum = 0;
     public static byte PersonCnt = 0;
     public static ECustomerType ECustomer = ECustomerType.MAN;
