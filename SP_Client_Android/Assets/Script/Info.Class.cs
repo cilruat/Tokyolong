@@ -11,9 +11,10 @@ public class UserInfo
 
     public List<byte> listLike = new List<byte>();
     public List<UserMsgInfo> listMsgInfo = new List<UserMsgInfo>();
+    public List<UserLikeInfo> listLikeInfo = new List<UserLikeInfo>();
 
 
-	public ECustomerType eCustomerType { get { return (ECustomerType)customerType; } }
+    public ECustomerType eCustomerType { get { return (ECustomerType)customerType; } }
 
 	public UserInfo (byte tableNo, byte peopleCnt, byte customerType)
 	{
@@ -53,6 +54,10 @@ public class UserMsgInfo
     public string strMsg = "";
 }
 
+public class UserLikeInfo
+{
+    public byte tableNo = 0;
+}
 
 
 public partial class Info : MonoBehaviour 

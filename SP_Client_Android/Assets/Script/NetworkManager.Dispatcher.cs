@@ -114,16 +114,12 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 	void LoginNOT(CPacket msg)
 	{
 		byte tableNo = msg.pop_byte ();
-        //간단해, 어드민이면 어드민 정보를 주고, 어드민이 아니면 메일에 정보를 주면돼, 두개다 같이 넘기면 에러뜬다
-        //어디클래스에서 테이블정보를 똑같이  가져오냐..ㅎㄷㄷ 그것만하면되는디
-        //byte로 된거 양식없니
-        if(tableNo == Info.AdminTableNum)
+        PageAdmin.Instance.SetLogin((int)tableNo);
+        /*if(tableNo == Info.AdminTableNum)
         {
             PageAdmin.Instance.SetLogin((int)tableNo);
         }
-        else
-        PageMail.Instance.SetLogin((int)tableNo);
-
+        else PageMail.Instance.SetLogin((int)tableNo);*/
     }
 
     //Admin In 
@@ -504,7 +500,32 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     void LkeSendNOT(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
-        //UIMANAGER 서 활동할 내용 작업
+        int gameCount = msg.pop_int32();
+
+
+        UserLikeInfo likeinfo = new UserLikeInfo(); //클래스를 쓰도록하고
+        likeinfo.tableNo = tableNo;
+
+        Info.myInfo.listLikeInfo.Add(likeinfo);
+
+        if (gameCount < 0)
+        {
+            Info.AddGameCount(gameCount);
+            if (Info.isCheckScene("Main"))
+                ((PageMain)PageBase.Instance).RefreshGamePlay();
+        }
+        else
+        {
+            Info.AddOrderCount(gameCount);
+            if (Info.isCheckScene("Main"))
+                ((PageMain)PageBase.Instance).StartFlyChance();
+        }
+
+        if (Info.isCheckScene("Game"))
+            ((PageGame)PageBase.Instance).RefreshPlayCnt();
+
+        UIManager.Instance.ShowLike();
+
     }
 
 

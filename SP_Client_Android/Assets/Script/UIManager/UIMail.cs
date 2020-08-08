@@ -61,8 +61,8 @@ public class UIMail : MonoBehaviour {
 
     public void OnGoMailScene()
     {
-        SystemMessage.Instance.Add("다음주에 쪽지기능이 나와요~ 지금은 테스트중입니다");
-        //SceneChanger.LoadScene("Mail", gameObject);
+        //SystemMessage.Instance.Add("다음주에 쪽지기능이 나와요~ 지금은 테스트중입니다");
+        SceneChanger.LoadScene("Mail", gameObject);
     }
 
     public void OnCloseContent()
@@ -70,6 +70,4 @@ public class UIMail : MonoBehaviour {
         UIManager.Instance.Hide(eUI.eMail);
     }
 
-    //코루틴 들어가고 그런거 없이 Content에 내용만 쪽지에 맞게 적용만한다면 완료되는거 같은데 그다음에 리스트에 넣어주고 ++ 해주고
-    //쪽지의 내용을 이제 여기서 뿌려주어야하는데 Distpath에서 어떻게 연결하까
 }

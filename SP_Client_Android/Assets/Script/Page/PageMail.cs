@@ -18,9 +18,11 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 	public GameObject objTableBoardCover;
 	public GameObject objTableMenu;
 	public GameObject objMsgWrite;
+    public GameObject objLike;
 
 
-	UITween tweenUrgency = null;
+
+    UITween tweenUrgency = null;
 
 	List<TableElt> listTable = new List<TableElt>();
 
@@ -33,15 +35,8 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 
 	void LoadTable()
 	{
-		//Instantiate() Destroy() 개념, 실행도중 게임오브젝트 생성, 파괴
-		/*# AS, IS 연산자의 개념
-		부모 클래스를 자식 클래스에 대입하는 경우가 발생하고, 그러한 행위를 도와주는 것이 AS, IS 연산자
-		AS 연산자 : 형변환이 가능하면 형변환을 수행하고, 그렇지 않으면 null 값을 대입
-		IS 연산자 : 형변환이 가능한 여부를 불린형으로 결과값을 반환한다*/
-		
 		for (int i = 0; i < TABLE_NUM; i++) 
 		{
-
 			GameObject obj = Instantiate(prefabTable) as GameObject;
 			obj.SetActive (true);
 
@@ -55,7 +50,6 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 			elt.SetTable (tableNum);
 
 			listTable.Add (elt);
-
 		}
 	}
 
@@ -72,7 +66,6 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
     }
 
 
-    //테이블 정보가 같으면 로그인 하고, 다르면 넘어가라
     public void SetLogin(int tableNo)
 	{
 		for (int i = 0; i < listTable.Count; i++) 
@@ -86,7 +79,6 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 
 	}
 
-	//추가 로그아웃하면 테이블의 좋아요, 쪽지목록, 선물목록, 좋아요 목록 지워야할까
 	public void SetLogout(int tableNo)
 	{
 		StopUrgency (tableNo);
@@ -157,17 +149,22 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 
 	}
 
-	//메세지와 좋아요등의 함수를 생성 처리할것
-
+	//이거없는데 안쓰는거네ㅋㅋㅋ 이런식으로 할수있다 참고할것
 	public void SendMSG(byte tableNo)
 	{
 		objMsgWrite.SetActive(true);
 		MailMsgWrite.Instance.SetInfo(tableNo);
 	}
 
+    public void SendLike(byte tableNo)
+    {
+        objLike.SetActive(true);
+        MailLike.Instance.SetInfo(tableNo);
+    }
 
 
-	// AdminTableMenu 와 같이 스크립트 생성해서 함ㅜ 만ㅡㄹ고 여서 REQ 보내기 작ㅓㅂ등을 하
+
+    // AdminTableMenu 와 같이 스크립트 생성해서 함ㅜ 만ㅡㄹ고 여서 REQ 보내기 작ㅓㅂ등을 하
 
     public void ReturnHome()
     {

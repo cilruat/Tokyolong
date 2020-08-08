@@ -22,9 +22,10 @@ public enum eUI
 	eFirstOrderDesc,
 	eOwnerGame,
 	eOwnerQuiz,
-	eOwnerTrick,
-	eTokyoQuiz,
+    eOwnerTrick     = 15,
+    eTokyoQuiz,
 	eMail,
+    eLike,
 
 	eNone = 100,
 }
@@ -205,6 +206,16 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 		UIMail uiMail = Show(eUI.eMail).GetComponent<UIMail>();
 		uiMail.ShowMsgTable();
 	}
+
+    public void ShowLike()
+    {
+        if (curUI != eUI.eNone && curUI != eUI.eLike)
+            Hide(curUI);
+
+        UILike uiLike = Show(eUI.eLike).GetComponent<UILike>();
+        uiLike.ShowLikeTable();
+
+    }
 
 
     void _ShowBillDetail()

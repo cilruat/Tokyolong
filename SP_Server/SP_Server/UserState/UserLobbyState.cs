@@ -63,16 +63,16 @@ namespace SP_Server.UserState
                                 existUser = true;
                             }                                
 
-                            /*// Admin Send packet
+                            // Admin Send packet
                             if(Frm.GetAdminUser() != null)
                             {
                                 other_msg = CPacket.create((short)PROTOCOL.LOGIN_NOT);
                                 other_msg.push(tableNum);
                                 Frm.GetAdminUser().send(other_msg);
-                            }*/
+                            }
                             
                             //어드민은 10000
-                            for(int i = 0; i< owner.mainFrm.ListUser.Count; i++)
+                            /*for(int i = 0; i< owner.mainFrm.ListUser.Count; i++)
                             {
                                 User other = owner.mainFrm.ListUser[i];
                                 if (other.tableNum <= 0 || other.info == null) //로그인안한상태는 -1, 예외처리
@@ -82,7 +82,7 @@ namespace SP_Server.UserState
                                 other_msg.push(tableNum);
                                 other.send(other_msg);
                                 break;
-                            }
+                            }*/
                         }
 
                         owner.tableNum = tableNum;                        
@@ -616,6 +616,7 @@ namespace SP_Server.UserState
                     case PROTOCOL.LKE_SEND_REQ:
                         tableNo = msg.pop_byte();
                         targetTableNo = msg.pop_byte();
+                        gameCount = msg.pop_int32();
 
                         for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
                         {
@@ -625,6 +626,7 @@ namespace SP_Server.UserState
 
                             other_msg = CPacket.create((short)PROTOCOL.LKE_SEND_NOT);
                             other_msg.push(tableNo);
+                            other_msg.push(gameCount);
 
                             inputTargetUser.send(other_msg);
                             break;

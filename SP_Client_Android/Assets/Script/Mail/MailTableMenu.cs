@@ -36,6 +36,9 @@ public class MailTableMenu : SingletonMonobehaviour<MailTableMenu> {
                     write.SetInfo(tableNo);
                 break;
             case 1:
+                MailLike like = objMenu[state].GetComponent<MailLike>();
+                if (like)
+                    like.SetInfo(tableNo);
                 break;
             case 2:
                 break;

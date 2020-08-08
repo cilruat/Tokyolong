@@ -4,13 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class MailMsgWrite : SingletonMonobehaviour<MailMsgWrite> {
-
+public class MailLike : SingletonMonobehaviour<MailLike>
+{
     public Text table;
-    public Text Msg;
-    public InputField input;
 
     byte tableNo = 0;
+    int gameCount = 1;
 
     public void SetInfo(byte tableNo)
     {
@@ -19,14 +18,10 @@ public class MailMsgWrite : SingletonMonobehaviour<MailMsgWrite> {
 
     }
 
+    //1로 지정되지 않을까 테스트 해봐야한다 무조건 1이될 가능성있음
     public void OnConfirm()
     {
-        if (input.text == string.Empty)
-            return;
-
-        string strMsg = input.text;
-        NetworkManager.Instance.Message_Send_REQ(tableNo, strMsg);
-        input.text = string.Empty;
+        NetworkManager.Instance.Like_Send_REQ(tableNo, gameCount);
         OnClose();
     }
 
@@ -34,4 +29,5 @@ public class MailMsgWrite : SingletonMonobehaviour<MailMsgWrite> {
     {
         gameObject.SetActive(false);
     }
+
 }

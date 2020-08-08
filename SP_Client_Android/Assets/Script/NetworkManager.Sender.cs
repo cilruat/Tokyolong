@@ -210,11 +210,12 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         send(msg);
     }
 
-    public void Like_Send_REQ(byte targetTableNo)
+    public void Like_Send_REQ(byte targetTableNo, int gameCount)
     {
         CPacket msg = CPacket.create((short)PROTOCOL.LKE_SEND_REQ);
         msg.push(Info.TableNum);
         msg.push(targetTableNo);
+        msg.push(gameCount);
 
         send(msg);
 
