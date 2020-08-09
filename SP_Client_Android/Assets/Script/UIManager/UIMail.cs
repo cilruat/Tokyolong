@@ -61,8 +61,8 @@ public class UIMail : MonoBehaviour {
 
     public void OnGoMailScene()
     {
-        //SystemMessage.Instance.Add("다음주에 쪽지기능이 나와요~ 지금은 테스트중입니다");
-        SceneChanger.LoadScene("Mail", gameObject);
+        UIManager.Instance.Hide(eUI.eMail);
+        SceneChanger.LoadScene("Mail", objContent);
     }
 
     public void OnCloseContent()

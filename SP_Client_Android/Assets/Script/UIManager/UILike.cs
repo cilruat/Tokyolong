@@ -24,7 +24,8 @@ public class UILike : MonoBehaviour {
         txtTableNum[0].text = tableNum.ToString();
         //txtTableNum[1].text = tableNum.ToString();
 
-        objSelect.SetActive(true);
+        UITweenAlpha.Start(objSelect, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+        //objSelect.SetActive(true);
     }
 
 
@@ -36,8 +37,9 @@ public class UILike : MonoBehaviour {
 
     public void OnGoMailScene()
     {
-        //SystemMessage.Instance.Add("다음주에 쪽지기능이 나와요~ 지금은 테스트중입니다");
-        SceneChanger.LoadScene("Mail", gameObject);
+        UIManager.Instance.Hide(eUI.eLike);
+        SceneChanger.LoadScene("Mail", objSelect);
+        //SceneManager.LoadScene("Mail");
     }
 
 }

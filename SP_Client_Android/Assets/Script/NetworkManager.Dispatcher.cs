@@ -493,7 +493,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     void LkeSendACK(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
-        SystemMessage.Instance.Add(tableNo.ToString() + "번 테이블에 좋아요해줫어요~♥");
+        SystemMessage.Instance.Add(tableNo.ToString() + "번 테이블에 좋아요했어요~♥");
         //UIMANAGER 끄기
     }
 
