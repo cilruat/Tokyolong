@@ -9,142 +9,147 @@ using UnityEngine.EventSystems;
 using LitJson;
 
 public partial class Info : MonoBehaviour {
-    
-	// Game Info
-	// ---------------------Not Used ---------------------
-	public static int EMOJI_DOWN_THE_HILL_FINISH_POINT = 30;
-	public static int EMOJI_SLIDING_DOWN_FINISH_POINT = 18;
-	public static int RING_DING_DONG_FINISH_POINT = 30;
-	public static int EGG_MON_FINISH_POINT = 20;
-	public static int HAMMER_FINISH_POINT = 60;
-	public static int TWO_CARS_FINISH_POINT = 20;
-	public static int BRIDGES_FINISH_POINT = 20;
-	public static int CRASH_RACING_LIMIT_TIME = 25;
-	public static int CATCH_MOLE_LIMIT_TIME = 30;
-	// ---------------------Not Used ---------------------
 
-	// ------------------Set Difficulty------------------
-	public static int CRASH_CAT_LIMIT_TIME {
-		get{
-			switch ((EDiscount)GameDiscountWon) {
-			case EDiscount.e500won:
-			case EDiscount.e1000won:	return 20;
-			case EDiscount.e2000won:	return 30;
-			case EDiscount.e5000won:	return 40;
-			case EDiscount.eAll:		return 50;
-			default:					return 50;
-			}
-		}
-	}
+    // Game Info
+    // ---------------------Not Used ---------------------
+    public static int EMOJI_DOWN_THE_HILL_FINISH_POINT = 30;
+    public static int EMOJI_SLIDING_DOWN_FINISH_POINT = 18;
+    public static int RING_DING_DONG_FINISH_POINT = 30;
+    public static int EGG_MON_FINISH_POINT = 20;
+    public static int HAMMER_FINISH_POINT = 60;
+    public static int TWO_CARS_FINISH_POINT = 20;
+    public static int BRIDGES_FINISH_POINT = 20;
+    public static int CRASH_RACING_LIMIT_TIME = 25;
+    public static int CATCH_MOLE_LIMIT_TIME = 30;
+    // ---------------------Not Used ---------------------
 
-	public static int FLAPPY_BIRD_LIMIT_TIME {
-		get{
-			switch ((EDiscount)GameDiscountWon) {
-			case EDiscount.e500won:
-			case EDiscount.e1000won:	return 25;
-			case EDiscount.e2000won:	return 40;
-			case EDiscount.e5000won:	return 50;
-			case EDiscount.eAll:		return 60;
-			default:					return 55;
-			}
-		}
-	}
+    // ------------------Set Difficulty------------------
+    public static int CRASH_CAT_LIMIT_TIME {
+        get {
+            switch ((EDiscount)GameDiscountWon) {
+                case EDiscount.e500won:
+                case EDiscount.e1000won: return 20;
+                case EDiscount.e2000won: return 30;
+                case EDiscount.e5000won: return 40;
+                case EDiscount.eAll: return 50;
+                default: return 50;
+            }
+        }
+    }
 
-	public static int PICTURE_PUZZLE_MODE {
-		get{
-			switch ((EDiscount)GameDiscountWon) {
-			case EDiscount.e500won:
-			case EDiscount.e1000won:	return 3;
-			case EDiscount.e2000won:	
-			case EDiscount.e5000won:	return 4;
-			case EDiscount.eAll:		return 5;
-			default:					return 5;
-			}
-		}
-	}
-	public static int PICTURE_PUZZLE_LIMIT_TIME {
-		get{
-			switch ((EDiscount)GameDiscountWon) {
-			case EDiscount.e500won:
-			case EDiscount.e1000won:	
-			case EDiscount.e2000won:	return 20;
-			case EDiscount.e5000won:	return 15;
-			case EDiscount.eAll:		return 10;
-			default:					return 10;
-			}
-		}
-	}
+    public static int FLAPPY_BIRD_LIMIT_TIME {
+        get {
+            switch ((EDiscount)GameDiscountWon) {
+                case EDiscount.e500won:
+                case EDiscount.e1000won: return 25;
+                case EDiscount.e2000won: return 40;
+                case EDiscount.e5000won: return 50;
+                case EDiscount.eAll: return 60;
+                default: return 55;
+            }
+        }
+    }
 
-	public static int PAIR_CARD_MODE {
-		get{
-			switch ((EDiscount)GameDiscountWon) {
-			case EDiscount.e500won:
-			case EDiscount.e1000won:	
-			case EDiscount.e2000won:	return 30;
-			case EDiscount.e5000won:	return 36;
-			case EDiscount.eAll:		return 36;
-			default:					return 30;
-			}
-		}
-	}
-	public static int PAIR_CARD_LIMIT_TIME {
-		get{
-			switch ((EDiscount)GameDiscountWon) {
-			case EDiscount.e500won:
-			case EDiscount.e1000won:	return 20;
-			case EDiscount.e2000won:	
-			case EDiscount.e5000won:	return 15;
-			case EDiscount.eAll:		return 10;
-			default:					return 15;
-			}
-		}
-	}
+    public static int PICTURE_PUZZLE_MODE {
+        get {
+            switch ((EDiscount)GameDiscountWon) {
+                case EDiscount.e500won:
+                case EDiscount.e1000won: return 3;
+                case EDiscount.e2000won:
+                case EDiscount.e5000won: return 4;
+                case EDiscount.eAll: return 5;
+                default: return 5;
+            }
+        }
+    }
+    public static int PICTURE_PUZZLE_LIMIT_TIME {
+        get {
+            switch ((EDiscount)GameDiscountWon) {
+                case EDiscount.e500won:
+                case EDiscount.e1000won:
+                case EDiscount.e2000won: return 20;
+                case EDiscount.e5000won: return 15;
+                case EDiscount.eAll: return 10;
+                default: return 10;
+            }
+        }
+    }
 
-	public static int TOUCH_NUMBER_LIMIT_TIME {
-		get{
-			switch ((EDiscount)GameDiscountWon) {
-			case EDiscount.e500won:
-			case EDiscount.e1000won:	return 8;
-			case EDiscount.e2000won:	
-			case EDiscount.e5000won:	return 5;
-			case EDiscount.eAll:		return 3;
-			default:					return 10;
-			}
-		}
-	}
-	public static int TOUCH_NUMBER_MAX_COUNT {
-		get{
-			switch ((EDiscount)GameDiscountWon) {
-			case EDiscount.e500won:
-			case EDiscount.e1000won:	
-			case EDiscount.e2000won:	return 15;
-			case EDiscount.e5000won:	return 20;
-			case EDiscount.eAll:		return 25;
-			default:					return 25;
-			}
-		}
-	}
+    public static int PAIR_CARD_MODE {
+        get {
+            switch ((EDiscount)GameDiscountWon) {
+                case EDiscount.e500won:
+                case EDiscount.e1000won:
+                case EDiscount.e2000won: return 30;
+                case EDiscount.e5000won: return 36;
+                case EDiscount.eAll: return 36;
+                default: return 30;
+            }
+        }
+    }
+    public static int PAIR_CARD_LIMIT_TIME {
+        get {
+            switch ((EDiscount)GameDiscountWon) {
+                case EDiscount.e500won:
+                case EDiscount.e1000won: return 20;
+                case EDiscount.e2000won:
+                case EDiscount.e5000won: return 15;
+                case EDiscount.eAll: return 10;
+                default: return 15;
+            }
+        }
+    }
 
-	public static int FIND_DIFF_PICTURE_LIMIT_TIME {
-		get{
-			switch ((EDiscount)GameDiscountWon) {
-			case EDiscount.e500won:
-			case EDiscount.e1000won:	return 25;
-			case EDiscount.e2000won:	
-			case EDiscount.e5000won:	return 18;
-			case EDiscount.eAll:		return 15;
-			default:					return 15;
-			}
-		}
-	}
-	// ------------------Set Difficulty------------------
+    public static int TOUCH_NUMBER_LIMIT_TIME {
+        get {
+            switch ((EDiscount)GameDiscountWon) {
+                case EDiscount.e500won:
+                case EDiscount.e1000won: return 8;
+                case EDiscount.e2000won:
+                case EDiscount.e5000won: return 5;
+                case EDiscount.eAll: return 3;
+                default: return 10;
+            }
+        }
+    }
+    public static int TOUCH_NUMBER_MAX_COUNT {
+        get {
+            switch ((EDiscount)GameDiscountWon) {
+                case EDiscount.e500won:
+                case EDiscount.e1000won:
+                case EDiscount.e2000won: return 15;
+                case EDiscount.e5000won: return 20;
+                case EDiscount.eAll: return 25;
+                default: return 25;
+            }
+        }
+    }
 
-	public static int GamePlayCnt = 0;
-	public static short GameDiscountWon = -1;	   
-	public static int GAMEPLAY_MIN_COUNT = 0;
-	public static int GAMEPLAY_MAX_COUNT = 50;
+    public static int FIND_DIFF_PICTURE_LIMIT_TIME {
+        get {
+            switch ((EDiscount)GameDiscountWon) {
+                case EDiscount.e500won:
+                case EDiscount.e1000won: return 25;
+                case EDiscount.e2000won:
+                case EDiscount.e5000won: return 18;
+                case EDiscount.eAll: return 15;
+                default: return 15;
+            }
+        }
+    }
+    // ------------------Set Difficulty------------------
 
-	public static bool practiceGame = false;
+    public static int GamePlayCnt = 0;
+    public static short GameDiscountWon = -1;
+    public static int GAMEPLAY_MIN_COUNT = 0;
+    public static int GAMEPLAY_MAX_COUNT = 50;
+
+    //조르기 수치입력
+    public static int PLZ_MIN_COUNT = 0;
+    public static int PLZ_MAX_COUNT = 20;
+    public static int PlzCount = 0;
+
+    public static bool practiceGame = false;
 
     // user Info
     public static int AdminTableNum = 10000;
@@ -153,59 +158,59 @@ public partial class Info : MonoBehaviour {
     public static ECustomerType ECustomer = ECustomerType.MAN;
 
     public static int orderCnt = 0;
-	public static bool firstOrder = false;
+    public static bool firstOrder = false;
 
     public static bool RunInGameScene = false;
 
-	public static bool CheckOwnerEvt = false;
-	public static eUI OwnerUI = eUI.eOwnerGame;
+    public static bool CheckOwnerEvt = false;
+    public static eUI OwnerUI = eUI.eOwnerGame;
 
-	public static void AnimateChangeObj(CanvasGroup cur, CanvasGroup next, UnityEvent nextCallback = null)
+    public static void AnimateChangeObj(CanvasGroup cur, CanvasGroup next, UnityEvent nextCallback = null)
     {
         UITweenAlpha.Start(cur.gameObject, 0f, TWParam.New(1f).Curve(TWCurve.CurveLevel2));
-		UITween uiNext = UITweenAlpha.Start (next.gameObject, 1f, TWParam.New (1f, 1f).Curve (TWCurve.CurveLevel2));
-		if (nextCallback != null)
-			uiNext.onCompleteFunc = nextCallback;
+        UITween uiNext = UITweenAlpha.Start(next.gameObject, 1f, TWParam.New(1f, 1f).Curve(TWCurve.CurveLevel2));
+        if (nextCallback != null)
+            uiNext.onCompleteFunc = nextCallback;
 
         cur.blocksRaycasts = false;
         next.blocksRaycasts = true;
     }
 
-	public static string MakeMoneyString(int price)
-	{
-		return "￦ " + price.ToString ("N0");
-	}
+    public static string MakeMoneyString(int price)
+    {
+        return "￦ " + price.ToString("N0");
+    }
 
-	public static bool isCheckScene(string scene)
-	{
-		return SceneManager.GetActiveScene ().name == scene;
-	}
+    public static bool isCheckScene(string scene)
+    {
+        return SceneManager.GetActiveScene().name == scene;
+    }
 
-	public static int idRobot = -1;
+    public static int idRobot = -1;
     public static List<int> listGameCnt_Robot = new List<int>();
     public static List<int> listOrderCnt_Robot = new List<int>();
 
-	public static bool IsInputFieldFocused()
-	{
-		GameObject objSelected = EventSystem.current.currentSelectedGameObject;
-		return objSelected != null && objSelected.GetComponent<InputField> () != null;
-	}		
+    public static bool IsInputFieldFocused()
+    {
+        GameObject objSelected = EventSystem.current.currentSelectedGameObject;
+        return objSelected != null && objSelected.GetComponent<InputField>() != null;
+    }
 
-	public static int GetGameCntByMenuType(EMenuType eType)
-	{
-		int cnt = 0;
-		switch (eType) {
-		case EMenuType.eTop:
-		case EMenuType.eEasy:
-		case EMenuType.eIzakaya:
-		case EMenuType.eWomanTarget:
-		case EMenuType.eHappy:
-		case EMenuType.eSoup:			cnt = 2;	break;
-		}
+    public static int GetGameCntByMenuType(EMenuType eType)
+    {
+        int cnt = 0;
+        switch (eType) {
+            case EMenuType.eTop:
+            case EMenuType.eEasy:
+            case EMenuType.eIzakaya:
+            case EMenuType.eWomanTarget:
+            case EMenuType.eHappy:
+            case EMenuType.eSoup: cnt = 2; break;
+        }
 
-		return cnt;
-	}
-
+        return cnt;
+    }
+    //좋아요 참고 바로가기
     public static void AddGameCount()
     {
         GamePlayCnt++;
@@ -229,7 +234,9 @@ public partial class Info : MonoBehaviour {
         orderCnt = Mathf.Clamp(value, GAMEPLAY_MIN_COUNT, GAMEPLAY_MAX_COUNT);
     }
 
-	public static bool CheckGameScene(string sceneName)
+
+
+    public static bool CheckGameScene(string sceneName)
 	{
 		if (sceneName == "PicturePuzzle"     		||
 			sceneName == "PairCards"         		||

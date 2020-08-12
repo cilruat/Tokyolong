@@ -232,12 +232,12 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
     }
 
-    public void Please_Send_REQ(byte targetTableNo, int gameCnt)
+    public void Please_Send_REQ(byte targetTableNo, int plzCount)
     {
         CPacket msg = CPacket.create((short)PROTOCOL.PLZ_SEND_REQ);
         msg.push(Info.TableNum);
         msg.push(targetTableNo);
-        msg.push(gameCnt);
+        msg.push(plzCount);
 
         send(msg);
 

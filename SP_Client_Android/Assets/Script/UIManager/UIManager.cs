@@ -26,6 +26,8 @@ public enum eUI
     eTokyoQuiz,
 	eMail,
     eLike,
+    ePresent,
+    ePlease         = 20,
 
 	eNone = 100,
 }
@@ -217,6 +219,26 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 
     }
 
+    public void ShowPresent()
+    {
+        if (curUI != eUI.eNone && curUI != eUI.ePresent)
+            Hide(curUI);
+
+        UIPresent ePresent = Show(eUI.ePresent).GetComponent<UIPresent>();
+        ePresent.ShowPresentTable();
+
+    }
+
+    public void ShowPlz()
+    {
+        if (curUI != eUI.eNone && curUI != eUI.ePlease)
+            Hide(curUI);
+
+        UIPlz uiPlz = Show(eUI.ePlease).GetComponent<UIPlz>();
+        uiPlz.ShowPlzTable();
+
+
+    }
 
     void _ShowBillDetail()
     {

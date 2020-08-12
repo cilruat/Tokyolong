@@ -640,9 +640,9 @@ namespace SP_Server.UserState
                         tableNo = msg.pop_byte();
                         targetTableNo = msg.pop_byte();
                         gameCount = msg.pop_int32();
-                        //설정변경
-                        owner.mainFrm.AddGameCount((int)tableNo, gameCount);
-                        owner.mainFrm.RefreshGameCount(tableNo, owner.mainFrm.GetGameCount((int)tableNo));
+
+                        //owner.mainFrm.AddGameCount((int)tableNo, gameCount);
+                        //owner.mainFrm.RefreshGameCount(tableNo, owner.mainFrm.GetGameCount((int)tableNo));
 
                         for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
                         {
@@ -652,6 +652,7 @@ namespace SP_Server.UserState
 
                             other_msg = CPacket.create((short)PROTOCOL.PRESENT_SEND_NOT);
                             other_msg.push(tableNo);
+                            other_msg.push(gameCount);
 
                             inputTargetUser.send(other_msg);
                             break;
@@ -659,18 +660,12 @@ namespace SP_Server.UserState
 
                         send_msg = CPacket.create((short)PROTOCOL.PRESENT_SEND_ACK);
                         send_msg.push(targetTableNo);
-                        other_msg.push(gameCount);
                         break;
 
                     case PROTOCOL.PLZ_SEND_REQ:
                         tableNo = msg.pop_byte();
                         targetTableNo = msg.pop_byte();
-                        //숫자값이기 때문에 단순히 int 만 넣으면 되지않나 //기존환경과 다른가
-                        int gameCnt = msg.pop_int32();
-
-                        //설정변경
-                        owner.mainFrm.AddGameCount((int)tableNo, gameCnt);
-                        owner.mainFrm.RefreshGameCount(tableNo, owner.mainFrm.GetGameCount((int)tableNo));
+                        int plzCount = msg.pop_int32();
 
                         for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
                         {
@@ -680,6 +675,7 @@ namespace SP_Server.UserState
 
                             other_msg = CPacket.create((short)PROTOCOL.PLZ_SEND_NOT);
                             other_msg.push(tableNo);
+                            other_msg.push(plzCount);
 
                             inputTargetUser.send(other_msg);
                             break;
@@ -687,7 +683,6 @@ namespace SP_Server.UserState
 
                         send_msg = CPacket.create((short)PROTOCOL.PLZ_SEND_ACK);
                         send_msg.push(targetTableNo);
-                        other_msg.push(gameCnt);
                         break;
 
 

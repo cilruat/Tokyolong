@@ -12,7 +12,8 @@ public class UserInfo
     public List<byte> listLike = new List<byte>();
     public List<UserMsgInfo> listMsgInfo = new List<UserMsgInfo>();
     public List<UserLikeInfo> listLikeInfo = new List<UserLikeInfo>();
-
+    public List<UserPresentInfo> listPresentInfo = new List<UserPresentInfo>();
+    public List<UserPlzInfo> listPlzInfo = new List<UserPlzInfo>();
 
     public ECustomerType eCustomerType { get { return (ECustomerType)customerType; } }
 
@@ -57,6 +58,18 @@ public class UserMsgInfo
 public class UserLikeInfo
 {
     public byte tableNo = 0;
+}
+
+public class UserPresentInfo
+{
+    public byte tableNo = 0;
+    public int plzCount = 0;
+}
+
+public class UserPlzInfo
+{
+    public byte tableNo = 0;
+    public int plzCount = 0;
 }
 
 

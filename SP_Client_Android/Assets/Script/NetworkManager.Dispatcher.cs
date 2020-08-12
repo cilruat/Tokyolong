@@ -460,7 +460,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     void MsgSendACK(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
-        SystemMessage.Instance.Add(tableNo.ToString() + "번 테이블에 성공적으로 쪽지를 보냈습니다");
+        SystemMessage.Instance.Add(tableNo.ToString() + "번 테이블에 성공적으로 [쪽지]를 보냈습니다 ꈍ◡ꈍ");
 
     }
 
@@ -476,24 +476,13 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
         Info.myInfo.listMsgInfo.Add(msginfo);
 
-        //UIMANAGER 서 활동할 내용 작업 , Dispatcher.cs 에서 ChatNOT 참조
-
-
-        /*if(UIManager.Instance.IsActive(eUI.eMail))
-        {
-            GameObject obj = UIManager.Instance.GetUI(eUI.eMail);
-            UIMail uiMail = obj.GetComponent<UIMail>();
-            uiMail.AddMailElt(msginfo);
-        }
-        else */
-
         UIManager.Instance.ShowMsg();
     }
 
     void LkeSendACK(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
-        SystemMessage.Instance.Add(tableNo.ToString() + "번 테이블에 좋아요했어요~♥");
+        SystemMessage.Instance.Add(tableNo.ToString() + "번 테이블에 좋아요 ღ'ᴗ'ღ 했어요~♥");
         //UIMANAGER 끄기
     }
 
@@ -532,8 +521,6 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     void PresentSendACK(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
-        SystemMessage.Instance.Add(tableNo.ToString() + "번 테이블에 할인포인트를 드렷어요~");
-        //UIMANAGER 끄기
     }
 
     void  PresentSendNOT(CPacket msg)
@@ -541,39 +528,57 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         byte tableNo = msg.pop_byte();
         int gameCnt = msg.pop_int32();
 
-        if (gameCnt < 0)
+        //gameCnt == 요청값, GamePlayCnt == 보유값
+        if(Info.GamePlayCnt >= gameCnt)
         {
-            Info.AddGameCount(gameCnt);
-            if (Info.isCheckScene("Main"))
-                ((PageMain)PageBase.Instance).RefreshGamePlay();
+            if (gameCnt < 0)
+            {
+                Info.AddGameCount(gameCnt);
+                if (Info.isCheckScene("Main"))
+                    ((PageMain)PageBase.Instance).RefreshGamePlay();
+            }
+            else
+            {
+                Info.AddOrderCount(gameCnt);
+                if (Info.isCheckScene("Main"))
+                    ((PageMain)PageBase.Instance).StartFlyChance();
+            }
+
+            if (Info.isCheckScene("Game"))
+                ((PageGame)PageBase.Instance).RefreshPlayCnt();
         }
         else
         {
-            Info.AddOrderCount(gameCnt);
-            if (Info.isCheckScene("Main"))
-                ((PageMain)PageBase.Instance).StartFlyChance();
+
         }
 
-        if (Info.isCheckScene("Game"))
-            ((PageGame)PageBase.Instance).RefreshPlayCnt();
+
     }
     //UIMANAGER 서 활동할 내용 작업
 
     void PleaseSendACK(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
-        SystemMessage.Instance.Add(tableNo.ToString() + "번 테이블에 조르기합니다~");
+        SystemMessage.Instance.Add(tableNo.ToString() + "번에게 조르기ƪ(•ε•)∫ ☆완료★ ");
         //UIMANAGER 끄기
     }
 
     void PleaseSendNOT(CPacket msg)
     {
-        byte tableNo = msg.pop_byte();
-        int gameCnt = msg.pop_int32();
+        byte tableNo = msg.pop_byte(); //서버꺼
+        int plzCount = msg.pop_int32(); //서버꺼 패킷과 구조를 일치
+
+        UserPlzInfo plzInfo = new UserPlzInfo(); //새로운걸 만들어야겟군, 클래스 쓰도록한다
+
+        plzInfo.tableNo = tableNo;
+        plzInfo.plzCount = plzCount;
+
+        Info.myInfo.listPlzInfo.Add(plzInfo);
+
+
+        UIManager.Instance.ShowPlz();
 
     }
-    //UIMANAGER 서 활동할 내용 작업
-
 
 }
 

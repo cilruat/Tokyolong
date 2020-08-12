@@ -41,8 +41,14 @@ public class MailTableMenu : SingletonMonobehaviour<MailTableMenu> {
                     like.SetInfo(tableNo);
                 break;
             case 2:
+                MailPresent present = objMenu[state].GetComponent<MailPresent>();
+                if (present)
+                    present.SetInfo(tableNo);
                 break;
             case 3:
+                MailPlz plz = objMenu[state].GetComponent<MailPlz>();
+                if (plz)
+                    plz.SetInfo(tableNo);
                 break;
         }
     }
