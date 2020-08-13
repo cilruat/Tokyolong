@@ -641,8 +641,8 @@ namespace SP_Server.UserState
                         targetTableNo = msg.pop_byte();
                         gameCount = msg.pop_int32();
 
-                        //owner.mainFrm.AddGameCount((int)tableNo, gameCount);
-                        //owner.mainFrm.RefreshGameCount(tableNo, owner.mainFrm.GetGameCount((int)tableNo));
+                        owner.mainFrm.AddGameCount((int)tableNo, gameCount);
+                        owner.mainFrm.RefreshGameCount(tableNo, owner.mainFrm.GetGameCount((int)tableNo));
 
                         for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
                         {

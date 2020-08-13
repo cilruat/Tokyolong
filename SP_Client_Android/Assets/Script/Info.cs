@@ -266,7 +266,8 @@ public partial class Info : MonoBehaviour {
 			sceneName == "SGTGame"					||
 			sceneName == "BSKArcade"				||
             sceneName == "Mail"                     ||
-            sceneName == "TwoCarsMain"				
+            sceneName == "TwoCarsMain"              ||
+            sceneName == "JumperStepUpMain" 
 
 			/*
 			sceneName == "EmojiMain"         		||
@@ -275,7 +276,6 @@ public partial class Info : MonoBehaviour {
 			sceneName == "AvoidGame"         		||
 			sceneName == "AvoidMain"         		||
 			sceneName == "BallDuetMain"				||
-			sceneName == "JumperStepUpMain"			||
 			sceneName == "HammerMain"				||
 			sceneName == "BridgesMain"				||
 			sceneName == "CrashRacingMain"*/
@@ -292,20 +292,20 @@ public partial class Info : MonoBehaviour {
 		case 0:		sceneName = "PicturePuzzle";		break;
 		case 1:		sceneName = "PairCards";			break;
 		case 2:		sceneName = "FlappyBirdMasterMain";	break;
-		case 3:		sceneName = "CrashCatStart";		break;
-		case 4:		sceneName = "TouchNumber";			break;
+		case 3:		sceneName = "CrashCatStart";		break; 
+        case 4:		sceneName = "TouchNumber";			break;
 		case 5:		sceneName = "FindDiffPicture";		break;
-		/*case 6:		sceneName = "EmojiMain";			break;
-		case 7:		sceneName = "Emoji2Main";			break;
-		case 8:		sceneName = "BallDuetMain";			break;
-		case 9:		sceneName = "JumperStepUpMain";		break;
-		case 10:	sceneName = "HammerMain";			break;
-		case 11:	sceneName = "TwoCarsMain";			break;
-		case 12:	sceneName = "BridgesMain";			break;
-		case 13:	sceneName = "CrashRacingMain";		break;*/
-		}
+                /*case 6:		sceneName = "EmojiMain";			break;
+                case 7:		sceneName = "Emoji2Main";			break;
+                case 8:		sceneName = "BallDuetMain";			break;
+                case 9:		sceneName = "JumperStepUpMain";		break;
+                case 10:	sceneName = "HammerMain";			break;
+                case 11:	sceneName = "TwoCarsMain";			break;
+                case 12:	sceneName = "BridgesMain";			break;
+                case 13:	sceneName = "CrashRacingMain";		break;*/
+        }
 
-		SceneChanger.LoadScene (sceneName, obj);
+        SceneChanger.LoadScene (sceneName, obj);
 	}
 
 	public static void AfterDiscountBehavior()
@@ -316,8 +316,8 @@ public partial class Info : MonoBehaviour {
 			PagePicturePuzzle.Instance.ReturnHome ();
 		else if (Info.isCheckScene ("PairCards"))
 			PagePairCards.Instance.ReturnHome ();
-		else if (Info.isCheckScene ("CrashCatMain"))
-			CrashCat.GameManager.instance.ReturnHome ();
+		else if (Info.isCheckScene ("CrashCatMain")) 
+            CrashCat.GameManager.instance.ReturnHome ();
 		else if (Info.isCheckScene ("FlappyBirdMasterMain"))
 			FlappyBirdStyle.FlappyScript.instance.ReturnHome ();
 		else if (Info.isCheckScene ("TouchNumber"))
@@ -326,8 +326,8 @@ public partial class Info : MonoBehaviour {
 			PageFindDiffPicture.Instance.ReturnHome ();
 		else if (Info.isCheckScene ("Trickery"))
 			gamemanager.instance.ReturnHome ();
-			
-		/*else if (Info.isCheckScene ("EmojiMain"))
+
+        /*else if (Info.isCheckScene ("EmojiMain"))
 			Emoji.GameManager.Instance.ReturnHome ();
 		else if (Info.isCheckScene ("Emoji2Main"))
 			Emoji2.GameManager.Instance.ReturnHome ();		
@@ -343,9 +343,9 @@ public partial class Info : MonoBehaviour {
 			Bridges.UIManager.Instance.ReturnHome ();
 		else if (Info.isCheckScene ("CrashRacingMain"))
 			CrashRacing.UIManager.Instance.ReturnHome ();*/
-	}
+    }
 
-	public static int TotalGameCount() { return 6; }
+    public static int TotalGameCount() { return 6; }
 	public static int TotalGameCountWithTokyoLive() { return TotalGameCount () + 1;	}
 
 	public static Color HexToColor(string hex)

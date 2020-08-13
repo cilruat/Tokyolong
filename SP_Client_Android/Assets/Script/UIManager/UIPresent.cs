@@ -10,8 +10,10 @@ public class UIPresent : MonoBehaviour {
     public eUI uiType;
 
     public Text[] txtTableNum;
+    public Text txtPresentCount;
     public CountDown countdown;
     public GameObject objSelect;
+    int presentCount = 0;
 
     public void ShowPresentTable()
     {
@@ -20,9 +22,11 @@ public class UIPresent : MonoBehaviour {
         {
             UserPresentInfo info = Info.myInfo.listPresentInfo[Info.myInfo.listPresentInfo.Count - 1];
             tableNum = info.tableNo;
+            presentCount = info.presentCount;
         }
 
         txtTableNum[0].text = tableNum.ToString();
+        txtPresentCount.text = presentCount.ToString();
 
         UITweenAlpha.Start(objSelect, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
     }

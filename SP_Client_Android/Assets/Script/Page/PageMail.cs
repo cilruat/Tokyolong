@@ -20,18 +20,31 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 	public GameObject objMsgWrite;
     public GameObject objLike;
 
-
+    public RectTransform rtScrollMail;
+    public GameObject prefabMail;
+    public RectTransform rtScrollLike;
+    public GameObject prefabLike;
+    public RectTransform rtScrollPresent;
+    public GameObject prefabPresent;
+    public RectTransform rtScrollPlz;
+    public GameObject prefabPlz;
 
     UITween tweenUrgency = null;
 
 	List<TableElt> listTable = new List<TableElt>();
 
+    List<MailElt> listMailelt = new List<MailElt>();
+    List<LikeElt> listLikeelt = new List<LikeElt>();
+    List<PresentElt> listPresentelt = new List<PresentElt>();
+    List<PlzElt> listPlzelt = new List<PlzElt>();
 
-	void Awake()
+
+    void Awake()
 	{
 		//일단 테이블 정보만
 		SetData (Info.adminTablePacking);
-	}
+        //DontDestroyOnLoad 예외처리까지 해야되
+    }
 
 	void LoadTable()
 	{
@@ -148,23 +161,98 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 		}
 
 	}
-
-	//이거없는데 안쓰는거네ㅋㅋㅋ 이런식으로 할수있다 참고할것
-	public void SendMSG(byte tableNo)
-	{
-		objMsgWrite.SetActive(true);
-		MailMsgWrite.Instance.SetInfo(tableNo);
-	}
-
-    public void SendLike(byte tableNo)
+    public void SetMail(UserMsgInfo info)
     {
-        objLike.SetActive(true);
-        MailLike.Instance.SetInfo(tableNo);
+        MailElt elt = CreateMailElt();
+        elt.SetInfo(info);
+    }
+
+    MailElt CreateMailElt()
+    {
+        GameObject obj = Instantiate(prefabMail) as GameObject;
+        obj.SetActive(true);
+
+        Transform tr = obj.transform;
+        tr.SetParent(rtScrollMail);
+        tr.InitTransform();
+
+        MailElt elt = obj.GetComponent<MailElt>();
+        listMailelt.Add(elt);
+
+        return elt;
+
     }
 
 
 
-    // AdminTableMenu 와 같이 스크립트 생성해서 함ㅜ 만ㅡㄹ고 여서 REQ 보내기 작ㅓㅂ등을 하
+    public void SetLike(UserLikeInfo info)
+    {
+        LikeElt elt = CreateLikeElt();
+        elt.SetInfo(info);
+    }
+
+    LikeElt CreateLikeElt()
+    {
+        GameObject obj = Instantiate(prefabLike) as GameObject;
+        obj.SetActive(true);
+
+        Transform tr = obj.transform;
+        tr.SetParent(rtScrollLike);
+        tr.InitTransform();
+
+        LikeElt elt = obj.GetComponent<LikeElt>();
+        listLikeelt.Add(elt);
+
+        return elt;
+
+    }
+
+    public void SetPresent(UserPresentInfo info)
+    {
+        PresentElt elt = CreatePresentElt();
+        elt.SetInfo(info);
+    }
+
+    PresentElt CreatePresentElt()
+    {
+        GameObject obj = Instantiate(prefabPresent) as GameObject;
+        obj.SetActive(true);
+
+        Transform tr = obj.transform;
+        tr.SetParent(rtScrollPresent);
+        tr.InitTransform();
+
+        PresentElt elt = obj.GetComponent<PresentElt>();
+        listPresentelt.Add(elt);
+
+        return elt;
+
+    }
+
+    public void SetPlz(UserPlzInfo info)
+    {
+        PlzElt elt = CreatePlzElt();
+        elt.SetInfo(info);
+    }
+
+    PlzElt CreatePlzElt()
+    {
+        GameObject obj = Instantiate(prefabPlz) as GameObject;
+        obj.SetActive(true);
+
+        Transform tr = obj.transform;
+        tr.SetParent(rtScrollPlz);
+        tr.InitTransform();
+
+        PlzElt elt = obj.GetComponent<PlzElt>();
+        listPlzelt.Add(elt);
+
+        return elt;
+
+    }
+
+
+
 
     public void ReturnHome()
     {

@@ -87,8 +87,9 @@ public class MailPresent : SingletonMonobehaviour<MailPlz>
         }
         else
         {
-            SystemMessage.Instance.Add("쿠폰보다 많아야 보내드리죵? ƪ(•ε•)∫ 못보내 못보내~");
+            SystemMessage.Instance.Add("가진거보단 많아야 보내드리죵? ƪ(•ε•)∫ 못보내 못보내~");
         }
+        OnClose();
     }
 
     public void OnClose()

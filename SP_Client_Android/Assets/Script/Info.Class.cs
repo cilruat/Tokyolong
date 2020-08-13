@@ -63,7 +63,7 @@ public class UserLikeInfo
 public class UserPresentInfo
 {
     public byte tableNo = 0;
-    public int plzCount = 0;
+    public int presentCount = 0;
 }
 
 public class UserPlzInfo

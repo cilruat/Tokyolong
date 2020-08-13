@@ -475,6 +475,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         msginfo.strMsg = strMsg;
 
         Info.myInfo.listMsgInfo.Add(msginfo);
+        PageMail.Instance.SetMail(msginfo);
 
         UIManager.Instance.ShowMsg();
     }
@@ -496,6 +497,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         likeinfo.tableNo = tableNo;
 
         Info.myInfo.listLikeInfo.Add(likeinfo);
+        PageMail.Instance.SetLike(likeinfo);
 
         if (gameCount < 0)
         {
@@ -528,10 +530,19 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         byte tableNo = msg.pop_byte();
         int gameCnt = msg.pop_int32();
 
+        UserPresentInfo presentInfo = new UserPresentInfo(); //새로운걸 만들어야겟군, 클래스 쓰도록한다
+
+        presentInfo.tableNo = tableNo;
+        presentInfo.presentCount = gameCnt;
+
+        Info.myInfo.listPresentInfo.Add(presentInfo);
+        PageMail.Instance.SetPresent(presentInfo);
+
+
         //gameCnt == 요청값, GamePlayCnt == 보유값
-        if(Info.GamePlayCnt >= gameCnt)
-        {
-            if (gameCnt < 0)
+        //if(Info.GamePlayCnt >= gameCnt)
+        //{
+        if (gameCnt < 0)
             {
                 Info.AddGameCount(gameCnt);
                 if (Info.isCheckScene("Main"))
@@ -546,14 +557,12 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
             if (Info.isCheckScene("Game"))
                 ((PageGame)PageBase.Instance).RefreshPlayCnt();
-        }
-        else
-        {
 
-        }
+            UIManager.Instance.ShowPresent();
 
 
     }
+
     //UIMANAGER 서 활동할 내용 작업
 
     void PleaseSendACK(CPacket msg)
@@ -574,6 +583,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         plzInfo.plzCount = plzCount;
 
         Info.myInfo.listPlzInfo.Add(plzInfo);
+        PageMail.Instance.SetPlz(plzInfo);
+
 
 
         UIManager.Instance.ShowPlz();

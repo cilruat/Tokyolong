@@ -77,6 +77,7 @@ public class MailPlz : SingletonMonobehaviour<MailPlz>
     {
         NetworkManager.Instance.Please_Send_REQ(this.tableNo, this.inputCount);
         _init();
+        OnClose();
     }
 
     public void OnClose()
