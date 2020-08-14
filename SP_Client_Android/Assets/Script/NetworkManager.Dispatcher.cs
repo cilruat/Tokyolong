@@ -113,13 +113,19 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
 	void LoginNOT(CPacket msg)
 	{
+
+
 		byte tableNo = msg.pop_byte ();
-        PageAdmin.Instance.SetLogin((int)tableNo);
-        /*if(tableNo == Info.AdminTableNum)
+        //PageAdmin.Instance.SetLogin((int)tableNo);
+        if (tableNo == Info.AdminTableNum)
         {
             PageAdmin.Instance.SetLogin((int)tableNo);
         }
-        else PageMail.Instance.SetLogin((int)tableNo);*/
+        //예외처리가 안되는거같아서 일케함해보자
+        else if(tableNo != Info.AdminTableNum)
+        {
+            PageMail.Instance.SetLogin((int)tableNo);
+        }
     }
 
     //Admin In 

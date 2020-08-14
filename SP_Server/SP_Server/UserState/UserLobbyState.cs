@@ -64,25 +64,26 @@ namespace SP_Server.UserState
                             }                                
 
                             // Admin Send packet
-                            if(Frm.GetAdminUser() != null)
+                            /*if(Frm.GetAdminUser() != null)
                             {
                                 other_msg = CPacket.create((short)PROTOCOL.LOGIN_NOT);
                                 other_msg.push(tableNum);
                                 Frm.GetAdminUser().send(other_msg);
-                            }
+                            }*/
+
                             
-                            //어드민은 10000
-                            /*for(int i = 0; i< owner.mainFrm.ListUser.Count; i++)
+                            //어드민은 10000, 접속한 모든 유저에게 주기
+                            for(int i = 0; i< owner.mainFrm.ListUser.Count; i++)
                             {
                                 User other = owner.mainFrm.ListUser[i];
-                                if (other.tableNum <= 0 || other.info == null) //로그인안한상태는 -1, 예외처리
+                                if (other.tableNum <= 0 || other.info == null)
                                     continue;
 
                                 other_msg = CPacket.create((short)PROTOCOL.LOGIN_NOT);
                                 other_msg.push(tableNum);
                                 other.send(other_msg);
                                 break;
-                            }*/
+                            }
                         }
 
                         owner.tableNum = tableNum;                        
