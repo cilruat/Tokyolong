@@ -623,6 +623,15 @@ namespace SP_Server.UserState
                         targetTableNo = msg.pop_byte();
                         gameCount = msg.pop_int32();
 
+                        int findIdx = owner.info.sendLikes.FindIndex(x => x == targetTableNo);
+                        if (findIdx == -1)
+                            owner.info.sendLikes.Add(targetTableNo);
+                        else
+                        { 
+                            send_msg = CPacket.create((short)PROTOCOL.FAILED_ALREADY_SEND_LIKE);
+                            break;
+                        }
+
                         for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
                         {
                             User inputTargetUser = owner.mainFrm.ListUser[i];

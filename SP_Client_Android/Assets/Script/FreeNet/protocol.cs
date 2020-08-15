@@ -27,11 +27,12 @@ namespace SP_Server
 		FAILED,
         FAILED_DB,
 		FAILED_NOT_NUMBER,
+        FAILED_ALREADY_SEND_LIKE,
 
         //-------------------------------------
         // 로비 프로토콜.
         //-------------------------------------        
-		LOGOUT_REQ,
+        LOGOUT_REQ,
 		LOGOUT_ACK,
 		LOGOUT_NOT,
 		WAITER_CALL_REQ,

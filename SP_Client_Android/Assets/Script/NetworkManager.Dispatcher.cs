@@ -21,7 +21,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		switch (protocol_id)
 		{
 		case PROTOCOL.FAILED:
-		case PROTOCOL.FAILED_NOT_NUMBER:			Failed (protocol_id);			break;
+		case PROTOCOL.FAILED_NOT_NUMBER:
+        case PROTOCOL.FAILED_ALREADY_SEND_LIKE:     Failed (protocol_id);			break;
 		case PROTOCOL.LOGIN_ACK:					LoginACK (msg);					break;
 		case PROTOCOL.LOGIN_NOT:					LoginNOT (msg);					break;
         case PROTOCOL.LOGOUT_ACK:					LogoutACK (msg);				break;
@@ -74,8 +75,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 	{
 		switch(id)
 		{
-		case PROTOCOL.FAILED:				SystemMessage.Instance.Add ("동작을 실패했어요");		break;
-		case PROTOCOL.FAILED_NOT_NUMBER:	SystemMessage.Instance.Add ("숫자로 입력해주세요");		break;
+		case PROTOCOL.FAILED:				    SystemMessage.Instance.Add ("동작을 실패했어요");		break;
+		case PROTOCOL.FAILED_NOT_NUMBER:	    SystemMessage.Instance.Add ("숫자로 입력해주세요");		break;
+        case PROTOCOL.FAILED_ALREADY_SEND_LIKE: SystemMessage.Instance.Add ("한 테이블에 한번만 보낼 수 있습니다");    break;
 		}
 	}
 

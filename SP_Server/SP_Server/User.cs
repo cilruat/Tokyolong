@@ -21,6 +21,7 @@ namespace SP_Server
         public int discount;        
         public int surpriseCnt;
         public bool firstOrder;
+        public List<int> sendLikes;
 
         public UserInfo()
         {
@@ -32,6 +33,7 @@ namespace SP_Server
             this.discount = 0;            
             this.surpriseCnt = 3;
             this.firstOrder = false;
+            this.sendLikes = new List<int>();
         }
 
         public UserInfo(int tableNum)
@@ -44,6 +46,7 @@ namespace SP_Server
             this.discount = 0;            
             this.surpriseCnt = 3;
             this.firstOrder = false;
+            this.sendLikes = new List<int>();
         }
 
         public UserInfo(int tableNum, byte peopleCnt, byte customerType)
@@ -56,6 +59,7 @@ namespace SP_Server
             this.discount = 0;            
             this.surpriseCnt = 3;
             this.firstOrder = false;
+            this.sendLikes = new List<int>();
         }
 
         public void Copy(UserInfo target, int tableNum)
@@ -76,6 +80,10 @@ namespace SP_Server
             this.discount = target.discount;            
             this.surpriseCnt = target.surpriseCnt;
             this.firstOrder = target.firstOrder;
+
+            this.sendLikes = new List<int>();
+            for (int i = 0; i < target.sendLikes.Count; i++)
+                this.sendLikes.Add(target.sendLikes[i]);
         }
 
         public void SetDiscount(short sType)
