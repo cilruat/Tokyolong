@@ -123,7 +123,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         //예외처리가 안되는거같아서 일케함해보자
         else
         {
-            PageMail.Instance.SetLogin((int)tableNo);
+            if (Info.isCheckScene("Mail"))
+                PageMail.Instance.SetLogin((int)tableNo);
         }
     }
 
