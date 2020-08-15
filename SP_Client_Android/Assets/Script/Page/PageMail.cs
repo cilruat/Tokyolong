@@ -46,7 +46,13 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
         //DontDestroyOnLoad 예외처리까지 해야되
     }
 
-	void LoadTable()
+    void Start()
+    {
+        for (int i = 0; i < Info.myInfo.listMsgInfo.Count; i++)
+            CreateMailElt(Info.myInfo.listMsgInfo[i]);
+    }
+
+    void LoadTable()
 	{
 		for (int i = 0; i < TABLE_NUM; i++) 
 		{
@@ -163,11 +169,10 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 	}
     public void SetMail(UserMsgInfo info)
     {
-        MailElt elt = CreateMailElt();
-        elt.SetInfo(info);
+        CreateMailElt(info);
     }
 
-    MailElt CreateMailElt()
+    void CreateMailElt(UserMsgInfo info)
     {
         GameObject obj = Instantiate(prefabMail) as GameObject;
         obj.SetActive(true);
@@ -177,13 +182,10 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
         tr.InitTransform();
 
         MailElt elt = obj.GetComponent<MailElt>();
+        elt.SetInfo(info);
+
         listMailelt.Add(elt);
-
-        return elt;
-
     }
-
-
 
     public void SetLike(UserLikeInfo info)
     {
