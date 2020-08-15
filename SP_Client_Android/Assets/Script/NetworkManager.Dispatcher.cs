@@ -483,7 +483,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         msginfo.strMsg = strMsg;
 
         Info.myInfo.listMsgInfo.Add(msginfo);
-        PageMail.Instance.SetMail(msginfo);
+
+        if (Info.isCheckScene("Mail"))
+            PageMail.Instance.SetMail(msginfo);
         
         UIManager.Instance.ShowMsg();
     }
