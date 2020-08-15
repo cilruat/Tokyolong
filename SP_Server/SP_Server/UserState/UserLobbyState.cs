@@ -61,28 +61,32 @@ namespace SP_Server.UserState
                             {
                                 owner.info = getUserInfo;
                                 existUser = true;
-                            }                                
+                            }
 
                             // Admin Send packet
-                            /*if(Frm.GetAdminUser() != null)
+                            if(Frm.GetAdminUser() != null)
                             {
                                 other_msg = CPacket.create((short)PROTOCOL.LOGIN_NOT);
                                 other_msg.push(tableNum);
                                 Frm.GetAdminUser().send(other_msg);
-                            }*/
+                            }
 
-                            
+
+                                /*other_msg = CPacket.create((short)PROTOCOL.LOGIN_NOT);
+                                other_msg.push(tableNum);
+                                owner.send(other_msg);*/
+
+
                             //어드민은 10000, 접속한 모든 유저에게 주기
                             for(int i = 0; i< owner.mainFrm.ListUser.Count; i++)
                             {
                                 User other = owner.mainFrm.ListUser[i];
-                                if (other.tableNum <= 0 || other.info == null)
+                                if (other.tableNum <= 0 || other.info == null || other.tableNum == 10000)
                                     continue;
 
                                 other_msg = CPacket.create((short)PROTOCOL.LOGIN_NOT);
                                 other_msg.push(tableNum);
                                 other.send(other_msg);
-                                break;
                             }
                         }
 

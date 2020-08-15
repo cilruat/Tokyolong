@@ -121,8 +121,8 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 	}
 
 
-	//Urgency가 뭐지
-	public void Urgency(int tableNo)
+    //Urgency가 뭐지 ==호출
+    public void Urgency(int tableNo)
 	{
 
 		for (int i = 0; i < listTable.Count; i++) {

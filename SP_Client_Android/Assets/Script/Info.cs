@@ -160,6 +160,7 @@ public partial class Info : MonoBehaviour {
     public static int orderCnt = 0;
     public static bool firstOrder = false;
 
+
     public static bool RunInGameScene = false;
 
     public static bool CheckOwnerEvt = false;
