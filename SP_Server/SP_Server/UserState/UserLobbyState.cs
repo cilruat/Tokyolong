@@ -655,8 +655,9 @@ namespace SP_Server.UserState
                         targetTableNo = msg.pop_byte();
                         gameCount = msg.pop_int32();
 
-                        owner.mainFrm.AddGameCount((int)tableNo, gameCount);
-                        owner.mainFrm.RefreshGameCount(tableNo, owner.mainFrm.GetGameCount((int)tableNo));
+                        owner.mainFrm.AddGameCount((int)tableNo, -gameCount);
+                        int remain_game_cnt = owner.mainFrm.GetGameCount((int)tableNo);
+                        owner.mainFrm.RefreshGameCount(tableNo, remain_game_cnt);
 
                         for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
                         {
@@ -674,6 +675,7 @@ namespace SP_Server.UserState
 
                         send_msg = CPacket.create((short)PROTOCOL.PRESENT_SEND_ACK);
                         send_msg.push(targetTableNo);
+                        send_msg.push(remain_game_cnt);
                         break;
 
                     case PROTOCOL.PLZ_SEND_REQ:

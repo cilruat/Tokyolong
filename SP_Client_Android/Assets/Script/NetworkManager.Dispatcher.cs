@@ -531,6 +531,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     void PresentSendACK(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
+        int game_cnt = msg.pop_int32();
+        Info.AddGameCount(game_cnt, true);
     }
 
     void  PresentSendNOT(CPacket msg)
