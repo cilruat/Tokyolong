@@ -5,6 +5,15 @@ using UnityEngine.UI;
 using LitJson;
 
 public class PageMail : SingletonMonobehaviour<PageMail>{
+
+    [System.Serializable]
+    public class ShowMsg
+    {
+        public GameObject obj;
+        public Text No;
+        public Text Msg;
+    }
+
 	//지역상수설정
 	public const int TABLE_NUM = 30;
 
@@ -28,6 +37,8 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
     public GameObject prefabPresent;
     public RectTransform rtScrollPlz;
     public GameObject prefabPlz;
+
+    public ShowMsg showMsg;
 
     UITween tweenUrgency = null;
 
@@ -152,6 +163,8 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 	}
 
 
+
+
 	public void StopUrgency(int tableNo)
 	{
 		for (int i = 0; i < listTable.Count; i++) {
@@ -256,7 +269,11 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
         listPlzelt.Add(elt);
     }
 
-
+    public void DeleteMailElt(MailElt elt)
+    {
+        listMailelt.Remove(elt);
+        Destroy(elt.gameObject);
+    }
 
 
     public void ReturnHome()

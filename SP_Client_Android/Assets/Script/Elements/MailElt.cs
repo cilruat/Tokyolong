@@ -5,37 +5,44 @@ using UnityEngine.UI;
 
 
 public class MailElt : MonoBehaviour {
-
-
-	public Text[] TableNo;
+    
+	public Text TableNo;
 	public Text strMsg;
 	public Text Desc;
-    public GameObject objMsg;
 
-
-    UserMsgInfo info = null;
+    UserMsgInfo info;
 
 	public void SetInfo(UserMsgInfo info)
 	{
         this.info = info;
-		TableNo[0].text = string.Format("{0:D2}", info.tableNo);
-        TableNo[1].text = string.Format("{0:D2}", info.tableNo);
+		TableNo.text = string.Format("{0:D2}", info.tableNo);
         strMsg.text = info.strMsg;
-	}
+    }
 
     public void OpenMsg()
     {
-        objMsg.SetActive(true);
+        if (!Info.isCheckScene("Mail"))
+            return;
+
+        PageMail.Instance.showMsg.No.text = info.tableNo.ToString();
+        PageMail.Instance.showMsg.Msg.text = info.strMsg;
+        PageMail.Instance.showMsg.obj.SetActive(true);
     }
 
     public void OnClose()
     {
-        objMsg.SetActive(false);
+        if (!Info.isCheckScene("Mail"))
+            return;
+
+        PageMail.Instance.showMsg.obj.SetActive(false);
     }
 
     public void OnDelete()
     {
-        Destroy(gameObject);
+        if (!Info.isCheckScene("Mail"))
+            return;
+
+        PageMail.Instance.DeleteMailElt(this);
     }
 
 }

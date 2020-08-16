@@ -594,7 +594,7 @@ namespace SP_Server.UserState
                         }
 
                         break;
-
+                        
                     case PROTOCOL.MSG_SEND_REQ:
                         tableNo = msg.pop_byte();
                         byte targetTableNo = msg.pop_byte();
