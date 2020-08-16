@@ -28,7 +28,6 @@ public enum eUI
     eLike,
     ePresent,
     ePlease         = 20,
-    eLog,
 
 	eNone = 100,
 }

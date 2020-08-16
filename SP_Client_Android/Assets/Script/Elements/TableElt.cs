@@ -13,7 +13,6 @@ public class TableElt : MonoBehaviour {
 	bool isLogin = false;
 	bool isUrgency = false;
 	byte tableNo = 0;
-    bool isLike = false;
 	UITween tweenUrgency;
 
 	List<short> listDiscount = new List<short>();
@@ -35,16 +34,11 @@ public class TableElt : MonoBehaviour {
 		objCover.SetActive (true);
 	}
 
-    public void Like()
-    {
-        isLike = true;
-    }
 
 	public void Logout()
 	{		
 		isLogin = false;
 		objCover.SetActive (false);
-        isLike = false;
 		StopUrgency ();
 	}
 
@@ -96,7 +90,7 @@ public class TableElt : MonoBehaviour {
 
         if(Info.TableNum == this.tableNo)
         {
-            SystemMessage.Instance.Add("내 테이블입니다.");
+            SystemMessage.Instance.Add("나의 테이블입니다.");
             return;
         }
         
@@ -116,6 +110,5 @@ public class TableElt : MonoBehaviour {
     public bool IsLogin() { return isLogin; }
 	public byte GetTableNo() { return this.tableNo; }
 	public bool GetUrgency() { return isUrgency; }
-    public bool IsLike() { return isLike; }
 
 }

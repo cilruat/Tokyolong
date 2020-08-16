@@ -134,7 +134,15 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     void LogoutACK(CPacket msg)
     {
         byte tableNo = msg.pop_byte ();
-        PageAdmin.Instance.SetLogout ((int)tableNo);
+        if (tableNo == Info.AdminTableNum)
+        {
+            PageAdmin.Instance.SetLogout((int)tableNo);
+        }
+        else //여기서 내가 만약 바탕화면에 나갓다왓는데 내가 꺼져잇다 그럼 여기를 손봐야될걸? 내가 로그아웃된걸 내가 내스스로에게 알릴필요있나?
+        {
+            if (Info.isCheckScene("Mail"))
+                PageMail.Instance.SetLogout((int)tableNo);
+        }
     }
 
     //Other Users 
@@ -150,10 +158,14 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
             SceneChanger.LoadScene ("Login", PageBase.Instance.curBoardObj ());
         }
         else
+        { 
             Info.SetLogoutOtherUser(tableNo);
-	}
+            if (Info.isCheckScene("Mail"))
+            PageMail.Instance.SetLogout((int)tableNo);
+        }
+    }
 
-	void EnterCustormerACK(CPacket msg)
+    void EnterCustormerACK(CPacket msg)
 	{
 		Info.PersonCnt = msg.pop_byte ();
 		Info.ECustomer = (ECustomerType)msg.pop_byte ();
@@ -507,7 +519,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         likeinfo.tableNo = tableNo;
 
         Info.myInfo.listLikeInfo.Add(likeinfo);
-        PageMail.Instance.SetLike(likeinfo);
+
+        if (Info.isCheckScene("Mail"))
+            PageMail.Instance.SetLike(likeinfo);
 
         if (gameCount < 0)
         {
@@ -548,7 +562,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         presentInfo.presentCount = gameCnt;
 
         Info.myInfo.listPresentInfo.Add(presentInfo);
-        PageMail.Instance.SetPresent(presentInfo);
+
+        if (Info.isCheckScene("Mail"))
+            PageMail.Instance.SetPresent(presentInfo);
 
 
         //gameCnt == 요청값, GamePlayCnt == 보유값
@@ -595,7 +611,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         plzInfo.plzCount = plzCount;
 
         Info.myInfo.listPlzInfo.Add(plzInfo);
-        PageMail.Instance.SetPlz(plzInfo);
+
+        if (Info.isCheckScene("Mail"))
+            PageMail.Instance.SetPlz(plzInfo);
 
 
 
