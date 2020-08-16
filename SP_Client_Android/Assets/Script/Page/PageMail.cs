@@ -50,6 +50,15 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
     {
         for (int i = 0; i < Info.myInfo.listMsgInfo.Count; i++)
             CreateMailElt(Info.myInfo.listMsgInfo[i]);
+
+        for (int i = 0; i < Info.myInfo.listLikeInfo.Count; i++)
+            CreateLikeElt(Info.myInfo.listLikeInfo[i]);
+
+        for (int i = 0; i < Info.myInfo.listPresentInfo.Count; i++)
+            CreatePresentElt(Info.myInfo.listPresentInfo[i]);
+
+        for (int i = 0; i < Info.myInfo.listPlzInfo.Count; i++)
+            CreatePlzElt(Info.myInfo.listPlzInfo[i]);
     }
 
     void LoadTable()
@@ -189,11 +198,10 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 
     public void SetLike(UserLikeInfo info)
     {
-        LikeElt elt = CreateLikeElt();
-        elt.SetInfo(info);
+        CreateLikeElt(info);
     }
 
-    LikeElt CreateLikeElt()
+    void CreateLikeElt(UserLikeInfo info)
     {
         GameObject obj = Instantiate(prefabLike) as GameObject;
         obj.SetActive(true);
@@ -203,19 +211,17 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
         tr.InitTransform();
 
         LikeElt elt = obj.GetComponent<LikeElt>();
+        elt.SetInfo(info);
+
         listLikeelt.Add(elt);
-
-        return elt;
-
     }
 
     public void SetPresent(UserPresentInfo info)
     {
-        PresentElt elt = CreatePresentElt();
-        elt.SetInfo(info);
+        CreatePresentElt(info);
     }
 
-    PresentElt CreatePresentElt()
+    void CreatePresentElt(UserPresentInfo info)
     {
         GameObject obj = Instantiate(prefabPresent) as GameObject;
         obj.SetActive(true);
@@ -225,19 +231,17 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
         tr.InitTransform();
 
         PresentElt elt = obj.GetComponent<PresentElt>();
+        elt.SetInfo(info);
+
         listPresentelt.Add(elt);
-
-        return elt;
-
     }
 
     public void SetPlz(UserPlzInfo info)
     {
-        PlzElt elt = CreatePlzElt();
-        elt.SetInfo(info);
+        CreatePlzElt(info);
     }
 
-    PlzElt CreatePlzElt()
+    void CreatePlzElt(UserPlzInfo info)
     {
         GameObject obj = Instantiate(prefabPlz) as GameObject;
         obj.SetActive(true);
@@ -247,10 +251,9 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
         tr.InitTransform();
 
         PlzElt elt = obj.GetComponent<PlzElt>();
+        elt.SetInfo(info);
+
         listPlzelt.Add(elt);
-
-        return elt;
-
     }
 
 
