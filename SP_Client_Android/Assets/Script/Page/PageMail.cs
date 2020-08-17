@@ -38,6 +38,8 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
     public RectTransform rtScrollPlz;
     public GameObject prefabPlz;
 
+    public GameObject SamDuk;
+
     public ShowMsg showMsg;
 
     UITween tweenUrgency = null;
@@ -273,6 +275,40 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
     {
         listMailelt.Remove(elt);
         Destroy(elt.gameObject);
+    }
+
+
+    public void DeletePlzElt(PlzElt elt)
+    {
+        listPlzelt.Remove(elt);
+        Destroy(elt.gameObject);
+    }
+
+    public void DeletePresentElt(PresentElt elt)
+    {
+        listPresentelt.Remove(elt);
+        Destroy(elt.gameObject);
+    }
+
+    public void DeleteLikeElt(LikeElt elt)
+    {
+        listLikeelt.Remove(elt);
+        Destroy(elt.gameObject);
+    }
+
+
+    public void OpenMap()
+    {
+
+        SamDuk.SetActive(true);
+
+    }
+
+    public void CloseMap()
+    {
+
+        SamDuk.SetActive(false);
+
     }
 
 

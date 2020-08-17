@@ -613,7 +613,7 @@ namespace SP_Server.UserState
                             inputTargetUser.send(other_msg);
                             break;
                         }
-
+                        
                         send_msg = CPacket.create((short)PROTOCOL.MSG_SEND_ACK);
                         send_msg.push(targetTableNo);
                         break;

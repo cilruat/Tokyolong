@@ -22,6 +22,9 @@ public class PlzElt : MonoBehaviour {
 
     public void OnDelete()
     {
-        Destroy(gameObject);
+        if (!Info.isCheckScene("Mail"))
+            return;
+
+        PageMail.Instance.DeletePlzElt(this);
     }
 }

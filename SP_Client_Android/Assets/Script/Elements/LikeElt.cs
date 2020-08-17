@@ -26,6 +26,9 @@ public class LikeElt : MonoBehaviour {
 
     public void OnDelete()
     {
-        Destroy(gameObject);
+        if (!Info.isCheckScene("Mail"))
+            return;
+
+        PageMail.Instance.DeleteLikeElt(this);
     }
 }
