@@ -17,6 +17,7 @@ public class ChatBoard : MonoBehaviour
 
 	void Update()
 	{
+        
 		if (Input.GetMouseButton (0)) {			
 			if (Info.IsInputFieldFocused ())
 				keyboard.ShowOnScreenKeyboard ();
