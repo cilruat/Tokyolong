@@ -134,7 +134,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     void LogoutACK(CPacket msg)
     {
         byte tableNo = msg.pop_byte ();
-        if (tableNo == Info.AdminTableNum)
+        PageAdmin.Instance.SetLogout((int)tableNo);
+
+        /*if (tableNo == Info.AdminTableNum)
         {
             PageAdmin.Instance.SetLogout((int)tableNo);
         }
@@ -142,7 +144,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         {
             if (Info.isCheckScene("Mail"))
                 PageMail.Instance.SetLogout((int)tableNo);
-        }
+        }*/
     }
 
     //Other Users 
