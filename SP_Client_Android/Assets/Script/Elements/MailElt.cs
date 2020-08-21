@@ -45,4 +45,5 @@ public class MailElt : MonoBehaviour {
         PageMail.Instance.DeleteMailElt(this);
     }
 
+    public byte GetTableNo() { return info.tableNo; }
 }

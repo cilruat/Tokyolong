@@ -44,8 +44,8 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 
     UITween tweenUrgency = null;
 
-	List<TableElt> listTable = new List<TableElt>();
 
+    List<TableElt> listTable = new List<TableElt>();
     List<MailElt> listMailelt = new List<MailElt>();
     List<LikeElt> listLikeelt = new List<LikeElt>();
     List<PresentElt> listPresentelt = new List<PresentElt>();
@@ -53,11 +53,13 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 
 
     void Awake()
-	{
-		//일단 테이블 정보만
-		SetData (Info.adminTablePacking);
-        //DontDestroyOnLoad 예외처리까지 해야되
+    {
+        LoadTable();
+
+        for (int i = 0; i < Info.listLoginTable.Count; i++)
+            SetLogin(Info.listLoginTable[i]);
     }
+
 
     void Start()
     {
@@ -72,6 +74,7 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 
         for (int i = 0; i < Info.myInfo.listPlzInfo.Count; i++)
             CreatePlzElt(Info.myInfo.listPlzInfo[i]);
+
     }
 
     void LoadTable()
@@ -97,13 +100,6 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 	public void SetData(string tablePacking)
 	{
 		LoadTable ();
-
-		if (string.IsNullOrEmpty (tablePacking) == false) 
-		{
-			JsonData tableJson = JsonMapper.ToObject (tablePacking);
-			for (int i = 0; i < tableJson.Count; i++)
-				SetLogin (int.Parse (tableJson [i].ToString ()));
-		}
     }
 
 
@@ -114,13 +110,13 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 			if (listTable [i].GetTableNo () != tableNo)
 				continue;
 
-			listTable [i].Login ();
+            listTable [i].Login ();
 			break;
 		}
 
 	}
 
-	public void SetLogout(int tableNo)
+    public void SetLogout(int tableNo)
 	{
 		StopUrgency (tableNo);
 
@@ -131,7 +127,6 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 			listTable [i].Logout ();
 			break;
 		}
-
 		//LogOut시 해야할행동들 추가
 	}
 
@@ -148,8 +143,6 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 		return false;
 	}
 
-
-    //Urgency가 뭐지 ==호출
     public void Urgency(int tableNo)
 	{
 
@@ -271,8 +264,21 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
         listPlzelt.Add(elt);
     }
 
+    //리스트에서 int 값을 받아오는데 그 int값이 쫙 나열되어있는 상황이다. NOT이 되어있으면, 
+
+
     public void DeleteMailElt(MailElt elt)
     {
+        for (int i = 0; i < Info.myInfo.listMsgInfo.Count; i++)
+        {
+            UserMsgInfo msg = Info.myInfo.listMsgInfo[i];
+            if (msg.tableNo != elt.GetTableNo())
+                continue;
+
+            Info.myInfo.listMsgInfo.RemoveAt(i);
+            break;
+        }
+
         listMailelt.Remove(elt);
         Destroy(elt.gameObject);
     }
@@ -295,6 +301,8 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
         listLikeelt.Remove(elt);
         Destroy(elt.gameObject);
     }
+
+
 
 
     public void OpenMap()

@@ -15,7 +15,7 @@ public class PageSsul : PageBase {
 	public GameObject objReturnFirst;
 
 
-	CanvasGroup _prevCG;
+    CanvasGroup _prevCG;
 	CanvasGroup _curCG;
 
 	public void Awake ()
@@ -64,5 +64,4 @@ public class PageSsul : PageBase {
 		_ChangeShow (cgFirst);
 		_ChangeReturn (true);
 	}
-
 }

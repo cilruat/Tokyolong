@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using FreeNet;
 using SP_Server;
 using FlappyBirdStyle;
+using LitJson;
 
 public partial class NetworkManager : SingletonMonobehaviour<NetworkManager> 
 {
@@ -96,7 +97,6 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
             int gameCnt = msg.pop_int32 ();
             Info.AddGameCount(gameCnt, true);
 
-
             //추가
 
             int existUser = msg.pop_int32 ();
@@ -110,7 +110,15 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
                 SceneChanger.LoadScene ("Main", PageBase.Instance.curBoardObj ());
 			} else
 				((PageLogin)PageBase.Instance).SuccessLogin ();
-		}
+
+            Info.listLoginTable.Clear();
+            if (string.IsNullOrEmpty(Info.adminTablePacking) == false)
+            {
+                JsonData tableJson = JsonMapper.ToObject(Info.adminTablePacking);
+                for (int i = 0; i < tableJson.Count; i++)
+                    Info.listLoginTable.Add(int.Parse(tableJson[i].ToString()));
+            }
+        }
 	}
 
 	void LoginNOT(CPacket msg)
@@ -120,40 +128,47 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
         //if (tableNo == Info.AdminTableNum)
 
+        int findTableIdx = Info.listLoginTable.FindIndex(x => x == (int)tableNo);
+        if (findTableIdx == -1)
+            Info.listLoginTable.Add((int)tableNo);
+
         if (Info.isCheckScene("Admin"))
         {
             PageAdmin.Instance.SetLogin((int)tableNo);
+            Debug.Log("어드민");
+
         }
-        //예외처리가 안되는거같아서 일케함해보자
+        if (Info.isCheckScene("Mail"))
+        {
+            PageMail.Instance.SetLogin((int)tableNo);
+            Debug.Log("메일");
+        }
         else
         {
-            if (Info.isCheckScene("Mail"))
-                PageMail.Instance.SetLogin((int)tableNo);
-        }
+            Debug.Log("메인화면");
+        }        
     }
 
     //Admin In 
     void LogoutACK(CPacket msg)
     {
         byte tableNo = msg.pop_byte ();
-        //PageAdmin.Instance.SetLogout((int)tableNo);
+        //PageAdmin.Instance.SetLogout((int)tableNo);        
 
         //if (tableNo == Info.AdminTableNum)
         if (Info.isCheckScene("Admin"))
-        {
             PageAdmin.Instance.SetLogout((int)tableNo);
-        }
-        else //여기서 내가 만약 바탕화면에 나갓다왓는데 내가 꺼져잇다 그럼 여기를 손봐야될걸? 내가 로그아웃된걸 내가 내스스로에게 알릴필요있나?
-        {
-            if (Info.isCheckScene("Mail"))
-                PageMail.Instance.SetLogout((int)tableNo);
-        }
+        
     }
 
     //Other Users 
     void LogoutNOT(CPacket msg)
 	{
 		byte tableNo = msg.pop_byte ();
+
+        int findTableIdx = Info.listLoginTable.FindIndex(x => x == (int)tableNo);
+        if (findTableIdx != -1)
+            Info.listLoginTable.RemoveAt(findTableIdx);
 
         if (tableNo == Info.TableNum)
         {
@@ -166,7 +181,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         { 
             Info.SetLogoutOtherUser(tableNo);
             if (Info.isCheckScene("Mail"))
-            PageMail.Instance.SetLogout((int)tableNo);
+                PageMail.Instance.SetLogout((int)tableNo);
         }
     }
 

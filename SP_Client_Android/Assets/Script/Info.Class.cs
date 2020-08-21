@@ -7,9 +7,8 @@ public class UserInfo
 {
     public byte tableNo = 0;
     public byte peopleCnt = 0;
-    public byte customerType = 0;
+    public byte customerType = 0;    
 
-    public List<byte> listLike = new List<byte>();
     public List<UserMsgInfo> listMsgInfo = new List<UserMsgInfo>();
     public List<UserLikeInfo> listLikeInfo = new List<UserLikeInfo>();
     public List<UserPresentInfo> listPresentInfo = new List<UserPresentInfo>();
@@ -83,6 +82,7 @@ public partial class Info : MonoBehaviour
     public static string adminOrderPacking = "";
     public static string adminMusicPacking = "";
 
+    public static List<int> listLoginTable = new List<int>();
 
     public static void Init()
     {
@@ -96,6 +96,7 @@ public partial class Info : MonoBehaviour
         myInfo = null;
         dictUserInfo.Clear();
         dictUserChatInfo.Clear();
+        listLoginTable.Clear();
     }
 
     // About User

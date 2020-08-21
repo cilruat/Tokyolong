@@ -183,6 +183,8 @@ namespace SP_Server.UserState
 
                         // 유저 리스트에 정보 입력하기                        
                         owner.info = new UserInfo(owner.tableNum, peopleCnt, customerType);
+
+                        // **여기부터 시작 , SetUserInfo가 아닌 Frm에서 새로 항목 추가할것 , 저거 써도 되나 모르겟네, 일단
                         owner.mainFrm.SetUserInfo(tableNo, owner.info);
 
                         List<UserInfo> listUserInfo = new List<UserInfo>();
@@ -198,8 +200,11 @@ namespace SP_Server.UserState
 
                             listUserInfo.Add(user.info);
 
+                        // ** 여기까지 적합한 정보를 유저에게 쏘게된다. // 리스트를 만들었고 유저들에게 정보를 쐇어
+
                             if (user.info.tableNum == owner.info.tableNum)
                                 continue;
+
 
                             other_msg = CPacket.create((short)PROTOCOL.ENTER_CUSTOMER_NOT);
                             JsonData loginUser = JsonMapper.ToJson(owner.info);
