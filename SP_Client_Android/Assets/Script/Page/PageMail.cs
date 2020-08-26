@@ -39,6 +39,8 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
     public GameObject prefabPlz;
 
     public GameObject SamDuk;
+    public GameObject Young;
+
 
     public ShowMsg showMsg;
 
@@ -264,13 +266,11 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
         listPlzelt.Add(elt);
     }
 
-    //리스트에서 int 값을 받아오는데 그 int값이 쫙 나열되어있는 상황이다. NOT이 되어있으면, 
-
-
     public void DeleteMailElt(MailElt elt)
     {
         for (int i = 0; i < Info.myInfo.listMsgInfo.Count; i++)
         {
+            //인포에 들어있는 특정한 정보를 꺼낼때 이렇게 쓸것
             UserMsgInfo msg = Info.myInfo.listMsgInfo[i];
             if (msg.tableNo != elt.GetTableNo())
                 continue;
@@ -286,24 +286,57 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 
     public void DeletePlzElt(PlzElt elt)
     {
+        for (int i = 0; i < Info.myInfo.listPlzInfo.Count; i++)
+        {
+            //인포에 들어있는 특정한 정보를 꺼낼때 이렇게 쓸것
+            UserPlzInfo msg = Info.myInfo.listPlzInfo[i];
+            if (msg.tableNo != elt.GetTableNo())
+                continue;
+
+            Info.myInfo.listPlzInfo.RemoveAt(i);
+            break;
+        }
+
         listPlzelt.Remove(elt);
         Destroy(elt.gameObject);
     }
 
     public void DeletePresentElt(PresentElt elt)
     {
+        for (int i = 0; i < Info.myInfo.listPresentInfo.Count; i++)
+        {
+            //인포에 들어있는 특정한 정보를 꺼낼때 이렇게 쓸것
+            UserPresentInfo msg = Info.myInfo.listPresentInfo[i];
+            if (msg.tableNo != elt.GetTableNo())
+                continue;
+
+            Info.myInfo.listPresentInfo.RemoveAt(i);
+            break;
+        }
+
         listPresentelt.Remove(elt);
         Destroy(elt.gameObject);
     }
 
     public void DeleteLikeElt(LikeElt elt)
     {
+        for (int i = 0; i < Info.myInfo.listLikeInfo.Count; i++)
+        {
+            //인포에 들어있는 특정한 정보를 꺼낼때 이렇게 쓸것
+            UserLikeInfo msg = Info.myInfo.listLikeInfo[i];
+            if (msg.tableNo != elt.GetTableNo())
+                continue;
+
+            Info.myInfo.listLikeInfo.RemoveAt(i);
+            break;
+        }
+
         listLikeelt.Remove(elt);
         Destroy(elt.gameObject);
     }
 
 
-
+    //나중에 배열만들어서 정리하자 일단 그냥지금넣기
 
     public void OpenMap()
     {
@@ -318,6 +351,18 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
         SamDuk.SetActive(false);
 
     }
+
+    public void OpenMapYoung()
+    {
+        Young.SetActive(true);
+    }
+
+    public void CloseMapYoung()
+    {
+
+        Young.SetActive(false);
+    }
+
 
 
     public void ReturnHome()

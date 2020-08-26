@@ -31,4 +31,5 @@ public class LikeElt : MonoBehaviour {
 
         PageMail.Instance.DeleteLikeElt(this);
     }
+    public byte GetTableNo() { return info.tableNo; }
 }

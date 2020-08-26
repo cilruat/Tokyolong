@@ -26,4 +26,6 @@ public class PresentElt : MonoBehaviour {
 
         PageMail.Instance.DeletePresentElt(this);
     }
+
+    public byte GetTableNo() { return info.tableNo; }
 }

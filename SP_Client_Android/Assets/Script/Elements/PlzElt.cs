@@ -27,4 +27,5 @@ public class PlzElt : MonoBehaviour {
 
         PageMail.Instance.DeletePlzElt(this);
     }
+    public byte GetTableNo() { return info.tableNo; }
 }
