@@ -21,6 +21,7 @@ public partial class Info : MonoBehaviour {
     public static int BRIDGES_FINISH_POINT = 20;
     public static int CRASH_RACING_LIMIT_TIME = 25;
     public static int CATCH_MOLE_LIMIT_TIME = 30;
+    public static int MULTI_NUMBERTOUCH_LIMIT_NUMBER = 12;
     // ---------------------Not Used ---------------------
 
     // ------------------Set Difficulty------------------
@@ -267,6 +268,7 @@ public partial class Info : MonoBehaviour {
 			sceneName == "BSKArcade"				||
             sceneName == "Mail"                     ||
             sceneName == "TwoCarsMain"              ||
+            sceneName == "Multi_TouchNumber"        ||
             sceneName == "JumperStepUpMain" 
 
 			/*
