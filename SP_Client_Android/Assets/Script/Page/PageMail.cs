@@ -15,7 +15,7 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
     }
 
 	//지역상수설정
-	public const int TABLE_NUM = 30;
+	public const int TABLE_NUM = 32;
 
 	//테이블셋팅부터합니다
 
