@@ -343,7 +343,19 @@ namespace SP_Server.UserState
 
                         tableNo = msg.pop_byte();
                         short discount = msg.pop_int16();
-                        owner.mainFrm.SetDiscount(tableNo, discount);
+
+                        int game_count = 0;
+                        switch(discount)
+                        {
+                            case 500:
+                                game_count = 1;
+                                break;
+                        }
+
+                        owner.mainFrm.AddGameCount(tableNo, game_count);
+                        int remain_cnt = owner.mainFrm.GetGameCount(tableNo);
+
+                        //owner.mainFrm.SetDiscount(tableNo, discount);
 
                         send_msg = CPacket.create((short)PROTOCOL.GAME_DISCOUNT_ACK);
 
@@ -662,13 +674,14 @@ namespace SP_Server.UserState
 
                         owner.mainFrm.AddGameCount((int)tableNo, -gameCount);
                         int remain_game_cnt = owner.mainFrm.GetGameCount((int)tableNo);
-                        owner.mainFrm.RefreshGameCount(tableNo, remain_game_cnt);
-
+                        
                         for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
                         {
                             User inputTargetUser = owner.mainFrm.ListUser[i];
                             if (inputTargetUser.tableNum != (int)targetTableNo)
                                 continue;
+
+                            inputTargetUser.info.AddGameCount(gameCount);
 
                             other_msg = CPacket.create((short)PROTOCOL.PRESENT_SEND_NOT);
                             other_msg.push(tableNo);
