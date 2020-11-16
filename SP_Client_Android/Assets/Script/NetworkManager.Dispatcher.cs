@@ -107,7 +107,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 				string packing = msg.pop_string ();
 				Info.SetLoginedOtherUser (packing);
 
-                SceneChanger.LoadScene ("Main", PageBase.Instance.curBoardObj ());
+                SceneChanger.LoadScene ("Order", PageBase.Instance.curBoardObj ());
 			} else
 				((PageLogin)PageBase.Instance).SuccessLogin ();
 
@@ -193,7 +193,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		string packing = msg.pop_string ();
         Info.SetLoginedOtherUser (packing);
 
-		SceneChanger.LoadScene ("Main", PageBase.Instance.curBoardObj ());
+		SceneChanger.LoadScene ("Order", PageBase.Instance.curBoardObj ());
 	}
 
 	void EnterCustormerNOT(CPacket msg)
