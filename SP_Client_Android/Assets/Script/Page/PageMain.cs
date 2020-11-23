@@ -26,7 +26,8 @@ public class PageMain : PageBase {
 		eSsul,
 		eInssa,
 		eMail,
-	}
+        eSelectGame,
+    }
 
     public CanvasGroup[] cgBoard;
 	public Text txtPlayCnt;
@@ -96,8 +97,9 @@ public class PageMain : PageBase {
 		case EMenu.eSsul:			SceneChanger.LoadScene ("Ssul", curBoardObj ());			break;
 		case EMenu.eInssa:			SceneChanger.LoadScene ("InSsa", curBoardObj ());			break;
 		case EMenu.eMail:			SceneChanger.LoadScene ("Mail", curBoardObj ());			break;
-		}
-	}
+        case EMenu.eSelectGame:     SceneChanger.LoadScene("SelectGame", curBoardObj());        break;
+        }
+    }
 
     public void RefreshGamePlayChance()
     {
