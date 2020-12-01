@@ -26,6 +26,7 @@ public class PageGame : PageBase {
 	public RectTransform[] rtTabletGame;
 	public List<SlotMachineElt> listSlotMachine = new List<SlotMachineElt>();
 	public CountDown countDownGameLoading;
+    public GameObject objHowToUse;
 
 	bool isStopEnable = false;
 	bool clickStop = false;
@@ -358,4 +359,7 @@ public class PageGame : PageBase {
 	}
 
 	public EGameType SelectGameType() { return (EGameType)curGameType; }
+
+
+
 }

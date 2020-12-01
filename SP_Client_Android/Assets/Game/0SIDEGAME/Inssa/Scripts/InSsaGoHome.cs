@@ -5,9 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class InSsaGoHome : MonoBehaviour {
 
-	public void GoHome()
-	{
+    public GameObject objBoard;
 
-		SceneManager.LoadScene ("InSsa");
-	}
+
+    public void GoHome()
+	{
+        SceneChanger.LoadScene("InSsa", objBoard);
+    }
 }
