@@ -22,15 +22,19 @@ public class PageLogin : PageBase {
     byte howMany = 0;
     ECustomerType eType = ECustomerType.MAN;
 
-	protected override void Awake ()
+
+
+
+    protected override void Awake ()
 	{
 		base.boards = this.cgBoards;
 		base.Awake ();
 		base.acFinal = _EnterCustomer;
 		base.acFinalIdx = 2;
 
-		#if UNITY_ANDROID
-		tableNo = PlayerPrefs.GetString ("set_table_no");
+
+#if UNITY_ANDROID
+        tableNo = PlayerPrefs.GetString ("set_table_no");
 		IP = PlayerPrefs.GetString ("set_IP");
 		PORT = PlayerPrefs.GetString ("set_PORT");
 		if (string.IsNullOrEmpty (tableNo) || string.IsNullOrEmpty (IP) || string.IsNullOrEmpty (PORT))
