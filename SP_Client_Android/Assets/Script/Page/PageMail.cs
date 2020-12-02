@@ -15,7 +15,7 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
     }
 
 	//지역상수설정
-	public const int TABLE_NUM = 32;
+	public const int TABLE_NUM = 50;
 
 	//테이블셋팅부터합니다
 
@@ -38,8 +38,6 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
     public RectTransform rtScrollPlz;
     public GameObject prefabPlz;
 
-    public GameObject SamDuk;
-    public GameObject Young;
 
 
     public ShowMsg showMsg;
@@ -83,12 +81,17 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 	{
 		for (int i = 0; i < TABLE_NUM; i++) 
 		{
+            
+            //TABLE_NUM의 숫자만큼 TableElt를 만들어주는 코드입니다
 			GameObject obj = Instantiate(prefabTable) as GameObject;
 			obj.SetActive (true);
+            //
 
+            //tr은 prefabTable의 transform인데 이 tr은 rtScrollTable에 Transform에 위치한다 즉 없어도 된다 
 			Transform tr = obj.transform;
 			tr.SetParent (rtScrollTable);
 			tr.InitTransform ();
+            
 
 			TableElt elt = obj.GetComponent<TableElt> ();
 
@@ -96,8 +99,21 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 			elt.SetTable (tableNum);
 
 			listTable.Add (elt);
-		}
-	}
+            
+
+            /*
+            TableElt elt = listTable[i];
+
+            int tableNum = i;
+            elt.SetTable(tableNum);
+
+            listTable.Add(elt);
+            */
+        }
+
+
+
+    }
 
 	public void SetData(string tablePacking)
 	{
@@ -333,34 +349,6 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 
         listLikeelt.Remove(elt);
         Destroy(elt.gameObject);
-    }
-
-
-    //나중에 배열만들어서 정리하자 일단 그냥지금넣기
-
-    public void OpenMap()
-    {
-
-        SamDuk.SetActive(true);
-
-    }
-
-    public void CloseMap()
-    {
-
-        SamDuk.SetActive(false);
-
-    }
-
-    public void OpenMapYoung()
-    {
-        Young.SetActive(true);
-    }
-
-    public void CloseMapYoung()
-    {
-
-        Young.SetActive(false);
     }
 
 
