@@ -18,7 +18,6 @@ public class PageSelectGame : PageBase  {
 
         txtPlayCnt.text = Info.GamePlayCnt.ToString();
         txtTableNo.text = Info.TableNum.ToString();
-        //Info.practiceGame = false;
     }
 
     public void RefreshGamePlayChance()

@@ -29,13 +29,13 @@ public class PopupSystem : MonoBehaviour {
 
 	public void OnClickCancel()
 	{
-        anim.SetTrigger("close");
         ClosePopup();
 	}
 
 	void ClosePopup()
 	{
-		popup.SetActive (false);
+        //anim.SetTrigger("close");
+        popup.SetActive (false);
 	}
 
 

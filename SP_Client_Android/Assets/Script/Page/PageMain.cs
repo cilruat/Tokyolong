@@ -27,6 +27,7 @@ public class PageMain : PageBase {
 		eInssa,
 		eMail,
         eSelectGame,
+        eCashShop = 20,
     }
 
     public CanvasGroup[] cgBoard;
@@ -99,6 +100,7 @@ public class PageMain : PageBase {
 		case EMenu.eInssa:			SceneChanger.LoadScene ("InSsa", curBoardObj ());			break;
 		case EMenu.eMail:			SceneChanger.LoadScene ("Mail", curBoardObj ());			break;
         case EMenu.eSelectGame:     SceneChanger.LoadScene("SelectGame", curBoardObj());        break;
+        case EMenu.eCashShop:       SceneChanger.LoadScene("CashShop", curBoardObj());          break;
         }
     }
 
