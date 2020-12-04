@@ -39,6 +39,10 @@ public class PageLuckGame : PageBase    {
         SceneChanger.LoadScene("ClawMachine - Red & Blue", objBoard);
     }
 
+    public void OnGoLotto()
+    {
+        SceneChanger.LoadScene("Lotto", objBoard);
+    }
 
     public void OnGoCash()
     {
@@ -54,6 +58,5 @@ public class PageLuckGame : PageBase    {
     {
         SceneChanger.LoadScene("Main", objBoard);
     }
-
 
 }

@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 // Back button. go to title.
 /// </summary>
 public class BackButton : MonoBehaviour {
-	void OnMouseClicked(){
-		Application.LoadLevel(0);
+
+
+	void OnMouseClicked()
+    {
+        SceneManager.LoadScene("LuckGame");
 	}
 
 	void OnMouseRelease(){

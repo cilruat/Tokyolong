@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Manager_ClawMovement : MonoBehaviour {
 
@@ -558,4 +559,17 @@ public class Manager_ClawMovement : MonoBehaviour {
     {
         UI_ClawButtonDown = false;
     }
+
+
+    public void OnGoHome()
+    {
+        SceneManager.LoadScene("Main");
+    }
+
+    public void OnReturn()
+    {
+        SceneManager.LoadScene("LuckGame");
+    }
+
+
 }

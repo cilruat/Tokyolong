@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 // LottoResult Close Button.
@@ -7,7 +8,7 @@ using System.Collections;
 /// </summary>
 public class LottoResultWindow_Close : MonoBehaviour {
 	void OnMouseClicked(){
-		Application.LoadLevel(2);
+        SceneManager.LoadScene("LuckGame");
 	}
 
 	void OnMouseRelease(){
