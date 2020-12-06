@@ -54,13 +54,13 @@ public class LottoResultWindow : MonoBehaviour {
 		int grade = getGrade(_my,_lottery);
 		if(grade == 3){
 			_gold.text = "+ "+3000;
-			PlayerMeta.incraseGold(3000);
+			PlayerMeta.incraseGold(4);
 		}else if(grade == 2){
 			_gold.text = "+ "+500;
-			PlayerMeta.incraseGold(500);
+			PlayerMeta.incraseGold(3);
 		}else if(grade == 1){
 			_gold.text = "+ "+100;
-			PlayerMeta.incraseGold(100);
+			PlayerMeta.incraseGold(2);
 		}else{
 			_gold.text = "+ 0";
 		}

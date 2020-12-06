@@ -6,6 +6,8 @@ using LitJson;
 
 public class TableElt : MonoBehaviour {
 
+    public byte TABLE_NO = 0;
+
 	public Text tableNum;
 	public GameObject objCover;
 	public GameObject objUrgency;
@@ -17,7 +19,13 @@ public class TableElt : MonoBehaviour {
 
 	List<short> listDiscount = new List<short>();
 
-	public void SetTable(int num)
+    private void Start()
+    {
+        if (this.tableNo == 0)
+            SetTable(TABLE_NO);
+    }
+
+    public void SetTable(int num)
 	{
 		this.tableNo = (byte)num;
 		tableNum.text = num.ToString ();

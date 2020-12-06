@@ -54,7 +54,18 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 
     void Awake()
     {
-        LoadTable();
+        //LoadTable();
+
+        for (int i = 0; i < rtScrollTable.childCount; i++)
+        {
+            Transform child = rtScrollTable.GetChild(i);
+            if (child == null)
+                continue;
+
+            TableElt elt = child.GetComponent<TableElt>();
+            if (elt != null)
+                listTable.Add(elt);
+        }
 
         for (int i = 0; i < Info.listLoginTable.Count; i++)
             SetLogin(Info.listLoginTable[i]);

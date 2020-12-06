@@ -449,24 +449,28 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
 	void GameCountInputACK()
 	{
-		AdminTableGameCountInput.Instance.InputComplete ();
+        if (Info.isCheckScene("Admin"))
+            AdminTableGameCountInput.Instance.InputComplete ();
 	}
 
 	void GameCountInputNOT(CPacket msg)
 	{
 		int cnt = msg.pop_int32 ();
-		if (cnt < 0) {
-			Info.AddGameCount(cnt);
-			if (Info.isCheckScene ("Main"))
-				((PageMain)PageBase.Instance).RefreshGamePlay ();			
-		} else {
-			Info.AddOrderCount(cnt);
-			if (Info.isCheckScene ("Main"))
-				((PageMain)PageBase.Instance).StartFlyChance ();			
-		}
+        Info.AddGameCount(cnt);
 
-		if (Info.isCheckScene ("Game"))
-			((PageGame)PageBase.Instance).RefreshPlayCnt ();
+        if (Info.isCheckScene("Main"))
+        {
+            if (cnt < 0)
+                ((PageMain)PageBase.Instance).RefreshGamePlay();
+            else
+                ((PageMain)PageBase.Instance).StartFlyChance();
+        }
+
+        if (Info.isCheckScene("Game"))
+            ((PageGame)PageBase.Instance).RefreshPlayCnt();
+        else if (Info.isCheckScene("Lotto"))
+            PlayerMeta.RefreshGold(cnt);
+
 	}
 
 	void TableMoveACK(CPacket msg)

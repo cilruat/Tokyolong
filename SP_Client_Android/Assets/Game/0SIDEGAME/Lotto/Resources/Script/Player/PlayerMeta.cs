@@ -19,19 +19,35 @@ public class PlayerMeta {
 	public static PlayerMeta Instance(){
 		if(_instance == null){
 			_instance = new PlayerMeta();
+            _instance.Gold = Info.GamePlayCnt;
 		}
 		return _instance;
 	}
 
 	// get more gold!
 	public static void incraseGold(int g){
-		Instance().Gold += g;
+        // loading 화면 켜기
+        // working source
+
+        NetworkManager.Instance.GameCountInput_REQ(Info.TableNum, g);
+
+		//Instance().Gold += g;
 	}
 
 	// lose gold!
 	public static void decreaseGold(int g){
-		Instance().Gold -= g;
+        // loading 화면 켜기
+        // working source
+
+        NetworkManager.Instance.GameCountInput_REQ(Info.TableNum, -g);
+
+        //Instance().Gold -= g;
 	}
+
+    public static void RefreshGold(int g)
+    {
+        Instance().Gold = Info.GamePlayCnt;
+    }
 
 	// now gold
 	public static int GetGold(){

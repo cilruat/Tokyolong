@@ -39,7 +39,7 @@ public class LoadingSceneController : MonoBehaviour {
         float timer = 0f;
         while(!op.isDone)
         {
-            yield return null;
+            
 
             if(op.progress < 0.9f)
             {
@@ -55,6 +55,8 @@ public class LoadingSceneController : MonoBehaviour {
                     yield break;
                 }
             }
+
+            yield return null;
         }
 
     }

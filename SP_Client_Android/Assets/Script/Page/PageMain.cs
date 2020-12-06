@@ -80,8 +80,8 @@ public class PageMain : PageBase {
 		EMenu e = (EMenu)idx;
 		switch (e) {
         case EMenu.eChat:       	SceneChanger.LoadScene("TableStatus", curBoardObj());   	break;
-        case EMenu.eOrder:      	SceneChanger.LoadScene ("Order", curBoardObj());        	break;
-        //case EMenu.eOrder:      	LoadingSceneController.LoadScene ("Order", curBoardObj());        	break;
+        //case EMenu.eOrder:      	SceneChanger.LoadScene ("Order", curBoardObj());        	break;
+        case EMenu.eOrder:      	LoadingSceneController.LoadScene ("Order");        	break;
         case EMenu.eGame:			SceneChanger.LoadScene ("Game", curBoardObj());         	break;
         case EMenu.eService:		SceneChanger.LoadScene ("Service", curBoardObj());			break;
         case EMenu.eShowChat:   	UIManager.Instance.Show(eUI.eChat);                     	break;

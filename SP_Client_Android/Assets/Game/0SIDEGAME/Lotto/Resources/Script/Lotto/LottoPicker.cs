@@ -39,7 +39,7 @@ public class LottoPicker : MonoBehaviour {
 
 	//Play function called from Lotto Select window
 	public void Play(List<int> list){
-		PlayerMeta.decreaseGold(50);
+		PlayerMeta.decreaseGold(1);
 
 		_selectBalls = list;
 		GameObject[] select_go = GameObject.FindGameObjectsWithTag("LottoMyPick");
