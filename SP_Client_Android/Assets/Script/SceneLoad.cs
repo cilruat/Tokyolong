@@ -40,7 +40,7 @@ public class SceneLoad : MonoBehaviour {
             }
             else
             {
-                loadText.text = "로딩 완료! 기다리다 지쳤다!";
+                loadText.text = "완료!! 어여오세요~";
                 //objText[0].SetActive(false);
                 //objText[1].SetActive(true);
             }

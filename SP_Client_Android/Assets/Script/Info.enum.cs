@@ -157,16 +157,16 @@ public enum EPuzzleGame
 
 public enum ETabletGame
 {
-	CrashCat = 0,
+	//CrashCat = 0,
 	FlappyBird,
-    /*SlidingDown,
+    SlidingDown,
     DownHill, 
     RingDingDong,
-	EggMon = 5,
-	Hammer,
-	TwoCars,
+	EggMon,
+	//Hammer,
+	//TwoCars,
 	Bridges,
-	CrashRacing*/
+	CrashRacing
 }
 
 public partial class Info : MonoBehaviour {

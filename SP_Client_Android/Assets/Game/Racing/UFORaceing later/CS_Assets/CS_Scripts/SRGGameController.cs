@@ -126,6 +126,8 @@ namespace SpeederRunGame
 		public Transform gameOverCanvas;
 		public Transform levelUpCanvas;
 
+        public GameObject objLeftBtn, ojbRightBtn;
+
 		[Header("<Sound Options>")]
 		[Tooltip("")]
 		// Various sounds and their source
@@ -291,7 +293,7 @@ namespace SpeederRunGame
 							highSpeedEffect.Stop();
 						}
 					}
-
+                    //기울여서 하는 게임이엇구나 그래서 터치가 안먹혔구나... // 근데 터치 먹힐거같은데,? 터치해보고 테스트해봅시다
 					// If tilt controls are on, calculate the device's tilt direction
 					if( tiltControls == true )
 					{
@@ -364,6 +366,15 @@ namespace SpeederRunGame
 		/// <summary>
 		/// Creates a new enemy at the end of a random lane 
 		/// </summary>
+        /// 
+        //키만들기
+
+        public void ButtonOnLeft()
+        {
+
+        }
+
+
 		public Transform CreateSection( Spawn[] currentSpawnList )
 		{
 			// Create a new random target from the target list

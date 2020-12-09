@@ -333,16 +333,16 @@ public class PageGame : PageBase {
             else if (curGameType == (int)EGameType.eTabletGame)
             {
 				switch ((ETabletGame)curGame) {
-				case ETabletGame.CrashCat:			sceneName = "CrashCatStart";			break;
+				//case ETabletGame.CrashCat:			sceneName = "CrashCatStart";			break;
 				case ETabletGame.FlappyBird:		sceneName = "FlappyBirdMasterMain";		break;
-				/*case ETabletGame.DownHill:			sceneName = "Emoji2Main";				break;
+				case ETabletGame.DownHill:			sceneName = "Emoji2Main";				break;
 				case ETabletGame.SlidingDown:		sceneName = "EmojiMain";				break;
 				case ETabletGame.RingDingDong:		sceneName = "BallDuetMain";				break;
 				case ETabletGame.EggMon:			sceneName = "JumperStepUpMain";			break;
-				case ETabletGame.Hammer:			sceneName = "HammerMain";				break;
-				case ETabletGame.TwoCars:			sceneName = "TwoCarsMain";				break;
+				//case ETabletGame.Hammer:			sceneName = "HammerMain";				break;
+				//case ETabletGame.TwoCars:			sceneName = "TwoCarsMain";				break;
 				case ETabletGame.Bridges:			sceneName = "BridgesMain";				break;
-				case ETabletGame.CrashRacing:		sceneName = "CrashRacingMain";			break;*/
+				case ETabletGame.CrashRacing:		sceneName = "CrashRacingMain";			break;
 				}
             }
 

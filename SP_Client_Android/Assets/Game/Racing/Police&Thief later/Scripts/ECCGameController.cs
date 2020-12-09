@@ -207,7 +207,7 @@ namespace EndlessCarChase
                     }
                 }
                 else
-                {
+                {   // 이것도 기본적으로 그럼 이동이 가능하다는 말이네
                     // If there is a player object, move it forward and turn it in the correct direction
                     if (playerObject)
                     {
