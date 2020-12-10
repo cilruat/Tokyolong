@@ -38,11 +38,9 @@ public class PlayerMeta {
 	public static void decreaseGold(int g){
         // loading 화면 켜기
         // working source
-
         NetworkManager.Instance.GameCountInput_REQ(Info.TableNum, -g);
-
         //Instance().Gold -= g;
-	}
+    }
 
     public static void RefreshGold(int g)
     {

@@ -17,8 +17,9 @@ public class PrizeCatcher_ClawMachine : MonoBehaviour {
             coinExplosion.Play();
 
             // Add the coins
-            managerClawMachine.playerCoins += other.GetComponent<Item_ClawMachine>().value;
-                     
+            //managerClawMachine.playerCoins += other.GetComponent<Item_ClawMachine>().value;
+            NetworkManager.Instance.GameCountInput_REQ(Info.TableNum, other.GetComponent<Item_ClawMachine>().value);
+
             // Destroy the prize
             Destroy(other.gameObject);
         }

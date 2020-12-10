@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class JjangGameBbo : MonoBehaviour {
+public class JjangGameBbo : SingletonMonobehaviour<JjangGameBbo>
+{
 
     public SpriteRenderer RSPSR;
     public Sprite[] RSPSprites;
@@ -12,29 +13,43 @@ public class JjangGameBbo : MonoBehaviour {
     public GameObject InsertBtn, Blind;
     public Text LogText, CoinText;
 
+    public GameObject PanelNoCoin;
+
     int rsp, input = -1; // 0바위, 1가위, 2보
     int rouletteNum, myCoin = 1;
     int[] rouletteCoins = new int[12] { 1, 2, 2, 1, 2, 5, 1, 2, 2, 1, 2, 2};
 
 
-    //Cnt를 내가 서버에 얼마가지고 있다 정보와 값보다 적으면 시도할수 없는 시스템메세지를 넣으면 되겠다
+    private void Start()
+    {
+        PanelNoCoin.SetActive(false);
+    }
 
     public void Insert()
     {
-        Blind.SetActive(false);
-        rsp = 0;
-        input = -1;
-        rouletteNum = 0;
-        for (int i = 0; i < Roullettes.Length; i++)
-            Roullettes[i].SetActive(false);
+        if (Info.GamePlayCnt >= 1)
+        {
+            Blind.SetActive(false);
+            rsp = 0;
+            input = -1;
+            rouletteNum = 0;
+            for (int i = 0; i < Roullettes.Length; i++)
+                Roullettes[i].SetActive(false);
 
-        StartCoroutine(RSPLoop());
+            StartCoroutine(RSPLoop());
+        }
+        else
+        {
+            InsertBtn.SetActive(true);
+        }
     }
 
     void End()
     {
         InsertBtn.SetActive(true);
-        CoinText.gameObject.SetActive(true);
+        //CoinText.gameObject.SetActive(true);
+        //Refresh해주면 좋을텐데
+        ShowCoin();
     }
 
     IEnumerator ShowLog(string log)
@@ -44,15 +59,31 @@ public class JjangGameBbo : MonoBehaviour {
         LogText.text = "";
     }
 
-    void ShowCoin()
+    public void ShowCoin()
     {
-        CoinText.text = myCoin.ToString();
+        //CoinText.text = myCoin.ToString();
+        //myCoin = Info.GamePlayCnt;
+        //myCoin = Info.GamePlayCnt;
+
+        CoinText.text = Info.GamePlayCnt.ToString();
     }
 
     public void MinusCoin()
     {
-        if (myCoin > 1) --myCoin;
-        ShowCoin();
+        if (Info.GamePlayCnt >= 1)
+        {
+            NetworkManager.Instance.GameCountInput_REQ(Info.TableNum, -1);
+            ShowCoin();
+        }
+        else
+        {
+            PanelNoCoin.SetActive(true);
+        }
+    }
+
+    public void ClosePanelBtn()
+    {
+        PanelNoCoin.SetActive(false);
     }
 
 
@@ -114,7 +145,8 @@ public class JjangGameBbo : MonoBehaviour {
         }
 
         int curCoin = rouletteCoins[rouletteNum];
-        myCoin += curCoin;
+        //myCoin += curCoin;
+        NetworkManager.Instance.GameCountInput_REQ(Info.TableNum, +curCoin);
         ShowCoin();
         StartCoroutine(ShowLog(curCoin + " 얻었다"));
         End();

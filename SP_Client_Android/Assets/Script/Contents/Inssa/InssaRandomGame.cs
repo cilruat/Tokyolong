@@ -8,6 +8,8 @@ public class InssaRandomGame : MonoBehaviour {
 
 	public Animator anim;
 	public bool PlayAnim = false;
+
+
 	System.Random InssaRandomizer = new System.Random(); //여기 클래스에서 랜덤 선언?
 	Transform RandomPanel;
 

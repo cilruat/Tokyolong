@@ -7,8 +7,9 @@ using UnityEngine.SceneManagement;
 public class Manager_ClawMovement : MonoBehaviour {
 
     [Header("Player Settings")]
-    public bool freePlay = true;
+    public bool freePlay = false;
     public int playerCoins = 10;
+    public int spendCoin = 2;
 
     [Header("UI Settings")]
     public Text coinsTextLabel;
@@ -130,7 +131,9 @@ public class Manager_ClawMovement : MonoBehaviour {
 
         // Update the UI text label
         coinsTextLabel.text = playerCoins.ToString();
-	}
+        playerCoins = Info.GamePlayCnt;
+
+    }
 
     void FixedUpdate()
     {
@@ -197,10 +200,11 @@ public class Manager_ClawMovement : MonoBehaviour {
             else if (!freePlay)
             {
                 // Make sure the player has coins
-                if (playerCoins > 0)
+                if (playerCoins > 1)
                 {
-                    playerCoins--;  // Remove one coin
-
+                    //playerCoins--;  // Remove one coin
+                    int curCoin = 2;
+                    NetworkManager.Instance.GameCountInput_REQ(Info.TableNum, -curCoin);
                     // Drop our claw
                     StartCoroutine(dropClaw());
 
@@ -571,5 +575,9 @@ public class Manager_ClawMovement : MonoBehaviour {
         SceneManager.LoadScene("LuckGame");
     }
 
+    public void ClosePopUp()
+    {
+        UI_OutOfCoinsPopup.SetActive(false);
+    }
 
 }

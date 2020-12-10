@@ -10,10 +10,7 @@ public class Gatcha : MonoBehaviour {
 public GameObject objBoard;
 public Text Text;
 public GameObject objReSetBtn;
-public GameObject FingerClap;
-
-
-
+//public GameObject FingerClap;
 
     public List<string> GachaList = new List<string>();
 
@@ -21,13 +18,12 @@ public GameObject FingerClap;
     private void Start()
     {
         objReSetBtn.SetActive(false);
-        FingerClap.SetActive(true);
-
     }
 
 
     public void Gacha()
     {
+
         for (int i = 0; i < 1; i++)
         {
             if(GachaList.Count != 0)
@@ -40,10 +36,10 @@ public GameObject FingerClap;
             else
             {
                 objReSetBtn.SetActive(true);
-                FingerClap.SetActive(false);
             }
         }
     }
+
 
     public void Reset()
     {
@@ -54,5 +50,4 @@ public GameObject FingerClap;
     {
         SceneChanger.LoadScene("InSsa", objBoard);
     }
-
 }

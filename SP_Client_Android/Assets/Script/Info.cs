@@ -12,17 +12,113 @@ public partial class Info : MonoBehaviour {
 
     // Game Info
     // ---------------------Not Used ---------------------
-    public static int EMOJI_DOWN_THE_HILL_FINISH_POINT = 30;
-    public static int EMOJI_SLIDING_DOWN_FINISH_POINT = 18;
-    public static int RING_DING_DONG_FINISH_POINT = 30;
-    public static int EGG_MON_FINISH_POINT = 20;
+    //public static int EMOJI_DOWN_THE_HILL_FINISH_POINT = 30;
+    //public static int EMOJI_SLIDING_DOWN_FINISH_POINT = 18;
+    //public static int RING_DING_DONG_FINISH_POINT = 30;
+    //public static int EGG_MON_FINISH_POINT = 20;
     public static int HAMMER_FINISH_POINT = 60;
     public static int TWO_CARS_FINISH_POINT = 20;
-    public static int BRIDGES_FINISH_POINT = 20;
-    public static int CRASH_RACING_LIMIT_TIME = 25;
+    //public static int BRIDGES_FINISH_POINT = 20;
+    //public static int CRASH_RACING_LIMIT_TIME = 25;
     public static int CATCH_MOLE_LIMIT_TIME = 30;
     public static int MULTI_NUMBERTOUCH_LIMIT_NUMBER = 12;
     // ---------------------Not Used ---------------------
+    public static int EMOJI_DOWN_THE_HILL_FINISH_POINT
+    {
+        get
+        {
+            switch ((EDiscount)GameDiscountWon)
+            {
+                case EDiscount.e500won:
+                case EDiscount.e1000won: return 30;
+                case EDiscount.e2000won: return 40;
+                case EDiscount.e5000won: return 50;
+                case EDiscount.eAll: return 60;
+                default: return 30;
+            }
+        }
+    }
+
+    public static int EMOJI_SLIDING_DOWN_FINISH_POINT
+    {
+        get
+        {
+            switch ((EDiscount)GameDiscountWon)
+            {
+                case EDiscount.e500won:
+                case EDiscount.e1000won: return 25;
+                case EDiscount.e2000won: return 30;
+                case EDiscount.e5000won: return 40;
+                case EDiscount.eAll: return 50;
+                default: return 20;
+            }
+        }
+    }
+
+    public static int RING_DING_DONG_FINISH_POINT
+    {
+        get
+        {
+            switch ((EDiscount)GameDiscountWon)
+            {
+                case EDiscount.e500won:
+                case EDiscount.e1000won: return 25;
+                case EDiscount.e2000won: return 30;
+                case EDiscount.e5000won: return 40;
+                case EDiscount.eAll: return 50;
+                default: return 20;
+            }
+        }
+    }
+
+    public static int EGG_MON_FINISH_POINT
+    {
+        get
+        {
+            switch ((EDiscount)GameDiscountWon)
+            {
+                case EDiscount.e500won:
+                case EDiscount.e1000won: return 25;
+                case EDiscount.e2000won: return 30;
+                case EDiscount.e5000won: return 40;
+                case EDiscount.eAll: return 50;
+                default: return 20;
+            }
+        }
+    }
+
+    public static int BRIDGES_FINISH_POINT
+    {
+        get
+        {
+            switch ((EDiscount)GameDiscountWon)
+            {
+                case EDiscount.e500won:
+                case EDiscount.e1000won: return 30;
+                case EDiscount.e2000won: return 40;
+                case EDiscount.e5000won: return 50;
+                case EDiscount.eAll: return 60;
+                default: return 20;
+            }
+        }
+    }
+
+    public static int CRASH_RACING_LIMIT_TIME
+    {
+        get
+        {
+            switch ((EDiscount)GameDiscountWon)
+            {
+                case EDiscount.e500won:
+                case EDiscount.e1000won: return 30;
+                case EDiscount.e2000won: return 40;
+                case EDiscount.e5000won: return 50;
+                case EDiscount.eAll: return 60;
+                default: return 20;
+            }
+        }
+    }
+
 
     // ------------------Set Difficulty------------------
     public static int CRASH_CAT_LIMIT_TIME {
@@ -275,7 +371,7 @@ public partial class Info : MonoBehaviour {
             sceneName == "Lotto"                    ||
             sceneName == "JJangGameBbo"             ||
             sceneName == "ClawMachine - Red & Blue" ||
-
+            sceneName == "kickTheBuddy"             ||
 
             sceneName == "EmojiMain"         		||
 			sceneName == "Emoji2Main"        		||

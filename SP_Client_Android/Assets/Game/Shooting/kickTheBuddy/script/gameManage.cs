@@ -41,8 +41,6 @@ namespace KickTheBuddy
 
             //btn.SetActive (false);
             coinCount = PlayerPrefs.GetInt("coin");
-            //coinCount = 0;
-
             coinText.text = "" + coinCount;
             this.GetComponent<control>().atkObj = atkObj;
             //Create a weapon button

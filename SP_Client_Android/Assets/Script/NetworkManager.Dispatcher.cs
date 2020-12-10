@@ -470,10 +470,11 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
             ((PageGame)PageBase.Instance).RefreshPlayCnt();
         else if (Info.isCheckScene("Lotto"))
             PlayerMeta.RefreshGold(cnt);
+        else if (Info.isCheckScene("JJangGameBbo"))
+            JjangGameBbo.Instance.ShowCoin();
+    }
 
-	}
-
-	void TableMoveACK(CPacket msg)
+    void TableMoveACK(CPacket msg)
 	{
 		byte tableNo = msg.pop_byte ();
 		AdminTableMove.Instance.MoveComplete ();
