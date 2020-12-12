@@ -332,7 +332,7 @@ public partial class Info : MonoBehaviour {
     }
 
 
-
+    //찾아오기 게임씬
     public static bool CheckGameScene(string sceneName)
 	{
 		if (sceneName == "PicturePuzzle"     		||
@@ -367,6 +367,7 @@ public partial class Info : MonoBehaviour {
             sceneName == "Multi_TouchNumber"        ||
             sceneName == "JumperStepUpMain"         ||
             sceneName == "InssaFingerClap"          ||
+            sceneName == "InssaWithOneMouth"        ||
 
             sceneName == "Lotto"                    ||
             sceneName == "JJangGameBbo"             ||

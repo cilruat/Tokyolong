@@ -15,7 +15,7 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
     }
 
 	//지역상수설정
-	public const int TABLE_NUM = 50;
+	//public const int TABLE_NUM = 50;
 
 	//테이블셋팅부터합니다
 
@@ -87,18 +87,14 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
             CreatePlzElt(Info.myInfo.listPlzInfo[i]);
 
     }
-
+    /*
     void LoadTable()
 	{
 		for (int i = 0; i < TABLE_NUM; i++) 
 		{
-            
-            //TABLE_NUM의 숫자만큼 TableElt를 만들어주는 코드입니다
 			GameObject obj = Instantiate(prefabTable) as GameObject;
 			obj.SetActive (true);
-            //
 
-            //tr은 prefabTable의 transform인데 이 tr은 rtScrollTable에 Transform에 위치한다 즉 없어도 된다 
 			Transform tr = obj.transform;
 			tr.SetParent (rtScrollTable);
 			tr.InitTransform ();
@@ -110,25 +106,13 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 			elt.SetTable (tableNum);
 
 			listTable.Add (elt);
-            
-
-            /*
-            TableElt elt = listTable[i];
-
-            int tableNum = i;
-            elt.SetTable(tableNum);
-
-            listTable.Add(elt);
-            */
         }
-
-
-
-    }
+    }*/
 
 	public void SetData(string tablePacking)
 	{
-		LoadTable ();
+		//LoadTable ();
+        //------------------데이터 불러오는건 LoadTable에 넣는게 아니고 //
     }
 
 
@@ -367,7 +351,6 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
     public void ReturnHome()
     {
         SceneChanger.LoadScene("Main", objBoard);
-
     }
 
 }

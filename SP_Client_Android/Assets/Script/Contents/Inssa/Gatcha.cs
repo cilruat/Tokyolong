@@ -10,7 +10,7 @@ public class Gatcha : MonoBehaviour {
 public GameObject objBoard;
 public Text Text;
 public GameObject objReSetBtn;
-//public GameObject FingerClap;
+    //public GameObject FingerClap;
 
     public List<string> GachaList = new List<string>();
 

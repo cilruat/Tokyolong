@@ -12,4 +12,11 @@ public class InSsaGoHome : MonoBehaviour {
 	{
         SceneChanger.LoadScene("InSsa", objBoard);
     }
+
+    public void GoHomeArcadeGame()
+    {
+        SceneChanger.LoadScene("ArcadeGame", objBoard);
+    }
+
+
 }
