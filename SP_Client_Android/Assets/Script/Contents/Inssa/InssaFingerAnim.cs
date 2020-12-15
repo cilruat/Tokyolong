@@ -43,6 +43,9 @@ public class InssaFingerAnim : MonoBehaviour {
         yield return new WaitForSeconds(2.0f);
     }
 
-
+    public void DotweenStart()
+    {
+        
+    }
 }
 
