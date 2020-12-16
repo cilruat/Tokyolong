@@ -17,7 +17,7 @@ public class GameCntrl : MonoBehaviour {
 	void Start () 
 	{
 		score = 0;
-		ScoreText.text = "Match the color";
+		ScoreText.text = "색깔이 똑같은것을 선택해주세요!";
 
 		InitColorObj ();	
 
@@ -69,7 +69,7 @@ public class GameCntrl : MonoBehaviour {
 
 	public void GameOver ()
 	{
-		ScoreText.text = "Game over\nYour score is: " + score.ToString ();
+		ScoreText.text = "게임오버 당신의 점수는 : " + score.ToString ();
 
 		for (int i = 0; i < Positions.Length; i++) 
 		{

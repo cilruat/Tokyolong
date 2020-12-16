@@ -15,7 +15,7 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
     }
 
 	//지역상수설정
-	//public const int TABLE_NUM = 50;
+	public const int TABLE_NUM = 50;
 
 	//테이블셋팅부터합니다
 
@@ -54,7 +54,7 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 
     void Awake()
     {
-        //LoadTable();
+        LoadTable();
 
         for (int i = 0; i < rtScrollTable.childCount; i++)
         {
@@ -87,7 +87,7 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
             CreatePlzElt(Info.myInfo.listPlzInfo[i]);
 
     }
-    /*
+    
     void LoadTable()
 	{
 		for (int i = 0; i < TABLE_NUM; i++) 
@@ -107,11 +107,11 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 
 			listTable.Add (elt);
         }
-    }*/
+    }
 
 	public void SetData(string tablePacking)
 	{
-		//LoadTable ();
+		LoadTable ();
         //------------------데이터 불러오는건 LoadTable에 넣는게 아니고 //
     }
 
