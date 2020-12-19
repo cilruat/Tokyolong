@@ -54,7 +54,7 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 
     void Awake()
     {
-        LoadTable();
+        //LoadTable();
 
         for (int i = 0; i < rtScrollTable.childCount; i++)
         {
@@ -67,13 +67,6 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
                 listTable.Add(elt);
         }
 
-        for (int i = 0; i < Info.listLoginTable.Count; i++)
-            SetLogin(Info.listLoginTable[i]);
-    }
-
-
-    void Start()
-    {
         for (int i = 0; i < Info.myInfo.listMsgInfo.Count; i++)
             CreateMailElt(Info.myInfo.listMsgInfo[i]);
 
@@ -85,7 +78,13 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 
         for (int i = 0; i < Info.myInfo.listPlzInfo.Count; i++)
             CreatePlzElt(Info.myInfo.listPlzInfo[i]);
+    }
 
+
+    void Start()
+    {
+        for (int i = 0; i < Info.listLoginTable.Count; i++)
+            SetLogin(Info.listLoginTable[i]);
     }
     
     void LoadTable()
@@ -112,7 +111,6 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 	public void SetData(string tablePacking)
 	{
 		LoadTable ();
-        //------------------데이터 불러오는건 LoadTable에 넣는게 아니고 //
     }
 
 

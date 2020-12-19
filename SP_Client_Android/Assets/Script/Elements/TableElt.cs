@@ -19,7 +19,7 @@ public class TableElt : MonoBehaviour {
 
 	List<short> listDiscount = new List<short>();
 
-    private void Start()
+    private void Awake()
     {
         if (this.tableNo == 0)
             SetTable(TABLE_NO);
@@ -89,7 +89,7 @@ public class TableElt : MonoBehaviour {
 
     public void OnMailMenu()
     {
-#if !UNITY_EDITOR
+//#if !UNITY_EDITOR
         if (isLogin == false)
         {
             SystemMessage.Instance.Add("비어있는 테이블입니다.");
@@ -102,7 +102,7 @@ public class TableElt : MonoBehaviour {
             return;
         }
         
-#endif
+//#endif
 
         if (PageMail.Instance.objTableMenu == null)
             return;

@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4762498340799932}
   - component: {fileID: 114831595554130398}
+  - component: {fileID: 114782712986113646}
   m_Layer: 0
   m_Name: GameController
   m_TagString: GameController
@@ -40,6 +41,43 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114782712986113646
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1095264080900112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09a5e949cefcdec4fbc027912274b8f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnAroundTag: Player
+  isSpawning: 0
+  spawnGroups:
+  - spawnObjects:
+    - {fileID: 4405878449484530, guid: d896189ae26fc834eae1470a4c477096, type: 2}
+    - {fileID: 4941441341357990, guid: d59b1a157fd902544a0634e563969315, type: 2}
+    - {fileID: 4000013324394496, guid: 4f426d30c8562d54288b9bc1dbadd1d7, type: 2}
+    spawnRate: 2
+    spawnObjectDistance: {x: 10, y: 15}
+  - spawnObjects:
+    - {fileID: 4139512482711386, guid: 052f5027c569dd7489e5c74d8a4e6c4c, type: 2}
+    - {fileID: 4139512482711386, guid: 052f5027c569dd7489e5c74d8a4e6c4c, type: 2}
+    - {fileID: 4110973972574062, guid: 42f666a98fe75af4293c13dcdf330fcf, type: 2}
+    - {fileID: 4139512482711386, guid: 052f5027c569dd7489e5c74d8a4e6c4c, type: 2}
+    - {fileID: 4139512482711386, guid: 052f5027c569dd7489e5c74d8a4e6c4c, type: 2}
+    - {fileID: 4126353118113974, guid: 00453729d87fdd24fb87b501eae7711e, type: 2}
+    - {fileID: 4139512482711386, guid: 052f5027c569dd7489e5c74d8a4e6c4c, type: 2}
+    - {fileID: 4139512482711386, guid: 052f5027c569dd7489e5c74d8a4e6c4c, type: 2}
+    - {fileID: 4139512482711386, guid: fdb9588874f952d4695281820e076673, type: 2}
+    spawnRate: 1
+    spawnObjectDistance: {x: 25, y: 40}
+  - spawnObjects:
+    - {fileID: 4489980074315094, guid: da2c113cb8c768a41b5a444d34e50457, type: 2}
+    - {fileID: 4185046365512272, guid: 07f52060a48da7e4aad4ce29ee32da75, type: 2}
+    spawnRate: 5
+    spawnObjectDistance: {x: 35, y: 50}
 --- !u!114 &114831595554130398
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -51,61 +89,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2de381048e5a1914cada112d6c83f4db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameArea: {x: 100, y: 100}
-  wrapAroundGameArea: 0
   cameraHolder: {fileID: 0}
-  playerObject: {fileID: 0}
+  cameraRotate: 0
+  playerObject: {fileID: 114300906824884244, guid: 67b4aed05ba6cdc4cb768ab5d8518587,
+    type: 2}
   groundObject: {fileID: 0}
-  groundRepeatDistance: 20
-  streetEdge: 2.5
-  streetEdgeDamage: 10
-  streetEdgeEffect: {fileID: 0}
-  streetEdgeSound: {fileID: 8300000, guid: 0d2e5bbaf40a20544b400c0415a531a2, type: 3}
-  spawnObstacles:
-  - spawnObject: {fileID: 0}
-    spawnChance: 16
-    spawnGap: 0
-  - spawnObject: {fileID: 0}
-    spawnChance: 16
-    spawnGap: 0
-  - spawnObject: {fileID: 0}
-    spawnChance: 12
-    spawnGap: 0
-  - spawnObject: {fileID: 0}
-    spawnChance: 8
-    spawnGap: 0
-  - spawnObject: {fileID: 0}
-    spawnChance: 8
-    spawnGap: 0
-  - spawnObject: {fileID: 0}
-    spawnChance: 1
-    spawnGap: 14
-  spawnPickups:
-  - {fileID: 4405878449484530, guid: d896189ae26fc834eae1470a4c477096, type: 2}
-  - {fileID: 4405878449484530, guid: d896189ae26fc834eae1470a4c477096, type: 2}
-  - {fileID: 4405878449484530, guid: d896189ae26fc834eae1470a4c477096, type: 2}
-  - {fileID: 4941441341357990, guid: d59b1a157fd902544a0634e563969315, type: 2}
-  - {fileID: 4405878449484530, guid: d896189ae26fc834eae1470a4c477096, type: 2}
-  - {fileID: 4405878449484530, guid: d896189ae26fc834eae1470a4c477096, type: 2}
-  - {fileID: 4405878449484530, guid: d896189ae26fc834eae1470a4c477096, type: 2}
-  - {fileID: 4941441341357990, guid: d59b1a157fd902544a0634e563969315, type: 2}
-  - {fileID: 4000013324394496, guid: 4f426d30c8562d54288b9bc1dbadd1d7, type: 2}
-  spawnPickupRate: 5
-  spawnGap: {x: 2, y: 4}
-  startDelay: 1
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  groundTextureSpeed: 1
+  startDelay: 3
   readyGoEffect: {fileID: 22485230, guid: bb9a98ac00266624ea79c0f47823def5, type: 2}
-  turnButton: Fire1
-  loseHealthDelay: 0.3
   score: 0
-  levelUpEveryScore: 500
-  levelUpSpeedIncrease: 0.2
+  scorePerSecond: 1
   scoreText: {fileID: 0}
+  moneyPlayerPrefs: Money
+  shopMenu: {fileID: 0}
+  steeringWheel: {fileID: 0}
   gameCanvas: {fileID: 0}
   healthCanvas: {fileID: 0}
-  fuelCanvas: {fileID: 0}
   pauseCanvas: {fileID: 0}
   gameOverCanvas: {fileID: 0}
-  mainMenuLevelName: CS_StartMenu
+  mainMenuLevelName: ECCGameTerrain
   soundGameOver: {fileID: 0}
   soundSourceTag: Sound
   confirmButton: Submit

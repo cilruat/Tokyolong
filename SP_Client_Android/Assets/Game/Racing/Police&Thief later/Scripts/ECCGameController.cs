@@ -124,7 +124,7 @@ namespace EndlessCarChase
         /// </summary>
         void Start()
         {
-            //Application.targetFrameRate = 30;
+            Application.targetFrameRate = 20;
 
             // Update the score at 0
             ChangeScore(0);
@@ -173,7 +173,8 @@ namespace EndlessCarChase
             if (scorePerSecond > 0) InvokeRepeating("ScorePerSecond", startDelay, 1);
 
             // If there is an active assigned Steering Wheel slider and we are on a mobile platform, activate the slider button
-            if (steeringWheel && steeringWheel.gameObject.activeInHierarchy && Application.isMobilePlatform) steeringWheel.gameObject.SetActive(true);
+            // 수정함
+            // if (steeringWheel && steeringWheel.gameObject.activeInHierarchy && Application.isMobilePlatform) steeringWheel.gameObject.SetActive(true);
         }
 
         /// <summary>

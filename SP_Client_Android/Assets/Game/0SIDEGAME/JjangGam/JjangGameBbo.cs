@@ -92,8 +92,8 @@ public class JjangGameBbo : SingletonMonobehaviour<JjangGameBbo>
         if (rsp == input) // 비김
         {
             //비겨도 돈날리는거입니다
-            //Invoke("Insert", 1);
-            End();
+            Invoke("Insert", 1);
+            //End();
             StartCoroutine(ShowLog("비겼다"));
         }
 
