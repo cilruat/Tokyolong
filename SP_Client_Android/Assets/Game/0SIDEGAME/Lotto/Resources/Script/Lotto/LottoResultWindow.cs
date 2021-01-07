@@ -56,11 +56,11 @@ public class LottoResultWindow : MonoBehaviour {
 			_gold.text = "+ "+50;
 			PlayerMeta.incraseGold(50);
 		}else if(grade == 2){
-			_gold.text = "+ " + 10;
-			PlayerMeta.incraseGold(10);
+			_gold.text = "+ " + 15;
+			PlayerMeta.incraseGold(15);
 		}else if(grade == 1){
-			_gold.text = "+ " + 1;
-			PlayerMeta.incraseGold(1);
+			_gold.text = "+ " + 3;
+			PlayerMeta.incraseGold(3);
 		}else{
 			_gold.text = "+ 0";
 		}

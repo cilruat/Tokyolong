@@ -4,10 +4,10 @@
 
 	public class Config : MonoBehaviour
 	{
-		[Range (1, 10)]
+		[Range (1, 30)]
 		public int speed;
 		public int spinTurnCost = 300;
-		public float spinDurationMin = 3.0f, spinDurationMax = 5.0f;
+		public float spinDurationMin = 10.0f, spinDurationMax = 15.0f;
 		public bool freeTurn, paidTurn;
 		public RewardItem[] rewarItem = new RewardItem[8];
 		public UITheme[] themes;

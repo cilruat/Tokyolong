@@ -19,7 +19,7 @@
         public void StartSpin()
         {
             animCurve = animCurves[Random.Range(0, animCurves.Length)];
-            float t = 2;
+            float t = 10;
             float val = (Config.Instance.speed * tileSizeX) +
                         (Random.Range(0, Config.Instance.rewarItem.Length) * (SpinScroller.Instance.unitXSize + 3));
             StartCoroutine(SpinNow(val, t));

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
+
 public class PageMind : PageBase {
 
 	public CanvasGroup[] cgBoard;
@@ -13,6 +14,8 @@ public class PageMind : PageBase {
 	public GameObject objReturnHome;
 	public GameObject objReturnPrev;
 	public GameObject objReturnFirst;
+
+
 
 	CanvasGroup _prevCG;
 	CanvasGroup _curCG;
@@ -73,4 +76,7 @@ public class PageMind : PageBase {
 		_ChangeShow (cgFirst);
 		_ChangeReturn (true);
 	}
+
+
+
 }
