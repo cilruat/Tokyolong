@@ -20,7 +20,11 @@ namespace GameBench
         private void Awake()
         {
             Spins = PlayerPrefs.GetInt(SPIN_COUNT, 10);
+            // Spin과 Coin의 합체
+
             Coins = PlayerPrefs.GetInt(COINS_COUNT, 3000);
+            // 현재 내 포인트를 넣읍시다
+
             SetTurnType();
             switch (spinTurnType)
             {
@@ -65,6 +69,8 @@ namespace GameBench
             addMoreImg.sprite = Config.Instance.CurrentTheme.addMoreButtonBg;
         }
 
+        // 결국 코인과 스핀은 같은것이라 값을 취하고 이미지만 딱 바꾸면 끝인건가?
+
         public int Coins
         {
             get { return _coins; }
@@ -81,7 +87,7 @@ namespace GameBench
             set
             {
                 _spins = value;
-                spinCostText.text = (value == 0) ? "Buy 10 Spins" : "Spin";
+                spinCostText.text = (value == 0) ? "Buy 10 Spins" : "돌리기";
                 spinsText.text = string.Format("Spins {0}", _spins);
             }
         }
