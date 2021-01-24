@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class PageTaroOther : PageBase {
 
@@ -17,6 +18,13 @@ public class PageTaroOther : PageBase {
     public GameObject objResetBtn;
 
 
+    public GameObject BlindPanel;
+    public GameObject CardSelectPanel;
+    public GameObject TextPanel;
+
+    public Text tx;
+    public string m_text = "";
+
 
     CanvasGroup _prevCG;
     CanvasGroup _curCG;
@@ -25,6 +33,11 @@ public class PageTaroOther : PageBase {
     {
         objStartBtn.SetActive(true);
         objResetBtn.SetActive(false);
+        CardSelectPanel.SetActive(false);
+        BlindPanel.SetActive(false);
+        TextPanel.SetActive(false);
+
+
     }
 
     protected override void Awake()
@@ -76,8 +89,10 @@ public class PageTaroOther : PageBase {
     public void StartBtn()
     {
         objStartBtn.SetActive(false);
+        TextPanel.SetActive(true);
         DOTween.PlayAll();
-
+        StartCoroutine(ShowCardPanel());
+        StartCoroutine(_taroTyping());
 
         //코루틴으로 N초뒤에 SetAcitve True 할것 패널
     }
@@ -86,9 +101,37 @@ public class PageTaroOther : PageBase {
     public void ResetBtn()
     {
         objStartBtn.SetActive(true);
-        DOTween.PlayAll();
+        //DOTween.PlayAll();
 
     }
+
+    IEnumerator _taroTyping()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(3f);
+            for(int i = 0; i < m_text.Length; i++)
+            {
+                tx.text = m_text.Substring(0, i);
+                yield return new WaitForSeconds(0.3f);
+            }
+        }
+    }
+
+
+    IEnumerator ShowCardPanel()
+    {
+        //연출이 중요
+        yield return new WaitForSeconds(10f);
+        //UITweenAlpha.Start(CardSelectPanel, 1f, 0f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+        TextPanel.SetActive(false);
+        BlindPanel.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        CardSelectPanel.SetActive(true);
+        yield return new WaitForSeconds(1f);
+    }
+
+
 
 
 

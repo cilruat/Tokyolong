@@ -19,11 +19,15 @@ namespace GameBench
 
         private void Awake()
         {
+            /*
             Spins = PlayerPrefs.GetInt(SPIN_COUNT, 10);
             // Spin과 Coin의 합체
 
             Coins = PlayerPrefs.GetInt(COINS_COUNT, 3000);
             // 현재 내 포인트를 넣읍시다
+            */
+
+            Coins = Info.GamePlayCnt;
 
             SetTurnType();
             switch (spinTurnType)
@@ -76,7 +80,8 @@ namespace GameBench
             get { return _coins; }
             set
             {
-                _coins = value;
+                //_coins = value;
+                _coins = Info.GamePlayCnt;
                 coinsText.text = _coins.ToString();
             }
         }
@@ -87,8 +92,9 @@ namespace GameBench
             set
             {
                 _spins = value;
-                spinCostText.text = (value == 0) ? "Buy 10 Spins" : "돌리기";
-                spinsText.text = string.Format("Spins {0}", _spins);
+                //_spins = Info.GamePlayCnt;
+                spinCostText.text = (value == 0) ? "코인이 필요해요" : "돌리기";
+                spinsText.text = string.Format("남은횟수 {0}", _spins);
             }
         }
 
@@ -121,6 +127,8 @@ namespace GameBench
             spinBtnFree.interactable = false;
             SpinScroller.Instance.StartSpin();
         }
+
+        // 여기를 코인으로 바꾸면 되겟네
 
         public void OnClickPaidSpin()
         {

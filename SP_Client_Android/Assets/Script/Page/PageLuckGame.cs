@@ -49,6 +49,11 @@ public class PageLuckGame : PageBase    {
         SceneChanger.LoadScene("CashShop", objBoard);
     }
 
+    public void OnGoWheel()
+    {
+        SceneChanger.LoadScene("SpinWheel", objBoard);
+    }
+
     public void ReturnPrev()
     {
         SceneChanger.LoadScene("SelectGame", objBoard);

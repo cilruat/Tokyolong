@@ -368,12 +368,10 @@ public partial class Info : MonoBehaviour {
             sceneName == "JumperStepUpMain"         ||
             sceneName == "InssaFingerClap"          ||
             sceneName == "InssaWithOneMouth"        ||
-
             sceneName == "Lotto"                    ||
             sceneName == "JJangGameBbo"             ||
             sceneName == "ClawMachine - Red & Blue" ||
             sceneName == "kickTheBuddy"             ||
-
             sceneName == "EmojiMain"         		||
 			sceneName == "Emoji2Main"        		||
 			sceneName == "AvoidBullets"      		||
@@ -382,7 +380,10 @@ public partial class Info : MonoBehaviour {
 			sceneName == "BallDuetMain"				||
 			sceneName == "HammerMain"				||
 			sceneName == "BridgesMain"				||
-			sceneName == "CrashRacingMain"
+            sceneName == "SpinWheel"                ||
+            sceneName == "ColorMatch"               ||
+            sceneName == "ZDGGame"                  ||
+            sceneName == "CrashRacingMain"
 			)
 			return true;
 		else
