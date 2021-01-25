@@ -73,6 +73,9 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 
     void Awake () 
 	{
+		if (Info.isCheckScene ("Login") == false)
+			return;
+
         if (single != null)
         {
             Destroy(this.gameObject);
@@ -86,12 +89,14 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 
         VLogSave.Start();
 
-		reporter.Initialize (gameObject);
-		reporter.SetCallback ((success, message) => {
-			Debug.Log("BugSplat Report Posted: " + success + ", BugSplat API Response: " + message);
-		});
+		if (reporter != null) {
+			reporter.Initialize (gameObject);
+			reporter.SetCallback ((success, message) => {
+				Debug.Log("BugSplat Report Posted: " + success + ", BugSplat API Response: " + message);
+			});
 
-		reporter.prompt = false;
+			reporter.prompt = false;
+		}
 
         Application.targetFrameRate = 60;
 
@@ -105,6 +110,9 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 
 	void collect()
 	{
+		if (listUI == null)
+			return;
+
 		for (int i = 0; i < listUI.Count; i++) {
 			if (listUI [i].obj != null)
 				dicObject.Add (listUI [i].ui, listUI [i].obj);
@@ -160,7 +168,9 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 		
 	public void Hide_All()
 	{
-		objShadow.SetActive (false);
+		if (objShadow != null)
+			objShadow.SetActive (false);
+		
 		foreach (KeyValuePair<eUI, GameObject> pair in dicObject) {
 			if (pair.Value != null)
 				pair.Value.SetActive (false);

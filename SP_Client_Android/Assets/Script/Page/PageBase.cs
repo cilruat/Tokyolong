@@ -51,6 +51,12 @@ public class PageBase : SingletonMonobehaviour<PageBase> {
     {
     }
 
+	public void OnFirst()
+	{
+		Info.AnimateChangeObj (boards [curBoardIdx], boards [0], null);
+		curBoardIdx = 0;	
+	}
+
 	public void OnPrev() { _OnChangeBoard (false); }
 	public void OnNext() { _OnChangeBoard (true); }
 

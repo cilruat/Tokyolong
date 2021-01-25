@@ -8,15 +8,20 @@ using UnityEngine.SceneManagement;
 
 public class PageTaroOther : PageBase {
 
+	public enum ETaroType
+	{
+		eCharacter,
+	}
+
     public CanvasGroup[] cgBoard;
-    public CanvasGroup cgFirst;
+
+	public CanvasGroup[] cgTypeSecond;
+	public CanvasGroup[] cgTypeResult;
+
     public GameObject objReturnHome;
     public GameObject objReturnPrev;
-    public GameObject objReturnFirst;
 
     public GameObject objStartBtn;
-    public GameObject objResetBtn;
-
 
     public GameObject BlindPanel;
     public GameObject CardSelectPanel;
@@ -25,19 +30,11 @@ public class PageTaroOther : PageBase {
     public Text tx;
     public string m_text = "";
 
-
-    CanvasGroup _prevCG;
-    CanvasGroup _curCG;
+	ETaroType curType = ETaroType.eCharacter;
 
     private void Start()
     {
-        objStartBtn.SetActive(true);
-        objResetBtn.SetActive(false);
-        CardSelectPanel.SetActive(false);
-        BlindPanel.SetActive(false);
-        TextPanel.SetActive(false);
-
-
+		_Init ();
     }
 
     protected override void Awake()
@@ -45,64 +42,76 @@ public class PageTaroOther : PageBase {
         base.boards = cgBoard;
         base.Awake();
 
-        _curCG = cgFirst;
-        _ChangeReturn(true);
+		_ChangeBtnsActive(true);
     }
 
-    void _ChangeShow(CanvasGroup nextCG)
+    void _ChangeBtnsActive(bool isFirst)
     {
-        _prevCG = _curCG;
-        Info.AnimateChangeObj(_curCG, nextCG);
-        _curCG = nextCG;
-
+		objReturnHome.SetActive(isFirst);
+		objReturnPrev.SetActive(!isFirst);
     }
 
-    void _ChangeReturn(bool isHome)
-    {
-        objReturnHome.SetActive(isHome);
-        objReturnPrev.SetActive(!isHome);
-        objReturnFirst.SetActive(!isHome);
-    }
+	void _Init()
+	{
+		StopAllCoroutines ();
 
-    public void OnPrev()
-    {
-        if (_prevCG == cgFirst)
-            OnGoFirst();
-        else
-            _ChangeShow(_prevCG);
-    }
+		for (int i = 0; i < cgTypeSecond.Length; i++)
+			cgTypeSecond [i].alpha = i == curBoardIdx ? 1f : 0f;
 
-    public void OnClick(CanvasGroup showCG)
+		for (int i = 0; i < cgTypeResult.Length; i++)
+			cgTypeResult [i].alpha = i == curBoardIdx ? 1f : 0f;
+
+		DOTween.RewindAll ();
+
+		objStartBtn.SetActive(true);
+		CardSelectPanel.SetActive(false);
+		BlindPanel.SetActive(false);
+		TextPanel.SetActive(false);
+
+		_ChangeBtnsActive (true);
+	}
+
+	public void OnClick(int nType)
     {
-        _ChangeShow(showCG);
-        _ChangeReturn(false);
+		curType = (ETaroType)nType;
+
+		base.OnNext ();
+
+		for (int i = 0; i < cgTypeSecond.Length; i++)
+			cgTypeSecond [i].alpha = i == nType ? 1f : 0f;
+
+		_ChangeBtnsActive(false);
     }
 
     public void OnGoFirst()
     {
-        _ChangeShow(cgFirst);
-        _ChangeReturn(true);
+		base.OnFirst ();
+		StartCoroutine (_delayInit());
     }
 
-    //---------------------------------------------------------------------------------------------------------------------------------------------
+	IEnumerator _delayInit()
+	{
+		yield return new WaitForSeconds (.8f);
+		_Init ();
+	}
+
+	public void OnPrevBoard()
+	{
+		base.OnPrev ();	
+
+		if (curBoardIdx == 0)
+			StartCoroutine (_delayInit ());
+	}
 
     public void StartBtn()
     {
         objStartBtn.SetActive(false);
         TextPanel.SetActive(true);
+
         DOTween.PlayAll();
-        StartCoroutine(ShowCardPanel());
-        StartCoroutine(_taroTyping());
 
-        //코루틴으로 N초뒤에 SetAcitve True 할것 패널
-    }
-
-
-    public void ResetBtn()
-    {
-        objStartBtn.SetActive(true);
-        //DOTween.PlayAll();
-
+		StartCoroutine(ShowCardPanel());
+		StartCoroutine (_taroTyping ());
     }
 
     IEnumerator _taroTyping()
@@ -130,11 +139,4 @@ public class PageTaroOther : PageBase {
         CardSelectPanel.SetActive(true);
         yield return new WaitForSeconds(1f);
     }
-
-
-
-
-
 }
-
-
