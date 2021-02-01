@@ -472,6 +472,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
             PlayerMeta.RefreshGold(cnt);
         else if (Info.isCheckScene("JJangGameBbo"))
             JjangGameBbo.Instance.ShowCoin();
+        else if (Info.isCheckScene("SpinWheel"))
+            GameBench.UIManager.Instance.RefreshCoins();
     }
 
     void TableMoveACK(CPacket msg)

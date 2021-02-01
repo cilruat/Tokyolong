@@ -17,9 +17,13 @@ public class PageOrder : PageBase {
 	public CanvasGroup[] cgBoards;
     public MenuTypeGroup[] menuTypeGroup;
 	public MenuGroup[] menuGroup;
+
+    public GameObject BillPanel;
 	public Bill bill;
 
-	EMenuType eCurMenu = EMenuType.eNone;
+
+
+    EMenuType eCurMenu = EMenuType.eNone;
 
     int param = -1;
 
@@ -43,6 +47,7 @@ public class PageOrder : PageBase {
     {
 //        showRoutine = StartCoroutine(ShowMenu(true));
 		OnTabChange (3);
+        BillPanel.SetActive(false);
     }
 
     void ShowMenu()
@@ -109,9 +114,11 @@ public class PageOrder : PageBase {
 	{
         EMenuDetail eType = (EMenuDetail)idx;
 		bill.SetMenu (eType);
-	}
+        BillPanel.SetActive(true);
 
-	public void OnTabChange(int idx)
+    }
+
+    public void OnTabChange(int idx)
 	{
 		EMenuType eSelect = (EMenuType)idx;
 		if (eSelect == EMenuType.eNone)		return;
@@ -141,4 +148,16 @@ public class PageOrder : PageBase {
     {
         NetworkManager.Instance.Order_Detail_REQ();
     }
+
+    public void OnBillShow()
+    {
+        BillPanel.SetActive(true);
+    }
+
+    public void CloseBillPanel()
+    {
+        BillPanel.SetActive(false);
+    }
+
+
 }

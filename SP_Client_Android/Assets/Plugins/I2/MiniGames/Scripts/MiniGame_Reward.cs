@@ -17,6 +17,9 @@ namespace I2.MiniGames
 		public bool _AttachToCaller = true;		// When then selected, should it move into the slot or element's position
 		public bool _EndGame = false;			// When selected, it stops the game. (e.g. Treasure Hunt, player is searching for the key, when found, the game stops)
 
+        public Animator anim;
+
+
 		// Callback used for playing effects/sounds when the reward is selected
 		public UnityEventTreasureHunt _OnRewarded = new UnityEventTreasureHunt();
 
@@ -38,11 +41,19 @@ namespace I2.MiniGames
 			
 			if (_AttachToCaller)
 				transform.position = parent.position;
-		}
+                anim.Play("Dog_Bark");
 
-		public virtual void Hide ()
+            //보물에 당첨되면 Show 스크립트 실행된다.. 여기서 애니메이션 달고, 그 애니메이션을 실행한다 문구정도만 추가하면 될거같다. 
+
+        }
+
+        public virtual void Hide ()
 		{
 			gameObject.SetActive (false);
-		}
-	}
+            //다시하기 버튼 누르면 Hide나옴
+            anim.Rebind();
+
+
+        }
+    }
 }

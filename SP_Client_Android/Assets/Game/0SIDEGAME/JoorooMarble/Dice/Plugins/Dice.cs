@@ -17,6 +17,9 @@
 using UnityEngine;
 using System.Collections;
 
+
+namespace  JoorooFirst{
+
 /// <summary>
 /// This dice dupporting class has some 'static' methods to help you throwning dice
 ///  and getting the rolling dice count, value or rolling state (asString)
@@ -385,3 +388,5 @@ class RollingDie
     }
 }
 
+
+}

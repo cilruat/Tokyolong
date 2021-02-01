@@ -102,7 +102,8 @@ namespace GameBench
             bool isCoin = currentReward.rewardType == RewardType.Coin;
             if (isCoin)
             {
-                UIManager.Instance.UpdateCoins(currentReward.rewardC);
+                //UIManager.Instance.UpdateCoins(currentReward.rewardC);
+                NetworkManager.Instance.GameCountInput_REQ(Info.TableNum, currentReward.rewardC);
             }
             particleAnim.SetActive(true);
             currentReward.endRewardObj.PlayAnim(isCoin);

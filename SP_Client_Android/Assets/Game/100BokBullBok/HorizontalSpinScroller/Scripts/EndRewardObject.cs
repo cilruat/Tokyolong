@@ -34,6 +34,7 @@
 		{
 			UIManager.Instance.SpinCompleted ();
 			gameObject.SetActive (false);
+            Debug.Log("AnimEndCoin");
 		}
 		//
 		//
@@ -74,6 +75,7 @@
 		public void SetActive (bool state)
 		{
 			gameObject.SetActive (state);
-		}
+            Debug.Log("SetActive");
+        }
 	}
 }

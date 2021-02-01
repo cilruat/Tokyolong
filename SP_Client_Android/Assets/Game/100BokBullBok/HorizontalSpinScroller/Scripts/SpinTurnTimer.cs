@@ -40,6 +40,7 @@
             timeStamp = DateTime.Now;
             UIManager.Instance.ActivateFreeSpin();
             gameObject.SetActive(false);
+            Debug.Log("ActivateFreeSpin");
         }
         private void OnApplicationPause(bool pause)
         {

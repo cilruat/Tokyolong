@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace GameBench
 {
     public class UIManager : MonoBehaviour
     {
+        public GameObject objCanvas;
         public SpriteRenderer[] borderSpriteRend, arrowSpriteRend;
-        public Image backImg, addMoreImg;
+        public Image backImg;
+        //public Image addMoreImg;
+
         public Image[] spinBtnImg;
 
         public SpinTurnTimer spinTimer;
@@ -16,6 +20,9 @@ namespace GameBench
         public GameObject _animCost;
         int _coins, _spins;
         public Button spinBtnFree, spinBtnPaid;
+
+        public GameObject BlindPanel;
+
 
         private void Awake()
         {
@@ -51,8 +58,14 @@ namespace GameBench
                     break;
             }
             spinBtnFree.onClick.AddListener(OnClickFreeSpin);
-            spinBtnPaid.onClick.AddListener(OnClickPaidSpin);
+            //spinBtnPaid.onClick.AddListener(OnClickPaidSpin);
             UpdateUI();
+        }
+
+        private void Start()
+        {
+            BlindPanel.SetActive(false);
+
         }
 
         void UpdateUI()
@@ -70,7 +83,7 @@ namespace GameBench
                 item.sprite = Config.Instance.CurrentTheme.spinButtonBg;
             }
             backImg.sprite = Config.Instance.CurrentTheme.backButonBg;
-            addMoreImg.sprite = Config.Instance.CurrentTheme.addMoreButtonBg;
+            //addMoreImg.sprite = Config.Instance.CurrentTheme.addMoreButtonBg;
         }
 
         // 결국 코인과 스핀은 같은것이라 값을 취하고 이미지만 딱 바꾸면 끝인건가?
@@ -120,6 +133,8 @@ namespace GameBench
             spinBtnFree.interactable = true;
             spinBtnFree.gameObject.SetActive(true);
             spinBtnPaid.gameObject.SetActive(false);
+            Debug.Log("ActivateFreeSpin");
+
         }
 
         public void OnClickFreeSpin()
@@ -129,9 +144,9 @@ namespace GameBench
         }
 
         // 여기를 코인으로 바꾸면 되겟네
-
         public void OnClickPaidSpin()
         {
+            /* //원본
             if (Spins > 0)
             {
                 UpdateSpin(-1);
@@ -144,17 +159,39 @@ namespace GameBench
                 {
                     UpdateSpin(10);
                 }
+            }*/
+
+            // Coins 가 아니라 내가 가진값을 넣기 // Config.Instance.spinTurnCost 이걸 넣어주면 되겟나...
+            if (Info.GamePlayCnt >= Config.Instance.spinTurnCost)
+            {
+                NetworkManager.Instance.GameCountInput_REQ(Info.TableNum, -Config.Instance.spinTurnCost);
+                spinBtnPaid.interactable = false;
+                SpinScroller.Instance.StartSpin();
             }
+            //예외처리
+
+            else if(Info.GamePlayCnt < Config.Instance.spinTurnCost)
+            {
+                BlindPanel.SetActive(true);
+            }
+
+            else
+            {
+                Debug.Log("예외처리");
+            }
+
         }
 
+        /*
         bool IsPaidTurnPossible()
         {
+            //1씩 까는걸 여기서 설정, 순서도 여기있네
             return Coins >= Config.Instance.spinTurnCost;
         }
+        */
 
         public void SpinCompleted()
         {
-
             if (spinTurnType == TurnType.FreeOnly)
             {
                 spinBtnFree.interactable = true;
@@ -162,16 +199,19 @@ namespace GameBench
             else if (spinTurnType == TurnType.Both)
             {
                 spinBtnPaid.gameObject.SetActive(true);
-                spinBtnPaid.interactable = IsPaidTurnPossible();
+                //spinBtnPaid.interactable = IsPaidTurnPossible();
                 spinTimer.gameObject.SetActive(true);
             }
             else if (spinTurnType == TurnType.PaidOnly)
             {
-                spinBtnPaid.interactable = IsPaidTurnPossible();
+                spinBtnPaid.interactable = true;
             }
             SpinScroller.Instance.particleAnim.SetActive(false);
+            Debug.Log("SpinCompleted");
+
         }
 
+        //Update는 안써서 둘다 빼긴함
         public void UpdateSpin(int val)
         {
             animTextCost.text = string.Format("{0} {1}", val > 0 ? "+" : "", val);
@@ -185,13 +225,34 @@ namespace GameBench
             _animCost.gameObject.SetActive(true);
             Coins += val;
             Debug.LogFormat("Got Coins {0}", val);
+            Debug.Log("UpdateCoins");
+
         }
+
+        public void RefreshCoins()
+        {
+            //_coins = Info.GamePlayCnt;
+            coinsText.text = Info.GamePlayCnt.ToString();
+        }
+
 
         public void OnThemeChanged(int themeID)
         {
             UpdateUI();
         }
 
+        public void OnCloseBlindPanel()
+        {
+            BlindPanel.SetActive(false);
+        }
+
+        public void OnGoFirst()
+        {
+            SceneChanger.LoadScene("LuckGame", objCanvas);
+
+        }
+
+        //이게 의미가 있는건가 어디쓰는지 보아야할것
         private void OnApplicationPause(bool pause)
         {
             if (pause)

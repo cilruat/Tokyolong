@@ -6,7 +6,7 @@
 	{
 		[Range (1, 30)]
 		public int speed;
-		public int spinTurnCost = 1;
+		public int spinTurnCost = 2;
 		public float spinDurationMin = 10.0f, spinDurationMax = 15.0f;
 		public bool freeTurn, paidTurn;
 		public RewardItem[] rewarItem = new RewardItem[8];
