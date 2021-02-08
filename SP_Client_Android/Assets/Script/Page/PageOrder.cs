@@ -15,12 +15,11 @@ public class PageOrder : PageBase {
 	}
 
 	public CanvasGroup[] cgBoards;
-    public MenuTypeGroup[] menuTypeGroup;
+    public MenuTypeGroup[] menuTypeGroup; // OderMain
 	public MenuGroup[] menuGroup;
 
     public GameObject BillPanel;
 	public Bill bill;
-
 
 
     EMenuType eCurMenu = EMenuType.eNone;

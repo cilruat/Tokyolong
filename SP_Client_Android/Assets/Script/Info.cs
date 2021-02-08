@@ -298,11 +298,11 @@ public partial class Info : MonoBehaviour {
         int cnt = 0;
         switch (eType) {
             case EMenuType.eTop:
-            case EMenuType.eEasy:
-            case EMenuType.eIzakaya:
-            case EMenuType.eWomanTarget:
-            case EMenuType.eHappy:
-            case EMenuType.eSoup: cnt = 2; break;
+            case EMenuType.eSide:
+            case EMenuType.eSigniture:
+            case EMenuType.eStick:
+            case EMenuType.eSoup:
+            case EMenuType.eGrill: cnt = 2; break;
         }
 
         return cnt;

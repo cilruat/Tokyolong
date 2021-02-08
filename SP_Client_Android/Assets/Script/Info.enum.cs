@@ -17,11 +17,11 @@ public enum EMenuType : int
 	eNone = -1,
 	eTop = 0,		    // 탑메뉴
 	eMeal,			    // 밥&안주 식사
-	eEasy,				// 간편안주
-	eIzakaya,			// 이자카야
-	eWomanTarget,    	// 여심저격
-	eHappy = 5, 		// 만원의 행복
-    eSoup,              // 탕,전골
+	eSide,				// 사이드메뉴
+	eSigniture,			// 시그니처메뉴
+	eStick,             // 꼬치
+    eSoup = 5, 		    // 탕, 전골
+    eGrill,             // 볶음
 	eSozu,              // 소주
 	eBear,              // 맥주
     eSake,              // 사케
@@ -178,11 +178,11 @@ public partial class Info : MonoBehaviour {
         {
         case EMenuType.eTop:            title = "탑";          	break;
         case EMenuType.eMeal:           title = "밥&사리";     	break;
-		case EMenuType.eEasy:      		title = "간편안주";     break;
-        case EMenuType.eIzakaya:        title = "이자카야";     break;
-        case EMenuType.eWomanTarget:    title = "여심저격";     break;
-		case EMenuType.eHappy:  		title = "만원의행복";   break;
-        case EMenuType.eSoup:           title = "탕&나베";      break;
+		case EMenuType.eSide:      		title = "사이드";     break;
+        case EMenuType.eSigniture:        title = "시그니처";     break;
+        case EMenuType.eStick:    title = "꼬치";     break;
+		case EMenuType.eSoup:  		title = "탕,전골";   break;
+        case EMenuType.eGrill:           title = "볶음";      break;
         case EMenuType.eSozu:           title = "소주";         break;
         case EMenuType.eBear:           title = "맥주";         break;
         case EMenuType.eSake:           title = "사케";         break;
