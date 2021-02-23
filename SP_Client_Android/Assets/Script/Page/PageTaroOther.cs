@@ -73,7 +73,6 @@ public class PageTaroOther : PageBase {
 
 	public void OnClick(int nType)
     {
-        //Character 등이 들어감
 		curType = (ETaroType)nType;
 
 		base.OnNext ();
@@ -83,6 +82,8 @@ public class PageTaroOther : PageBase {
 
 		_ChangeBtnsActive(false);
     }
+
+
 
     public void OnGoFirst()
     {
