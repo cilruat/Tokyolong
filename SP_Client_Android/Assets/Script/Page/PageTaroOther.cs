@@ -73,6 +73,7 @@ public class PageTaroOther : PageBase {
 
 	public void OnClick(int nType)
     {
+        //Character 등이 들어감
 		curType = (ETaroType)nType;
 
 		base.OnNext ();
