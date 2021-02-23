@@ -18,6 +18,7 @@ public class InssaTodaySolution : MonoBehaviour
     public GameObject objOpenBookPanel;
     public GameObject objCloseBookPanel;
 
+    public GameObject objBlindPanel;
 
     public List<string> GachaList = new List<string>();
 
@@ -31,6 +32,7 @@ public class InssaTodaySolution : MonoBehaviour
         PanelGatcha.SetActive(false);
         objOpenBookPanel.SetActive(true);
         objCloseBookPanel.SetActive(false);
+        objBlindPanel.SetActive(false);
     }
 
 
@@ -59,6 +61,8 @@ public class InssaTodaySolution : MonoBehaviour
     IEnumerator ShowText()
     {
         Debug.Log("ShowText");
+        objBlindPanel.SetActive(true);
+
         yield return new WaitForSeconds(5.5f);
         for (int i = 0; i < 1; i++)
         {
@@ -83,6 +87,7 @@ public class InssaTodaySolution : MonoBehaviour
     public void ActiveBookCloseBtn()
     {
         objBookCloseBtn.SetActive(false);
+        objBlindPanel.SetActive(false);
         objCloseBookPanel.SetActive(true);
         objOpenBookPanel.SetActive(false);
         PanelGatcha.SetActive(false);
