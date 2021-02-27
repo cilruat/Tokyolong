@@ -32,6 +32,8 @@ public class PlayerToken : MonoBehaviour
     /// </summary>
 	void Update () 
     {
+
+        //0.03f 이내의 거리라면 0.2f의 속도로 스무스하게 움직여라 이건가
         if (Vector3.Distance(this.transform.position, targetPosition) > 0.03f)
         {
             this.transform.position = Vector3.SmoothDamp(this.transform.position, targetPosition, ref velocity, 0.2f);
