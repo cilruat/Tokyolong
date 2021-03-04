@@ -19,7 +19,7 @@ public class DiceManager : MonoBehaviour
             diceList[i].AddForceToDice();
         }
     }
-
+    // 주루마블에서 쓸것
     public void CountAllDieValues()
     {
         for (int i = 0; i < diceList.Count; i++)
@@ -35,5 +35,11 @@ public class DiceManager : MonoBehaviour
             }
         }
         EndRollEvent.Invoke();
+    }
+
+    // 복불복 게임에서 쓸것
+    public void ShowAllDiceImg()
+    {
+            EndRollEvent.Invoke();
     }
 }
