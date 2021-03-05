@@ -9,6 +9,9 @@ public class DiceManager : MonoBehaviour
     public int totalValue;
     public UnityEvent EndRollEvent;
 
+
+    // 주루마블에서 쓸것
+
     public void RollAllDie()
     {
         totalValue = 0;
@@ -19,7 +22,6 @@ public class DiceManager : MonoBehaviour
             diceList[i].AddForceToDice();
         }
     }
-    // 주루마블에서 쓸것
     public void CountAllDieValues()
     {
         for (int i = 0; i < diceList.Count; i++)
@@ -38,6 +40,20 @@ public class DiceManager : MonoBehaviour
     }
 
     // 복불복 게임에서 쓸것
+
+    public void RollAllDiceMain()
+    {
+        totalValue = 0;
+        //reset total value
+
+        for (int i = 0; i < diceList.Count; i++)
+        {
+            diceList[i].AddForceDiceMain();
+        }
+    }
+
+
+
     public void ShowAllDiceImg()
     {
             EndRollEvent.Invoke();
