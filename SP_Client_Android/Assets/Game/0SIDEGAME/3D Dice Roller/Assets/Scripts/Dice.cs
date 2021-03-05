@@ -81,7 +81,7 @@ public class Dice : MonoBehaviour
             value = 5;
         }   
     }
-
+    //주루마블일 경우 힘
     public void AddForceToDice()
     {
         if (!isRolling)
@@ -96,4 +96,17 @@ public class Dice : MonoBehaviour
             rb.AddExplosionForce(Random.Range(minRollForce, maxRollForce), RandomPosition, -0.5f, 2f);  
         }
     }
+
+    //일반 주사위 굴림
+    public void AddForceDiceMain()
+    {
+        if (!isRolling)
+        {
+            isRolling = true;
+            Vector3 RandomPosition = new Vector3(Random.Range(-0.2f, 0.2f), -1, Random.Range(-0.2f, 0.2f));
+            rb.AddExplosionForce(Random.Range(minRollForce, maxRollForce), RandomPosition, -0.5f, 2f);
+        }
+    }
+
+
 }
