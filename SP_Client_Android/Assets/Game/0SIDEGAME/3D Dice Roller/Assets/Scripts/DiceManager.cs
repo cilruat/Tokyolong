@@ -8,7 +8,7 @@ public class DiceManager : MonoBehaviour
     public List<Dice> diceList;
     public int totalValue;
     public UnityEvent EndRollEvent;
-
+    public GameObject objBoard;
 
     // 주루마블에서 쓸것
 
@@ -54,8 +54,9 @@ public class DiceManager : MonoBehaviour
 
 
 
-    public void ShowAllDiceImg()
+    public void OnGoHome(string SceneName)
     {
-            EndRollEvent.Invoke();
+        SceneChanger.LoadScene(SceneName, objBoard);
     }
+
 }

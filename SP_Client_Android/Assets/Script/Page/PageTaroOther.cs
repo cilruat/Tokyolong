@@ -71,6 +71,10 @@ public class PageTaroOther : PageBase {
 		_ChangeBtnsActive (true);
 	}
 
+
+    // nType에는 enum이 들어감, eCharacter = 0 인 enum
+    // 클릭했을때 OnNext 함수
+    // cgTypeSecond의 길이만큼 i를 돌면서 cgTypeSecond의 i값이 nType과 같다면 alpha를 1로 하고 아니면 0
 	public void OnClick(int nType)
     {
 		curType = (ETaroType)nType;

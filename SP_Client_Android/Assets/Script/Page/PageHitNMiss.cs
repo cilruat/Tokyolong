@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
+
 
 public class PageHitNMiss : PageBase {
 
 
 	public CanvasGroup[] cgBoard;
+    public GameObject objBoard;
 
 	public CanvasGroup cgFirst;
 	public GameObject objReturnHome;
@@ -57,7 +60,14 @@ public class PageHitNMiss : PageBase {
 		_ChangeReturn (false);
 	}
 
-	public void OnGoFirst()
+    public void OnChangeScene(string SceneName)
+    {
+        SceneChanger.LoadScene(SceneName, objBoard);
+    }
+
+
+
+    public void OnGoFirst()
 	{
 		_ChangeShow (cgFirst);
 		_ChangeReturn (true);
