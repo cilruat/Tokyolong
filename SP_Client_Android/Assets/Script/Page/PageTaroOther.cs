@@ -27,6 +27,9 @@ public class PageTaroOther : PageBase {
     public GameObject CardSelectPanel;
     public GameObject TextPanel;
 
+    public List<GameObject> ResultList = new List<GameObject>();
+
+
     public Text tx;
     public string m_text = "";
 
@@ -85,6 +88,16 @@ public class PageTaroOther : PageBase {
 			cgTypeSecond [i].alpha = i == nType ? 1f : 0f;
 
 		_ChangeBtnsActive(false);
+    }
+
+
+    public void OnGoResult()
+    {
+        base.OnNext();
+
+
+
+
     }
 
 
