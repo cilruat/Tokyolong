@@ -27,6 +27,8 @@ public class PageTaroOther : PageBase {
     public GameObject CardSelectPanel;
     public GameObject TextPanel;
 
+    //public GameObject objResultToHomeBtn;
+
     public List<GameObject> ResultList = new List<GameObject>();
 
 
@@ -64,12 +66,15 @@ public class PageTaroOther : PageBase {
 		for (int i = 0; i < cgTypeResult.Length; i++)
 			cgTypeResult [i].alpha = i == curBoardIdx ? 1f : 0f;
 
-		DOTween.RewindAll ();
+
+
+        DOTween.RewindAll ();
 
 		objStartBtn.SetActive(true);
 		CardSelectPanel.SetActive(false);
 		BlindPanel.SetActive(false);
 		TextPanel.SetActive(false);
+        //objResultToHomeBtn.SetActive(false);
 
 		_ChangeBtnsActive (true);
 	}
@@ -91,24 +96,31 @@ public class PageTaroOther : PageBase {
     }
 
 
-    public void OnGoResult()
+    public void OnGoResult(int idx)
     {
         base.OnNext();
-
-
-
-
+        ResultList[idx].SetActive(true);
+        //objResultToHomeBtn.SetActive(true);
     }
 
-
+    /*
+    public void ResultToHome(int idx)
+    {
+        objResultToHomeBtn.SetActive(false);
+        ResultList[idx].SetActive(false);
+    }
+    */
 
     public void OnGoFirst()
     {
-		base.OnFirst ();
+        for (int i = 0; i < ResultList.Count; i++)
+            ResultList[i].SetActive(false);
+
+        base.OnFirst ();
 		StartCoroutine (_delayInit());
     }
 
-	IEnumerator _delayInit()
+    IEnumerator _delayInit()
 	{
 		yield return new WaitForSeconds (.8f);
 		_Init ();
@@ -116,11 +128,15 @@ public class PageTaroOther : PageBase {
 
 	public void OnPrevBoard()
 	{
-		base.OnPrev ();	
+        for (int i = 0; i < ResultList.Count; i++)
+            ResultList[i].SetActive(false);
+
+        base.OnPrev ();	
 
 		if (curBoardIdx == 0)
 			StartCoroutine (_delayInit ());
-	}
+
+    }
 
     public void StartBtn()
     {
