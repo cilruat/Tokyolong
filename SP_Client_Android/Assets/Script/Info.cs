@@ -383,6 +383,8 @@ public partial class Info : MonoBehaviour {
             sceneName == "SpinWheel"                ||
             sceneName == "ColorMatch"               ||
             sceneName == "ZDGGame"                  ||
+            sceneName == "ScratchCard"              ||
+            sceneName == "DiceRollGame"             ||
             sceneName == "CrashRacingMain"
 			)
 			return true;
