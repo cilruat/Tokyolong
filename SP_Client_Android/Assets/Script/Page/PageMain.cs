@@ -28,6 +28,7 @@ public class PageMain : PageBase {
 		eMail,
         eSelectGame,
         eCashShop = 20,
+        eWebView,
     }
 
     public CanvasGroup[] cgBoard;
@@ -100,6 +101,8 @@ public class PageMain : PageBase {
 		case EMenu.eMail:			SceneChanger.LoadScene ("LoadingChat", curBoardObj ());			break;
         case EMenu.eSelectGame:     SceneChanger.LoadScene("LoadingGame", curBoardObj());        break;
         case EMenu.eCashShop:       SceneChanger.LoadScene("CashShop", curBoardObj());          break;
+        case EMenu.eWebView:        SceneChanger.LoadScene("WebView", curBoardObj()); break;
+
         }
     }
 
