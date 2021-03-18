@@ -27,6 +27,9 @@ public class PageTaroOther : PageBase {
     public GameObject CardSelectPanel;
     public GameObject TextPanel;
 
+    public GameObject objTodaySolutionPanel;
+
+
     //public GameObject objResultToHomeBtn;
 
     public List<GameObject> ResultList = new List<GameObject>();
@@ -74,15 +77,11 @@ public class PageTaroOther : PageBase {
 		CardSelectPanel.SetActive(false);
 		BlindPanel.SetActive(false);
 		TextPanel.SetActive(false);
-        //objResultToHomeBtn.SetActive(false);
+        objTodaySolutionPanel.SetActive(false);
 
-		_ChangeBtnsActive (true);
+        _ChangeBtnsActive (true);
 	}
 
-
-    // nType에는 enum이 들어감, eCharacter = 0 인 enum
-    // 클릭했을때 OnNext 함수
-    // cgTypeSecond의 길이만큼 i를 돌면서 cgTypeSecond의 i값이 nType과 같다면 alpha를 1로 하고 아니면 0
 	public void OnClick(int nType)
     {
 		curType = (ETaroType)nType;
@@ -100,21 +99,25 @@ public class PageTaroOther : PageBase {
     {
         base.OnNext();
         ResultList[idx].SetActive(true);
-        //objResultToHomeBtn.SetActive(true);
     }
 
-    /*
-    public void ResultToHome(int idx)
+    public void ActiveTodaySolutionPanel()
     {
-        objResultToHomeBtn.SetActive(false);
-        ResultList[idx].SetActive(false);
+        objTodaySolutionPanel.SetActive(true);
     }
-    */
+
+    public void DeActiveTodaySolutionPanel()
+    {
+        objTodaySolutionPanel.SetActive(false);
+    }
+
+
 
     public void OnGoFirst()
     {
         for (int i = 0; i < ResultList.Count; i++)
             ResultList[i].SetActive(false);
+        objTodaySolutionPanel.SetActive(false);
 
         base.OnFirst ();
 		StartCoroutine (_delayInit());
@@ -130,6 +133,8 @@ public class PageTaroOther : PageBase {
 	{
         for (int i = 0; i < ResultList.Count; i++)
             ResultList[i].SetActive(false);
+        objTodaySolutionPanel.SetActive(false);
+
 
         base.OnPrev ();	
 
