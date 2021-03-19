@@ -24,6 +24,8 @@ public class SampleWebView : MonoBehaviour {
 	public string lasturl;
 	public string htmlcode;
 
+    public GameObject objCanvas;
+
 
 	// Use this for initialization
 	void Start () {
@@ -46,7 +48,21 @@ public class SampleWebView : MonoBehaviour {
 
 	}
 
-	public void BtnLastCallFullWeb()
+    public void BtnYouTube()
+    {
+        url = "http://www.youtube.com";
+        PopupWebView.FullWebView(url);
+    }
+
+    public void BtnNaver()
+    {
+        url = "http://www.naver.com";
+        PopupWebView.FullWebView(url);
+    }
+
+
+
+    public void BtnLastCallFullWeb()
 	{
 		lasturl = inputlast.text;
 		
@@ -65,7 +81,29 @@ public class SampleWebView : MonoBehaviour {
 
 	}
 
-	public void BtnLastCustomWeb()
+    public void BtYoutubeCustom()
+    {
+        url = "http://www.youtube.com";
+        width = int.Parse(inputWidth.text);
+        height = int.Parse(inputHeight.text);
+        PopupWebView.CustomWebView(url, false, width, height);
+    }
+
+
+
+    public void BtNaverCustom()
+    {
+        url = "http://www.naver.com";
+        width = int.Parse(inputWidth.text);
+        height = int.Parse(inputHeight.text);
+        PopupWebView.CustomWebView(url, false, width, height);
+    }
+
+
+
+
+
+    public void BtnLastCustomWeb()
 	{
 		lasturl = inputlast.text;
 		width = int.Parse(inputWidth.text);
@@ -110,6 +148,11 @@ public class SampleWebView : MonoBehaviour {
 		txthtml.text = html;
 		
 	}
+
+    public void OnGoHome()
+    {
+        SceneChanger.LoadScene("Main", objCanvas);
+    }
 
 
 }

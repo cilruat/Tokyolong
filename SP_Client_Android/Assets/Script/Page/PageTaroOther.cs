@@ -108,9 +108,16 @@ public class PageTaroOther : PageBase {
 
     public void DeActiveTodaySolutionPanel()
     {
-        objTodaySolutionPanel.SetActive(false);
+        StartCoroutine(_DelayClosePanel());
     }
 
+
+    IEnumerator _DelayClosePanel()
+    {
+        yield return new WaitForSeconds(2f);
+        objTodaySolutionPanel.SetActive(false);
+
+    }
 
 
     public void OnGoFirst()
@@ -136,11 +143,10 @@ public class PageTaroOther : PageBase {
         objTodaySolutionPanel.SetActive(false);
 
 
-        base.OnPrev ();	
+        base.OnPrev ();
 
-		if (curBoardIdx == 0)
-			StartCoroutine (_delayInit ());
-
+        if (curBoardIdx == 0)
+            StartCoroutine(_delayInit());
     }
 
     public void StartBtn()

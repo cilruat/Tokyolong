@@ -47,16 +47,10 @@ public class InssaTodaySolution : MonoBehaviour
     public void Gacha()
     {
         objTextTouchMe.SetActive(false);
-        //초기화 의미
         Text.text = "";
 
         StartCoroutine(ShowText());
     }
-
-    //애니메이션 끝나면 이제 SetActive 해준다 넣어야함
-
-
-
 
     IEnumerator ShowText()
     {
@@ -82,6 +76,41 @@ public class InssaTodaySolution : MonoBehaviour
         yield return new WaitForSeconds(1f);
         objBookCloseBtn.SetActive(true);
     }
+
+
+    //타로에서 쓰이는 랜덤뽑기도 이곳에서 사용합니다, 시간이 다르기때문에 함수를 한개 추가합니다
+    public void TaroOtherGacha()
+    {
+        objTextTouchMe.SetActive(false);
+        Text.text = "";
+        StartCoroutine(ShowTaroCard());
+    }
+
+    IEnumerator ShowTaroCard()
+    {
+        Debug.Log("ShowTaroCard");
+        objBlindPanel.SetActive(true);
+
+        yield return new WaitForSeconds(2f);
+        for (int i = 0; i < 1; i++)
+        {
+            if (GachaList.Count != 0)
+            {
+                int rand = Random.Range(0, GachaList.Count);
+                print(GachaList[rand]);
+                Text.text = GachaList[rand].ToString();
+                GachaList.RemoveAt(rand);
+            }
+            else
+            {
+                objReSetBtn.SetActive(true);
+            }
+        }
+        PanelGatcha.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        objBookCloseBtn.SetActive(true);
+    }
+
 
 
     public void ActiveBookCloseBtn()
