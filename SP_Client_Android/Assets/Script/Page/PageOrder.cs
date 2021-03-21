@@ -117,6 +117,16 @@ public class PageOrder : PageBase {
 
     }
 
+    public void DeleteDetailMenu(int idx)
+    {
+        EMenuDetail eType = (EMenuDetail)idx;
+        bill.RemoveElt(eType);
+        BillPanel.SetActive(false);
+
+    }
+
+
+
     public void OnTabChange(int idx)
 	{
 		EMenuType eSelect = (EMenuType)idx;
