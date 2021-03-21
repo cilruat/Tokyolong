@@ -21,6 +21,12 @@ public class PageOrder : PageBase {
     public GameObject BillPanel;
 	public Bill bill;
 
+    public GameObject CloseBillPanelBtn;
+
+    public GameObject CartAnimationPanel;
+    public Animator InCartAnimation;
+    public bool InCart = false;
+
 
     EMenuType eCurMenu = EMenuType.eNone;
 
@@ -47,6 +53,8 @@ public class PageOrder : PageBase {
 //        showRoutine = StartCoroutine(ShowMenu(true));
 		OnTabChange (3);
         BillPanel.SetActive(false);
+        CloseBillPanelBtn.SetActive(false);
+        CartAnimationPanel.SetActive(false);
     }
 
     void ShowMenu()
@@ -114,8 +122,16 @@ public class PageOrder : PageBase {
         EMenuDetail eType = (EMenuDetail)idx;
 		bill.SetMenu (eType);
         BillPanel.SetActive(true);
-
     }
+
+    public void DeleteDetailMenu(int idx)
+    {
+        EMenuDetail eType = (EMenuDetail)idx;
+        bill.RemoveElt(eType);
+        BillPanel.SetActive(false);
+    }
+
+
 
     public void OnTabChange(int idx)
 	{
@@ -151,12 +167,34 @@ public class PageOrder : PageBase {
     public void OnBillShow()
     {
         BillPanel.SetActive(true);
+        CloseBillPanelBtn.SetActive(true);
     }
 
+    public void CloseShowCart()
+    {
+        BillPanel.SetActive(false);
+        CloseBillPanelBtn.SetActive(false);
+    }
+
+    //명명좀 제대로..이게 
     public void CloseBillPanel()
     {
         BillPanel.SetActive(false);
+
+        if (InCart == false)
+        {
+            CartAnimationPanel.SetActive(true);
+            InCartAnimation.Play("CartAnimation");
+            InCart = true;
+            StartCoroutine(_ResetAnim());
+        }
     }
 
+    IEnumerator _ResetAnim()
+    {
+        yield return new WaitForSeconds(1.25f);
+        CartAnimationPanel.SetActive(false);
+        InCart = false;
+    }
 
 }
