@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class PlayerToken : MonoBehaviour 
 {
@@ -9,6 +10,7 @@ public class PlayerToken : MonoBehaviour
     public Tile startingTile;
     public DiceManager diceManager;
     public Text valueText;
+    public UnityEvent EndMoveEvent;
 
     Tile currentTile;
 
@@ -76,5 +78,6 @@ public class PlayerToken : MonoBehaviour
             moveQueue[i] = finalTile;
         }
         moveQueueIndex = 0;
+        EndMoveEvent.Invoke();
     }
 }

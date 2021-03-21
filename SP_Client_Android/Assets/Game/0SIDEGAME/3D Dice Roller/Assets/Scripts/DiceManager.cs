@@ -10,7 +10,6 @@ public class DiceManager : MonoBehaviour
     public UnityEvent EndRollEvent;
     public GameObject objBoard;
 
-    // 주루마블에서 쓸것
 
     public void RollAllDie()
     {
