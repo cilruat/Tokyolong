@@ -192,7 +192,7 @@ public class PageOrder : PageBase {
 
     IEnumerator _ResetAnim()
     {
-        yield return new WaitForSeconds(1.25f);
+        yield return new WaitForSeconds(1.4f);
         CartAnimationPanel.SetActive(false);
         InCart = false;
     }
