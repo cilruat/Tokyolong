@@ -64,14 +64,20 @@ public class PageTaroOther : PageBase {
 		StopAllCoroutines ();
 
 		for (int i = 0; i < cgTypeSecond.Length; i++)
-			cgTypeSecond [i].alpha = i == curBoardIdx ? 1f : 0f;
+            cgTypeSecond[i].alpha = i == curBoardIdx ? 1f : 0f;
 
-		for (int i = 0; i < cgTypeResult.Length; i++)
+        for (int i = 0; i < cgTypeSecond.Length; i++)
+            cgTypeSecond[i].gameObject.SetActive(false);
+
+
+        for (int i = 0; i < cgTypeResult.Length; i++)
 			cgTypeResult [i].alpha = i == curBoardIdx ? 1f : 0f;
 
 
+        //DOTween.SetTweensCapacity(3000, 200);
 
         DOTween.RewindAll ();
+
 
 		objStartBtn.SetActive(true);
 		CardSelectPanel.SetActive(false);
@@ -89,10 +95,16 @@ public class PageTaroOther : PageBase {
 		base.OnNext ();
 
 		for (int i = 0; i < cgTypeSecond.Length; i++)
-			cgTypeSecond [i].alpha = i == nType ? 1f : 0f;
+        {
+            cgTypeSecond[i].alpha = i == nType ? 1f : 0f;
+            cgTypeSecond[nType].gameObject.SetActive(true);
+        }
 
-		_ChangeBtnsActive(false);
+        _ChangeBtnsActive(false);
     }
+
+
+
 
 
     public void OnGoResult(int idx)
@@ -124,7 +136,7 @@ public class PageTaroOther : PageBase {
     {
         for (int i = 0; i < ResultList.Count; i++)
             ResultList[i].SetActive(false);
-        objTodaySolutionPanel.SetActive(false);
+            objTodaySolutionPanel.SetActive(false);
 
         base.OnFirst ();
 		StartCoroutine (_delayInit());

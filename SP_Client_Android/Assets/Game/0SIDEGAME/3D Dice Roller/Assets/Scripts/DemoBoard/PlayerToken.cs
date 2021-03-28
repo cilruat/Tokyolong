@@ -80,4 +80,5 @@ public class PlayerToken : MonoBehaviour
         moveQueueIndex = 0;
         EndMoveEvent.Invoke();
     }
+
 }
