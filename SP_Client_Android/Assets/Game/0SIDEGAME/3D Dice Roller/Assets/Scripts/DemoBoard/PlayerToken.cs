@@ -21,6 +21,8 @@ public class PlayerToken : MonoBehaviour
     Vector3 velocity;
 
     Tile finalTile;
+
+    public bool IsGoing = false;
 	
     void Awake()
     {
@@ -34,8 +36,6 @@ public class PlayerToken : MonoBehaviour
     /// </summary>
 	void Update () 
     {
-
-        //0.03f 이내의 거리라면 0.2f의 속도로 스무스하게 움직여라 이건가
         if (Vector3.Distance(this.transform.position, targetPosition) > 0.03f)
         {
             this.transform.position = Vector3.SmoothDamp(this.transform.position, targetPosition, ref velocity, 0.2f);
@@ -60,6 +60,7 @@ public class PlayerToken : MonoBehaviour
     /// <summary>
     /// Moves the player 1-6 spaces depending on value of the dice roll.
     /// </summary>
+    /// 
     public void MovePlayerToken()
     {
         int spacesToMove = diceManager.totalValue;
@@ -79,6 +80,7 @@ public class PlayerToken : MonoBehaviour
         }
         moveQueueIndex = 0;
         EndMoveEvent.Invoke();
+        IsGoing = true;
     }
 
 }

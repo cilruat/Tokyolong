@@ -14,14 +14,14 @@ public class PageTaroOther : PageBase {
 	}
 
     public CanvasGroup[] cgBoard;
-
-	public CanvasGroup[] cgTypeSecond;
+    public GameObject objSecondBoard;
+    public CanvasGroup[] cgTypeThird;
 	public CanvasGroup[] cgTypeResult;
+
+    public GameObject[] objStartBtn;
 
     public GameObject objReturnHome;
     public GameObject objReturnPrev;
-
-    public GameObject objStartBtn;
 
     public GameObject BlindPanel;
     public GameObject CardSelectPanel;
@@ -29,11 +29,7 @@ public class PageTaroOther : PageBase {
 
     public GameObject objTodaySolutionPanel;
 
-
-    //public GameObject objResultToHomeBtn;
-
     public List<GameObject> ResultList = new List<GameObject>();
-
 
     public Text tx;
     public string m_text = "";
@@ -63,48 +59,47 @@ public class PageTaroOther : PageBase {
 	{
 		StopAllCoroutines ();
 
-		for (int i = 0; i < cgTypeSecond.Length; i++)
-            cgTypeSecond[i].alpha = i == curBoardIdx ? 1f : 0f;
-
-        for (int i = 0; i < cgTypeSecond.Length; i++)
-            cgTypeSecond[i].gameObject.SetActive(false);
-
+        for (int i = 0; i < cgTypeThird.Length; i++)
+            cgTypeThird[i].alpha = i == curBoardIdx ? 1f : 0f;
 
         for (int i = 0; i < cgTypeResult.Length; i++)
 			cgTypeResult [i].alpha = i == curBoardIdx ? 1f : 0f;
 
-
-        //DOTween.SetTweensCapacity(3000, 200);
-
         DOTween.RewindAll ();
 
-
-		objStartBtn.SetActive(true);
-		CardSelectPanel.SetActive(false);
-		BlindPanel.SetActive(false);
-		TextPanel.SetActive(false);
-        objTodaySolutionPanel.SetActive(false);
+        objSecondBoard.SetActive(false);
 
         _ChangeBtnsActive (true);
 	}
 
-	public void OnClick(int nType)
+    public void OnClickFirst(int nType)
     {
-		curType = (ETaroType)nType;
+        curType = (ETaroType)nType;
+        base.OnNext();
+        objSecondBoard.SetActive(true);
 
-		base.OnNext ();
-
-		for (int i = 0; i < cgTypeSecond.Length; i++)
+        for (int i = 0; i < objStartBtn.Length; i++)
         {
-            cgTypeSecond[i].alpha = i == nType ? 1f : 0f;
-            cgTypeSecond[nType].gameObject.SetActive(true);
+            objStartBtn[nType].SetActive(true);
         }
+
 
         _ChangeBtnsActive(false);
     }
 
+    public void OnClick(int nType)
+    {
+		curType = (ETaroType)nType;
+		base.OnNext ();
 
+		for (int i = 0; i < cgTypeThird.Length; i++)
+        {
+            cgTypeThird[i].alpha = i == nType ? 1f : 0f;
+            cgTypeThird[nType].gameObject.SetActive(true);
+        }
 
+        _ChangeBtnsActive(false);
+    }
 
 
     public void OnGoResult(int idx)
@@ -138,6 +133,10 @@ public class PageTaroOther : PageBase {
             ResultList[i].SetActive(false);
             objTodaySolutionPanel.SetActive(false);
 
+        for (int i = 0; i < objStartBtn.Length; i++)
+            objStartBtn[i].SetActive(false);
+
+
         base.OnFirst ();
 		StartCoroutine (_delayInit());
     }
@@ -152,8 +151,10 @@ public class PageTaroOther : PageBase {
 	{
         for (int i = 0; i < ResultList.Count; i++)
             ResultList[i].SetActive(false);
-        objTodaySolutionPanel.SetActive(false);
+            objTodaySolutionPanel.SetActive(false);
 
+        for (int i = 0; i < objStartBtn.Length; i++)
+            objStartBtn[i].SetActive(false);
 
         base.OnPrev ();
 
@@ -161,15 +162,35 @@ public class PageTaroOther : PageBase {
             StartCoroutine(_delayInit());
     }
 
-    public void StartBtn()
+    public void StartBtn(int nType)
     {
-        objStartBtn.SetActive(false);
         TextPanel.SetActive(true);
-
         DOTween.PlayAll();
 
-		StartCoroutine(ShowCardPanel());
+		StartCoroutine(ShowCardPanel(nType));
 		StartCoroutine (_taroTyping ());
+    }
+
+    IEnumerator ShowCardPanel(int nType)
+    {
+        yield return new WaitForSeconds(10f);
+        TextPanel.SetActive(false);
+
+
+        for (int i = 0; i < cgTypeThird.Length; i++)
+        {
+            cgTypeThird[i].alpha = i == nType ? 1f : 0f;
+            cgTypeThird[nType].gameObject.SetActive(true);
+        }
+
+        BlindPanel.SetActive(true);
+
+        //여기서 수정해줘야돼 Third를
+
+
+        yield return new WaitForSeconds(1f);
+        CardSelectPanel.SetActive(true);
+        yield return new WaitForSeconds(1f);
     }
 
     IEnumerator _taroTyping()
@@ -177,7 +198,7 @@ public class PageTaroOther : PageBase {
         while (true)
         {
             yield return new WaitForSeconds(3f);
-            for(int i = 0; i < m_text.Length; i++)
+            for (int i = 0; i < m_text.Length; i++)
             {
                 tx.text = m_text.Substring(0, i);
                 yield return new WaitForSeconds(0.3f);
@@ -186,15 +207,4 @@ public class PageTaroOther : PageBase {
     }
 
 
-    IEnumerator ShowCardPanel()
-    {
-        //연출이 중요
-        yield return new WaitForSeconds(10f);
-        //UITweenAlpha.Start(CardSelectPanel, 1f, 0f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
-        TextPanel.SetActive(false);
-        BlindPanel.SetActive(true);
-        yield return new WaitForSeconds(1f);
-        CardSelectPanel.SetActive(true);
-        yield return new WaitForSeconds(1f);
-    }
 }

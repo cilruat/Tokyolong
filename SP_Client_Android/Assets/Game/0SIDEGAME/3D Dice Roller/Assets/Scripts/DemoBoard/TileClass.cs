@@ -4,16 +4,6 @@ using UnityEngine;
 
 public class TileClass : MonoBehaviour {
 
-    public int Tileidx = 0;
+    public int TileNum = 0;
 
-    public int SetTile()
-    {
-        return Tileidx;
-    }
-
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("ㅎㅎㅎ");
-    }
 }
