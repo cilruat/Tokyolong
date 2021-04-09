@@ -22,21 +22,20 @@ public class MarbleEvent : MonoBehaviour {
     public List<Tile> listTile;
 
 
-
-
     public void OnTileOn()
     {
-        if (token.IsGoing == true)
+        int nType = tilenum.TileNum;
+
+        //Tile에 붙은 TileNum의 값이 내가 위에 있는 타일의idx값과 같다면
+
+
+
+        for (int i = 0; i < cgTile.Length; i++)
         {
-            Debug.Log("가지않는중");
-        }
-        else
-        {
-            for (int i = 0; i < cgTile.Length; i++)
-            {
-                cgTile[i].alpha = i == tilenum.TileNum ? 1f : 0f;
-                Debug.Log(i + "Check");
-            }
+            //cgTile[i].alpha = i == nType ? 1f : 0f;
+            //if(cgTile[nType] == )
+            cgTile[nType].gameObject.SetActive(true);
+            Debug.Log(i + "Check");
         }
     }
 
