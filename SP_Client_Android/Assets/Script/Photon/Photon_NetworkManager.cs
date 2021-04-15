@@ -132,13 +132,13 @@ public class Photon_NetworkManager : MonoBehaviourPunCallbacks {
 
 	public override void OnJoinRandomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); }
 
-	public void OnPlayerEnteredRoom(Player newPlayer)
+	public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
 	{
 		RoomRenewal();
 		PV.RPC("ChatRPC", RpcTarget.All, "<color=yellow>" + newPlayer.NickName + "님이 참가하셨습니다</color>");
 	}
 
-	public void OnPlayerLeftRoom(Player otherPlayer)
+	public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
 	{
 		RoomRenewal();
 		PV.RPC("ChatRPC", RpcTarget.All, "<color=yellow>" + otherPlayer.NickName + "님이 퇴장하셨습니다</color>");
