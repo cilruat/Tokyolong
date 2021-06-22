@@ -7,15 +7,11 @@ using UnityEngine.Events;
 
 public class MarbleEvent : MonoBehaviour {
 
-    //public List<string> BadCard;
-    //public List<string> GoodCard;
-
 
     public CanvasGroup[] cgTile;
     public GameObject Token;
     public List<GameObject> TileImageList = new List<GameObject>();
     public bool IsGoing = false;
-    TileClass tilenum = new TileClass();
     PlayerToken token = new PlayerToken();
 
     public GameObject ShowPanel;
@@ -24,11 +20,9 @@ public class MarbleEvent : MonoBehaviour {
 
     public void OnTileOn()
     {
+        TileClass tilenum = new TileClass();
+
         int nType = tilenum.TileNum;
-
-        //Tile에 붙은 TileNum의 값이 내가 위에 있는 타일의idx값과 같다면
-
-
 
         for (int i = 0; i < cgTile.Length; i++)
         {
@@ -45,6 +39,7 @@ public class MarbleEvent : MonoBehaviour {
         ShowPanel.SetActive(false);
         TileImageList[idx].SetActive(false);
     }
+    
 }
 
 

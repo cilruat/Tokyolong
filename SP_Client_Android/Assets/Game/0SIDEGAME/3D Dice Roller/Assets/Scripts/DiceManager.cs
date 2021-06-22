@@ -10,13 +10,6 @@ public class DiceManager : MonoBehaviour
     public UnityEvent EndRollEvent;
     public GameObject objBoard;
 
-    public bool IsGoing = false;
-
-
-    public GameObject ShowPanel;
-
-    public List<GameObject> TileImageList = new List<GameObject>();
-
 
     public void RollAllDie()
     {

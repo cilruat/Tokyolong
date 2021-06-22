@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class TileClass : MonoBehaviour {
 
-    public int TileNum = 0;
+    public int TileNum;
 
 }

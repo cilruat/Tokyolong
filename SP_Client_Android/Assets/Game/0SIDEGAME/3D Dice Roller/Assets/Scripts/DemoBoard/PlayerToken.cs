@@ -21,8 +21,6 @@ public class PlayerToken : MonoBehaviour
     Vector3 velocity;
 
     Tile finalTile;
-
-    public bool IsGoing = false;
 	
     void Awake()
     {
@@ -80,7 +78,6 @@ public class PlayerToken : MonoBehaviour
         }
         moveQueueIndex = 0;
         EndMoveEvent.Invoke();
-        IsGoing = true;
     }
 
 }
