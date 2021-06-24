@@ -12,6 +12,7 @@ public class InssaOmikuji : MonoBehaviour {
     public GameObject objExplainPanel;
     public GameObject objTouchPanel;
     public GameObject objWoodTrayPanel;
+    public GameObject objResultPanel;
 
     //스타트 그거 Dottween 한번 써야겟네 혹은 애니메이션 스타트 해야겟노..
 
@@ -22,11 +23,20 @@ public class InssaOmikuji : MonoBehaviour {
     public List<string> GachaList = new List<string>();
 
 
+    public List<GameObject> WoodTrayPanel;
+    public List<TabButton> tabWoodTray;
+    public List<GameObject> tabWoodTaryOpenImg;
+
+
+
+
     private void Start()
     {
         objReSetBtn.SetActive(false);
         objTouchPanel.SetActive(false);
         objWoodTrayPanel.SetActive(false);
+        objResultPanel.SetActive(false);
+
     }
 
 
@@ -72,6 +82,31 @@ public class InssaOmikuji : MonoBehaviour {
         DOTween.PlayAll();
 
     }
+
+
+    //주루마블 이거하면 안되냐?
+    public void ClickWoodPanel(int id)
+    {
+        for(int i = 0; i < WoodTrayPanel.Count; i++)
+        {
+            if(i == id)
+            {
+                WoodTrayPanel[i].SetActive(true);
+                tabWoodTray[i].Selected();
+                tabWoodTaryOpenImg[i].SetActive(true);
+            }
+            else
+            {
+                WoodTrayPanel[i].SetActive(false);
+                tabWoodTray[i].DeSelected();
+                tabWoodTaryOpenImg[i].SetActive(false);
+            }
+        }
+        objReSetBtn.SetActive(true);
+        objResultPanel.SetActive(true);
+    }
+
+
 
     public void GoHome()
     {
