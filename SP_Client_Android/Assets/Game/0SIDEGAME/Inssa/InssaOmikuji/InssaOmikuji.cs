@@ -17,11 +17,12 @@ public class InssaOmikuji : MonoBehaviour {
     //스타트 그거 Dottween 한번 써야겟네 혹은 애니메이션 스타트 해야겟노..
 
     public Text Text;
+    public List<string> GachaList = new List<string>();
 
     //public GameObject objBlindPanel;
 
-    public List<string> GachaList = new List<string>();
-
+    public Text TextLuck;
+    public List<string> LuckList = new List<string>();
 
     public List<GameObject> WoodTrayPanel;
     public List<TabButton> tabWoodTray;
@@ -105,6 +106,36 @@ public class InssaOmikuji : MonoBehaviour {
         objReSetBtn.SetActive(true);
         objResultPanel.SetActive(true);
     }
+
+
+    // Text한계에 있기때문에 이 문제는 홀수 짝수, 24개니깐 6개의 패널로 나누어서 하자
+
+    public void GachaLuckText()
+    {
+        //objTouchPanel.SetActive(false);
+        TextLuck.text = "";
+
+        StartCoroutine(ShowLuckText());
+    }
+
+
+    IEnumerator ShowLuckText()
+    {
+        Debug.Log("ShowLuckText");
+
+        yield return new WaitForSeconds(0.5f);
+        for (int i = 0; i < 1; i++)
+        {
+            if (LuckList.Count != 0)
+            {
+                int rand = Random.Range(0, LuckList.Count);
+                print(LuckList[rand]);
+                TextLuck.text = LuckList[rand].ToString();
+                LuckList.RemoveAt(rand);
+            }
+        }
+    }
+
 
 
 

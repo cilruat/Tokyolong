@@ -19,6 +19,15 @@ public class JjangGameBbo : SingletonMonobehaviour<JjangGameBbo>
     int rouletteNum, myCoin = 1;
     int[] rouletteCoins = new int[12] { 1, 2, 2, 1, 2, 5, 1, 2, 2, 1, 2, 2};
 
+    public AudioClip clipOpening;
+    public AudioClip clipWin;
+    public AudioClip clipCoin;
+
+    public AudioSource audioOpening;
+    public AudioSource audioWin;
+    public AudioSource audioYappi;
+
+
 
     private void Start()
     {
@@ -29,6 +38,7 @@ public class JjangGameBbo : SingletonMonobehaviour<JjangGameBbo>
     {
         if (Info.GamePlayCnt >= 1)
         {
+            audioOpening.Play();
             Blind.SetActive(false);
             rsp = 0;
             input = -1;
@@ -101,6 +111,7 @@ public class JjangGameBbo : SingletonMonobehaviour<JjangGameBbo>
         {
             StartCoroutine(RouletteSpin());
             StartCoroutine(ShowLog("이겼다!"));
+            audioWin.Play();
         }
 
         else // 짐
@@ -142,6 +153,8 @@ public class JjangGameBbo : SingletonMonobehaviour<JjangGameBbo>
             for (int i = 0; i < Roullettes.Length; i++)
                 Roullettes[i].SetActive(rouletteNum == i);
             yield return new WaitForSeconds(0.07f);
+            audioYappi.Play();
+
         }
 
         int curCoin = rouletteCoins[rouletteNum];
@@ -151,5 +164,6 @@ public class JjangGameBbo : SingletonMonobehaviour<JjangGameBbo>
         StartCoroutine(ShowLog(curCoin + " 얻었다"));
         End();
     }
+
 
 }

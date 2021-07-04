@@ -59,6 +59,8 @@ public class PlayerToken : MonoBehaviour
     /// Moves the player 1-6 spaces depending on value of the dice roll.
     /// </summary>
     /// 
+
+        // 이곳에 코루틴 넣어서 SpaceTomove만큼의 wating을 주고 Endmoveenvent를 invoke 하는게 맞지않을까?
     public void MovePlayerToken()
     {
         int spacesToMove = diceManager.totalValue;
@@ -77,7 +79,13 @@ public class PlayerToken : MonoBehaviour
             moveQueue[i] = finalTile;
         }
         moveQueueIndex = 0;
-        EndMoveEvent.Invoke();
+        StartCoroutine(WatingMove());
     }
 
+
+    IEnumerator WatingMove()
+    {
+        yield return new WaitForSeconds(diceManager.totalValue * 0.5f);
+        EndMoveEvent.Invoke();
+    }
 }
