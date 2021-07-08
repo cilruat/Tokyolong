@@ -112,7 +112,8 @@ public class PageLogin : PageBase {
 	{
 		if (NetworkManager.Instance.is_connected() == false) {			
 			NetworkManager.Instance.connect (IP, PORT);
-			return;
+            StartCoroutine(_PreventOverLapLoginBtn()); // 로그인버튼 누르면 코루틴 실행
+            return;
 		}
 	}
 
@@ -138,7 +139,19 @@ public class PageLogin : PageBase {
 		NetworkManager.Instance.Login_REQ (tableNo);
 	}
 
-	public void SuccessLogin()
+    //코루틴 추가 == 한번에 여러번 터치하는것을 방지
+
+    IEnumerator _PreventOverLapLoginBtn()
+    {
+        objLoginBox.gameObject.SetActive(false);
+        yield return new WaitForSeconds(3f);
+        objLoginBox.gameObject.SetActive(true);
+
+    }
+
+
+
+    public void SuccessLogin()
 	{
 		howMany = 1;
 		eType = (ECustomerType)Random.Range (0, 3);

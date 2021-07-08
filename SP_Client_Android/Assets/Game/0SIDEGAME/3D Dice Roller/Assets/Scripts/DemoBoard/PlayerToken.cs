@@ -21,7 +21,10 @@ public class PlayerToken : MonoBehaviour
     Vector3 velocity;
 
     Tile finalTile;
-	
+
+    public List<GameObject> TileImageList = new List<GameObject>();
+
+
     void Awake()
     {
         finalTile = startingTile;
@@ -81,6 +84,32 @@ public class PlayerToken : MonoBehaviour
         moveQueueIndex = 0;
         StartCoroutine(WatingMove());
     }
+
+
+    public void TileCheck()
+    {
+        int spacesToMove = diceManager.totalValue;
+        if (spacesToMove == 0)
+        {
+            return;
+        }
+        Debug.Log(finalTile);
+
+        for (int i = 0; i < spacesToMove; i++)
+        {
+
+        }
+
+
+        //15번 타일의 GameObject의 ShowPanel을 활성화하면 되지않냐 그냥 인보크해서 
+    }
+
+    public void ShowTile()
+    {
+
+
+    }
+
 
 
     IEnumerator WatingMove()
