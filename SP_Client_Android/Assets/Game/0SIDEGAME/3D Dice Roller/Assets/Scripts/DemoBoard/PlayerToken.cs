@@ -19,11 +19,12 @@ public class PlayerToken : MonoBehaviour
 
     Vector3 targetPosition;
     Vector3 velocity;
-
+    
     Tile finalTile;
 
     public List<GameObject> TileImageList = new List<GameObject>();
 
+    public GameObject ShowPanel;
 
     void Awake()
     {
@@ -88,21 +89,235 @@ public class PlayerToken : MonoBehaviour
 
     public void TileCheck()
     {
-        int spacesToMove = diceManager.totalValue;
-        if (spacesToMove == 0)
-        {
-            return;
-        }
-        Debug.Log(finalTile);
+        //Debug.Log(finalTile.name);
 
-        for (int i = 0; i < spacesToMove; i++)
+        if(finalTile.name == "Tile_Holder_1")
         {
+            GameObject Tile1 = ShowPanel.transform.GetChild(1).gameObject;
+            Tile1.SetActive(true);
+            Debug.Log("1");
 
         }
+        else if (finalTile.name == "Tile_Holder_2")
+        {
+            GameObject Tile2 = ShowPanel.transform.GetChild(2).gameObject;
+            Tile2.SetActive(true);
+            Debug.Log("2");
+
+        }
+
+        else if (finalTile.name == "Tile_Holder_3")
+        {
+            GameObject Tile3 = ShowPanel.transform.GetChild(3).gameObject;
+            Tile3.SetActive(true);
+            Debug.Log("3");
+
+        }
+
+        else if (finalTile.name == "Tile_Holder_4")
+        {
+            GameObject Tile4 = ShowPanel.transform.GetChild(4).gameObject;
+            Tile4.SetActive(true);
+            Debug.Log("4");
+        }
+
+        else if (finalTile.name == "Tile_Holder_5")
+        {
+            GameObject Tile5 = ShowPanel.transform.GetChild(5).gameObject;
+            Tile5.SetActive(true);
+            Debug.Log("5");
+        }
+
+        else if (finalTile.name == "Tile_Holder_6")
+        {
+            GameObject Tile6 = ShowPanel.transform.GetChild(6).gameObject;
+            Tile6.SetActive(true);
+            Debug.Log("6");
+        }
+
+        else if (finalTile.name == "Tile_Holder_7")
+        {
+            GameObject Tile7 = ShowPanel.transform.GetChild(7).gameObject;
+            Tile7.SetActive(true);
+            Debug.Log("7");
+        }
+
+        else if (finalTile.name == "Tile_Holder_8")
+        {
+            GameObject Tile8 = ShowPanel.transform.GetChild(8).gameObject;
+            Tile8.SetActive(true);
+            Debug.Log("8");
+        }
+
+        else if (finalTile.name == "Tile_Holder_9")
+        {
+            GameObject Tile9 = ShowPanel.transform.GetChild(9).gameObject;
+            Tile9.SetActive(true);
+            Debug.Log("9");
+        }
+
+        else if (finalTile.name == "Tile_Holder_10")
+        {
+            GameObject Tile10 = ShowPanel.transform.GetChild(10).gameObject;
+            Tile10.SetActive(true);
+            Debug.Log("10");
+        }
+
+        else if (finalTile.name == "Tile_Holder_11")
+        {
+            GameObject Tile11 = ShowPanel.transform.GetChild(11).gameObject;
+            Tile11.SetActive(true);
+            Debug.Log("11");
+        }
+
+        else if (finalTile.name == "Tile_Holder_12")
+        {
+            GameObject Tile12 = ShowPanel.transform.GetChild(12).gameObject;
+            Tile12.SetActive(true);
+            Debug.Log("12");
+        }
+
+        else if (finalTile.name == "Tile_Holder_13")
+        {
+            GameObject Tile13 = ShowPanel.transform.GetChild(13).gameObject;
+            Tile13.SetActive(true);
+            Debug.Log("13");
+        }
+
+        else if (finalTile.name == "Tile_Holder_14")
+        {
+            GameObject Tile14 = ShowPanel.transform.GetChild(14).gameObject;
+            Tile14.SetActive(true);
+            Debug.Log("14");
+        }
+
+        else if (finalTile.name == "Tile_Holder_15")
+        {
+            GameObject Tile15 = ShowPanel.transform.GetChild(15).gameObject;
+            Tile15.SetActive(true);
+            Debug.Log("15");
+        }
+
+        else if (finalTile.name == "Tile_Holder_16")
+        {
+            GameObject Tile16 = ShowPanel.transform.GetChild(16).gameObject;
+            Tile16.SetActive(true);
+            Debug.Log("16");
+        }
+
+        else if (finalTile.name == "Tile_Holder_17")
+        {
+            GameObject Tile17 = ShowPanel.transform.GetChild(17).gameObject;
+            Tile17.SetActive(true);
+            Debug.Log("17");
+        }
+
+        else if (finalTile.name == "Tile_Holder_18")
+        {
+            GameObject Tile18 = ShowPanel.transform.GetChild(18).gameObject;
+            Tile18.SetActive(true);
+            Debug.Log("18");
+        }
+
+        else if (finalTile.name == "Tile_Holder_19")
+        {
+            GameObject Tile19 = ShowPanel.transform.GetChild(19).gameObject;
+            Tile19.SetActive(true);
+            Debug.Log("19");
+        }
+
+        else if (finalTile.name == "Tile_Holder_20")
+        {
+            GameObject Tile20 = ShowPanel.transform.GetChild(20).gameObject;
+            Tile20.SetActive(true);
+            Debug.Log("20");
+        }
+
+        else if (finalTile.name == "Tile_Holder_21")
+        {
+            GameObject Tile21 = ShowPanel.transform.GetChild(21).gameObject;
+            Tile21.SetActive(true);
+            Debug.Log("21");
+        }
+
+        else if (finalTile.name == "Tile_Holder_22")
+        {
+            GameObject Tile22 = ShowPanel.transform.GetChild(22).gameObject;
+            Tile22.SetActive(true);
+            Debug.Log("22");
+        }
+
+        else if (finalTile.name == "Tile_Holder_23")
+        {
+            GameObject Tile23 = ShowPanel.transform.GetChild(23).gameObject;
+            Tile23.SetActive(true);
+            Debug.Log("23");
+        }
+
+        else if (finalTile.name == "Tile_Holder_24")
+        {
+            GameObject Tile24 = ShowPanel.transform.GetChild(24).gameObject;
+            Tile24.SetActive(true);
+            Debug.Log("24");
+        }
 
 
-        //15번 타일의 GameObject의 ShowPanel을 활성화하면 되지않냐 그냥 인보크해서 
+
+
+        else if (finalTile.name == "Tile_Holder_Start")
+        {
+            GameObject Tile0 = ShowPanel.transform.GetChild(25).gameObject;
+            Tile0.SetActive(true);
+            Debug.Log("25");
+        }
+
+
+
+
+
+
+        /*
+        switch (finalTile.name)
+        {
+
+            case "Tile_Holder_1":
+
+                GameObject Tile1 = ShowPanel.transform.GetChild(0).gameObject;
+                Tile1.SetActive(true);
+                break;
+
+            case "Tile_Holder_2":
+
+                GameObject Tile2 = ShowPanel.transform.GetChild(1).gameObject;
+                Tile2.SetActive(true);
+                break;
+
+            case "Tile_Holder_3":
+
+                GameObject Tile3 = ShowPanel.transform.GetChild(2).gameObject;
+                Tile3.SetActive(true);
+                break;
+
+            case "Tile_Holder_4":
+
+                GameObject Tile4 = ShowPanel.transform.GetChild(3).gameObject;
+                Tile4.SetActive(true);
+                break;
+
+            case "Tile_Holder_5":
+
+                GameObject Tile5 = ShowPanel.transform.GetChild(4).gameObject;
+                Tile5.SetActive(true);
+                break;
+
+
+            case "details":
+                //TBD
+                break;
+        }*/
+
     }
+
 
     public void ShowTile()
     {
