@@ -8,41 +8,18 @@ using UnityEngine.Events;
 public class MarbleEvent : MonoBehaviour {
 
 
-    public List<GameObject> cgTile = new List<GameObject>();
-    public List<GameObject> TileImageList = new List<GameObject>();
-    public GameObject ShowPanel;
-    public DiceManager diceManager;
+    public List<GameObject> InShowPanelobj = new List<GameObject>();
+
+    public Button btnDiceRoll;
 
 
 
-
-    public void OnTileOn()
+    public void OnClosePopUp(int idx)
     {
-        TileClass tilenum = new TileClass(); //클래스를 가져왓고
+        InShowPanelobj[idx].SetActive(false);
 
-        int nType = tilenum.TileNum; // 매개변수를 지정해서 뭔지 알게햇고
-
-        for (int i = 0; i < cgTile.Count; i++)
-        {
-            /* 맞는 무언가가 있어야해
-            if (cgTile[nType] = )
-            {
-                Debug.Log(i + "Check");
-
-            }
-            */
-            //cgTile[nType].gameObject.SetActive(true);
-        }
-    }
-
-
-
-
-
-    public void CloseShowPanel(int idx)
-    {
-        ShowPanel.SetActive(false);
-        TileImageList[idx].SetActive(false);
+        //DiceManager dice = new DiceManager(); // 왜 안되는지 알때는 언제일까 2021.7.12
+        btnDiceRoll.interactable = true;
     }
     
 }

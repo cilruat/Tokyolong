@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 
 public class DiceManager : MonoBehaviour
@@ -11,13 +11,7 @@ public class DiceManager : MonoBehaviour
     public int totalValue;
     public UnityEvent EndRollEvent;
     public GameObject objBoard;
-
-    //추가부분//
-    public List<GameObject> WoodTrayPanel;
-    //public List<TabButton> tabWoodTray;
-    //public List<GameObject> tabWoodTaryOpenImg;
-
-
+    public Button btnRollDice;
 
     TileClass Tilenum = new TileClass();
 
@@ -48,6 +42,7 @@ public class DiceManager : MonoBehaviour
             }
         }
         EndRollEvent.Invoke();
+        btnRollDice.interactable = false;
     }
 
     // 복불복 게임에서 쓸것
