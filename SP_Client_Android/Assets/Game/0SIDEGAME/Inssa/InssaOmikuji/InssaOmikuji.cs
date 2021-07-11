@@ -23,6 +23,10 @@ public class InssaOmikuji : MonoBehaviour {
 
     public Text TextLuck;
     public List<string> LuckList = new List<string>();
+    public List<string> LuckList2 = new List<string>();
+    public List<string> LuckList3 = new List<string>();
+
+
 
     public List<GameObject> WoodTrayPanel;
     public List<TabButton> tabWoodTray;
@@ -119,10 +123,27 @@ public class InssaOmikuji : MonoBehaviour {
     }
 
 
+    public void GachaLuckText2()
+    {
+        //objTouchPanel.SetActive(false);
+        TextLuck.text = "";
+
+        StartCoroutine(ShowLuckText2());
+    }
+
+    public void GachaLuckText3()
+    {
+        //objTouchPanel.SetActive(false);
+        TextLuck.text = "";
+
+        StartCoroutine(ShowLuckText3());
+    }
+
+
+
+
     IEnumerator ShowLuckText()
     {
-        Debug.Log("ShowLuckText");
-
         yield return new WaitForSeconds(0.5f);
         for (int i = 0; i < 1; i++)
         {
@@ -131,7 +152,34 @@ public class InssaOmikuji : MonoBehaviour {
                 int rand = Random.Range(0, LuckList.Count);
                 print(LuckList[rand]);
                 TextLuck.text = LuckList[rand].ToString();
-                LuckList.RemoveAt(rand);
+            }
+        }
+    }
+
+    IEnumerator ShowLuckText2()
+    {
+        yield return new WaitForSeconds(0.5f);
+        for (int i = 0; i < 1; i++)
+        {
+            if (LuckList2.Count != 0)
+            {
+                int rand = Random.Range(0, LuckList2.Count);
+                print(LuckList2[rand]);
+                TextLuck.text = LuckList2[rand].ToString();
+            }
+        }
+    }
+
+    IEnumerator ShowLuckText3()
+    {
+        yield return new WaitForSeconds(0.5f);
+        for (int i = 0; i < 1; i++)
+        {
+            if (LuckList3.Count != 0)
+            {
+                int rand = Random.Range(0, LuckList3.Count);
+                print(LuckList3[rand]);
+                TextLuck.text = LuckList3[rand].ToString();
             }
         }
     }
