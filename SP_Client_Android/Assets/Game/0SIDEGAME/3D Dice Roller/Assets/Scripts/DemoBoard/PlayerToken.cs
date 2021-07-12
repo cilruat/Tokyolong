@@ -261,14 +261,21 @@ public class PlayerToken : MonoBehaviour
             Debug.Log("24");
         }
 
+        else if (finalTile.name == "Tile_Holder_25")
+        {
+            GameObject Tile24 = ShowPanel.transform.GetChild(25).gameObject;
+            Tile24.SetActive(true);
+            Debug.Log("25");
+        }
+
 
 
 
         else if (finalTile.name == "Tile_Holder_Start")
         {
-            GameObject Tile0 = ShowPanel.transform.GetChild(25).gameObject;
+            GameObject Tile0 = ShowPanel.transform.GetChild(0).gameObject;
             Tile0.SetActive(true);
-            Debug.Log("25");
+            Debug.Log("0");
         }
 
 
