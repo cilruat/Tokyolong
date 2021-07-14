@@ -21,6 +21,11 @@ public class PlayerToken : MonoBehaviour
     Vector3 velocity;
     
     Tile finalTile;
+    public int stackSoju = 0;
+    public Text textSoju;
+    public Text textSoju2;
+
+
 
     public List<GameObject> TileImageList = new List<GameObject>();
 
@@ -30,6 +35,7 @@ public class PlayerToken : MonoBehaviour
     {
         finalTile = startingTile;
         targetPosition = this.transform.position;
+        stackSoju = 0;
     }
 
 	// Update is called once per frame
@@ -132,6 +138,12 @@ public class PlayerToken : MonoBehaviour
         {
             GameObject Tile6 = ShowPanel.transform.GetChild(6).gameObject;
             Tile6.SetActive(true);
+
+
+            textSoju2.text = stackSoju.ToString();
+
+
+
             Debug.Log("6");
         }
 
@@ -258,6 +270,9 @@ public class PlayerToken : MonoBehaviour
         {
             GameObject Tile24 = ShowPanel.transform.GetChild(24).gameObject;
             Tile24.SetActive(true);
+            stackSoju++;
+            textSoju.text = stackSoju.ToString();
+
             Debug.Log("24");
         }
 
