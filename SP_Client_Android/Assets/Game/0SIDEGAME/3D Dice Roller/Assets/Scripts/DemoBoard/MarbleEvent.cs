@@ -42,11 +42,8 @@ public class MarbleEvent : MonoBehaviour {
     }
 
 
-    //카드가 등장하게된다
-    //애니메이터 달고
     public void OnOpenGoldenCard()
     {
-        //애니메이션 후 카드가 시작된다
         GoldenCardText.text = "";
         FlipGoldenCard.Play("Flip");
         StartCoroutine(GoldenCard());
@@ -59,15 +56,26 @@ public class MarbleEvent : MonoBehaviour {
         yield return new WaitForSeconds(0.4f);
 
         objGoldeCard.SetActive(true);
+        for(int i = 0; i < 1; i++)
+        {
+            if(GoldenCardList.Count !=0)
+            {
+                int rand = Random.Range(0, GoldenCardList.Count);
+                print(GoldenCardList[rand]);
+                GoldenCardText.text = GoldenCardList[rand].ToString();
+                Debug.Log("dd");
 
+            }
+        }
     }
 
 
 
     public void OnCloseGoldenCard(int idx)
     {
-        objGoldeCard.SetActive(false);
         InShowPanelobj[idx].SetActive(false);
+        objGoldeCard.SetActive(false);
+
         btnDiceRoll.interactable = true;
 
 
