@@ -31,11 +31,15 @@ public class PlayerToken : MonoBehaviour
 
     public GameObject ShowPanel;
 
+    private void Start()
+    {
+                stackSoju = 0;
+    }
+
     void Awake()
     {
         finalTile = startingTile;
         targetPosition = this.transform.position;
-        stackSoju = 0;
     }
 
 	// Update is called once per frame
@@ -144,7 +148,7 @@ public class PlayerToken : MonoBehaviour
 
 
 
-            Debug.Log("6");
+            Debug.Log(stackSoju + "소주");
         }
 
         else if (finalTile.name == "Tile_Holder_7")
