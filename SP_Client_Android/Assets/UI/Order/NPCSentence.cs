@@ -11,13 +11,15 @@ public class NPCSentence : MonoBehaviour {
 
     private void Start()
     {
-        
+        Invoke("TalkNPC", 10f);
     }
 
     public void TalkNPC()
     {
         GameObject go = Instantiate(chatBoxPrefab);
-        go.GetComponent<ChatSystem>().Ondialogue(sentences);
+        go.transform.SetParent(transform, false);
+        go.GetComponent<ChatSystem>().Ondialogue(sentences, chatTr);
+        Invoke("TalkNPC", 10f);
     }
 
     private void OnMouseDown()
