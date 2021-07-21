@@ -33,22 +33,58 @@ public class MarbleEvent : MonoBehaviour {
     public Animator FlipBadCard;
     public Animator FlipBadCard2;
 
+    public GameObject BlindPanel;
+    public GameObject TurnPanel;
+    public Text TurnText;
+    public Animator MoveToPanel;
+
+    public Text PanelTurnText;
+
+    private int Turn;
+
+
+    private void Start()
+    {
+        BlindPanel.SetActive(false);
+        Turn = 1;
+        Debug.Log(DiceRollMain.PeopleNum+ "넘어온사람수");
+    }
+
+
+
+    IEnumerator OffBlindPanel()
+    {
+
+
+        
+        if (Turn < DiceRollMain.PeopleNum)
+        {
+            Turn++;
+            Debug.Log(Turn);
+        }
+        else if(Turn == DiceRollMain.PeopleNum)
+        {
+            Turn = 1;
+            Debug.Log("같을때입니다");
+        }
+
+        BlindPanel.SetActive(true);
+        MoveToPanel.Play("MoveTurnPanel");
+        TurnText.text = Turn.ToString();
+        PanelTurnText.text = Turn.ToString();
+        yield return new WaitForSeconds(1f);
+        BlindPanel.SetActive(false);
+    }
 
     public void OnClosePopUp(int idx)
     {
         InShowPanelobj[idx].SetActive(false);
 
+        StartCoroutine(OffBlindPanel());
+
+
         //DiceManager dice = new DiceManager(); // 왜 안되는지 알때는 언제일까 2021.7.12
         btnDiceRoll.interactable = true;
-    }
-
-    public void OnClosePopUpStackSoju(int idx)
-    {
-        InShowPanelobj[idx].SetActive(false);
-        PlayerToken StackSoju = new PlayerToken();
-        StackSoju.stackSoju = 0;
-        btnDiceRoll.interactable = true;
-
     }
 
 
@@ -155,6 +191,8 @@ public class MarbleEvent : MonoBehaviour {
         InShowPanelobj[idx].SetActive(false);
         objGoldeCard.SetActive(false);
         btnDiceRoll.interactable = true;
+        StartCoroutine(OffBlindPanel());
+
     }
 
 
@@ -163,6 +201,8 @@ public class MarbleEvent : MonoBehaviour {
         InShowPanelobj[idx].SetActive(false);
         objGoldeCard2.SetActive(false);
         btnDiceRoll.interactable = true;
+        StartCoroutine(OffBlindPanel());
+
     }
 
 
@@ -171,6 +211,8 @@ public class MarbleEvent : MonoBehaviour {
         objBadCard.SetActive(false);
         InShowPanelobj[idx].SetActive(false);
         btnDiceRoll.interactable = true;
+        StartCoroutine(OffBlindPanel());
+
     }
 
     public void OnCloseBadCard2(int idx)
@@ -178,7 +220,22 @@ public class MarbleEvent : MonoBehaviour {
         objBadCard2.SetActive(false);
         InShowPanelobj[idx].SetActive(false);
         btnDiceRoll.interactable = true;
+        StartCoroutine(OffBlindPanel());
+
     }
+
+
+    public void OnClosePopUpStackSoju(int idx)
+    {
+        InShowPanelobj[idx].SetActive(false);
+        PlayerToken StackSoju = new PlayerToken();
+        StackSoju.ClearSoju();
+        btnDiceRoll.interactable = true;
+        StartCoroutine(OffBlindPanel());
+
+    }
+
+
 
 }
 

@@ -104,7 +104,7 @@ public class Dice : MonoBehaviour
         {
             isRolling = true;
             Vector3 RandomPosition = new Vector3(Random.Range(-0.2f, 0.2f), -1, Random.Range(-0.2f, 0.2f));
-            rb.AddExplosionForce(Random.Range(minRollForce, maxRollForce), RandomPosition, -0.5f, 2f);
+            rb.AddExplosionForce(Random.Range(minRollForce, maxRollForce), RandomPosition, -1f, 2f);
         }
     }
 

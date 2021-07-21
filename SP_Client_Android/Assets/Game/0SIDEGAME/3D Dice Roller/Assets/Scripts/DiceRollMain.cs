@@ -6,23 +6,23 @@ using UnityEngine.UI;
 
 public class DiceRollMain : MonoBehaviour {
 
-    public int PeopleNum;
+
+    public GameObject objBoard;
+    //public int PeopleNum;
+
+    public static int PeopleNum;
+
     public int maxPeopleNum = 8;
     public int minPeopleNum = 1;
     public Text PeopleText;
     public GameObject btnPlus;
     public GameObject btnMinus;
-
-
-    void _init()
+    
+    
+    private void Start()
     {
         PeopleNum = 1;
         PeopleText.text = "1";
-    }
-
-    private void Start()
-    {
-        _init();
     }
 
 
@@ -56,5 +56,14 @@ public class DiceRollMain : MonoBehaviour {
 
     }
 
+    public void GoHome()
+    {
+        SceneChanger.LoadScene("HitNMiss", objBoard);
+    }
+
+    public void StartBtn()
+    {
+        SceneChanger.LoadScene("DemoScene", objBoard);
+    }
 
 }

@@ -21,7 +21,9 @@ public class PlayerToken : MonoBehaviour
     Vector3 velocity;
     
     Tile finalTile;
+
     public int stackSoju = 0;
+
     public Text textSoju;
     public Text textSoju2;
 
@@ -48,6 +50,8 @@ public class PlayerToken : MonoBehaviour
     /// </summary>
 	void Update () 
     {
+        textSoju.text = stackSoju.ToString();
+        textSoju2.text = stackSoju.ToString();
         if (Vector3.Distance(this.transform.position, targetPosition) > 0.03f)
         {
             this.transform.position = Vector3.SmoothDamp(this.transform.position, targetPosition, ref velocity, 0.2f);
@@ -144,11 +148,7 @@ public class PlayerToken : MonoBehaviour
             Tile6.SetActive(true);
 
 
-            textSoju2.text = stackSoju.ToString();
 
-
-
-            Debug.Log(stackSoju + "소주");
         }
 
         else if (finalTile.name == "Tile_Holder_7")
@@ -169,6 +169,7 @@ public class PlayerToken : MonoBehaviour
         {
             GameObject Tile9 = ShowPanel.transform.GetChild(9).gameObject;
             Tile9.SetActive(true);
+            Debug.Log(stackSoju + "소주");
             Debug.Log("9");
         }
 
@@ -275,7 +276,6 @@ public class PlayerToken : MonoBehaviour
             GameObject Tile24 = ShowPanel.transform.GetChild(24).gameObject;
             Tile24.SetActive(true);
             stackSoju++;
-            textSoju.text = stackSoju.ToString();
 
             Debug.Log("24");
         }
@@ -345,12 +345,10 @@ public class PlayerToken : MonoBehaviour
     }
 
 
-    public void ShowTile()
+    public void ClearSoju()
     {
-
-
+        stackSoju = 0;
     }
-
 
 
     IEnumerator WatingMove()
