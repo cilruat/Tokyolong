@@ -60,11 +60,15 @@ public class DiceManager : MonoBehaviour
 
 
 
-    public void OnGoHome(string SceneName)
+    public void OnGoHome()
     {
-        SceneChanger.LoadScene(SceneName, objBoard);
+        SceneChanger.LoadScene("HitNMiss", objBoard);
     }
 
+    public void OnReset()
+    {
+        SceneChanger.LoadScene("JooRooMarble", objBoard);
+    }
 
 
 
