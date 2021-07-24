@@ -22,7 +22,7 @@ public class PlayerToken : MonoBehaviour
     
     Tile finalTile;
 
-    public int stackSoju = 0;
+    public int stackSoju;
 
     public Text textSoju;
     public Text textSoju2;
@@ -32,6 +32,8 @@ public class PlayerToken : MonoBehaviour
     public List<GameObject> TileImageList = new List<GameObject>();
 
     public GameObject ShowPanel;
+
+
 
     private void Start()
     {
@@ -347,6 +349,8 @@ public class PlayerToken : MonoBehaviour
 
     public void ClearSoju()
     {
+        Debug.Log("2");
+
         stackSoju = 0;
     }
 

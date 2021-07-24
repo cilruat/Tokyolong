@@ -5,8 +5,10 @@ using UnityEngine;
 public class ClickMovement : MonoBehaviour {
 
 
-    public Camera camera;
+    private Camera camera;
     public Animator animator;
+    public float moveSpeed;
+
 
     private bool isMove;
     private Vector3 destination;
@@ -51,7 +53,7 @@ public class ClickMovement : MonoBehaviour {
         if(isMove)
         {
             var dir = destination - transform.position;
-            transform.position += dir.normalized * Time.deltaTime * 5f;
+            transform.position += dir.normalized * Time.deltaTime * moveSpeed;
         }
 
         if(Vector3.Distance(transform.position, destination) <= 0.1f)

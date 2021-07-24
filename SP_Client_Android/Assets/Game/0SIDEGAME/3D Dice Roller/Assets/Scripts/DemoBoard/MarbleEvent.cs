@@ -42,12 +42,15 @@ public class MarbleEvent : MonoBehaviour {
 
     private int Turn;
 
+    
+
 
     private void Start()
     {
         BlindPanel.SetActive(false);
         Turn = 1;
         Debug.Log(DiceRollMain.PeopleNum+ "넘어온사람수");
+
     }
 
 
@@ -228,8 +231,12 @@ public class MarbleEvent : MonoBehaviour {
     public void OnClosePopUpStackSoju(int idx)
     {
         InShowPanelobj[idx].SetActive(false);
-        PlayerToken StackSoju = new PlayerToken();
-        StackSoju.ClearSoju();
+
+        //PlayerToken Soju = GetComponent<PlayerToken>()
+
+        PlayerToken Soju = new PlayerToken();
+        Soju = GetComponent<PlayerToken>();
+        Soju.stackSoju = 0;
         btnDiceRoll.interactable = true;
         StartCoroutine(OffBlindPanel());
 
