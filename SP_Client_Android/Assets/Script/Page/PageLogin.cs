@@ -22,6 +22,11 @@ public class PageLogin : PageBase {
     byte howMany = 0;
     ECustomerType eType = ECustomerType.MAN;
 
+    //Typing Reapeat Effect
+    public Text tx, tx2;
+    public string m_text, m_text2 = "";
+    public float TimeToWait, TimeToWait2;
+    public float stringInterval, stringInterval2;
 
 
 
@@ -120,13 +125,17 @@ public class PageLogin : PageBase {
 	public void SuccessConnect()
 	{
 		successConnect = true;
-		string desc = "정상적으로 서버에 접속하였습니다\n" + "테이블 넘버: " + tableNo;
+		string desc = "도쿄마츠리에 오신것을 환영합니다\n" + "테이블 넘버: " + tableNo;
 		SystemMessage.Instance.Add (desc);
 
 		StartCoroutine (_SendLoginREQ ());
-	}
 
-	IEnumerator _SendLoginREQ()
+        StartCoroutine(FirstTyping());
+        StartCoroutine(SecondTyping());
+
+    }
+
+    IEnumerator _SendLoginREQ()
 	{
         Info.Init();
 		yield return new WaitForSeconds (.5f);
@@ -182,9 +191,10 @@ public class PageLogin : PageBase {
     }
 
     Coroutine waitRoutine = null;
+
     IEnumerator WaitShowNoticeAndHome()
     {
-        yield return new WaitForSeconds(3.5f);
+        yield return new WaitForSeconds(5.5f);
 
         OnNext();
         waitRoutine = null;
@@ -229,6 +239,39 @@ public class PageLogin : PageBase {
 	public void ClickedDelete()
     {
 		PlayerPrefs.DeleteAll();
+    }
+
+
+    IEnumerator FirstTyping()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(TimeToWait);
+            for (int i = 0; i < m_text.Length; i++)
+            {
+                tx.text = m_text.Substring(0, i);
+
+                yield return new WaitForSeconds(stringInterval);
+            }
+            yield return new WaitForSeconds(5f);
+        }
+    }
+
+    IEnumerator SecondTyping()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(TimeToWait2);
+            for (int i = 0; i < m_text2.Length; i++)
+            {
+                tx2.text = m_text2.Substring(0, i);
+
+                yield return new WaitForSeconds(stringInterval2);
+
+            }
+            yield return new WaitForSeconds(5f);
+        }
+
     }
 
 }
