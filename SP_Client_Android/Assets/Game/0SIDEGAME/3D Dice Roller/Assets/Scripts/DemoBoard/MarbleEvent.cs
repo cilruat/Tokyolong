@@ -231,12 +231,6 @@ public class MarbleEvent : MonoBehaviour {
     public void OnClosePopUpStackSoju(int idx)
     {
         InShowPanelobj[idx].SetActive(false);
-
-        //PlayerToken Soju = GetComponent<PlayerToken>()
-
-        PlayerToken Soju = new PlayerToken();
-        Soju = GetComponent<PlayerToken>();
-        Soju.stackSoju = 0;
         btnDiceRoll.interactable = true;
         StartCoroutine(OffBlindPanel());
 

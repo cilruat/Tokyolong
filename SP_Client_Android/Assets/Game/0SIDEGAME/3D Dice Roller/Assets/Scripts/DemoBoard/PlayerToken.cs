@@ -102,7 +102,6 @@ public class PlayerToken : MonoBehaviour
         StartCoroutine(WatingMove());
     }
 
-
     public void TileCheck()
     {
         //Debug.Log(finalTile.name);
@@ -171,6 +170,7 @@ public class PlayerToken : MonoBehaviour
         {
             GameObject Tile9 = ShowPanel.transform.GetChild(9).gameObject;
             Tile9.SetActive(true);
+            StartCoroutine(resetSoju());
             Debug.Log(stackSoju + "소주");
             Debug.Log("9");
         }
@@ -352,6 +352,12 @@ public class PlayerToken : MonoBehaviour
         Debug.Log("2");
 
         stackSoju = 0;
+    }
+
+    IEnumerator resetSoju()
+    {
+        yield return new WaitForSeconds(15f);
+        ClearSoju();
     }
 
 
