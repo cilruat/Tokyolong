@@ -720,6 +720,33 @@ namespace SP_Server.UserState
                         break;
 
 
+
+                    case PROTOCOL.CASH_SEND_REQ:
+
+                        tableNo = msg.pop_byte();
+                        string reqCash = msg.pop_string();
+                        gameCount = msg.pop_int32();
+
+                        // 유저의 gameCount를 감소시킨다
+                        owner.mainFrm.AddGameCount((int)tableNo, -gameCount);
+
+                        send_msg = CPacket.create((short)PROTOCOL.CASH_SEND_ACK);
+
+                        RequestCashInfo reqCashInfo = owner.mainFrm.AddRequestCash(tableNo, reqCash);
+                        JsonData reqCashJson = JsonMapper.ToJson(reqCashInfo);
+
+                        if(Frm.GetAdminUser() != null)
+                        {
+                            other_msg = CPacket.create((short)PROTOCOL.CASH_SEND_NOT);
+                            other_msg.push(reqCashJson.ToString());
+                            Frm.GetAdminUser().send(other_msg);
+                        }
+
+                        send_msg.push(reqCashJson.ToString());
+
+                        break;
+
+
                     default:
                         break;
                 }

@@ -67,6 +67,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         case PROTOCOL.PRESENT_SEND_NOT:             PresentSendNOT(msg);            break;
         case PROTOCOL.PLZ_SEND_ACK:                 PleaseSendACK(msg);            break;
         case PROTOCOL.PLZ_SEND_NOT:                 PleaseSendNOT(msg);            break;
+        case PROTOCOL.CASH_SEND_ACK:                CashSendACK(msg);              break;
+        case PROTOCOL.CASH_SEND_NOT:                CashSendNOT(msg);              break;
+
         }
 
         isSending = false;
@@ -648,6 +651,52 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
     }
 
+    void CashSendACK(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+        string title = msg.pop_string();
+        int game_cnt = msg.pop_int32();
+        Info.AddGameCount(game_cnt, true);
+    }
+
+    void CashSendNOT(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+        string title = msg.pop_string();
+        int gameCnt = msg.pop_int32();
+
+        UserPresentInfo presentInfo = new UserPresentInfo(); //새로운걸 만들어야겟군, 클래스 쓰도록한다
+
+        presentInfo.tableNo = tableNo;
+        presentInfo.presentCount = gameCnt;
+
+        Info.myInfo.listPresentInfo.Add(presentInfo);
+
+        if (Info.isCheckScene("Mail"))
+            PageMail.Instance.SetPresent(presentInfo);
+
+
+        //gameCnt == 요청값, GamePlayCnt == 보유값
+        //if(Info.GamePlayCnt >= gameCnt)
+        //{
+        if (gameCnt < 0)
+        {
+            Info.AddGameCount(gameCnt);
+            if (Info.isCheckScene("Main"))
+                ((PageMain)PageBase.Instance).RefreshGamePlay();
+        }
+        else
+        {
+            Info.AddOrderCount(gameCnt);
+            if (Info.isCheckScene("Main"))
+                ((PageMain)PageBase.Instance).StartFlyChance();
+        }
+
+        if (Info.isCheckScene("Game"))
+            ((PageGame)PageBase.Instance).RefreshPlayCnt();
+
+        UIManager.Instance.ShowPresent();
+    }
 }
 
 

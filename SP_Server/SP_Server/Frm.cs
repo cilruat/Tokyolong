@@ -49,7 +49,10 @@ namespace SP_Server
 
         public const int REQUEST_MUSIC_MAX_COUNT = 20;
         public int musicID = -1;
-        public List<RequestMusicInfo> listReqMusicInfo = new List<RequestMusicInfo>();        
+        public int cashID = -1;
+
+        public List<RequestMusicInfo> listReqMusicInfo = new List<RequestMusicInfo>();
+        public List<RequestCashInfo> listReqCashInfo = new List<RequestCashInfo>();
 
         Random random;
         
@@ -545,6 +548,19 @@ namespace SP_Server
 
             return dictUserInfo[tableNo].GetGameCount();
         }
+
+        public RequestCashInfo AddRequestCash(int tableNo, string title)
+        {
+            ++cashID;
+            RequestCashInfo reqCash = new RequestCashInfo(musicID, tableNo, title);
+            listReqCashInfo.Add(reqCash);
+            DataRequestSave(false);
+
+            return reqCash;
+        }
+
+
+
 
         public void RemoveUserData(int tableNo)
         {

@@ -243,4 +243,16 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
     }
 
+
+    public void Cash_Send_REQ(string title, int gameCnt)
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.CASH_SEND_REQ);
+        msg.push(Info.TableNum);
+        msg.push(title);
+        msg.push(gameCnt);
+
+        send(msg);
+
+    }
+
 }
