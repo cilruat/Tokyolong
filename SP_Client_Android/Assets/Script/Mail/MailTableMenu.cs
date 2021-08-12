@@ -10,6 +10,8 @@ public class MailTableMenu : SingletonMonobehaviour<MailTableMenu> {
 	byte tableNo = 0;
 
     public GameObject[] objMenu;
+    public Animator startShowanim;
+
 
 	public void SetInfo (byte tableNo)
 	{
@@ -25,6 +27,7 @@ public class MailTableMenu : SingletonMonobehaviour<MailTableMenu> {
                 continue;
 
             objMenu[i].SetActive(true);
+            startShowanim.Play("Show");
             break;
         }
 
@@ -50,6 +53,8 @@ public class MailTableMenu : SingletonMonobehaviour<MailTableMenu> {
                 if (plz)
                     plz.SetInfo(tableNo);
                 break;
+
+                //여기에 1vs1 대전 케이스를 추가해주어야한다
         }
     }
 

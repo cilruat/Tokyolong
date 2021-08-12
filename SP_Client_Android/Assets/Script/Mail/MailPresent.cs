@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class MailPresent : SingletonMonobehaviour<MailPlz>
+public class MailPresent : SingletonMonobehaviour<MailPresent>
 {
     public Text table;
     public Text count;
