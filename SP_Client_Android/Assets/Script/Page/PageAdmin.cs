@@ -31,6 +31,8 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 	public GameObject objTableMove;
     public AdminSettingDiscountProb settingDiscountProb;
     public GameObject objMsgWrite;
+    public GameObject prefabCash;
+    public RectTransform rtScrollCash;
 
 
 
@@ -38,6 +40,9 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 	List<TableElt> listTable = new List<TableElt>();
 	List<OrderElt> listOrder = new List<OrderElt>();
 	List<MusicElt> listMusic = new List<MusicElt>();
+    List<CashElt> listCashelt = new List<CashElt>();
+
+
 
     void Awake()
     {		
@@ -355,4 +360,43 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 		AdminMsgWrite.Instance.SetInfo(tableNo);
 
     }
+
+    public void SetCash(UserCashInfo info)
+    {
+        CreateCashElt(info);
+    }
+
+    void CreateCashElt(UserCashInfo info)
+    {
+        GameObject obj = Instantiate(prefabCash) as GameObject;
+        obj.SetActive(true);
+
+        Transform tr = obj.transform;
+        tr.SetParent(rtScrollCash);
+        tr.InitTransform();
+
+        CashElt elt = obj.GetComponent<CashElt>();
+        elt.SetInfo(info);
+
+        listCashelt.Add(elt);
+    }
+
+    public void DeleteCashElt(CashElt elt)
+    {
+        for (int i = 0; i < Info.myInfo.listCashInfo.Count; i++)
+        {
+            //인포에 들어있는 특정한 정보를 꺼낼때 이렇게 쓸것
+            UserCashInfo msg = Info.myInfo.listCashInfo[i];
+
+            if (msg.tableNo != elt.GetTableNo())
+                continue;
+
+            Info.myInfo.listCashInfo.RemoveAt(i);
+            break;
+        }
+
+        listCashelt.Remove(elt);
+        Destroy(elt.gameObject);
+    }
+
 }

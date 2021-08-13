@@ -719,32 +719,34 @@ namespace SP_Server.UserState
                         send_msg.push(targetTableNo);
                         break;
 
-
-
                     case PROTOCOL.CASH_SEND_REQ:
 
                         tableNo = msg.pop_byte();
                         string reqCash = msg.pop_string();
                         gameCount = msg.pop_int32();
 
-                        // 유저의 gameCount를 감소시킨다
                         owner.mainFrm.AddGameCount((int)tableNo, -gameCount);
+                        owner.mainFrm.RefreshGameCount(tableNo, owner.info.GetGameCount());
 
-                        send_msg = CPacket.create((short)PROTOCOL.CASH_SEND_ACK);
 
-                        RequestCashInfo reqCashInfo = owner.mainFrm.AddRequestCash(tableNo, reqCash);
-                        JsonData reqCashJson = JsonMapper.ToJson(reqCashInfo);
+                        int gameCntRemain = owner.mainFrm.GetGameCount((int)tableNo);
 
-                        if(Frm.GetAdminUser() != null)
+
+                        // Admin Send packet
+                        if (Frm.GetAdminUser() != null)
                         {
                             other_msg = CPacket.create((short)PROTOCOL.CASH_SEND_NOT);
-                            other_msg.push(reqCashJson.ToString());
+                            other_msg.push(tableNo);
+                            other_msg.push(reqCash);
+                            other_msg.push(gameCount);
                             Frm.GetAdminUser().send(other_msg);
                         }
 
-                        send_msg.push(reqCashJson.ToString());
 
+                        send_msg = CPacket.create((short)PROTOCOL.CASH_SEND_ACK);
+                        send_msg.push(gameCntRemain);
                         break;
+
 
 
                     default:

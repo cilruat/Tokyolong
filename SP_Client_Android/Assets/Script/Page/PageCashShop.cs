@@ -7,21 +7,12 @@ public class PageCashShop : PageBase {
 
 
     public GameObject objBoard;
-
     public Text txtPlayCnt;
 
 
     protected override void Awake()
     {
         base.Awake();
-
-        txtPlayCnt.text = Info.GamePlayCnt.ToString();
-
-
-    }
-
-    public void RefreshGamePlay()
-    {
         txtPlayCnt.text = Info.GamePlayCnt.ToString();
     }
 

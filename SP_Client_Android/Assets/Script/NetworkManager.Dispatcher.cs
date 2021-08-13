@@ -653,8 +653,6 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
     void CashSendACK(CPacket msg)
     {
-        byte tableNo = msg.pop_byte();
-        string title = msg.pop_string();
         int game_cnt = msg.pop_int32();
         Info.AddGameCount(game_cnt, true);
     }
@@ -665,20 +663,20 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         string title = msg.pop_string();
         int gameCnt = msg.pop_int32();
 
-        UserPresentInfo presentInfo = new UserPresentInfo(); //새로운걸 만들어야겟군, 클래스 쓰도록한다
+        //어드민이 알아야할 작업들
+        UserCashInfo cashInfo = new UserCashInfo();
+        cashInfo.tableNo = tableNo;
+        cashInfo.reqCashItem = title;
+        Info.myInfo.listCashInfo.Add(cashInfo);
 
-        presentInfo.tableNo = tableNo;
-        presentInfo.presentCount = gameCnt;
+        if (Info.isCheckScene("Admin"))
+            PageAdmin.Instance.SetCash(cashInfo);
 
-        Info.myInfo.listPresentInfo.Add(presentInfo);
 
-        if (Info.isCheckScene("Mail"))
-            PageMail.Instance.SetPresent(presentInfo);
-
+        ////여기까지 실행함
 
         //gameCnt == 요청값, GamePlayCnt == 보유값
-        //if(Info.GamePlayCnt >= gameCnt)
-        //{
+        /*
         if (gameCnt < 0)
         {
             Info.AddGameCount(gameCnt);
@@ -694,8 +692,11 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
         if (Info.isCheckScene("Game"))
             ((PageGame)PageBase.Instance).RefreshPlayCnt();
+        */
 
-        UIManager.Instance.ShowPresent();
+        //UIManager.Instance.ShowPresent();
+
+        Debug.Log("하하성공인가성공의위치도모르겟군");
     }
 }
 

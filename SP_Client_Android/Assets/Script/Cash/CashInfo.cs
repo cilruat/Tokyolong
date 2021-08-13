@@ -5,10 +5,11 @@ using UnityEngine.UI;
 
 
 
-public class CashInfo : MonoBehaviour {
+public class CashInfo : MonoBehaviour
+{
 
     public int cashmenu;
-    public string  title;
+    public string title;
     public int cashPrice;
 
     public Text titleText;
@@ -20,4 +21,22 @@ public class CashInfo : MonoBehaviour {
         titleText.text = title.ToString();
         priceText.text = cashPrice.ToString();
     }
+
+    public void ConfirmCash()
+    {
+        if (Info.GamePlayCnt >= cashPrice)
+        {
+            NetworkManager.Instance.Cash_Send_REQ(title, -cashPrice);
+            //RefreshGamePlay();
+        }
+    }
+    /*
+    public void RefreshGamePlay()
+    {
+        txtPlayCnt.text = Info.GamePlayCnt.ToString();
+    }
+    */
+
+
+
 }

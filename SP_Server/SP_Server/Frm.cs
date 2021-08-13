@@ -549,6 +549,8 @@ namespace SP_Server
             return dictUserInfo[tableNo].GetGameCount();
         }
 
+
+        /*
         public RequestCashInfo AddRequestCash(int tableNo, string title)
         {
             ++cashID;
@@ -558,7 +560,7 @@ namespace SP_Server
 
             return reqCash;
         }
-
+        */
 
 
 

@@ -13,6 +13,8 @@ public class UserInfo
     public List<UserLikeInfo> listLikeInfo = new List<UserLikeInfo>();
     public List<UserPresentInfo> listPresentInfo = new List<UserPresentInfo>();
     public List<UserPlzInfo> listPlzInfo = new List<UserPlzInfo>();
+    public List<UserCashInfo> listCashInfo = new List<UserCashInfo>();
+
 
     public ECustomerType eCustomerType { get { return (ECustomerType)customerType; } }
 
@@ -69,6 +71,13 @@ public class UserPlzInfo
 {
     public byte tableNo = 0;
     public int plzCount = 0;
+}
+
+public class UserCashInfo
+{
+    //필요한 정보는 몇번테이블인지, 무슨아이템을 삿는지
+    public byte tableNo = 0;
+    public string reqCashItem = "";
 }
 
 
