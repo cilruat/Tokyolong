@@ -661,10 +661,11 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     {
         byte tableNo = msg.pop_byte();
         string title = msg.pop_string();
-        int gameCnt = msg.pop_int32();
 
         //어드민이 알아야할 작업들
+
         UserCashInfo cashInfo = new UserCashInfo();
+
         cashInfo.tableNo = tableNo;
         cashInfo.reqCashItem = title;
         Info.myInfo.listCashInfo.Add(cashInfo);

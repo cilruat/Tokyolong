@@ -738,7 +738,6 @@ namespace SP_Server.UserState
                             other_msg = CPacket.create((short)PROTOCOL.CASH_SEND_NOT);
                             other_msg.push(tableNo);
                             other_msg.push(reqCash);
-                            other_msg.push(gameCount);
                             Frm.GetAdminUser().send(other_msg);
                         }
 
