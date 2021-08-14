@@ -662,20 +662,20 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         byte tableNo = msg.pop_byte();
         string title = msg.pop_string();
 
-        //어드민이 알아야할 작업들
-
-        UserCashInfo cashInfo = new UserCashInfo();
-
-        cashInfo.tableNo = tableNo;
-        cashInfo.reqCashItem = title;
-        Info.myInfo.listCashInfo.Add(cashInfo);
-
         if (Info.isCheckScene("Admin"))
+        {
+
+            UserCashInfo cashInfo = new UserCashInfo();
+
+            cashInfo.tableNo = tableNo;
+            cashInfo.reqCashItem = title;
+            Info.myInfo.listCashInfo.Add(cashInfo);
+
+
+
             PageAdmin.Instance.SetCash(cashInfo);
-
-
-        ////여기까지 실행함
-
+            Debug.Log("?");
+        }
         //gameCnt == 요청값, GamePlayCnt == 보유값
         /*
         if (gameCnt < 0)
@@ -697,7 +697,6 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
         //UIManager.Instance.ShowPresent();
 
-        Debug.Log("하하성공인가성공의위치도모르겟군");
     }
 }
 
