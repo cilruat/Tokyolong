@@ -655,6 +655,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     {
         int game_cnt = msg.pop_int32();
         Info.AddGameCount(game_cnt, true);
+
+        //패널 끄고 로그 남겨주고..
     }
 
     void CashSendNOT(CPacket msg)
@@ -664,39 +666,11 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
         if (Info.isCheckScene("Admin"))
         {
-
             UserCashInfo cashInfo = new UserCashInfo();
-
             cashInfo.tableNo = tableNo;
             cashInfo.reqCashItem = title;
-            Info.myInfo.listCashInfo.Add(cashInfo);
-
-
-
             PageAdmin.Instance.SetCash(cashInfo);
-            Debug.Log("?");
         }
-        //gameCnt == 요청값, GamePlayCnt == 보유값
-        /*
-        if (gameCnt < 0)
-        {
-            Info.AddGameCount(gameCnt);
-            if (Info.isCheckScene("Main"))
-                ((PageMain)PageBase.Instance).RefreshGamePlay();
-        }
-        else
-        {
-            Info.AddOrderCount(gameCnt);
-            if (Info.isCheckScene("Main"))
-                ((PageMain)PageBase.Instance).StartFlyChance();
-        }
-
-        if (Info.isCheckScene("Game"))
-            ((PageGame)PageBase.Instance).RefreshPlayCnt();
-        */
-
-        //UIManager.Instance.ShowPresent();
-
     }
 }
 

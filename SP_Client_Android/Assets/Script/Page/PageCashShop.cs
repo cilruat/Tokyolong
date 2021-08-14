@@ -3,17 +3,43 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PageCashShop : PageBase {
+public class PageCashShop : SingletonMonobehaviour<PageCashShop>
+{
 
 
     public GameObject objBoard;
     public Text txtPlayCnt;
 
+    public RectTransform rtScrollCash;
+    public GameObject prefabCash;
+    List<CashElt> listCashelt = new List<CashElt>();
 
-    protected override void Awake()
+
+
+    public void SetCash(UserCashInfo info)
     {
-        base.Awake();
-        txtPlayCnt.text = Info.GamePlayCnt.ToString();
+        CreateCashElt(info);
+    }
+
+    void CreateCashElt(UserCashInfo info)
+    {
+        GameObject obj = Instantiate(prefabCash) as GameObject;
+        obj.SetActive(true);
+
+        Transform tr = obj.transform;
+        tr.SetParent(rtScrollCash);
+        tr.InitTransform();
+
+        CashElt elt = obj.GetComponent<CashElt>();
+        elt.SetInfo(info);
+
+        listCashelt.Add(elt);
+    }
+
+    public void DeleteCashElt(CashElt elt)
+    {
+        listCashelt.Remove(elt);
+        Destroy(elt.gameObject);
     }
 
 

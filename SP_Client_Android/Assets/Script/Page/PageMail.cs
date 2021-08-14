@@ -51,7 +51,6 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
     List<PresentElt> listPresentelt = new List<PresentElt>();
     List<PlzElt> listPlzelt = new List<PlzElt>();
 
-
     void Awake()
     {
         //LoadTable();

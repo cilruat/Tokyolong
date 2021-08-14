@@ -17,13 +17,22 @@ public class CashElt : MonoBehaviour {
         Desc.text = string.Format("{0:D2}", info.reqCashItem);
     }
 
-    public void OnDelete()
+    public void OnDeleteAdmin()
     {
         if (!Info.isCheckScene("Admin"))
             return;
 
         PageAdmin.Instance.DeleteCashElt(this);
     }
+
+    public void OnDeleteCashShop()
+    {
+        if (!Info.isCheckScene("CashShop"))
+            return;
+
+        PageCashShop.Instance.DeleteCashElt(this);
+    }
+
 
     public byte GetTableNo() { return info.tableNo; }
 

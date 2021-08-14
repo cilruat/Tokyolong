@@ -383,18 +383,6 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
 
     public void DeleteCashElt(CashElt elt)
     {
-        for (int i = 0; i < Info.myInfo.listCashInfo.Count; i++)
-        {
-            //인포에 들어있는 특정한 정보를 꺼낼때 이렇게 쓸것
-            UserCashInfo msg = Info.myInfo.listCashInfo[i];
-
-            if (msg.tableNo != elt.GetTableNo())
-                continue;
-
-            Info.myInfo.listCashInfo.RemoveAt(i);
-            break;
-        }
-
         listCashelt.Remove(elt);
         Destroy(elt.gameObject);
     }
