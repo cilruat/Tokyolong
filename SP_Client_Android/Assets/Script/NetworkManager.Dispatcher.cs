@@ -675,8 +675,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
             PageAdmin.Instance.SetCash(cashInfo);
         }
 
+        // && tableNo == Info.TableNum
         //안에 if를 써야할수도
-        else if (Info.isCheckScene("CashShop") && tableNo == Info.TableNum)
+        if (Info.isCheckScene("CashShop"))
         {
             Debug.Log(tableNo.ToString() + "캐쉬를 보내는 번호");
             Debug.Log(Info.TableNum.ToString() + "내가 접속한 번호");
@@ -687,6 +688,10 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
             PageCashShop.Instance.SetCash(cashInfo);
         }
 
+        else
+        {
+            Debug.Log("null");
+        }
 
     }
 }
