@@ -671,6 +671,17 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
             cashInfo.reqCashItem = title;
             PageAdmin.Instance.SetCash(cashInfo);
         }
+
+
+        if (Info.isCheckScene("CashShop") && tableNo == Info.TableNum)
+        {
+            UserCashInfo cashInfo = new UserCashInfo();
+            cashInfo.tableNo = tableNo;
+            cashInfo.reqCashItem = title;
+            PageCashShop.Instance.SetCash(cashInfo);
+        }
+
+
     }
 }
 
