@@ -666,15 +666,21 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
         if (Info.isCheckScene("Admin"))
         {
+            Debug.Log(tableNo.ToString() + "캐쉬를 보내는 번호");
+            Debug.Log(Info.TableNum.ToString() + "내가 접속한 번호");
+
             UserCashInfo cashInfo = new UserCashInfo();
             cashInfo.tableNo = tableNo;
             cashInfo.reqCashItem = title;
             PageAdmin.Instance.SetCash(cashInfo);
         }
 
-
-        if (Info.isCheckScene("CashShop") && tableNo == Info.TableNum)
+        //안에 if를 써야할수도
+        else if (Info.isCheckScene("CashShop") && tableNo == Info.TableNum)
         {
+            Debug.Log(tableNo.ToString() + "캐쉬를 보내는 번호");
+            Debug.Log(Info.TableNum.ToString() + "내가 접속한 번호");
+
             UserCashInfo cashInfo = new UserCashInfo();
             cashInfo.tableNo = tableNo;
             cashInfo.reqCashItem = title;
