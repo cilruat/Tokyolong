@@ -14,11 +14,17 @@ public class UIMail : MonoBehaviour {
     public GameObject objSelect;
     public GameObject objContent;
 
+
+    byte tableNum = 0;
+
+    public GameObject objChatPanel;
+    public Text Msg;
+    public InputField input;
+
     string desc = "";
 
     public void ShowMsgTable()
     {
-        byte tableNum = 0;
         if (Info.myInfo.listMsgInfo.Count > 0)
         {
             UserMsgInfo info = Info.myInfo.listMsgInfo[Info.myInfo.listMsgInfo.Count - 1];
@@ -69,5 +75,28 @@ public class UIMail : MonoBehaviour {
     {
         UIManager.Instance.Hide(eUI.eMail);
     }
+
+    public void OnOpenChatPanel()
+    {
+        objChatPanel.SetActive(true);
+    }
+
+    public void OnSendReply()
+    {
+        if (input.text == string.Empty)
+            return;
+
+        string strMsg = input.text;
+        NetworkManager.Instance.Message_Send_REQ(tableNum, strMsg);
+        input.text = string.Empty;
+        OnClose();
+    }
+
+    public void OnCloseReply()
+    {
+        objChatPanel.SetActive(false);
+    }
+
+
 
 }
