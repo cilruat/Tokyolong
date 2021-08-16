@@ -664,6 +664,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         byte tableNo = msg.pop_byte();
         string title = msg.pop_string();
 
+
+
         if (Info.isCheckScene("Admin"))
         {
             Debug.Log(tableNo.ToString() + "캐쉬를 보내는 번호");
@@ -675,17 +677,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
             PageAdmin.Instance.SetCash(cashInfo);
         }
 
-        else if (Info.isCheckScene("Mail") && tableNo == Info.TableNum)
-        {
-            Debug.Log(tableNo.ToString() + "캐쉬를 보내는 번호");
-            Debug.Log(Info.TableNum.ToString() + "내가 접속한 번호");
-            UserCashInfo cashInfo = new UserCashInfo();
-            cashInfo.tableNo = tableNo;
-            cashInfo.reqCashItem = title;
-
-        }
-
-        else if (Info.isCheckScene("CashShop") && tableNo == Info.TableNum)
+        if (Info.isCheckScene("CashShop") && tableNo == Info.TableNum)
         {
             Debug.Log(tableNo.ToString() + "캐쉬를 보내는 번호");
             Debug.Log(Info.TableNum.ToString() + "내가 접속한 번호");
@@ -693,6 +685,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
             UserCashInfo cashInfo = new UserCashInfo();
             cashInfo.tableNo = tableNo;
             cashInfo.reqCashItem = title;
+            Info.myInfo.listCashInfo.Add(cashInfo);
             PageCashShop.Instance.SetCash(cashInfo);
         }
 

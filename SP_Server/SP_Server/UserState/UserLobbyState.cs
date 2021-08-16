@@ -733,6 +733,7 @@ namespace SP_Server.UserState
 
 
                         // Admin Send packet
+                        /*
                         if (Frm.GetAdminUser() != null)
                         {
                             other_msg = CPacket.create((short)PROTOCOL.CASH_SEND_NOT);
@@ -740,11 +741,28 @@ namespace SP_Server.UserState
                             other_msg.push(reqCash);
                             Frm.GetAdminUser().send(other_msg);
                         }
+                        */
+
+                        for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
+                        {
+                            User user = owner.mainFrm.ListUser[i];
+
+                            other_msg = CPacket.create((short)PROTOCOL.CASH_SEND_NOT);
+                            other_msg.push(tableNo);
+                            other_msg.push(reqCash);
+                            user.send(other_msg);
+                        }
+
+
 
 
                         send_msg = CPacket.create((short)PROTOCOL.CASH_SEND_ACK);
                         send_msg.push(gameCntRemain);
                         break;
+
+
+
+
 
 
 

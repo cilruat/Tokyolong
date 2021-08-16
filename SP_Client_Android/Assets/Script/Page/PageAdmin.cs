@@ -143,7 +143,8 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
         }
 
 
-		StopUrgency (tableNo);
+
+        StopUrgency(tableNo);
 
 		for (int i = 0; i < listTable.Count; i++) {
 			if (listTable [i].GetTableNo () != tableNo)
@@ -379,6 +380,8 @@ public class PageAdmin : SingletonMonobehaviour<PageAdmin> {
         elt.SetInfo(info);
 
         listCashelt.Add(elt);
+        UIManager.Instance.PlayBell();
+
     }
 
     public void DeleteCashElt(CashElt elt)
