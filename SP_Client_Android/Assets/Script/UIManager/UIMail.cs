@@ -89,7 +89,7 @@ public class UIMail : MonoBehaviour {
         string strMsg = input.text;
         NetworkManager.Instance.Message_Send_REQ(tableNum, strMsg);
         input.text = string.Empty;
-        OnClose();
+        OnCloseReply();
     }
 
     public void OnCloseReply()

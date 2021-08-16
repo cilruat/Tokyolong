@@ -12,9 +12,12 @@ public class UILike : MonoBehaviour {
     public CountDown countdown;
     public GameObject objSelect;
 
+
+    byte tableNum = 0;
+    int gameCount = 1;
+
     public void ShowLikeTable()
     {
-        byte tableNum = 0;
         if (Info.myInfo.listLikeInfo.Count > 0)
         {
             UserLikeInfo info = Info.myInfo.listLikeInfo[Info.myInfo.listLikeInfo.Count - 1];
@@ -41,5 +44,12 @@ public class UILike : MonoBehaviour {
         SceneChanger.LoadScene("Mail", objSelect);
         //SceneManager.LoadScene("Mail");
     }
+
+    public void OnSendLike()
+    {
+        NetworkManager.Instance.Like_Send_REQ(tableNum, gameCount);
+        OnClose();
+    }
+
 
 }
