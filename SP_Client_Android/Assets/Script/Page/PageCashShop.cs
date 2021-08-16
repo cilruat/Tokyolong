@@ -14,11 +14,20 @@ public class PageCashShop : SingletonMonobehaviour<PageCashShop>
     public GameObject prefabCash;
     List<CashElt> listCashelt = new List<CashElt>();
 
+    public GameObject objPanelDontDestroy;
 
+
+
+    private void Awake()
+    {
+        for (int i = 0; i < Info.myInfo.listCashInfo.Count; i++)
+            CreateCashElt(Info.myInfo.listCashInfo[i]);
+    }
 
     public void SetCash(UserCashInfo info)
     {
         CreateCashElt(info);
+
     }
 
     void CreateCashElt(UserCashInfo info)
@@ -34,6 +43,7 @@ public class PageCashShop : SingletonMonobehaviour<PageCashShop>
         elt.SetInfo(info);
 
         listCashelt.Add(elt);
+
     }
 
     public void DeleteCashElt(CashElt elt)
