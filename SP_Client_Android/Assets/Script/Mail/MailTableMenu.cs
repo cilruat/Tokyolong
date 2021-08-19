@@ -31,7 +31,7 @@ public class MailTableMenu : SingletonMonobehaviour<MailTableMenu> {
             break;
         }
 
-        // 0: 쪽지 1: 좋아요 2: 선물하기 3:조르기
+        // 0: 쪽지 1: 좋아요 2: 선물하기 3:조르기 4: 1대1게임
         switch (state) {
             case 0:
                 MailMsgWrite write = objMenu[state].GetComponent<MailMsgWrite>();
@@ -54,7 +54,12 @@ public class MailTableMenu : SingletonMonobehaviour<MailTableMenu> {
                     plz.SetInfo(tableNo);
                 break;
 
-                //여기에 1vs1 대전 케이스를 추가해주어야한다
+            case 4:
+                Mail1vs1 versus = objMenu[state].GetComponent<Mail1vs1>();
+                if (versus)
+                    versus.SetInfo(tableNo);
+                break;
+
         }
     }
 

@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class MailPlz : SingletonMonobehaviour<MailPlz>
 {
-    //Tostring  배워보자
     public Text table;
     public Text count;
 
