@@ -37,6 +37,8 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
     public GameObject prefabPresent;
     public RectTransform rtScrollPlz;
     public GameObject prefabPlz;
+    public RectTransform rtScrollGame;
+    public GameObject prefabGame;
 
 
 
@@ -50,6 +52,8 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
     List<LikeElt> listLikeelt = new List<LikeElt>();
     List<PresentElt> listPresentelt = new List<PresentElt>();
     List<PlzElt> listPlzelt = new List<PlzElt>();
+    List<GameElt> listGameelt = new List<GameElt>();
+
 
     void Awake()
     {
@@ -274,6 +278,28 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
         listPlzelt.Add(elt);
     }
 
+
+    public void SetGame(UserGameInfo info)
+    {
+        CreateGameElt(info);
+    }
+
+    void CreateGameElt(UserGameInfo info)
+    {
+        GameObject obj = Instantiate(prefabGame) as GameObject;
+        obj.SetActive(true);
+
+        Transform tr = obj.transform;
+        tr.SetParent(rtScrollGame);
+        tr.InitTransform();
+
+        GameElt elt = obj.GetComponent<GameElt>();
+        elt.SetInfo(info);
+
+        listGameelt.Add(elt);
+    }
+
+
     public void DeleteMailElt(MailElt elt)
     {
         for (int i = 0; i < Info.myInfo.listMsgInfo.Count; i++)
@@ -343,6 +369,21 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
         Destroy(elt.gameObject);
     }
 
+    public void DeleteGameElt(GameElt elt)
+    {
+        for (int i = 0; i < Info.myInfo.listGameInfo.Count; i++)
+        {
+            UserGameInfo msg = Info.myInfo.listGameInfo[i];
+            if (msg.tableNo != elt.GetTableNo())
+                continue;
+
+            Info.myInfo.listGameInfo.RemoveAt(i);
+            break;
+        }
+
+        listGameelt.Remove(elt);
+        Destroy(elt.gameObject);
+    }
 
 
     public void ReturnHome()

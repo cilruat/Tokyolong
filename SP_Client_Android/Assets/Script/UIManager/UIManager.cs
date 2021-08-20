@@ -28,6 +28,7 @@ public enum eUI
     eLike,
     ePresent,
     ePlease         = 20,
+    eGameInvite,
 
 	eNone = 100,
 }
@@ -249,6 +250,16 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 
 
     }
+
+    public void ShowGameInvite()
+    {
+        if (curUI != eUI.eNone && curUI != eUI.eGameInvite)
+            Hide(curUI);
+
+        UIGameInvite uiGameInvite = Show(eUI.eGameInvite).GetComponent<UIGameInvite>();
+        uiGameInvite.ShowGameInviteTable();
+    }
+
 
     void _ShowBillDetail()
     {

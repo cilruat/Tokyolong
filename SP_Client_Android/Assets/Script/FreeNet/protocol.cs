@@ -108,7 +108,12 @@ namespace SP_Server
 
         //-------------------------------------
         // 게임 프로토콜.
-        //-------------------------------------        
+        //-------------------------------------
+
+        GAME_VERSUS_INVITE_REQ,
+        GAME_VERSUS_INVITE_ACK,
+        GAME_VERSUS_INVITE_NOT,
+
         ROOM_REMOVED,
 
         END,

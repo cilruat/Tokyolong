@@ -120,7 +120,7 @@ public class Mail1vs1 : SingletonMonobehaviour<Mail1vs1>
 
     public void OnConfirm()
     {
-        //NetworkManager.Instance.Please_Send_REQ(this.tableNo, this.inputCount);
+        NetworkManager.Instance.Game_Versus_Invite_REQ(this.tableNo, inputCount, gameName);
         _init();
         OnClose();
     }
