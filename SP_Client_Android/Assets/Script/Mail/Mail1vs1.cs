@@ -86,42 +86,33 @@ public class Mail1vs1 : SingletonMonobehaviour<Mail1vs1>
             break;
         }
 
-        //여기 코드 이상해 바꿔야행 ㅠ
-
         // 1 가위바위보 2 불독룰렛
         switch (state)
         {
             case 0:
                 // 가위바위보를 신설해서 거기에 정보를 넣는작업
-                MailMsgWrite write = objGame[state].GetComponent<MailMsgWrite>();
+                /*MailMsgWrite write = objGame[state].GetComponent<MailMsgWrite>();
                 if (write)
                     write.SetInfo(tableNo);
+                    */
                 Debug.Log("가위");
                 game.text = "가위바위보";
                 break;
 
                 // 불복복불복 정보를 만들어서 거기다가 정보를 넣는 작업
             case 1:
-                MailLike like = objGame[state].GetComponent<MailLike>();
+                /*MailLike like = objGame[state].GetComponent<MailLike>();
                 if (like)
-                    like.SetInfo(tableNo);
+                    like.SetInfo(tableNo);*/
                 game.text = "복불복룰렛";
 
                 break;
         }
     }
 
-
-
-    public void OnInit()
-    {
-        _init();
-    }
-
     public void OnConfirm()
     {
-        NetworkManager.Instance.Game_Versus_Invite_REQ(this.tableNo, inputCount, gameName);
-        _init();
+        NetworkManager.Instance.Game_Versus_Invite_REQ(tableNo, inputCount, gameName);
         OnClose();
     }
 

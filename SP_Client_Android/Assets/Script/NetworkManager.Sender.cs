@@ -257,7 +257,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
     public void Game_Versus_Invite_REQ(byte targetTableNo, int reqGameCnt, string gameName)
     {
-        CPacket msg = CPacket.create((short)PROTOCOL.GAME_VERSUS_INVITE_NOT);
+        CPacket msg = CPacket.create((short)PROTOCOL.GAME_VERSUS_INVITE_REQ);
         msg.push(Info.TableNum);
         msg.push(targetTableNo);
         msg.push(reqGameCnt);
