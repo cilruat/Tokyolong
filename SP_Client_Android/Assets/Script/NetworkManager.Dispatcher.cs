@@ -705,21 +705,22 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         string gameName = msg.pop_string();
 
 
-
-        UserGameInfo gameInfo = new UserGameInfo(); //새로운걸 만들어야겟군, 클래스 쓰도록한다
+        
+        UserGameInfo gameInfo = new UserGameInfo();
 
         gameInfo.tableNo = tableNo;
         gameInfo.reqGameCnt = reqGameCnt;
         gameInfo.gameName = gameName;
 
+        
         Info.myInfo.listGameInfo.Add(gameInfo);
 
         if (Info.isCheckScene("Mail"))
             PageMail.Instance.SetGame(gameInfo);
+        
+        
 
-
-
-        UIManager.Instance.ShowPlz();
+        UIManager.Instance.ShowGameInvite();
 
     }
 

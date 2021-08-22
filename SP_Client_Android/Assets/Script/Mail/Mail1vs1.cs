@@ -97,6 +97,7 @@ public class Mail1vs1 : SingletonMonobehaviour<Mail1vs1>
                     */
                 Debug.Log("가위");
                 game.text = "가위바위보";
+                gameName = game.text;
                 break;
 
                 // 불복복불복 정보를 만들어서 거기다가 정보를 넣는 작업
@@ -105,7 +106,7 @@ public class Mail1vs1 : SingletonMonobehaviour<Mail1vs1>
                 if (like)
                     like.SetInfo(tableNo);*/
                 game.text = "복불복룰렛";
-
+                gameName = game.text;
                 break;
         }
     }

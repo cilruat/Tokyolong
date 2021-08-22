@@ -25,14 +25,10 @@ public class UIPlz : MonoBehaviour {
         }
 
         txtTableNum[0].text = tableNum.ToString();
-        //txtPlzCount.text = Info.PlzCount.ToString(); // 이렇게하니깐안되넹~
         txtPlzCount.text = plzCount.ToString();
 
 
-        //txtTableNum[1].text = tableNum.ToString();
-
         UITweenAlpha.Start(objSelect, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
-        //objSelect.SetActive(true);
     }
 
     public void OnClose()
