@@ -71,6 +71,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         case PROTOCOL.CASH_SEND_NOT:                CashSendNOT(msg);              break;
         case PROTOCOL.GAME_VERSUS_INVITE_ACK:       GameVersusInviteACK(msg); break;
         case PROTOCOL.GAME_VERSUS_INVITE_NOT:       GameVersusInviteNOT(msg); break;
+        case PROTOCOL.GAME_REFUSE_ACK:              GameRefuseACK(msg); break;
+        case PROTOCOL.GAME_REFUSE_NOT:              GameRefuseNOT(msg); break;
+
 
         }
 
@@ -723,6 +726,23 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         UIManager.Instance.ShowGameInvite();
 
     }
+
+
+    void GameRefuseACK(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+        SystemMessage.Instance.Add(tableNo.ToString() + "번에게 미안하다고했어요");
+    }
+
+    void GameRefuseNOT(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+
+        UIManager.Instance.ShoweGameRefuse();
+    }
+
+
+
 
 }
 

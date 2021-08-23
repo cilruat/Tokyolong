@@ -267,5 +267,15 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
     }
 
+    public void Game_Refuse_REQ(byte targetTableNo)
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.GAME_REFUSE_REQ);
+        msg.push(Info.TableNum);
+        msg.push(targetTableNo);
+        send(msg);
+
+    }
+
+
 
 }

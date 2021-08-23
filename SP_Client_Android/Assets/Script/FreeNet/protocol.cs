@@ -114,6 +114,11 @@ namespace SP_Server
         GAME_VERSUS_INVITE_ACK,
         GAME_VERSUS_INVITE_NOT,
 
+        GAME_REFUSE_REQ,
+        GAME_REFUSE_ACK,
+        GAME_REFUSE_NOT,
+
+
         ROOM_REMOVED,
 
         END,

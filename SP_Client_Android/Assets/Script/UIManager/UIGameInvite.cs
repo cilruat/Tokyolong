@@ -19,10 +19,10 @@ public class UIGameInvite : MonoBehaviour {
     int inviteGameCnt;
     string inviteGameName;
 
+    byte tableNum = 0;
 
     public void ShowGameInviteTable()
     {
-        byte tableNum = 0;
 
         if (Info.myInfo.listGameInfo.Count > 0)
         {
@@ -43,6 +43,8 @@ public class UIGameInvite : MonoBehaviour {
     {
         countdown.Stop();
         UIManager.Instance.Hide(eUI.eGameInvite);
+        NetworkManager.Instance.Game_Refuse_REQ(tableNum);
+
     }
 
     public void OnGoMailScene()
