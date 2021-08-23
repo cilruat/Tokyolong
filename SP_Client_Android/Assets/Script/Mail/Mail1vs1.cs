@@ -27,7 +27,7 @@ public class Mail1vs1 : SingletonMonobehaviour<Mail1vs1>
     {
         inputCount = 1;
         count.text = "1";
-        gameName = "";
+        gameName = null;
     }
 
     public void SetInfo(byte tableNo)
@@ -113,8 +113,14 @@ public class Mail1vs1 : SingletonMonobehaviour<Mail1vs1>
 
     public void OnConfirm()
     {
-        NetworkManager.Instance.Game_Versus_Invite_REQ(tableNo, inputCount, gameName);
-        OnClose();
+        if(gameName != null)
+        {
+            NetworkManager.Instance.Game_Versus_Invite_REQ(tableNo, inputCount, gameName);
+            OnClose();
+        }
+        else
+        SystemMessage.Instance.Add("게임을 먼저 선택해주세요!");
+
     }
 
     public void OnClose()

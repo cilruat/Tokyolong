@@ -741,6 +741,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         UserRefuseInfo refuseInfo = new UserRefuseInfo();
 
         refuseInfo.tableNo = tableNo;
+        Info.myInfo.listRefuseInfo.Add(refuseInfo);
+
+
 
         UIManager.Instance.ShoweGameRefuse();
     }

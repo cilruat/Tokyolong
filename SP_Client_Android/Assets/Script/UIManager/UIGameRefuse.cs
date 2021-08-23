@@ -16,7 +16,7 @@ public class UIGameRefuse : MonoBehaviour {
     {
         byte tableNum = 0;
 
-        if (Info.myInfo.listGameInfo.Count > 0)
+        if (Info.myInfo.listRefuseInfo.Count > 0)
         {
             UserRefuseInfo info = Info.myInfo.listRefuseInfo[Info.myInfo.listRefuseInfo.Count - 1];
             tableNum = info.tableNo;
@@ -26,7 +26,14 @@ public class UIGameRefuse : MonoBehaviour {
 
         //UITweenAlpha.Start(objSelect, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
         anim.Play("GameRefuse");
-
+        StartCoroutine(_DestroyShadow());
     }
+
+    IEnumerator _DestroyShadow()
+    {
+        yield return new WaitForSeconds(2f);
+        UIManager.Instance.Hide(eUI.eGameRefuse);
+    }
+
 
 }
