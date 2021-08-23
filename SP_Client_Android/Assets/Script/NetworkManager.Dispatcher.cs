@@ -738,6 +738,10 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     {
         byte tableNo = msg.pop_byte();
 
+        UserRefuseInfo refuseInfo = new UserRefuseInfo();
+
+        refuseInfo.tableNo = tableNo;
+
         UIManager.Instance.ShoweGameRefuse();
     }
 

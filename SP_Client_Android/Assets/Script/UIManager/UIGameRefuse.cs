@@ -18,7 +18,7 @@ public class UIGameRefuse : MonoBehaviour {
 
         if (Info.myInfo.listGameInfo.Count > 0)
         {
-            UserGameInfo info = Info.myInfo.listGameInfo[Info.myInfo.listGameInfo.Count - 1];
+            UserRefuseInfo info = Info.myInfo.listRefuseInfo[Info.myInfo.listRefuseInfo.Count - 1];
             tableNum = info.tableNo;
         }
 
