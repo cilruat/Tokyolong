@@ -542,6 +542,11 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         byte tableNo = msg.pop_byte();
         SystemMessage.Instance.Add(tableNo.ToString() + "번 테이블에 좋아요 ღ'ᴗ'ღ 했어요~♥");
         //UIMANAGER 끄기
+        if (Info.isCheckScene("Mail"))
+        {
+            PageMail.Instance.RefreshGamePlayChance();
+        }
+
     }
 
     void LkeSendNOT(CPacket msg)
@@ -578,7 +583,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         {
             PageMail.Instance.RefreshGamePlayChance();
         }
-            
+
+
 
         UIManager.Instance.ShowLike();
 
@@ -590,6 +596,12 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         byte tableNo = msg.pop_byte();
         int game_cnt = msg.pop_int32();
         Info.AddGameCount(game_cnt, true);
+
+        if (Info.isCheckScene("Mail"))
+        {
+            PageMail.Instance.RefreshGamePlayChance();
+        }
+
     }
 
     void  PresentSendNOT(CPacket msg)
@@ -627,11 +639,12 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
             if (Info.isCheckScene("Game"))
                 ((PageGame)PageBase.Instance).RefreshPlayCnt();
 
-
         if (Info.isCheckScene("Mail"))
         {
             PageMail.Instance.RefreshGamePlayChance();
         }
+
+
 
         UIManager.Instance.ShowPresent();
 
