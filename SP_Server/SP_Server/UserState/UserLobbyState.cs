@@ -726,7 +726,7 @@ namespace SP_Server.UserState
                         gameCount = msg.pop_int32();
 
                         owner.mainFrm.AddGameCount((int)tableNo, -gameCount);
-                        owner.mainFrm.RefreshGameCount(tableNo, owner.info.GetGameCount());
+                        //owner.mainFrm.RefreshGameCount(tableNo, owner.info.GetGameCount());
 
 
                         int gameCntRemain = owner.mainFrm.GetGameCount((int)tableNo);

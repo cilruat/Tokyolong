@@ -660,6 +660,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     {
         int game_cnt = msg.pop_int32();
         Info.AddGameCount(game_cnt, true);
+
     }
 
     void CashSendNOT(CPacket msg)
@@ -690,6 +691,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
             cashInfo.reqCashItem = title;
             Info.myInfo.listCashInfo.Add(cashInfo);
             PageCashShop.Instance.SetCash(cashInfo);
+
+
         }
 
     }
