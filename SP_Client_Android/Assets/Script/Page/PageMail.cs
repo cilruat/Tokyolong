@@ -40,12 +40,9 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
     public RectTransform rtScrollGame;
     public GameObject prefabGame;
 
-
-
     public ShowMsg showMsg;
 
     UITween tweenUrgency = null;
-
 
     List<TableElt> listTable = new List<TableElt>();
     List<MailElt> listMailelt = new List<MailElt>();
@@ -54,6 +51,8 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
     List<PlzElt> listPlzelt = new List<PlzElt>();
     List<GameElt> listGameelt = new List<GameElt>();
 
+    public Text txtPlayCnt;
+    public Text txtTableNo;
 
     void Awake()
     {
@@ -81,6 +80,11 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
 
         for (int i = 0; i < Info.myInfo.listPlzInfo.Count; i++)
             CreatePlzElt(Info.myInfo.listPlzInfo[i]);
+
+
+        txtPlayCnt.text = Info.GamePlayCnt.ToString();
+        txtTableNo.text = Info.TableNum.ToString();
+
     }
 
 
@@ -391,4 +395,8 @@ public class PageMail : SingletonMonobehaviour<PageMail>{
         SceneChanger.LoadScene("Main", objBoard);
     }
 
+    public void RefreshGamePlayChance()
+    {
+        txtPlayCnt.text = Info.GamePlayCnt.ToString();
+    }
 }

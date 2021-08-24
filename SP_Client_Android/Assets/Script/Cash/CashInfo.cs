@@ -16,6 +16,7 @@ public class CashInfo : MonoBehaviour
     public Text priceText;
 
 
+
     private void Awake()
     {
         titleText.text = title.ToString();
@@ -26,17 +27,13 @@ public class CashInfo : MonoBehaviour
     {
         if (Info.GamePlayCnt >= cashPrice)
         {
-            NetworkManager.Instance.Cash_Send_REQ(title, -cashPrice);
-            //RefreshGamePlay();
+            NetworkManager.Instance.Cash_Send_REQ(title, cashPrice);
+            Info.AddOrderCount(-cashPrice);
+        }
+        else
+        {
+            PageCashShop.Instance.NoCoin();
         }
     }
-    /*
-    public void RefreshGamePlay()
-    {
-        txtPlayCnt.text = Info.GamePlayCnt.ToString();
-    }
-    */
-
-
 
 }

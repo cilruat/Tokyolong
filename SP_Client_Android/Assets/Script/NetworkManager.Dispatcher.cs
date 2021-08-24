@@ -574,6 +574,12 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         if (Info.isCheckScene("Game"))
             ((PageGame)PageBase.Instance).RefreshPlayCnt();
 
+        if (Info.isCheckScene("Mail"))
+        {
+            PageMail.Instance.RefreshGamePlayChance();
+        }
+            
+
         UIManager.Instance.ShowLike();
 
     }
@@ -621,7 +627,13 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
             if (Info.isCheckScene("Game"))
                 ((PageGame)PageBase.Instance).RefreshPlayCnt();
 
-            UIManager.Instance.ShowPresent();
+
+        if (Info.isCheckScene("Mail"))
+        {
+            PageMail.Instance.RefreshGamePlayChance();
+        }
+
+        UIManager.Instance.ShowPresent();
 
 
     }
@@ -660,6 +672,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     {
         int game_cnt = msg.pop_int32();
         Info.AddGameCount(game_cnt, true);
+        PageCashShop.Instance.RefreshGamePlayChance();
+        SystemMessage.Instance.Add("코인을 사용해 주문을 넣었습니다");
+
 
     }
 
@@ -667,6 +682,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     {
         byte tableNo = msg.pop_byte();
         string title = msg.pop_string();
+        //int game_cnt = msg.pop_int32();
 
 
 
@@ -691,8 +707,6 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
             cashInfo.reqCashItem = title;
             Info.myInfo.listCashInfo.Add(cashInfo);
             PageCashShop.Instance.SetCash(cashInfo);
-
-
         }
 
     }
