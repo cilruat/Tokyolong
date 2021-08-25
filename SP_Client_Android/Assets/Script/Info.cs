@@ -386,6 +386,8 @@ public partial class Info : MonoBehaviour {
             sceneName == "ScratchCard"              ||
             sceneName == "DiceRollGame"             ||
             sceneName == "CashShop"                 ||
+            sceneName == "RPS"                      ||
+            sceneName == "BullDog"                  ||
             sceneName == "CrashRacingMain"
 			)
 			return true;

@@ -791,7 +791,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
         if (gameName == "가위바위보")
         {
-            SceneChanger.LoadScene("RPS", PageBase.Instance.curBoardObj());
+            SceneChanger.LoadScene("LoadingRPS", PageBase.Instance.curBoardObj());
         }
         else
             Debug.Log("안된다");
@@ -820,7 +820,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         {
             PageMail.Instance.SetGame(gameInfo);
             Debug.Log("가위바위보 로그 NOT");
-            SceneChanger.LoadScene("RPS", PageBase.Instance.curBoardObj());
+            SceneChanger.LoadScene("LoadingRPS", PageBase.Instance.curBoardObj());
         }
         else
             Debug.Log("안된다");
