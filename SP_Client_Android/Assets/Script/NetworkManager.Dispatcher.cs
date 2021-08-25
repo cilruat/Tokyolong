@@ -814,10 +814,17 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
         Info.myInfo.listGameInfo.Add(gameInfo);
 
-        if (Info.isCheckScene("Mail"))
-            PageMail.Instance.SetGame(gameInfo);
+        //여기서 정보를 넣어주면 된다.
 
-        Debug.Log("일단됩니까");
+        if (gameName =="가위바위보")
+        {
+            PageMail.Instance.SetGame(gameInfo);
+            Debug.Log("가위바위보 로그 NOT");
+            SceneChanger.LoadScene("RPS", PageBase.Instance.curBoardObj());
+        }
+        else
+            Debug.Log("안된다");
+
 
 
     }
