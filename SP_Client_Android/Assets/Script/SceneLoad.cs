@@ -35,7 +35,7 @@ public class SceneLoad : MonoBehaviour {
             yield return null;
             if(progressbar.value <1f)
             {
-                progressbar.value = Mathf.MoveTowards(progressbar.value, 1f, Time.deltaTime);
+                progressbar.value = Mathf.MoveTowards(progressbar.value, 1f, Time.deltaTime/2);
                 //objText[0].SetActive(true);
             }
             else
