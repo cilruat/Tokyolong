@@ -73,6 +73,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         case PROTOCOL.GAME_VERSUS_INVITE_NOT:       GameVersusInviteNOT(msg); break;
         case PROTOCOL.GAME_REFUSE_ACK:              GameRefuseACK(msg); break;
         case PROTOCOL.GAME_REFUSE_NOT:              GameRefuseNOT(msg); break;
+        case PROTOCOL.GAME_ACCEPT_ACK:              GameAcceptACK(msg); break;
+        case PROTOCOL.GAME_ACCEPT_NOT:              GameAcceptNOT(msg); break;
 
 
         }
@@ -776,6 +778,48 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
 
         UIManager.Instance.ShoweGameRefuse();
+    }
+
+
+    void GameAcceptACK(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+
+        string gameName = msg.pop_string();
+
+        SystemMessage.Instance.Add(tableNo.ToString() + "번과 게임을 시작합니다");
+
+        if (gameName == "가위바위보")
+        {
+            SceneChanger.LoadScene("RPS", PageBase.Instance.curBoardObj());
+        }
+        else
+            Debug.Log("안된다");
+    }
+
+    void GameAcceptNOT(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+        int reqGameCnt = msg.pop_int32();
+        string gameName = msg.pop_string();
+
+
+
+        UserGameInfo gameInfo = new UserGameInfo();
+
+        gameInfo.tableNo = tableNo;
+        gameInfo.reqGameCnt = reqGameCnt;
+        gameInfo.gameName = gameName;
+
+
+        Info.myInfo.listGameInfo.Add(gameInfo);
+
+        if (Info.isCheckScene("Mail"))
+            PageMail.Instance.SetGame(gameInfo);
+
+        Debug.Log("일단됩니까");
+
+
     }
 
 

@@ -47,10 +47,11 @@ public class UIGameInvite : MonoBehaviour {
 
     }
 
-    public void OnGoMailScene()
+    public void OnAcceptGame()
     {
         UIManager.Instance.Hide(eUI.eGameInvite);
-        SceneChanger.LoadScene("Mail", objSelect);
+        //씬체인지는 ACK에서 NOT에서 시켜지는지 확인할것
+        NetworkManager.Instance.Game_Accept_REQ(tableNum, inviteGameCnt, inviteGameName);
     }
 
 

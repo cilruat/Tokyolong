@@ -816,7 +816,35 @@ namespace SP_Server.UserState
 
 
 
+                    case PROTOCOL.GAME_ACCEPT_REQ:
 
+                        tableNo = msg.pop_byte();
+                        targetTableNo = msg.pop_byte();
+                        reqGameCnt = msg.pop_int32();
+                        gameName = msg.pop_string();
+
+
+
+                        for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
+                        {
+                            User inputTargetUser = owner.mainFrm.ListUser[i];
+                            if (inputTargetUser.tableNum != (int)targetTableNo)
+                                continue;
+
+                            other_msg = CPacket.create((short)PROTOCOL.GAME_ACCEPT_NOT);
+                            other_msg.push(tableNo);
+                            other_msg.push(reqGameCnt);
+                            other_msg.push(gameName);
+
+                            inputTargetUser.send(other_msg);
+                            break;
+                        }
+
+                        send_msg = CPacket.create((short)PROTOCOL.GAME_ACCEPT_ACK);
+                        send_msg.push(targetTableNo);
+                        send_msg.push(gameName);
+
+                        break;
 
 
 
