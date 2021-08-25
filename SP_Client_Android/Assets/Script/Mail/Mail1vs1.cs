@@ -113,13 +113,20 @@ public class Mail1vs1 : SingletonMonobehaviour<Mail1vs1>
 
     public void OnConfirm()
     {
-        if(gameName != null)
+
+        if (Info.GamePlayCnt >= inputCount)
         {
-            NetworkManager.Instance.Game_Versus_Invite_REQ(tableNo, inputCount, gameName);
-            OnClose();
+            if (gameName != null)
+            {
+                NetworkManager.Instance.Game_Versus_Invite_REQ(tableNo, inputCount, gameName);
+                OnClose();
+            }
+            else
+                SystemMessage.Instance.Add("게임을 먼저 선택해주세요!");
+
         }
         else
-        SystemMessage.Instance.Add("게임을 먼저 선택해주세요!");
+            SystemMessage.Instance.Add("코인이 없어..");
 
     }
 

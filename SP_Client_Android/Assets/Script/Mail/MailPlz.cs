@@ -41,7 +41,7 @@ public class MailPlz : SingletonMonobehaviour<MailPlz>
         if (inputCount > Info.PLZ_MAX_COUNT || inputCount < Info.PLZ_MAX_COUNT * -1)
         {
             inputCount = inputCount > 0 ? Info.PLZ_MAX_COUNT : Info.PLZ_MAX_COUNT * -1;
-            SystemMessage.Instance.Add("한번에 " + Info.PLZ_MAX_COUNT.ToString() + "개 이상 조르기 할 수는 없어용!");
+            SystemMessage.Instance.Add("한번에 " + Info.PLZ_MAX_COUNT.ToString() + "개 이상 조르기 할 수는 없어!");
         }
 
         count.text = inputCount.ToString();
@@ -60,7 +60,7 @@ public class MailPlz : SingletonMonobehaviour<MailPlz>
             if (inputCount > Info.PLZ_MAX_COUNT || inputCount < Info.PLZ_MAX_COUNT * -1)
             {
                 inputCount = inputCount > 0 ? Info.PLZ_MAX_COUNT : Info.PLZ_MAX_COUNT * -1;
-                SystemMessage.Instance.Add("한번에 " + Info.PLZ_MAX_COUNT.ToString() + "개 이상 조르기 할 수는 없어용!");
+                SystemMessage.Instance.Add("한번에 " + Info.PLZ_MAX_COUNT.ToString() + "개 이상 조르기 할 수는 없어!");
             }
 
             count.text = inputCount.ToString();
@@ -86,7 +86,7 @@ public class MailPlz : SingletonMonobehaviour<MailPlz>
 
     public void InputComplete()
     {
-        SystemMessage.Instance.Add(this.tableNo.ToString() + "번 테이블에 조르기를 부탁했습니다 이모티콘나오니?");
+        SystemMessage.Instance.Add(this.tableNo.ToString() + "번 테이블에 조르기~");
         this.tableNo = 0;
         OnClose();
     }

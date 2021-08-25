@@ -42,7 +42,7 @@ public class MailPresent : SingletonMonobehaviour<MailPresent>
         if (inputCount > Info.GAMEPLAY_MAX_COUNT || inputCount < Info.GAMEPLAY_MAX_COUNT * -1)
         {
             inputCount = inputCount > 0 ? Info.GAMEPLAY_MAX_COUNT : Info.GAMEPLAY_MAX_COUNT * -1;
-            SystemMessage.Instance.Add("한번에 " + Info.GAMEPLAY_MAX_COUNT.ToString() + "개 이상 선물 할 수 없어요!");
+            SystemMessage.Instance.Add("한번에 " + Info.GAMEPLAY_MAX_COUNT.ToString() + "개 이상 선물 할 수 없어!");
         }
 
         count.text = inputCount.ToString();
@@ -61,7 +61,7 @@ public class MailPresent : SingletonMonobehaviour<MailPresent>
             if (inputCount > Info.GAMEPLAY_MAX_COUNT || inputCount < Info.GAMEPLAY_MAX_COUNT * -1)
             {
                 inputCount = inputCount > 0 ? Info.GAMEPLAY_MAX_COUNT : Info.GAMEPLAY_MAX_COUNT * -1;
-                SystemMessage.Instance.Add("한번에 " + Info.GAMEPLAY_MAX_COUNT.ToString() + "개 이상 선물 할 수 없어용!");
+                SystemMessage.Instance.Add("한번에 " + Info.GAMEPLAY_MAX_COUNT.ToString() + "개 이상 선물 할 수 없어!");
             }
 
             count.text = inputCount.ToString();
@@ -78,7 +78,7 @@ public class MailPresent : SingletonMonobehaviour<MailPresent>
         //GamePlayCnt == 보유값, inputCount == 입력값
         if (Info.GamePlayCnt >= inputCount)
         { 
-            SystemMessage.Instance.Add(tableNo.ToString() + "번 테이블에 쿠폰을 쏴! 쏴! (❁´▽`❁) 드렸어요~!");
+            SystemMessage.Instance.Add(tableNo.ToString() + "번 테이블에 코인을 선물했어~!");
             NetworkManager.Instance.Prensent_Send_REQ(this.tableNo, this.inputCount);
 
             Info.AddOrderCount(-inputCount);
@@ -87,7 +87,7 @@ public class MailPresent : SingletonMonobehaviour<MailPresent>
         }
         else
         {
-            SystemMessage.Instance.Add("가진거보단 많아야 보내드리죵? ƪ(•ε•)∫ 못보내 못보내~");
+            SystemMessage.Instance.Add("사장님 코인이 없는데 어떻게 줍니까 ㅠ");
         }
         OnClose();
     }
