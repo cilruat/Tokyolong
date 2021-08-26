@@ -25,27 +25,24 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
     string RPSGameName;
     byte tableNum = 0;
 
+    UserGameInfo info;
 
+
+    public void SetInfo(UserGameInfo info)
+    {
+        this.info = info;
+        tableNum = info.tableNo;
+        RPSGameCnt = info.reqGameCnt;
+        RPSGameName = info.gameName;
+    }
 
 
 
     public void ShowRPSInfo()
     {
-
-        if (Info.myInfo.listGameInfo.Count > 0)
-        {
-            UserGameInfo info = Info.myInfo.listGameInfo[Info.myInfo.listGameInfo.Count - 1];
-            tableNum = info.tableNo;
-            RPSGameCnt = info.reqGameCnt;
-            RPSGameName = info.gameName;
-        }
-
         txtTableNo.text = tableNum.ToString();
-
-
         txtGameCnt.text = RPSGameCnt.ToString();
         txtGameName.text = RPSGameName.ToString();
-
         //UITweenAlpha.Start(objSelect, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
     }
 

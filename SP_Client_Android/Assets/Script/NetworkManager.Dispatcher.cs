@@ -815,7 +815,6 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         Info.myInfo.listGameInfo.Add(gameInfo);
 
         //여기서 정보를 넣어주면 된다.
-        PageRPS.Instance.ShowRPSInfo();
 
         if (gameName =="가위바위보")
         {
