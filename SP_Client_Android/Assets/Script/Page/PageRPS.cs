@@ -34,6 +34,11 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
         tableNum = info.tableNo;
         RPSGameCnt = info.reqGameCnt;
         RPSGameName = info.gameName;
+
+        txtTableNo.text = string.Format("{0:D2}", info.tableNo);
+        txtGameCnt.text = string.Format("{0:D2}", info.reqGameCnt);
+        txtGameName.text = string.Format("{0:D2}", info.gameName);
+
     }
 
 
