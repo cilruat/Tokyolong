@@ -28,6 +28,7 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
     UserGameInfo info;
 
 
+
     public void SetInfo(UserGameInfo info)
     {
         this.info = info;
@@ -35,9 +36,10 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
         RPSGameCnt = info.reqGameCnt;
         RPSGameName = info.gameName;
 
-        txtTableNo.text = string.Format("{0:D2}", info.tableNo);
-        txtGameCnt.text = string.Format("{0:D2}", info.reqGameCnt);
-        txtGameName.text = string.Format("{0:D2}", info.gameName);
+
+        Debug.Log(info.tableNo);
+        Debug.Log(info.reqGameCnt);
+        Debug.Log(info.gameName);
 
     }
 
@@ -45,9 +47,11 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
 
     public void ShowRPSInfo()
     {
-        txtTableNo.text = tableNum.ToString();
-        txtGameCnt.text = RPSGameCnt.ToString();
-        txtGameName.text = RPSGameName.ToString();
+
+        txtTableNo.text = info.tableNo.ToString();
+        txtGameCnt.text = info.reqGameCnt.ToString();
+        txtGameName.text = info.gameName.ToString();
+
         //UITweenAlpha.Start(objSelect, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
     }
 
