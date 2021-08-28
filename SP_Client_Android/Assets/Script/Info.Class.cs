@@ -16,6 +16,7 @@ public class UserInfo
     public List<UserCashInfo> listCashInfo = new List<UserCashInfo>();
     public List<UserGameInfo> listGameInfo = new List<UserGameInfo>();
     public List<UserRefuseInfo> listRefuseInfo = new List<UserRefuseInfo>();
+    public List<UserGameAcceptInfo> listGameAcceptInfo = new List<UserGameAcceptInfo>();
 
 
     public ECustomerType eCustomerType { get { return (ECustomerType)customerType; } }
@@ -83,6 +84,14 @@ public class UserCashInfo
 }
 
 public class UserGameInfo
+{
+    public byte tableNo = 0;
+    public int reqGameCnt = 0;
+    public string gameName = "";
+
+}
+
+public class UserGameAcceptInfo
 {
     public byte tableNo = 0;
     public int reqGameCnt = 0;

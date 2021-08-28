@@ -818,7 +818,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
         if (gameName =="가위바위보")
         {
-            PageMail.Instance.SetGame(gameInfo);
+            PageRPS.Instance.SetInfo(gameInfo);
             Debug.Log("가위바위보 로그 NOT");
             SceneChanger.LoadScene("LoadingRPS", PageBase.Instance.curBoardObj());
         }
