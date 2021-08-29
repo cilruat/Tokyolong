@@ -780,17 +780,26 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         UIManager.Instance.ShoweGameRefuse();
     }
 
+    //예외처리해야될게 여러사람에게서 계속 게임신청이 들어온다면?
 
     void GameAcceptACK(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
-
+        int reqGameCnt = msg.pop_int32();
         string gameName = msg.pop_string();
+
+
+        UserGameInfo gameInfo = new UserGameInfo();
+
+        gameInfo.tableNo = tableNo;
+        gameInfo.reqGameCnt = reqGameCnt;
+        gameInfo.gameName = gameName;
 
         SystemMessage.Instance.Add(tableNo.ToString() + "번과 게임을 시작합니다");
 
         if (gameName == "가위바위보")
         {
+            PageRPS.Instance.SetInfo(gameInfo);
             SceneChanger.LoadScene("LoadingRPS", PageBase.Instance.curBoardObj());
         }
         else

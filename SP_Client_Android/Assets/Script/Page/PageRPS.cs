@@ -48,10 +48,7 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
     public void ShowRPSInfo()
     {
 
-        txtTableNo.text = info.tableNo.ToString();
-        txtGameCnt.text = info.reqGameCnt.ToString();
-        txtGameName.text = info.gameName.ToString();
-
+        txtTableNo.text = tableNum.ToString();
         //UITweenAlpha.Start(objSelect, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
     }
 
@@ -59,7 +56,7 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
 
     public void ReturnHome()
     {
-
+        SceneChanger.LoadScene("Mail", PageBase.Instance.curBoardObj());
         //REQ 보내야하넹...ㅎㅎ 이사람이 나갔으니까 상대방이 나가서 취소됬다고 애니메이션 넣기..심플하게
     }
 
