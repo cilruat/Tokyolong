@@ -8,7 +8,7 @@ public class ClickMovement : MonoBehaviour {
     private Camera camera;
     public Animator animator;
     public float moveSpeed;
-
+    SpriteRenderer sr;
 
     private bool isMove;
     private Vector3 destination;
@@ -23,11 +23,13 @@ public class ClickMovement : MonoBehaviour {
 
 
     void Start () {
-		
+        sr = GetComponent<SpriteRenderer>();
 	}
 	
 	void Update () {
-		
+
+        sr.sortingOrder = Mathf.RoundToInt(transform.position.y) * -1;
+
         if(Input.GetMouseButton(0))
         {
             RaycastHit hit;
@@ -62,11 +64,11 @@ public class ClickMovement : MonoBehaviour {
             // 마우스 클릭한 위치가 플레이어위 위치값보다 +면 아니면 y축을 반전해라
             if( dir.x > 0)
             {
-                transform.rotation = Quaternion.Euler(0, 0, 0);
+                sr.flipX = false;
             }
             else
             {
-                transform.rotation = Quaternion.Euler(0, 180, 0);
+                sr.flipX = true;
             }
         }
 
