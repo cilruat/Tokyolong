@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/*
+
 public class ObjectCameraResize : MonoBehaviour {
 
 
@@ -69,22 +69,21 @@ public class ObjectCameraResize : MonoBehaviour {
                 StartCoroutine(SwapColor(sprite.color, day));
             }
         }
-
-
-
-
-        IEnumerator SwapColor(Color start, Color end)
-        {
-            float t = 0;
-
-            while(t<1)
-            {
-                t += Time.deltaTime * (1 / (transitionTime * oneDay));
-                sprite.color = Color.Lerp(start, end, t);
-                yield return null;
-            }
-            isSwap = false;
-        }
     }
+
+    IEnumerator SwapColor(Color start, Color end)
+    {
+
+        float t = 0;
+
+        while (t < 1)
+        {
+            t += Time.deltaTime * (1 / (transitionTime * oneDay));
+            sprite.color = Color.Lerp(start, end, t);
+            yield return null;
+        }
+        isSwap = false;
+    }
+
 }
-*/
+
