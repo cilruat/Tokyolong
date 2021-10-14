@@ -13,12 +13,16 @@ public class ClickMovement : MonoBehaviour {
     private bool isMove;
     private Vector3 destination;
 
+    public DialogueManager manager;
+    GameObject scanObject;
+
+
+
     private void Awake()
     {
         camera = Camera.main;
         animator = GetComponent<Animator>();
     }
-
 
 
 
@@ -30,7 +34,7 @@ public class ClickMovement : MonoBehaviour {
 
         sr.sortingOrder = Mathf.RoundToInt(transform.position.y) * -1;
 
-        if(Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0))
         {
             RaycastHit hit;
             if(Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out hit))
@@ -52,31 +56,68 @@ public class ClickMovement : MonoBehaviour {
 
     private void Move()
     {
-        if(isMove)
+        if(manager.isAction == false)
         {
-            //방향
-            var dir = destination - transform.position;
-
-
-            transform.position += dir.normalized * Time.deltaTime * moveSpeed;
-
-            // 각도 계산해서 그 각도가 180 / 360 나눠서 그 이하면 회전하고 아니면 회전하지마라 이렇게만 정의하고 카메라는 위치는 옮기긴 해야겟는디..
-            // 마우스 클릭한 위치가 플레이어위 위치값보다 +면 아니면 y축을 반전해라
-            if( dir.x > 0)
+            if (isMove)
             {
-                sr.flipX = false;
-            }
-            else
-            {
-                sr.flipX = true;
-            }
-        }
+                //방향
+                var dir = destination - transform.position;
 
-        if (Vector3.Distance(transform.position, destination) <= 0.1f)
-        {
-            isMove = false;
-            animator.SetBool("isMove", false);
+
+                transform.position += dir.normalized * Time.deltaTime * moveSpeed;
+
+                // 각도 계산해서 그 각도가 180 / 360 나눠서 그 이하면 회전하고 아니면 회전하지마라 이렇게만 정의하고 카메라는 위치는 옮기긴 해야겟는디..
+                // 마우스 클릭한 위치가 플레이어위 위치값보다 +면 아니면 y축을 반전해라
+                if (dir.x > 0)
+                {
+                    sr.flipX = false;
+                }
+                else
+                {
+                    sr.flipX = true;
+                }
+            }
+
+            if (Vector3.Distance(transform.position, destination) <= 0.1f)
+            {
+                isMove = false;
+                animator.SetBool("isMove", false);
+            }
+
         }
     }
 
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+
+        if (collision.tag == "TarotNPC")
+        {
+            scanObject = collision.gameObject;
+            NPCAction npcAction = scanObject.GetComponent<NPCAction>();
+
+            Debug.Log("태그");
+            npcAction.OnEnterPlayer();
+
+
+        }
+
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+
+
+        if (collision.tag == "TarotNPC")
+        {
+
+            scanObject = collision.gameObject;
+            NPCAction npcAction = scanObject.GetComponent<NPCAction>();
+
+            Debug.Log("태그아웃");
+            npcAction.OnExitPlayer();
+
+        }
+
+    }
 }
