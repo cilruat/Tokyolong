@@ -20,23 +20,27 @@ public class DialogueManager : MonoBehaviour {
 
     public QuestManager questManager;
 
+    public ChoiceManager choiceManager;
+
+
+
     public void Action(GameObject scanObj)
     {
         talkPanel.SetBool("isShow", true);
         scanObject = scanObj;
         NPCAction objData = scanObject.GetComponent<NPCAction>();
-        Talk(objData.npcID, objData.isNPC);
+        Talk(objData.npcID, objData.isNPC, objData.isChoice);
     }
 
 
     public void disableTalkPanel()
     {
         NPCAction objData = scanObject.GetComponent<NPCAction>();
-        Talk(objData.npcID, objData.isNPC);
+        Talk(objData.npcID, objData.isNPC, objData.isChoice);
     }
 
 
-    public void Talk(int id, bool isNPC)
+    public void Talk(int id, bool isNPC, bool isChoice)
     {
 
         // Set Talk Data
@@ -58,9 +62,12 @@ public class DialogueManager : MonoBehaviour {
         // End Talk
         if (talkData == null)
         {
+
+            //이쯤에 if문을 한개 더 추가해서 만약 NPC 이름이 뭐면 케이스로 가나?
             isAction = false;
             talkPanel.SetBool("isShow", false);
             talkIndex = 0;
+            Debug.Log(questManager.CheckQuest(id));
             return;
         }
 
@@ -87,6 +94,19 @@ public class DialogueManager : MonoBehaviour {
             talk.SetMsg(talkData);
             portraitImg.color = new Color(1, 1, 1, 0);
         }
+
+        // 선택지 지문을 추가합니다
+
+        if(isChoice)
+        {
+            //대화가 끝나면 선택지를 띄웁니다.
+        }
+        else
+        {
+
+        }
+
+
         isAction = true;
         talkIndex++;
     }

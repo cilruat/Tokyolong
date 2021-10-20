@@ -13,6 +13,8 @@ public class NPCAction : MonoBehaviour {
     public int npcID;
     public bool isNPC;
 
+    public bool isChoice;
+
     public GameObject objNPC;
     public GameObject objTalkBox;
     public GameObject objAlarm;
