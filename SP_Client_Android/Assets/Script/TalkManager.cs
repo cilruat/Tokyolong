@@ -27,6 +27,9 @@ public class TalkManager : MonoBehaviour {
         talkData.Add(2000, new string[] { "멍멍!! 멍멍!!"});
 
 
+        talkData.Add(3000, new string[] { "하하하 여기서 명령은 못내리나?" });
+
+
         talkData.Add(100, new string[] { "평범한 나무상자다" });
 
         // Quest Talk

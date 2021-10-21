@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class ChoiceManager : MonoBehaviour {
 
-    Dictionary<string, string[]> choiceData;
-
     private string question;
     private List<string> answerList;
 
@@ -17,10 +15,9 @@ public class ChoiceManager : MonoBehaviour {
 
     public Animator anim;
     public bool choiceIng;
+
     private int count; // 배열의 크기
     private int result; // 선택한 선택창
-
-    //private WaitForSeconds waitTime = new WaitForSeconds(0.01f);
 
 
     private void Start()
@@ -34,21 +31,6 @@ public class ChoiceManager : MonoBehaviour {
         question_Text.text = "";
 
     }
-
-    void Awake()
-    {
-        //초기화
-        choiceData = new Dictionary<string, string[]>();
-
-        GenerateData();
-    }
-
-
-    void GenerateData()
-    {
-    }
-
-
 
     public void ShowChoice(ChoiceData _choice)
     {

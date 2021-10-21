@@ -59,16 +59,22 @@ public class DialogueManager : MonoBehaviour {
             talkData = talkManager.GetTalk(id + questTalkIndex, talkIndex);
         }
 
-        // End Talk
+        // End Talk // 여기서 조절해주면 되네
         if (talkData == null)
         {
-
-            //이쯤에 if문을 한개 더 추가해서 만약 NPC 이름이 뭐면 케이스로 가나?
-            isAction = false;
             talkPanel.SetBool("isShow", false);
             talkIndex = 0;
-            Debug.Log(questManager.CheckQuest(id));
-            return;
+
+            if (isChoice == true)
+            {
+                //choiceManager.ShowChoice();
+            }
+            else
+            {
+                isAction = false; //초이스 없어서 움직일수있다.
+                Debug.Log(questManager.CheckQuest(id));
+                return;
+            }
         }
 
         // Continue Talk
@@ -95,19 +101,11 @@ public class DialogueManager : MonoBehaviour {
             portraitImg.color = new Color(1, 1, 1, 0);
         }
 
-        // 선택지 지문을 추가합니다
-
-        if(isChoice)
-        {
-            //대화가 끝나면 선택지를 띄웁니다.
-        }
-        else
-        {
-
-        }
-
-
         isAction = true;
         talkIndex++;
     }
+
+
+
+
 }

@@ -13,7 +13,6 @@ public class NPCAction : MonoBehaviour {
     public int npcID;
     public bool isNPC;
 
-    public bool isChoice;
 
     public GameObject objNPC;
     public GameObject objTalkBox;
@@ -21,22 +20,25 @@ public class NPCAction : MonoBehaviour {
 
     public Text txtTalk;
     public string m_text;
-
     public bool IsEnter = false;
-
     public Button btnNPC;
-
     public DialogueManager manager;
 
-    //public Animation animNPC;
+    SpriteRenderer sr;
 
+
+    public bool isChoice;
+    public string qeustionName;
+    public string[] questAnswers;
 
 
     private void Start()
     {
         btnNPC.interactable = false;
         StartCoroutine(_typing());
+        sr = GetComponent<SpriteRenderer>();
     }
+
 
     public void OnEnterPlayer()
     {
@@ -44,7 +46,6 @@ public class NPCAction : MonoBehaviour {
         objAlarm.SetActive(true);
         objTalkBox.SetActive(true);
         btnNPC.interactable = true;
-
     }
 
     public void OnExitPlayer()
@@ -53,13 +54,12 @@ public class NPCAction : MonoBehaviour {
         objAlarm.SetActive(false);
         objTalkBox.SetActive(false);
         btnNPC.interactable = false;
-
-        Debug.Log("나감");
     }
 
     public void OnButtonClick(GameObject objNPC)
     {
         manager.Action(objNPC);
+        StartCoroutine(ClickSprite());
     }
 
 
@@ -75,5 +75,18 @@ public class NPCAction : MonoBehaviour {
                 yield return new WaitForSeconds(0.1f);
             }
         }
+    }
+
+    IEnumerator ClickSprite()
+    {
+        sr.color = new Color(0, 0, 1, 1);
+        yield return new WaitForSeconds(0.2f);
+        sr.color = new Color(1, 1, 1, 1);
+    }
+
+    public void ChoiceData(string name, string[] answer)
+    {
+        qeustionName = name;
+        questAnswers = answer;
     }
 }
