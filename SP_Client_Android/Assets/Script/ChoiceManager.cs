@@ -22,29 +22,23 @@ public class ChoiceManager : MonoBehaviour {
 
     private void Start()
     {
-        answerList = new List<string>();
-        for (int i = 0; i <= answer_Text.Length; i++)
-        {
-            answer_Text[i].text = "";
-            answerPanel[i].SetActive(false);
-        }
-        question_Text.text = "";
-
     }
 
-    public void ShowChoice(ChoiceData _choice)
+    public void ShowChoice(NPCAction _choice)
     {
         objChoicePanel.SetActive(true);
-        result = 0;
+        //result = 0;
         question = _choice.qeustionName;
 
         for(int i = 0; i < _choice.questAnswers.Length; i++)
         {
             answerList.Add(_choice.questAnswers[i]);
             count = i;
+            Debug.Log(_choice.questAnswers.Length);
         }
         anim.SetBool("Appear", true);
     }
+
 
     public int GetResult()
     {

@@ -46,7 +46,7 @@ public class DialogueManager : MonoBehaviour {
         // Set Talk Data
         int questTalkIndex = 0;
         string talkData = "";
-
+        NPCAction npcAction = new NPCAction();
 
         if (talk.isAnim)
         {
@@ -67,7 +67,9 @@ public class DialogueManager : MonoBehaviour {
 
             if (isChoice == true)
             {
-                //choiceManager.ShowChoice();
+
+                //연결 지금 잘못된듯?
+                choiceManager.ShowChoice(npcAction);
             }
             else
             {
