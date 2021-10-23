@@ -46,7 +46,7 @@ public class DialogueManager : MonoBehaviour {
         // Set Talk Data
         int questTalkIndex = 0;
         string talkData = "";
-        NPCAction npcAction = new NPCAction();
+        NPCAction npcAction = scanObject.GetComponent<NPCAction>();
 
         if (talk.isAnim)
         {
@@ -59,22 +59,30 @@ public class DialogueManager : MonoBehaviour {
             talkData = talkManager.GetTalk(id + questTalkIndex, talkIndex);
         }
 
-        // End Talk // 여기서 조절해주면 되네
+        // End Talk 
         if (talkData == null)
         {
             talkPanel.SetBool("isShow", false);
             talkIndex = 0;
 
+            #region BackUp
+            /*
+            talkPanel.SetBool("isShow", false);
+            talkIndex = 0;
+            isAction = false; //초이스 없어서 움직일수있다.
+            Debug.Log(questManager.CheckQuest(id));
+            return;
+            */
+            #endregion
             if (isChoice == true)
             {
-
-                //연결 지금 잘못된듯?
                 choiceManager.ShowChoice(npcAction);
+                return;
+                //선택지가 끝나거든 bool값을  풀어줄것
             }
             else
             {
                 isAction = false; //초이스 없어서 움직일수있다.
-                Debug.Log(questManager.CheckQuest(id));
                 return;
             }
         }

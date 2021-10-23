@@ -5,63 +5,65 @@ using UnityEngine.UI;
 
 public class ChoiceManager : MonoBehaviour {
 
-    private string question;
-    private List<string> answerList;
-
     public GameObject objChoicePanel;
+
+    public Text sort_Text;
     public Text question_Text;
-    public Text[] answer_Text;
+    public Text answer_Text;
+    public Text reject_Text;
+
     public GameObject[] answerPanel;
 
+    public DialogueManager dialogueManager;
+
     public Animator anim;
-    public bool choiceIng;
-
-    private int count; // 배열의 크기
-    private int result; // 선택한 선택창
-
 
     private void Start()
     {
+        sort_Text.text = "";
+        question_Text.text = "";
+        answer_Text.text = "";
+        reject_Text.text = "";
     }
 
     public void ShowChoice(NPCAction _choice)
     {
         objChoicePanel.SetActive(true);
-        //result = 0;
-        question = _choice.qeustionName;
 
-        for(int i = 0; i < _choice.questAnswers.Length; i++)
-        {
-            answerList.Add(_choice.questAnswers[i]);
-            count = i;
-            Debug.Log(_choice.questAnswers.Length);
-        }
+        sort_Text.text = _choice.questionSort;
+        question_Text.text = _choice.questionName;
+        answer_Text.text = _choice.questAnswers;
+        reject_Text.text = _choice.questReject;
         anim.SetBool("Appear", true);
     }
 
 
-    public int GetResult()
+    public void OnGoScene()
     {
-        Debug.Log(result);
-        return result;
+        anim.SetBool("Appear", false);
+        StartCoroutine(DelayChoicePanel());
+        NPCAction nPC = dialogueManager.scanObject.GetComponent<NPCAction>();
+        nPC.SceneMove();
     }
-
 
     public void ExitChoice()
     {
+        sort_Text.text = "";
         question_Text.text = "";
+        answer_Text.text = "";
+        reject_Text.text = "";
 
-        for (int i = 0; i < count; i++)
-        {
-            answer_Text[i].text = "";
-            answerPanel[i].SetActive(false);
-        }
         anim.SetBool("Appear", false);
-        choiceIng = false;
-        objChoicePanel.SetActive(false);
-
+        StartCoroutine(DelayChoicePanel());
     }
 
+
+    IEnumerator DelayChoicePanel()
+    {
+        dialogueManager.isAction = false;
+        yield return new WaitForSeconds(0.1f);
+        objChoicePanel.SetActive(false);
+    }
 
     #region //타이핑이펙트, 미적용
     //이름이 헷갈리는게 많은데 적용안되면 이게 틀린거

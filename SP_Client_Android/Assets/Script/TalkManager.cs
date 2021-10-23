@@ -27,7 +27,8 @@ public class TalkManager : MonoBehaviour {
         talkData.Add(2000, new string[] { "멍멍!! 멍멍!!"});
 
 
-        talkData.Add(3000, new string[] { "하하하 여기서 명령은 못내리나?" });
+        talkData.Add(3000, new string[] { "태블릿이 있는데 유튜브는 왜 볼수없냐고?:1",
+                                          "괜히 태블릿 건들지말고 나한테 와 앞으로는~:0" });
 
 
         talkData.Add(100, new string[] { "평범한 나무상자다" });
@@ -66,6 +67,9 @@ public class TalkManager : MonoBehaviour {
         portraitData.Add(1000 + 1, portraitArr[3]); // Quest
         portraitData.Add(1000 + 2, portraitArr[5]); // Good
         portraitData.Add(1000 + 3, portraitArr[6]); // Sad
+        portraitData.Add(3000 + 0, portraitArr[7]); // Sad
+        portraitData.Add(3000 + 1, portraitArr[8]); // Sad
+
 
     }
 

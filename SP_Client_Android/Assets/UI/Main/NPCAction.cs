@@ -28,8 +28,12 @@ public class NPCAction : MonoBehaviour {
 
 
     public bool isChoice;
-    public string qeustionName;
-    public string[] questAnswers;
+    public string questionSort;
+    public string questionName;
+    public string questAnswers;
+    public string questReject;
+
+    public string sceneName;
 
 
     private void Start()
@@ -84,9 +88,16 @@ public class NPCAction : MonoBehaviour {
         sr.color = new Color(1, 1, 1, 1);
     }
 
-    public void ChoiceData(string name, string[] answer)
+    public void ChoiceData(string sort, string name, string answer, string reject)
     {
-        qeustionName = name;
+        questionSort = sort;
+        questionName = name;
         questAnswers = answer;
+        questReject = reject;
+    }
+
+    public void SceneMove()
+    {
+        SceneChanger.LoadScene(sceneName, objTalkBox);
     }
 }
