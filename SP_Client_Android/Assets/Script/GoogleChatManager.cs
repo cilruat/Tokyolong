@@ -23,14 +23,16 @@ public class GoogleChatManager : MonoBehaviour {
     public Text ChatText;
     public InputField NicknameInput, ChatInput;
 
+    public GameObject objChatBtn;
 
+    public Animator anim;
 
 
     void Start()
     {
-
         StartCoroutine(Get());
-
+        NicknameInput.text = Info.TableNum.ToString();
+        objChatBtn.SetActive(true);
     }
 
 
@@ -46,13 +48,25 @@ public class GoogleChatManager : MonoBehaviour {
     }
 
 
+    public void ShowChatPanel()
+    {
+        anim.SetBool("Appear", true);
+        objChatBtn.SetActive(false);
+
+    }
+
+    public void CloseChatPanel()
+    {
+        anim.SetBool("Appear", false);
+        objChatBtn.SetActive(true);
+    }
+
 
     public void ChatPost()
     {
         WWWForm form = new WWWForm();
         form.AddField("nickname", NicknameInput.text);
         form.AddField("chat", ChatInput.text);
-
         StartCoroutine(Post(form));
     }
 

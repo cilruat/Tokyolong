@@ -32,6 +32,8 @@ public class VersusManager : MonoBehaviour {
 
 
 
-
+    public void SetInfo(byte tableNo)
+    {
+    }
 
 }
