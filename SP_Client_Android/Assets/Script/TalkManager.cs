@@ -33,6 +33,9 @@ public class TalkManager : MonoBehaviour {
         talkData.Add(4000, new string[] { "복이 오거나~ 안오거나! 복불복입니다~♡:1",
                                           "벌칙자를 선발하는 게임이지요! 하실래요?:0" });
 
+        talkData.Add(5000, new string[] { "하..심심한데...:0",
+                                          "재밌는 썰이나 좀 풀어줄까?:1" });
+
 
 
         talkData.Add(100, new string[] { "평범한 나무상자다" });
@@ -73,8 +76,10 @@ public class TalkManager : MonoBehaviour {
         portraitData.Add(1000 + 3, portraitArr[6]); // Sad
         portraitData.Add(3000 + 0, portraitArr[7]); // Sad
         portraitData.Add(3000 + 1, portraitArr[8]); // Sad
-        portraitData.Add(4000 + 0, portraitArr[9]); // Sad
-        portraitData.Add(4000 + 1, portraitArr[10]); // Sad
+        portraitData.Add(4000 + 0, portraitArr[9]); // 
+        portraitData.Add(4000 + 1, portraitArr[10]); // 
+        portraitData.Add(5000 + 0, portraitArr[11]); // 
+        portraitData.Add(5000 + 1, portraitArr[12]); // 
 
 
     }
