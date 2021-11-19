@@ -36,6 +36,13 @@ public class TalkManager : MonoBehaviour {
         talkData.Add(5000, new string[] { "하..심심한데...:0",
                                           "재밌는 썰이나 좀 풀어줄까?:1" });
 
+        talkData.Add(6000, new string[] { "하하하하하:0",
+                                          "역시 여기를 안들릴수 없지!!:1" });
+
+        talkData.Add(7000, new string[] { "오우 언니오빠들~ !:0",
+                                           "내가 진짜 재밌는걸 아는데:1",
+                                           "한번 해볼래?!!!:1" });
+
 
 
         talkData.Add(100, new string[] { "평범한 나무상자다" });
@@ -80,6 +87,10 @@ public class TalkManager : MonoBehaviour {
         portraitData.Add(4000 + 1, portraitArr[10]); // 
         portraitData.Add(5000 + 0, portraitArr[11]); // 
         portraitData.Add(5000 + 1, portraitArr[12]); // 
+        portraitData.Add(6000 + 0, portraitArr[13]); // 
+        portraitData.Add(6000 + 1, portraitArr[14]); // 
+        portraitData.Add(7000 + 0, portraitArr[15]); // 
+        portraitData.Add(7000 + 1, portraitArr[16]); // 
 
 
     }
