@@ -43,7 +43,14 @@ public class TalkManager : MonoBehaviour {
                                            "내가 진짜 재밌는걸 아는데:1",
                                            "한번 해볼래?!!!:1" });
 
+        talkData.Add(8000, new string[] { "타로 카드로 보는 당신의 운명!:0",
+                                           "제가 타로 한번 봐드릴까요?:1" });
 
+        talkData.Add(9000, new string[] { "한번 해보면 계속하는 심리테스트입니다아!:0",
+                                           "같이하면 더 즐겁다구요~?:1" });
+
+        talkData.Add(10000, new string[] { "코인을 가지고있으면 상품으로 바꾸어줍니다!:0",
+                                           "진짜니까 구라치면 죽어요:1" });
 
         talkData.Add(100, new string[] { "평범한 나무상자다" });
 
@@ -91,6 +98,12 @@ public class TalkManager : MonoBehaviour {
         portraitData.Add(6000 + 1, portraitArr[14]); // 
         portraitData.Add(7000 + 0, portraitArr[15]); // 
         portraitData.Add(7000 + 1, portraitArr[16]); // 
+        portraitData.Add(8000 + 0, portraitArr[19]); // 
+        portraitData.Add(8000 + 1, portraitArr[20]); // 
+        portraitData.Add(9000 + 0, portraitArr[17]); // 
+        portraitData.Add(9000 + 1, portraitArr[18]); // 
+        portraitData.Add(10000 + 0, portraitArr[21]); // 
+        portraitData.Add(10000 + 1, portraitArr[22]); // 
 
 
     }
