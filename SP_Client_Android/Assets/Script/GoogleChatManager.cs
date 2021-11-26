@@ -27,12 +27,15 @@ public class GoogleChatManager : MonoBehaviour {
 
     public Animator anim;
 
+    public GameObject objChatPanel;
+
 
     void Start()
     {
         StartCoroutine(Get());
         NicknameInput.text = Info.TableNum.ToString();
         objChatBtn.SetActive(true);
+        objChatPanel.SetActive(true);
     }
 
 
