@@ -68,6 +68,8 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 	public AudioSource audioBell;
 	public AudioSource audioMusic;
 
+    public Animator anim;
+
 	public Reporter reporter;
 
     [System.NonSerialized]public bool isMouseClickEff = false;
@@ -133,41 +135,69 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 	}
 
     public void Show(int pageIdx) { Show((eUI)pageIdx); }
-	public GameObject Show(eUI page)
-	{
-		switch (page) {
-		case eUI.eWaiting:		
-			elapsedTime = 0f;	
-			waiting = true;		
-			break;
-		case eUI.eShowLog:		break;
-		default:
-			curUI = page;
-			objShadow.SetActive (true);
-			break;
-		}
 
-		dicObject [page].SetActive (true);
+
+    //쪽지, 좋아요, 선물, 조르기, 1vs1 애니메이션 추가 ==> Show, Hide
+
+    public GameObject Show(eUI page)
+	{
+        switch (page)
+        {
+            case eUI.eWaiting:
+                elapsedTime = 0f;
+                waiting = true;
+                break;
+            case eUI.eShowLog: break;
+
+
+            case eUI.eMail:
+                curUI = page;
+                if (anim != null && anim.isActiveAndEnabled)
+                {
+                    anim.Play("Show");
+                }
+                break;
+
+
+            default:
+                curUI = page;
+                objShadow.SetActive(true);
+                break;
+        }
+
+        dicObject [page].SetActive (true);
 		return dicObject [page];
 	}
+
+
+
+
 
     public void Hide(int pageIdx) { Hide((eUI)pageIdx); }
 	public void Hide(eUI page)
 	{
-		switch (page) {
-		case eUI.eWaiting:		
-			elapsedTime = 0f;	
-			waiting = false;	
-			break;
-		case eUI.eShowLog:		
-			break;        
-		default:
-			curUI = eUI.eNone;
-			objShadow.SetActive (false);
-			break;
-		}
-		
-		dicObject [page].SetActive (false);
+        switch (page)
+        {
+            case eUI.eWaiting:
+                elapsedTime = 0f;
+                waiting = false;
+                break;
+            case eUI.eShowLog:
+                break;
+
+            case eUI.eMail:
+                curUI = page;
+                //objShadow.SetActive(false);
+                anim.Play("Hide");
+                break;
+
+            default:
+                curUI = eUI.eNone;
+                objShadow.SetActive(false);
+                break;
+        }
+
+        dicObject [page].SetActive (false);
 	}
 		
 	public void Hide_All()
