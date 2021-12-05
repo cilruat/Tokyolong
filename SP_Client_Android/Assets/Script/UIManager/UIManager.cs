@@ -70,7 +70,12 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 
     public Animator anim;
 
-	public Reporter reporter;
+
+    private float MailendTime = 11f;
+
+
+
+    public Reporter reporter;
 
     [System.NonSerialized]public bool isMouseClickEff = false;
 
@@ -150,11 +155,12 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
             case eUI.eShowLog: break;
 
 
+
             case eUI.eMail:
                 curUI = page;
-                if (anim != null && anim.isActiveAndEnabled)
+                if (anim.isActiveAndEnabled)
                 {
-                    anim.Play("Show");
+                    anim.Play("Show", -1, 0f);
                 }
                 break;
 
@@ -170,9 +176,6 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 	}
 
 
-
-
-
     public void Hide(int pageIdx) { Hide((eUI)pageIdx); }
 	public void Hide(eUI page)
 	{
@@ -183,12 +186,6 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
                 waiting = false;
                 break;
             case eUI.eShowLog:
-                break;
-
-            case eUI.eMail:
-                curUI = page;
-                //objShadow.SetActive(false);
-                anim.Play("Hide");
                 break;
 
             default:
