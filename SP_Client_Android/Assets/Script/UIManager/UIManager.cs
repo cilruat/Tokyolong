@@ -69,7 +69,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 	public AudioSource audioMusic;
 
     public Animator anim;
-
+    public Animator LikeAnim;
 
     private float MailendTime = 11f;
 
@@ -163,6 +163,16 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
                     anim.Play("Show", -1, 0f);
                 }
                 break;
+
+            case eUI.eLike:
+                curUI = page;
+                if (LikeAnim.isActiveAndEnabled)
+                {
+                    LikeAnim.Play("LikeShow", -1, 0f);
+                }
+                break;
+
+
 
 
             default:
