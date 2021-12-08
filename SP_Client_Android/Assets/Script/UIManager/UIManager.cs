@@ -70,6 +70,11 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 
     public Animator anim;
     public Animator LikeAnim;
+    public Animator PresentAnim;
+    public Animator PlzAnim;
+    public Animator VersrusAnim;
+
+
 
     private float MailendTime = 11f;
 
@@ -172,7 +177,29 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
                 }
                 break;
 
+            case eUI.ePresent:
+                curUI = page;
+                if (PresentAnim.isActiveAndEnabled)
+                {
+                    PresentAnim.Play("PresentShow", -1, 0f);
+                }
+                break;
 
+            case eUI.ePlease:
+                curUI = page;
+                if (PlzAnim.isActiveAndEnabled)
+                {
+                    PlzAnim.Play("PlzShow", -1, 0f);
+                }
+                break;
+
+            case eUI.eGameInvite:
+                curUI = page;
+                if (VersrusAnim.isActiveAndEnabled)
+                {
+                    VersrusAnim.Play("VersusShow", -1, 0f);
+                }
+                break;
 
 
             default:
