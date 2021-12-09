@@ -40,6 +40,8 @@ public class PageMain : PageBase {
 
     public FlyChance flyChance;
 
+    public GameObject objSubScroll;
+
 	protected override void Awake ()
 	{
         base.boards = cgBoard;
@@ -53,9 +55,10 @@ public class PageMain : PageBase {
 
     void Start()
     {
+        objSubScroll.SetActive(false);
 		StartFlyChance ();
 
-		if (Info.firstOrder)
+        if (Info.firstOrder)
 			StartCoroutine (_FirstOrderTokyoLive ());
     }
 
@@ -140,5 +143,15 @@ public class PageMain : PageBase {
         }
 
         flyRoutine = null;
+    }
+
+    public void ShowSubScroll()
+    {
+        objSubScroll.SetActive(true);
+    }
+
+    public void HideSubScroll()
+    {
+        objSubScroll.SetActive(false);
     }
 }
