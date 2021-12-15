@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class UIGameInvite : MonoBehaviour {
 
+    //UIManager에서 뜨는 화면 1vs1 게임은 여기서 최종처리
 
     public eUI uiType;
     public Text[] txtTableNum;
@@ -30,6 +31,8 @@ public class UIGameInvite : MonoBehaviour {
             tableNum = info.tableNo;
             inviteGameCnt = info.reqGameCnt;
             inviteGameName = info.gameName;
+
+            //여기서 info는 accept 했을때의 info와는 별개인것을 기억할것
         }
 
         txtTableNum[0].text = tableNum.ToString();

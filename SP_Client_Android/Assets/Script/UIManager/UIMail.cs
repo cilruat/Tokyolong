@@ -35,14 +35,6 @@ public class UIMail : MonoBehaviour {
         txtTableNum[0].text = tableNum.ToString();
         txtTableNum[1].text = tableNum.ToString();
 
-        /*
-        CanvasGroup cgSelect = objSelect.GetComponent<CanvasGroup>();
-        if (cgSelect != null)
-            cgSelect.alpha = 1f;
-
-        CanvasGroup cgCongent = objSelect.GetComponent<CanvasGroup>();
-        if (cgCongent != null)
-            cgCongent.alpha = 0f;*/
 
         UITweenAlpha.Start(objSelect, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
         UITweenAlpha.Start(objContent, 1f, 0f, TWParam.New(.5f, .5f).Curve(TWCurve.CurveLevel2));

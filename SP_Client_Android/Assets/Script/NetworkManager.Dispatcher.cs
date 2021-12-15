@@ -780,27 +780,33 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         UIManager.Instance.ShoweGameRefuse();
     }
 
-    //예외처리해야될게 여러사람에게서 계속 게임신청이 들어온다면?
+    //예외처리해야될게 여러사람에게서 계속 게임신청이 들어온다면? 불값 넣기
 
     void GameAcceptACK(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
+        byte targetTableNo = msg.pop_byte();
         int reqGameCnt = msg.pop_int32();
         string gameName = msg.pop_string();
 
 
-        UserGameInfo gameInfo = new UserGameInfo();
+        UserGameAcceptInfo gameInfo = new UserGameAcceptInfo();
+
 
         gameInfo.tableNo = tableNo;
+        gameInfo.targettableNo = targetTableNo;
         gameInfo.reqGameCnt = reqGameCnt;
         gameInfo.gameName = gameName;
+
+        //각각 정해진 순서의 배열이 있을거아냐 그걸 보여주면 되는거지
+
 
         SystemMessage.Instance.Add(tableNo.ToString() + "번과 게임을 시작합니다");
 
         if (gameName == "가위바위보")
         {
-            PageRPS.Instance.SetInfo(gameInfo);
-            SceneChanger.LoadScene("LoadingRPS", PageBase.Instance.curBoardObj());
+            VersusManager.Instance.SetInfo(gameInfo);
+            SceneChanger.LoadScene("RPS", PageBase.Instance.curBoardObj());
         }
         else
             Debug.Log("안된다");
@@ -809,33 +815,29 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     void GameAcceptNOT(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
+        byte targetTableNo = msg.pop_byte();
         int reqGameCnt = msg.pop_int32();
         string gameName = msg.pop_string();
 
 
 
-        UserGameInfo gameInfo = new UserGameInfo();
+        UserGameAcceptInfo gameInfo = new UserGameAcceptInfo();
+
 
         gameInfo.tableNo = tableNo;
+        gameInfo.targettableNo = targetTableNo;
         gameInfo.reqGameCnt = reqGameCnt;
         gameInfo.gameName = gameName;
 
 
-        Info.myInfo.listGameInfo.Add(gameInfo);
 
         //여기서 정보를 넣어주면 된다.
 
-        if (gameName =="가위바위보")
+        if (gameName =="복불복룰렛")
         {
-            PageRPS.Instance.SetInfo(gameInfo);
-            Debug.Log("가위바위보 로그 NOT");
-            SceneChanger.LoadScene("LoadingRPS", PageBase.Instance.curBoardObj());
+            SystemMessage.Instance.Add(tableNo.ToString() + "히히 이건아직;; 디버그보자");
+
         }
-        else
-            Debug.Log("안된다");
-
-
-
     }
 
 

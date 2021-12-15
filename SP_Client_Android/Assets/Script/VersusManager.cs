@@ -6,34 +6,46 @@ using UnityEngine.UI;
 
 
 
-public class VersusManager : MonoBehaviour {
+public class VersusManager : SingletonMonobehaviour<VersusManager> {
 
-    public int myCoin;
-    public int oppoCoin;
 
-    public GameObject myTableNum;
-    public GameObject oppoTableNum;
+    public Text txtmyTableNum;
+    public Text txtTableNum;
 
-    public Text txtMyTableNum;
-    public Text txtOppoTableNum;
-
-    public GameObject objGameName;
+    public Text txtGameCnt;
     public Text txtGameName;
+
+
+    int RPSGameCnt;
+    string RPSGameName;
+    byte tableNum = 0;
+    byte myTableNum = 0;
+
+    UserGameAcceptInfo info;
 
     public bool isLobby = false;
     public bool isReady = false;
 
-    public Image imgTimer;
 
-    // Info에서 Dictionary 만들고 거기서 ConstainKey 쓸것
-    // 없으면 null반환할것
-    // Set만들것
-    // 
-
-
-
-    public void SetInfo(byte tableNo)
+    private void Awake()
     {
+        //txtmyTableNum.text = Info.TableNum.ToString(); // 내 테이블 정보
+
+        txtmyTableNum.text = info.tableNo.ToString();
+        txtTableNum.text = info.targettableNo.ToString();
+        txtGameCnt.text = info.reqGameCnt.ToString();
+        txtGameName.text = info.gameName.ToString();
+    }
+
+
+    //셋인포 두개해야하나? 나한테 주는거 상대한테 주는거
+    public void SetInfo(UserGameAcceptInfo info)
+    {
+        this.info = info;
+        myTableNum = info.tableNo;
+        tableNum = info.targettableNo;
+        RPSGameCnt = info.reqGameCnt;
+        RPSGameName = info.gameName;
     }
 
 }

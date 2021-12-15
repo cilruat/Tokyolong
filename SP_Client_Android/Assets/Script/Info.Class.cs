@@ -19,6 +19,8 @@ public class UserInfo
     public List<UserGameAcceptInfo> listGameAcceptInfo = new List<UserGameAcceptInfo>();
 
 
+
+
     public ECustomerType eCustomerType { get { return (ECustomerType)customerType; } }
 
 	public UserInfo (byte tableNo, byte peopleCnt, byte customerType)
@@ -94,6 +96,7 @@ public class UserGameInfo
 public class UserGameAcceptInfo
 {
     public byte tableNo = 0;
+    public byte targettableNo = 0;
     public int reqGameCnt = 0;
     public string gameName = "";
 
