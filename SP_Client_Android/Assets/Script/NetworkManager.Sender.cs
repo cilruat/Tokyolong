@@ -276,10 +276,11 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
     }
 
-    public void Game_Accept_REQ(byte targetTableNo, int reqGameCnt, string gameName)
+    public void Game_Accept_REQ(byte TableNo, byte targetTableNo, int reqGameCnt, string gameName)
     {
         CPacket msg = CPacket.create((short)PROTOCOL.GAME_ACCEPT_REQ);
-        msg.push(Info.TableNum);
+        //msg.push(Info.TableNum);
+        msg.push(TableNo);
         msg.push(targetTableNo);
         msg.push(reqGameCnt);
         msg.push(gameName);

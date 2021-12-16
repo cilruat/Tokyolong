@@ -799,14 +799,15 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         gameInfo.gameName = gameName;
 
         //각각 정해진 순서의 배열이 있을거아냐 그걸 보여주면 되는거지
+        // taargettableno 시스템 메세지 잘 되는거보면 debug.log 찍어보고 테스트하기
+        // 만약 여기서 디버그 로그 다 잘찍히면 결국엔 Setinfo만 잘 손봐주면 로비쪽은 문제없을것
 
-
-        SystemMessage.Instance.Add(tableNo.ToString() + "번과 게임을 시작합니다");
+        SystemMessage.Instance.Add(targetTableNo.ToString() + "번과 게임을 시작합니다");
 
         if (gameName == "가위바위보")
         {
             VersusManager.Instance.SetInfo(gameInfo);
-            SceneChanger.LoadScene("RPS", PageBase.Instance.curBoardObj());
+            SceneChanger.LoadScene("VersusLobby", PageBase.Instance.curBoardObj());
         }
         else
             Debug.Log("안된다");

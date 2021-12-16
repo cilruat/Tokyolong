@@ -32,7 +32,7 @@ public class UIGameInvite : MonoBehaviour {
             inviteGameCnt = info.reqGameCnt;
             inviteGameName = info.gameName;
 
-            //여기서 info는 accept 했을때의 info와는 별개인것을 기억할것
+            //여기서 info는 
         }
 
         txtTableNum[0].text = tableNum.ToString();
@@ -54,7 +54,7 @@ public class UIGameInvite : MonoBehaviour {
     {
         UIManager.Instance.Hide(eUI.eGameInvite);
         //씬체인지는 ACK에서 NOT에서 시켜지는지 확인할것
-        NetworkManager.Instance.Game_Accept_REQ(tableNum, inviteGameCnt, inviteGameName);
+        NetworkManager.Instance.Game_Accept_REQ(Info.TableNum, tableNum, inviteGameCnt, inviteGameName);
     }
 
 

@@ -27,25 +27,21 @@ public class VersusManager : SingletonMonobehaviour<VersusManager> {
     public bool isReady = false;
 
 
-    private void Awake()
-    {
-        //txtmyTableNum.text = Info.TableNum.ToString(); // 내 테이블 정보
-
-        txtmyTableNum.text = info.tableNo.ToString();
-        txtTableNum.text = info.targettableNo.ToString();
-        txtGameCnt.text = info.reqGameCnt.ToString();
-        txtGameName.text = info.gameName.ToString();
-    }
-
-
     //셋인포 두개해야하나? 나한테 주는거 상대한테 주는거
     public void SetInfo(UserGameAcceptInfo info)
     {
-        this.info = info;
+
         myTableNum = info.tableNo;
         tableNum = info.targettableNo;
         RPSGameCnt = info.reqGameCnt;
         RPSGameName = info.gameName;
+
+
+        txtmyTableNum.text = myTableNum.ToString();
+        txtTableNum.text = tableNum.ToString();
+        txtGameCnt.text = RPSGameCnt.ToString();
+        txtGameName.text = RPSGameName.ToString();
+
     }
 
 }
