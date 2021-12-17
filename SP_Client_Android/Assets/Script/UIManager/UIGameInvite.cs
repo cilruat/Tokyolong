@@ -54,7 +54,7 @@ public class UIGameInvite : MonoBehaviour {
     {
         UIManager.Instance.Hide(eUI.eGameInvite);
         //씬체인지는 ACK에서 NOT에서 시켜지는지 확인할것
-        NetworkManager.Instance.Game_Accept_REQ(Info.TableNum, tableNum, inviteGameCnt, inviteGameName);
+        NetworkManager.Instance.Game_Accept_REQ(tableNum, inviteGameCnt, inviteGameName);
     }
 
 

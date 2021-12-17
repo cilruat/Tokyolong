@@ -833,7 +833,6 @@ namespace SP_Server.UserState
 
                             other_msg = CPacket.create((short)PROTOCOL.GAME_ACCEPT_NOT);
                             other_msg.push(tableNo);
-                            other_msg.push(targetTableNo);
                             other_msg.push(reqGameCnt);
                             other_msg.push(gameName);
 
@@ -842,7 +841,6 @@ namespace SP_Server.UserState
                         }
 
                         send_msg = CPacket.create((short)PROTOCOL.GAME_ACCEPT_ACK);
-                        send_msg.push(tableNo);
                         send_msg.push(targetTableNo);
                         send_msg.push(reqGameCnt);
                         send_msg.push(gameName);

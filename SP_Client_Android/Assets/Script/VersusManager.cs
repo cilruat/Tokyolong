@@ -16,32 +16,18 @@ public class VersusManager : SingletonMonobehaviour<VersusManager> {
     public Text txtGameName;
 
 
-    int RPSGameCnt;
-    string RPSGameName;
-    byte tableNum = 0;
-    byte myTableNum = 0;
+    UserGameAcceptInfo info = null;
 
-    UserGameAcceptInfo info;
-
-    public bool isLobby = false;
-    public bool isReady = false;
 
 
     //셋인포 두개해야하나? 나한테 주는거 상대한테 주는거
     public void SetInfo(UserGameAcceptInfo info)
     {
-
-        myTableNum = info.tableNo;
-        tableNum = info.targettableNo;
-        RPSGameCnt = info.reqGameCnt;
-        RPSGameName = info.gameName;
-
-
-        txtmyTableNum.text = myTableNum.ToString();
-        txtTableNum.text = tableNum.ToString();
-        txtGameCnt.text = RPSGameCnt.ToString();
-        txtGameName.text = RPSGameName.ToString();
-
+        this.info = info;
+        txtmyTableNum.text = string.Format("{0:D2}", Info.TableNum);
+        txtTableNum.text = string.Format("{0:D2}", info.targettableNo);
+        txtGameCnt.text = string.Format("{0:D1}", info.reqGameCnt);
+        txtGameName.text = string.Format("{0:D1}", info.gameName);
     }
 
 }
