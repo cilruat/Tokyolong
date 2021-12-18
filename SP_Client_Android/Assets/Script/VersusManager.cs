@@ -19,21 +19,11 @@ public class VersusManager : SingletonMonobehaviour<VersusManager> {
 
 
 
-    public void Start()
+    public void SetInfo(UserGameAcceptInfo info)
     {
-        txtPlayCnt.text = Info.GamePlayCnt.ToString();
-    }
-
-    private void Awake()
-    {
-        txtTableNo.text = Info.TableNum.ToString();
-    }
-
-    public void SetInfo(byte targetTableNo, int reqGameCnt, string gameName)
-    {
-        txtTargetTableNo.text = targetTableNo.ToString();
-        txtReqGameCnt.text = reqGameCnt.ToString();
-        txtGameName.text = gameName.ToString();
+        txtTargetTableNo.text = info.tableNo.ToString();
+        txtReqGameCnt.text = info.reqGameCnt.ToString();
+        txtGameName.text = info.gameName.ToString();
     }
 
 }

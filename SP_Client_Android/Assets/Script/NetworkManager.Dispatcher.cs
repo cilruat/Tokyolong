@@ -792,15 +792,18 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
         SystemMessage.Instance.Add(targetTableNo.ToString() + "번과 게임을 시작합니다");
 
+
+        /*
         if (gameName == "가위바위보")
         {
             SceneChanger.LoadScene("VersusLobby", PageBase.Instance.curBoardObj());
             VersusManager.Instance.SetInfo((byte) targetTableNo, (int)reqGameCnt, (string)gameName);
 
-            Debug.Log(targetTableNo);
         }
         else
             Debug.Log("안된다");
+
+        */
     }
 
     void GameAcceptNOT(CPacket msg)
@@ -825,6 +828,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         if (gameName == "가위바위보")
         {
             SceneChanger.LoadScene("VersusLobby", PageBase.Instance.curBoardObj());
+            VersusManager.Instance.SetInfo(gameInfo);
+
         }
         else
             Debug.Log("안된다");
