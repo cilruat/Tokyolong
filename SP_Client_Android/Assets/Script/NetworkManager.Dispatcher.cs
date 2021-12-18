@@ -789,18 +789,15 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         string gameName = msg.pop_string();
 
 
-        UserGameAcceptInfo gameInfo = new UserGameAcceptInfo();
-
-        gameInfo.targettableNo = targetTableNo;
-        gameInfo.reqGameCnt = reqGameCnt;
-        gameInfo.gameName = gameName;
 
         SystemMessage.Instance.Add(targetTableNo.ToString() + "번과 게임을 시작합니다");
 
         if (gameName == "가위바위보")
         {
             SceneChanger.LoadScene("VersusLobby", PageBase.Instance.curBoardObj());
-            VersusManager.Instance.SetInfo(gameInfo);
+            VersusManager.Instance.SetInfo((byte) targetTableNo, (int)reqGameCnt, (string)gameName);
+
+            Debug.Log(targetTableNo);
         }
         else
             Debug.Log("안된다");
@@ -825,11 +822,12 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
         //여기서 정보를 넣어주면 된다.
 
-        if (gameName =="복불복룰렛")
+        if (gameName == "가위바위보")
         {
-            SystemMessage.Instance.Add(tableNo.ToString() + "히히 이건아직;; 디버그보자");
-
+            SceneChanger.LoadScene("VersusLobby", PageBase.Instance.curBoardObj());
         }
+        else
+            Debug.Log("안된다");
     }
 
 

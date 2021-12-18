@@ -9,25 +9,31 @@ using UnityEngine.UI;
 public class VersusManager : SingletonMonobehaviour<VersusManager> {
 
 
-    public Text txtmyTableNum;
-    public Text txtTableNum;
+    public Text txtTableNo;
+    public Text txtPlayCnt;
 
-    public Text txtGameCnt;
+
+    public Text txtTargetTableNo;
+    public Text txtReqGameCnt;
     public Text txtGameName;
 
 
-    UserGameAcceptInfo info = null;
 
-
-
-    //셋인포 두개해야하나? 나한테 주는거 상대한테 주는거
-    public void SetInfo(UserGameAcceptInfo info)
+    public void Start()
     {
-        this.info = info;
-        txtmyTableNum.text = string.Format("{0:D2}", Info.TableNum);
-        txtTableNum.text = string.Format("{0:D2}", info.targettableNo);
-        txtGameCnt.text = string.Format("{0:D1}", info.reqGameCnt);
-        txtGameName.text = string.Format("{0:D1}", info.gameName);
+        txtPlayCnt.text = Info.GamePlayCnt.ToString();
+    }
+
+    private void Awake()
+    {
+        txtTableNo.text = Info.TableNum.ToString();
+    }
+
+    public void SetInfo(byte targetTableNo, int reqGameCnt, string gameName)
+    {
+        txtTargetTableNo.text = targetTableNo.ToString();
+        txtReqGameCnt.text = reqGameCnt.ToString();
+        txtGameName.text = gameName.ToString();
     }
 
 }

@@ -10,50 +10,6 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
 
 
 
-    //public Text txtPlayCnt;
-    public Text txtTableNo;
-    public Text txtOtherTableNo;
-    public Text txtGameCnt;
-    public Text txtGameName;
-
-    //public GameObject objSelect;
-
-    public GameObject objReadyPlayer_1, objReadyPlayer_2;
-    public GameObject objReadyBtn, objReadyFinBtn;
-
-    int RPSGameCnt;
-    string RPSGameName;
-    byte tableNum = 0;
-
-    UserGameInfo info;
-
-
-
-    public void SetInfo(UserGameInfo info)
-    {
-        this.info = info;
-        tableNum = info.tableNo;
-        RPSGameCnt = info.reqGameCnt;
-        RPSGameName = info.gameName;
-
-
-        Debug.Log(info.tableNo);
-        Debug.Log(info.reqGameCnt);
-        Debug.Log(info.gameName);
-
-    }
-
-
-
-    public void ShowRPSInfo()
-    {
-
-        txtTableNo.text = tableNum.ToString();
-        //UITweenAlpha.Start(objSelect, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
-    }
-
-
-
     public void ReturnHome()
     {
         SceneChanger.LoadScene("Mail", PageBase.Instance.curBoardObj());

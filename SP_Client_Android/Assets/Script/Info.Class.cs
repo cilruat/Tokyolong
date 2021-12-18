@@ -96,7 +96,6 @@ public class UserGameInfo
 public class UserGameAcceptInfo
 {
     public byte tableNo = 0;
-    public byte targettableNo = 0;
     public int reqGameCnt = 0;
     public string gameName = "";
 
