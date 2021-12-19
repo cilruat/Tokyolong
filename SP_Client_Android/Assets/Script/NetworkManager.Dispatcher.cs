@@ -808,18 +808,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
         //인포에 정보를 담았으니깐 괜찮지 않냐?
 
-
-
-        if (gameName == "가위바위보")
-        {
-            SceneChanger.LoadScene("VersusLobby", PageBase.Instance.curBoardObj());
-
             VersusManager Versus = GetComponent<VersusManager>();
             Versus.ShowGame();
 
-        }
-        else
-            Debug.Log("안된다");
     }
 
 
