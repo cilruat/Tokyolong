@@ -784,26 +784,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
     void GameAcceptACK(CPacket msg)
     {
-        byte targetTableNo = msg.pop_byte();
-        int reqGameCnt = msg.pop_int32();
-        string gameName = msg.pop_string();
+        byte tableNo = msg.pop_byte();
+        SystemMessage.Instance.Add(tableNo.ToString() + "수락누르면 나한텐 이게뜸");
 
-
-
-        SystemMessage.Instance.Add(targetTableNo.ToString() + "번과 게임을 시작합니다");
-
-
-        /*
-        if (gameName == "가위바위보")
-        {
-            SceneChanger.LoadScene("VersusLobby", PageBase.Instance.curBoardObj());
-            VersusManager.Instance.SetInfo((byte) targetTableNo, (int)reqGameCnt, (string)gameName);
-
-        }
-        else
-            Debug.Log("안된다");
-
-        */
     }
 
     void GameAcceptNOT(CPacket msg)
@@ -821,14 +804,18 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         gameInfo.reqGameCnt = reqGameCnt;
         gameInfo.gameName = gameName;
 
+        Info.myInfo.listGameAcceptInfo.Add(gameInfo);
+
+        //인포에 정보를 담았으니깐 괜찮지 않냐?
 
 
-        //여기서 정보를 넣어주면 된다.
 
         if (gameName == "가위바위보")
         {
             SceneChanger.LoadScene("VersusLobby", PageBase.Instance.curBoardObj());
-            VersusManager.Instance.SetInfo(gameInfo);
+
+            VersusManager Versus = GetComponent<VersusManager>();
+            Versus.ShowGame();
 
         }
         else
