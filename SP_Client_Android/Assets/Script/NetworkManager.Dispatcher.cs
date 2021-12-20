@@ -785,7 +785,18 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     void GameAcceptACK(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
-        SystemMessage.Instance.Add(tableNo.ToString() + "수락누르면 나한텐 이게뜸");
+        int reqGameCnt = msg.pop_int32();
+        string gameName = msg.pop_string();
+
+        UserGameAcceptInfo gameInfo = new UserGameAcceptInfo();
+
+        gameInfo.tableNo = tableNo;
+        gameInfo.reqGameCnt = reqGameCnt;
+        gameInfo.gameName = gameName;
+
+        Info.myInfo.listGameAcceptInfo.Add(gameInfo);
+
+        VersusManager.Instance.LoadPage();
 
     }
 
@@ -809,7 +820,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         // 조건식을 몇개 추가해야겠지만 일단 가장 심플하게 구현할것
         // VersusManager가 아니라 UIManager에서 처리하면 되지않냐?
 
-        UIManager.Instance.LoadPage();
+        VersusManager.Instance.LoadPage();
 
 
 

@@ -8,7 +8,7 @@ public class PageRPS : MonoBehaviour  {
 
     public GameObject objBoard;
 
-    public Text txtTableNum;
+    public Text[] txtTableNum;
     public Text txtReqGameCnt;
     public Text txtGameName;
 
@@ -27,7 +27,7 @@ public class PageRPS : MonoBehaviour  {
             GameName = info.gameName;
 
         }
-        txtTableNum.text = tableNum.ToString();
+        txtTableNum[0].text = tableNum.ToString();
         txtReqGameCnt.text = GameCnt.ToString();
         txtGameName.text = GameName.ToString();
 

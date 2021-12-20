@@ -8,12 +8,13 @@ public class PageVersusLobby : MonoBehaviour {
 
     public GameObject objBoard;
 
-    public Text txtTableNum;
+    public Text txtMyTableNum;
+
+    public Text[] txtTableNum;
     public Text txtReqGameCnt;
     public Text txtGameName;
 
-
-    public void SetInfo()
+    private void Start()
     {
         byte tableNum = 0;
         int GameCnt = 0;
@@ -27,12 +28,13 @@ public class PageVersusLobby : MonoBehaviour {
             GameName = info.gameName;
 
         }
-        txtTableNum.text = tableNum.ToString();
+        txtMyTableNum.text = Info.TableNum.ToString();
+
+        txtTableNum[0].text = tableNum.ToString();
         txtReqGameCnt.text = GameCnt.ToString();
         txtGameName.text = GameName.ToString();
 
     }
-
 
     public void ReturnHome()
     {

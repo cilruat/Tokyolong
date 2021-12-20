@@ -486,24 +486,6 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 		//audioMusic.PlayOneShot(clip, volumeScale);
 	}
 
-    public void LoadPage()
-    {
-
-        UserGameAcceptInfo gameinfo = new UserGameAcceptInfo();
-
-        if (gameinfo.gameName == "가위바위보")
-        {
-            PageVersusLobby Lobby = GetComponent<PageVersusLobby>();
-            Lobby.SetInfo();
-            SceneChanger.LoadScene("VersusLobby", PageBase.Instance.curBoardObj());
-
-        }
-
-
-    }
-
-
-
 
     public void StopMusic()
 	{
