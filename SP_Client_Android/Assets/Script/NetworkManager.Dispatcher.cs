@@ -795,10 +795,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         int reqGameCnt = msg.pop_int32();
         string gameName = msg.pop_string();
 
-
-
         UserGameAcceptInfo gameInfo = new UserGameAcceptInfo();
-
 
         gameInfo.tableNo = tableNo;
         gameInfo.reqGameCnt = reqGameCnt;
@@ -806,10 +803,15 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
         Info.myInfo.listGameAcceptInfo.Add(gameInfo);
 
-        //인포에 정보를 담았으니깐 괜찮지 않냐?
 
-            VersusManager Versus = GetComponent<VersusManager>();
-            Versus.ShowGame();
+        //일단 여기까지는 refuse랑 같고 이제 확인작업. 적어도 NOT에서는 확인할것
+
+        // 조건식을 몇개 추가해야겠지만 일단 가장 심플하게 구현할것
+        // VersusManager가 아니라 UIManager에서 처리하면 되지않냐?
+
+        UIManager.Instance.LoadPage();
+
+
 
     }
 
