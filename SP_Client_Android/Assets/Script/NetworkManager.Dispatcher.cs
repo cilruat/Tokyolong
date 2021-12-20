@@ -796,8 +796,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
         Info.myInfo.listGameAcceptInfo.Add(gameInfo);
 
-        VersusManager.Instance.LoadPage();
-
+        //VersusManager.Instance.LoadPage();
+        UIManager.Instance.ShowGameWaiting();
     }
 
     void GameAcceptNOT(CPacket msg)
@@ -820,9 +820,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         // 조건식을 몇개 추가해야겠지만 일단 가장 심플하게 구현할것
         // VersusManager가 아니라 UIManager에서 처리하면 되지않냐?
 
-        VersusManager.Instance.LoadPage();
-
-
+        UIManager.Instance.ShowGameWaiting();
 
     }
 

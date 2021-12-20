@@ -30,7 +30,7 @@ public enum eUI
     ePlease         = 20,
     eGameInvite,
     eGameRefuse,
-
+    eGameWaiting,
 
 
     eNone = 100,
@@ -335,6 +335,17 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
         UIGameRefuse uiGameRefuse = Show(eUI.eGameRefuse).GetComponent<UIGameRefuse>();
         uiGameRefuse.ShowGameRefuse();
     }
+
+    public void ShowGameWaiting()
+    {
+        if (curUI != eUI.eNone && curUI != eUI.eGameWaiting)
+            Hide(curUI);
+
+        UIGameWaiting uiGameWaiting = Show(eUI.eGameWaiting).GetComponent<UIGameWaiting>();
+        uiGameWaiting.ShowWaiting();
+
+    }
+
 
 
 
