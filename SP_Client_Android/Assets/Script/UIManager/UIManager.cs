@@ -32,7 +32,6 @@ public enum eUI
     eGameRefuse,
     eGameWaiting,
 
-
     eNone = 100,
 }
 
@@ -83,8 +82,11 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
     public Reporter reporter;
 
     [System.NonSerialized]public bool isMouseClickEff = false;
+    [System.NonSerialized]public bool isGameRoom = false;
 
-	eUI curUI = eUI.eNone;
+
+
+    eUI curUI = eUI.eNone;
 	Dictionary<eUI, GameObject> dicObject = new Dictionary<eUI, GameObject> ();
 
     void Awake () 
@@ -343,10 +345,9 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 
         UIGameWaiting uiGameWaiting = Show(eUI.eGameWaiting).GetComponent<UIGameWaiting>();
         uiGameWaiting.ShowWaiting();
+        isGameRoom = true;
 
     }
-
-
 
 
     void _ShowBillDetail()

@@ -116,13 +116,19 @@ public class Mail1vs1 : SingletonMonobehaviour<Mail1vs1>
 
         if (Info.GamePlayCnt >= inputCount)
         {
-            if (gameName != null)
+            if (gameName != null && UIManager.Instance.isGameRoom == false)
             {
                 NetworkManager.Instance.Game_Versus_Invite_REQ(tableNo, inputCount, gameName);
                 OnClose();
             }
-            else
+            else if(gameName == null)
+            {
                 SystemMessage.Instance.Add("게임을 먼저 선택해주세요!");
+            }
+            else if (UIManager.Instance.isGameRoom == true)
+            {
+                SystemMessage.Instance.Add("상대방이 현재 게임중입니다. 나중에 다시 시도해주세요!");
+            }
 
         }
         else

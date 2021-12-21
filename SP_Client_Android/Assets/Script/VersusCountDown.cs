@@ -39,6 +39,10 @@ public class VersusCountDown : MonoBehaviour {
         yield return new WaitForSeconds(1f);
 
         SceneChanger.LoadScene("Main", objBoard);
+
+        //일단 여기서 통제하고 Debug찍기
+        //UIManager.Instance.isGameRoom = false;
+
         Debug.Log("UI작업");
 
         countdownDisplay.gameObject.SetActive(false);

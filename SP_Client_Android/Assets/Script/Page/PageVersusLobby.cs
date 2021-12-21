@@ -34,6 +34,7 @@ public class PageVersusLobby : MonoBehaviour {
         txtReqGameCnt.text = GameCnt.ToString();
         txtGameName.text = GameName.ToString();
 
+        Debug.Log(UIManager.Instance.isGameRoom);
     }
 
     public void ReturnHome()

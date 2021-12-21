@@ -259,6 +259,9 @@ public partial class Info : MonoBehaviour {
 
     public static bool RunInGameScene = false;
 
+    public static bool InVersusGameRoom = false;
+
+
     public static bool CheckOwnerEvt = false;
     public static eUI OwnerUI = eUI.eOwnerGame;
 
@@ -395,7 +398,10 @@ public partial class Info : MonoBehaviour {
 			return false;
 	}
 
-	public static void PlayGame(int idx, GameObject obj)
+
+
+
+    public static void PlayGame(int idx, GameObject obj)
 	{
 		string sceneName = "";
 		switch (idx) {
