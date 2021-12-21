@@ -29,6 +29,7 @@ public class PageMain : PageBase {
         eSelectGame,
         eCashShop = 20,
         eWebView,
+        eLuckGame,
     }
 
     public CanvasGroup[] cgBoard;
@@ -41,6 +42,9 @@ public class PageMain : PageBase {
     public FlyChance flyChance;
 
     public GameObject objSubScroll;
+
+
+    bool Direct;
 
 	protected override void Awake ()
 	{
@@ -56,7 +60,9 @@ public class PageMain : PageBase {
     void Start()
     {
         objSubScroll.SetActive(false);
-		StartFlyChance ();
+
+
+        StartFlyChance();
 
         if (Info.firstOrder)
 			StartCoroutine (_FirstOrderTokyoLive ());
@@ -84,7 +90,7 @@ public class PageMain : PageBase {
 		EMenu e = (EMenu)idx;
 		switch (e) {
         case EMenu.eChat:       	SceneChanger.LoadScene("TableStatus", curBoardObj());   	break;
-        case EMenu.eOrder:      	SceneChanger.LoadScene ("LoadingOrder", curBoardObj());        	break;
+        case EMenu.eOrder:      	SceneChanger.LoadScene ("LoadingOrder", curBoardObj());     break;
         case EMenu.eGame:			SceneChanger.LoadScene ("Game", curBoardObj());         	break;
         case EMenu.eService:		SceneChanger.LoadScene ("Service", curBoardObj());			break;
         case EMenu.eShowChat:   	UIManager.Instance.Show(eUI.eChat);                     	break;
@@ -101,10 +107,11 @@ public class PageMain : PageBase {
 		case EMenu.eArcadeGame:		SceneChanger.LoadScene ("ArcadeGame", curBoardObj ());		break;
 		case EMenu.eSsul:			SceneChanger.LoadScene ("Ssul", curBoardObj ());			break;
 		case EMenu.eInssa:			SceneChanger.LoadScene ("InSsa", curBoardObj ());			break;
-		case EMenu.eMail:			SceneChanger.LoadScene ("LoadingChat", curBoardObj ());			break;
-        case EMenu.eSelectGame:     SceneChanger.LoadScene("LoadingGame", curBoardObj());        break;
+		case EMenu.eMail:			SceneChanger.LoadScene ("LoadingChat", curBoardObj ());     break;
+        case EMenu.eSelectGame:     SceneChanger.LoadScene("LoadingGame", curBoardObj());       break;
         case EMenu.eCashShop:       SceneChanger.LoadScene("CashShop", curBoardObj());          break;
-        case EMenu.eWebView:        SceneChanger.LoadScene("WebView", curBoardObj()); break;
+        case EMenu.eWebView:        SceneChanger.LoadScene("WebView", curBoardObj());           break;
+        case EMenu.eLuckGame:       SceneChanger.LoadScene("LuckGame", curBoardObj());          break;
 
         }
     }
@@ -147,11 +154,20 @@ public class PageMain : PageBase {
 
     public void ShowSubScroll()
     {
-        objSubScroll.SetActive(true);
+        if (Direct == false)
+        {
+            objSubScroll.SetActive(true);
+            Direct = true;
+        }
+        else if (Direct == true)
+        {
+            HideSubScroll();
+        }
     }
 
     public void HideSubScroll()
     {
         objSubScroll.SetActive(false);
+        Direct = false;
     }
 }

@@ -52,6 +52,13 @@ public class TalkManager : MonoBehaviour {
         talkData.Add(10000, new string[] { "코인을 가지고있으면 상품으로 바꾸어줍니다!:0",
                                            "진짜니까 구라치면 죽어요:1" });
 
+        talkData.Add(11000, new string[] { "안녕~? 뽑기방에 오신걸 환영해요~:0",
+                                           "코인!!! 가지고 뽑기해서 대박날수있어요!!!:1" });
+
+        talkData.Add(12000, new string[] { "보는것이 하는것보다 재미있을수가 없지:0",
+                                           "이기면 엄청난 코인을 줄께 기회는 한번뿐이야:1" });
+
+
         talkData.Add(100, new string[] { "평범한 나무상자다" });
 
         // Quest Talk
@@ -104,6 +111,10 @@ public class TalkManager : MonoBehaviour {
         portraitData.Add(9000 + 1, portraitArr[18]); // 
         portraitData.Add(10000 + 0, portraitArr[21]); // 
         portraitData.Add(10000 + 1, portraitArr[22]); // 
+        portraitData.Add(11000 + 0, portraitArr[23]); // 
+        portraitData.Add(11000 + 1, portraitArr[24]); // 
+        portraitData.Add(12000 + 0, portraitArr[25]); // 
+        portraitData.Add(12000 + 1, portraitArr[26]); // 
 
 
     }
