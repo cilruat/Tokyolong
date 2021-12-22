@@ -65,16 +65,18 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         case PROTOCOL.LKE_SEND_NOT:                 LkeSendNOT(msg);                break;
         case PROTOCOL.PRESENT_SEND_ACK:             PresentSendACK(msg);            break;
         case PROTOCOL.PRESENT_SEND_NOT:             PresentSendNOT(msg);            break;
-        case PROTOCOL.PLZ_SEND_ACK:                 PleaseSendACK(msg);            break;
-        case PROTOCOL.PLZ_SEND_NOT:                 PleaseSendNOT(msg);            break;
-        case PROTOCOL.CASH_SEND_ACK:                CashSendACK(msg);              break;
-        case PROTOCOL.CASH_SEND_NOT:                CashSendNOT(msg);              break;
-        case PROTOCOL.GAME_VERSUS_INVITE_ACK:       GameVersusInviteACK(msg); break;
-        case PROTOCOL.GAME_VERSUS_INVITE_NOT:       GameVersusInviteNOT(msg); break;
-        case PROTOCOL.GAME_REFUSE_ACK:              GameRefuseACK(msg); break;
-        case PROTOCOL.GAME_REFUSE_NOT:              GameRefuseNOT(msg); break;
-        case PROTOCOL.GAME_ACCEPT_ACK:              GameAcceptACK(msg); break;
-        case PROTOCOL.GAME_ACCEPT_NOT:              GameAcceptNOT(msg); break;
+        case PROTOCOL.PLZ_SEND_ACK:                 PleaseSendACK(msg);             break;
+        case PROTOCOL.PLZ_SEND_NOT:                 PleaseSendNOT(msg);             break;
+        case PROTOCOL.CASH_SEND_ACK:                CashSendACK(msg);               break;
+        case PROTOCOL.CASH_SEND_NOT:                CashSendNOT(msg);               break;
+        case PROTOCOL.GAME_VERSUS_INVITE_ACK:       GameVersusInviteACK(msg);       break;
+        case PROTOCOL.GAME_VERSUS_INVITE_NOT:       GameVersusInviteNOT(msg);       break;
+        case PROTOCOL.GAME_REFUSE_ACK:              GameRefuseACK(msg);             break;
+        case PROTOCOL.GAME_REFUSE_NOT:              GameRefuseNOT(msg);             break;
+        case PROTOCOL.GAME_ACCEPT_ACK:              GameAcceptACK(msg);             break;
+        case PROTOCOL.GAME_ACCEPT_NOT:              GameAcceptNOT(msg);             break;
+        case PROTOCOL.GAME_CANCEL_ACK:              GameAcceptACK(msg);             break;
+        case PROTOCOL.GAME_CANCEL_NOT:              GameAcceptNOT(msg);             break;
 
 
         }
@@ -823,6 +825,31 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         UIManager.Instance.ShowGameWaiting();
 
     }
+
+
+    void GameCanCelACK(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+        SystemMessage.Instance.Add(tableNo.ToString() + "번과의 게임을 취소합니다.");
+
+        UIManager.Instance.ShowGameOut();
+
+    }
+
+    void GameCanCelNOT(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+
+        UserCancelInfo cancelInfo = new UserCancelInfo();
+
+        cancelInfo.tableNo = tableNo;
+        Info.myInfo.listCanCelInfo.Add(cancelInfo);
+
+
+
+        UIManager.Instance.ShowGameOut();
+    }
+
 
 
 

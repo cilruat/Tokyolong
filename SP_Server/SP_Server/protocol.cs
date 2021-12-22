@@ -124,6 +124,11 @@ namespace SP_Server
         GAME_ACCEPT_ACK,
         GAME_ACCEPT_NOT,
 
+        GAME_CANCEL_REQ,
+        GAME_CANCEL_ACK,
+        GAME_CANCEL_NOT,
+
+
 
         ROOM_REMOVED,
 

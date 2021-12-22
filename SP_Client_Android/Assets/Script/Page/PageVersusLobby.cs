@@ -14,11 +14,14 @@ public class PageVersusLobby : MonoBehaviour {
     public Text txtReqGameCnt;
     public Text txtGameName;
 
+    public GameObject objCancelPanel;
+
+    byte tableNum = 0;
+    int GameCnt = 0;
+    string GameName = "";
+
     private void Start()
     {
-        byte tableNum = 0;
-        int GameCnt = 0;
-        string GameName = "";
 
         if (Info.myInfo.listGameAcceptInfo.Count > 0)
         {
@@ -37,10 +40,16 @@ public class PageVersusLobby : MonoBehaviour {
         Debug.Log(UIManager.Instance.isGameRoom);
     }
 
-    public void ReturnHome()
+
+
+    public void CancelMatch()
     {
-        SceneChanger.LoadScene("Mail", PageBase.Instance.curBoardObj());
-        //REQ 보내야하넹...ㅎㅎ 이사람이 나갔으니까 상대방이 나가서 취소됬다고 애니메이션 넣기..심플하게
+        NetworkManager.Instance.Game_Cancel_REQ(tableNum);
     }
 
+
+
+
+    //Start 누르면 판정에서 마지막으로 갯수판정하고, --Count 할것.
+    // 자동으로 튕기니깐.. 숫자없으면. 괜히 넣을 필요없겠다요!
 }

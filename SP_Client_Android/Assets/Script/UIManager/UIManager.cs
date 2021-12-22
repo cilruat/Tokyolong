@@ -31,6 +31,7 @@ public enum eUI
     eGameInvite,
     eGameRefuse,
     eGameWaiting,
+    eGameOut,
 
     eNone = 100,
 }
@@ -91,6 +92,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 
     void Awake () 
 	{
+
 		if (Info.isCheckScene ("Login") == false)
 			return;
 
@@ -348,6 +350,17 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
         isGameRoom = true;
 
     }
+
+
+    public void ShowGameOut()
+    {
+        if (curUI != eUI.eNone && curUI != eUI.eGameOut)
+            Hide(curUI);
+
+        UIGameOut uiGameOut = Show(eUI.eGameOut).GetComponent<UIGameOut>();
+        uiGameOut.ShowGameOut();
+    }
+
 
 
     void _ShowBillDetail()

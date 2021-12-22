@@ -39,11 +39,8 @@ public class VersusCountDown : MonoBehaviour {
         yield return new WaitForSeconds(1f);
 
         SceneChanger.LoadScene("Main", objBoard);
-
-        //일단 여기서 통제하고 Debug찍기, 항상 true인가, 그래서 초대가 안되는가?
-        //UIManager.Instance.isGameRoom = false;
-
-        Debug.Log("UI작업");
+        UIManager.Instance.isGameRoom = false;
+        Debug.Log("타임아웃되면 게임룸 false");
 
         countdownDisplay.gameObject.SetActive(false);
     }
