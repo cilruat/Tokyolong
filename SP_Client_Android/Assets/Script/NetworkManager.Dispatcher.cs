@@ -831,6 +831,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     {
         byte tableNo = msg.pop_byte();
         SystemMessage.Instance.Add(tableNo.ToString() + "번과의 게임을 취소합니다.");
+
     }
 
     void GameCanCelNOT(CPacket msg)
@@ -842,11 +843,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         cancelInfo.tableNo = tableNo;
         Info.myInfo.listCanCelInfo.Add(cancelInfo);
 
-
-
         UIManager.Instance.ShowGameOut();
     }
-
 
 
 

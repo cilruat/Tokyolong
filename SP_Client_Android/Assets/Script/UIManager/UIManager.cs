@@ -359,6 +359,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 
         UIGameOut uiGameOut = Show(eUI.eGameOut).GetComponent<UIGameOut>();
         uiGameOut.ShowGameOut();
+        isGameRoom = false;
     }
 
 

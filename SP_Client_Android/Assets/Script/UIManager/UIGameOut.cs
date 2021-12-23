@@ -7,15 +7,12 @@ public class UIGameOut : MonoBehaviour {
 
     public eUI uiType;
     public GameObject objSelect;
-    public Text txtTableNum;
+    public Text[] txtTableNum;
 
 
     public Animator anim;
 
 
-    //안쓰는건데 나중을 위해 남겨두자
-
-    //단순히 SystemMessage 보내는것보다 이게 더 나을것
     public void ShowGameOut()
     {
         byte tableNum = 0;
@@ -26,7 +23,7 @@ public class UIGameOut : MonoBehaviour {
             tableNum = info.tableNo;
         }
 
-        txtTableNum.text = tableNum.ToString();
+        txtTableNum[0].text = tableNum.ToString();
 
         anim.Play("UIVersusOut");
         StartCoroutine(_DestroyShadow());
@@ -36,8 +33,6 @@ public class UIGameOut : MonoBehaviour {
     {
         yield return new WaitForSeconds(3f);
         UIManager.Instance.Hide(eUI.eGameOut);
-        UIManager.Instance.isGameRoom = false;
-
     }
 
 }

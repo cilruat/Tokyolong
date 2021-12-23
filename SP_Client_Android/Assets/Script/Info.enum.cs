@@ -123,11 +123,11 @@ public enum EMenuDetail : int
 /// </summary>
 public enum EDiscount
 {
-	e500won = 0,
-	e1000won,
-	e2000won,
-	e5000won,
-    eAll,
+	e500won = 0,        // 코인 2개
+	e1000won,           // 코인 3
+	e2000won,           // 코인 4
+	e5000won,           // 코인 5
+    eAll,               // 코인 10
     eDirect = 5,
 }
 
@@ -201,10 +201,10 @@ public partial class Info : MonoBehaviour {
     {
         int discountPrice = 0;
 		switch (type) {
-		case EDiscount.e500won:		discountPrice = 500;	break;
-		case EDiscount.e1000won:	discountPrice = 1000;	break;
-		case EDiscount.e2000won:	discountPrice = 2000;	break;
-		case EDiscount.e5000won:	discountPrice = 5000;	break;
+		case EDiscount.e500won:		discountPrice = 0;	break;
+		case EDiscount.e1000won:	discountPrice = 0;	break;
+		case EDiscount.e2000won:	discountPrice = 0;	break;
+		case EDiscount.e5000won:	discountPrice = 0;	break;
 		}
 
         return discountPrice;
