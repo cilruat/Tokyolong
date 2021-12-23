@@ -25,7 +25,7 @@ public class UIGameRefuse : MonoBehaviour {
         txtTableNum[0].text = tableNum.ToString();
 
         //UITweenAlpha.Start(objSelect, 0f, 1f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
-        anim.Play("GameRefuse");
+        anim.Play("UIVersusOut");
         StartCoroutine(_DestroyShadow());
     }
 

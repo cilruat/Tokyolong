@@ -9,7 +9,9 @@ public class UIGameOut : MonoBehaviour {
     public GameObject objSelect;
     public Text txtTableNum;
 
-    public GameObject objCancelPanel;
+
+    public Animator anim;
+
 
     //안쓰는건데 나중을 위해 남겨두자
 
@@ -26,16 +28,14 @@ public class UIGameOut : MonoBehaviour {
 
         txtTableNum.text = tableNum.ToString();
 
-
+        anim.Play("UIVersusOut");
         StartCoroutine(_DestroyShadow());
     }
 
     IEnumerator _DestroyShadow()
     {
-        objCancelPanel.SetActive(true);
         yield return new WaitForSeconds(3f);
         UIManager.Instance.Hide(eUI.eGameOut);
-        objCancelPanel.SetActive(false);
         UIManager.Instance.isGameRoom = false;
 
     }
