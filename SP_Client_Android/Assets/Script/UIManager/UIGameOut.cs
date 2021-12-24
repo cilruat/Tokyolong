@@ -7,7 +7,7 @@ public class UIGameOut : MonoBehaviour {
 
     public eUI uiType;
     public GameObject objSelect;
-    public Text[] txtTableNum;
+    public Text txtTableNum;
 
 
     public Animator anim;
@@ -24,19 +24,18 @@ public class UIGameOut : MonoBehaviour {
             tableNum = info.tableNo;
         }
 
-        txtTableNum[0].text = tableNum.ToString();
+        txtTableNum.text = tableNum.ToString();
 
-        Debug.Log(Info.myInfo.listCanCelInfo[0]);
         anim.Play("UIVersusOut");
         StartCoroutine(_DestroyShadow());
     }
 
     IEnumerator _DestroyShadow()
     {
-        UIManager.Instance.Hide(eUI.eGameOut);
         yield return new WaitForSeconds(2f);
-        UIManager.Instance.isGameRoom = false;
         SceneChanger.LoadScene("Main", PageBase.Instance.curBoardObj());
+        UIManager.Instance.Hide(eUI.eGameOut);
+
     }
 
 }
