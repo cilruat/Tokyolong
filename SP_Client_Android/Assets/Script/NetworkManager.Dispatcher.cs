@@ -75,8 +75,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         case PROTOCOL.GAME_REFUSE_NOT:              GameRefuseNOT(msg);             break;
         case PROTOCOL.GAME_ACCEPT_ACK:              GameAcceptACK(msg);             break;
         case PROTOCOL.GAME_ACCEPT_NOT:              GameAcceptNOT(msg);             break;
-        case PROTOCOL.GAME_CANCEL_ACK:              GameAcceptACK(msg);             break;
-        case PROTOCOL.GAME_CANCEL_NOT:              GameAcceptNOT(msg);             break;
+        case PROTOCOL.GAME_CANCEL_ACK:              GameCanCelACK(msg);             break;
+        case PROTOCOL.GAME_CANCEL_NOT:              GameCanCelNOT(msg);             break;
 
 
         }
@@ -832,18 +832,29 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         byte tableNo = msg.pop_byte();
         SystemMessage.Instance.Add(tableNo.ToString() + "번과의 게임을 취소합니다.");
 
-    }
-
-    void GameCanCelNOT(CPacket msg)
-    {
-        byte tableNo = msg.pop_byte();
-
         UserCancelInfo cancelInfo = new UserCancelInfo();
 
         cancelInfo.tableNo = tableNo;
         Info.myInfo.listCanCelInfo.Add(cancelInfo);
 
         UIManager.Instance.ShowGameOut();
+
+
+    }
+
+    void GameCanCelNOT(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+
+
+        
+        UserCancelInfo cancelInfo = new UserCancelInfo();
+
+        cancelInfo.tableNo = tableNo;
+        Info.myInfo.listCanCelInfo.Add(cancelInfo);
+        
+        UIManager.Instance.ShowGameOut();
+        
     }
 
 

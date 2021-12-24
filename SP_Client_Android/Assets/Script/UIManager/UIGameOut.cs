@@ -15,6 +15,7 @@ public class UIGameOut : MonoBehaviour {
 
     public void ShowGameOut()
     {
+        
         byte tableNum = 0;
 
         if (Info.myInfo.listCanCelInfo.Count > 0)
@@ -25,14 +26,17 @@ public class UIGameOut : MonoBehaviour {
 
         txtTableNum[0].text = tableNum.ToString();
 
+        Debug.Log(Info.myInfo.listCanCelInfo[0]);
         anim.Play("UIVersusOut");
         StartCoroutine(_DestroyShadow());
     }
 
     IEnumerator _DestroyShadow()
     {
-        yield return new WaitForSeconds(3f);
         UIManager.Instance.Hide(eUI.eGameOut);
+        yield return new WaitForSeconds(2f);
+        UIManager.Instance.isGameRoom = false;
+        SceneChanger.LoadScene("Main", PageBase.Instance.curBoardObj());
     }
 
 }

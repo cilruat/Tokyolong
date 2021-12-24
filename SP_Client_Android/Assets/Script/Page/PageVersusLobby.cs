@@ -17,14 +17,14 @@ public class PageVersusLobby : MonoBehaviour {
     public GameObject objCancelPanel;
 
 
+    byte tableNum = 0;
+    int GameCnt = 0;
+    string GameName = "";
 
 
     private void Start()
     {
 
-        byte tableNum = 0;
-        int GameCnt = 0;
-        string GameName = "";
 
         if (Info.myInfo.listGameAcceptInfo.Count > 0)
         {
@@ -47,8 +47,6 @@ public class PageVersusLobby : MonoBehaviour {
 
     public void CancelMatch()
     {
-        byte tableNum = 0;
-
         NetworkManager.Instance.Game_Cancel_REQ(tableNum);
     }
 
