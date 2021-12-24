@@ -52,9 +52,18 @@ public class UIGameInvite : MonoBehaviour {
 
     public void OnAcceptGame()
     {
-        UIManager.Instance.Hide(eUI.eGameInvite);
-        //씬체인지는 ACK에서 NOT에서 시켜지는지 확인할것
-        NetworkManager.Instance.Game_Accept_REQ(tableNum, inviteGameCnt, inviteGameName);
+
+        if(inviteGameCnt <= Info.GamePlayCnt)
+        {
+            UIManager.Instance.Hide(eUI.eGameInvite);
+            NetworkManager.Instance.Game_Accept_REQ(tableNum, inviteGameCnt, inviteGameName);
+        }
+        else
+        {
+            SystemMessage.Instance.DelayAdd("코인이 부족해요ㅠㅠ");
+            UIManager.Instance.Hide(eUI.eGameInvite);
+            NetworkManager.Instance.Game_Refuse_REQ(tableNum);
+        }
     }
 
 

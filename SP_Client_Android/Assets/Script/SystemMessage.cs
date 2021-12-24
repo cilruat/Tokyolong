@@ -14,7 +14,15 @@ public class SystemMessage : SingletonMonobehaviour<SystemMessage> {
 		StartCoroutine (ShowMsg (desc));
 	}
 
-	const float SHOW_HEIGHT = .13F;
+    public void DelayAdd(string desc)
+    {
+        gameObject.SetActive(true);
+        StartCoroutine(DelayShowMsg(desc));
+    }
+
+
+
+    const float SHOW_HEIGHT = .13F;
 	IEnumerator ShowMsg (string msg)
 	{
 		msgCount++;
@@ -43,7 +51,38 @@ public class SystemMessage : SingletonMonobehaviour<SystemMessage> {
 		UITweenAlpha.Start(newMsg, 0f, TWParam.New(.6f).Curve(TWCurve.CurveLevel2).Speed(TWSpeed.Faster).DestroyOnFinish()).AddCallback(TweenCompleteMsg);
 	}
 
-	void TweenCompleteMsg ()
+
+    IEnumerator DelayShowMsg(string msg)
+    {
+        msgCount++;
+
+        GameObject newMsg = GameObject.Instantiate(msgPrefab, transform, true) as GameObject;
+        newMsg.name = msgPrefab.name;
+        newMsg.SetActive(true);
+
+        RectTransform rt = (RectTransform)newMsg.transform;
+        Vector3 change_pos = Vector3.zero;
+        rt.anchoredPosition = new Vector2(change_pos.x, change_pos.y - 270f);
+
+        Text textMsg = newMsg.GetComponentInChildren<Text>();
+        textMsg.text = msg;
+
+        rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, textMsg.preferredWidth + 20f);
+        rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, textMsg.preferredHeight + 10f);
+
+        UITweenAlpha.Start(newMsg, 0f, 1f, TWParam.New(.2f).Curve(TWCurve.Back));
+        UITweenScale.Start(newMsg, .5f, 1f, TWParam.New(.2f).Curve(TWCurve.Back));
+
+        float showTime = 1.2f + Mathf.Max(1.2f, msg.Length * .04f);
+        yield return new WaitForSecondsRealtime(showTime);
+
+        UITweenPosY.Start(newMsg, rt.anchoredPosition.y + 40f, TWParam.New(.6f).Curve(TWCurve.CurveLevel2).Speed(TWSpeed.Faster));
+        UITweenAlpha.Start(newMsg, 0f, TWParam.New(.6f).Curve(TWCurve.CurveLevel2).Speed(TWSpeed.Faster).DestroyOnFinish()).AddCallback(TweenCompleteMsg);
+    }
+
+
+
+    void TweenCompleteMsg ()
 	{
 		msgCount--;
 		CheckHide();
