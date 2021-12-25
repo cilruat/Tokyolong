@@ -873,6 +873,30 @@ namespace SP_Server.UserState
                         break;
 
 
+                    case PROTOCOL.GAME_READY_REQ:
+
+                        tableNo = msg.pop_byte();
+                        targetTableNo = msg.pop_byte();
+
+
+                        for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
+                        {
+                            User inputTargetUser = owner.mainFrm.ListUser[i];
+                            if (inputTargetUser.tableNum != (int)targetTableNo)
+                                continue;
+
+                            other_msg = CPacket.create((short)PROTOCOL.GAME_READY_NOT);
+                            other_msg.push(tableNo);
+                            inputTargetUser.send(other_msg);
+                            break;
+                        }
+
+
+                        send_msg = CPacket.create((short)PROTOCOL.GAME_READY_ACK);
+                        send_msg.push(targetTableNo);
+                        break;
+
+
 
 
                     default:

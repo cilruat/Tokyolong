@@ -77,8 +77,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         case PROTOCOL.GAME_ACCEPT_NOT:              GameAcceptNOT(msg);             break;
         case PROTOCOL.GAME_CANCEL_ACK:              GameCanCelACK(msg);             break;
         case PROTOCOL.GAME_CANCEL_NOT:              GameCanCelNOT(msg);             break;
-
-
+        case PROTOCOL.GAME_READY_ACK:               GameReadyACK(msg);              break;
+        case PROTOCOL.GAME_READY_NOT:               GameReadyNOT(msg);              break;
         }
 
         isSending = false;
@@ -846,16 +846,32 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     {
         byte tableNo = msg.pop_byte();
 
-
-        
         UserCancelInfo cancelInfo = new UserCancelInfo();
 
         cancelInfo.tableNo = tableNo;
         Info.myInfo.listCanCelInfo.Add(cancelInfo);
         
         UIManager.Instance.ShowGameOut();
-        
     }
+
+
+    void GameReadyACK(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+
+        PageVersusLobby.Instance.needStartNum++;
+
+
+    }
+
+    void GameReadyNOT(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+
+        PageVersusLobby.Instance.OnReady_2Player();
+    }
+
+
 
 
 

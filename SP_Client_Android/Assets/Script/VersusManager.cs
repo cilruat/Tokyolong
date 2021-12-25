@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class VersusManager : SingletonMonobehaviour<VersusManager> {
 
+
+
     public void LoadPage()
     {
         SceneChanger.LoadScene("VersusLobby", PageBase.Instance.curBoardObj());

@@ -12,7 +12,7 @@ public class ParticleControll : MonoBehaviour {
 
     public void objFireWorkTest()
     {
-        objFireWork.Play();
+        objFireWork.Play(true);
 
     }
 }
