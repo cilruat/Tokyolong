@@ -29,6 +29,9 @@ public class PageVersusLobby : SingletonMonobehaviour<PageVersusLobby>
     int GameCnt = 0;
     string GameName = "";
 
+    public VersusCountDown versus;
+
+
 
     private void Start()
     {
@@ -61,7 +64,7 @@ public class PageVersusLobby : SingletonMonobehaviour<PageVersusLobby>
 
         if (needStartNum == 2)
         {
-            StartCoroutine(StartGame());
+            LoadGame();
         }
     }
 
@@ -91,16 +94,27 @@ public class PageVersusLobby : SingletonMonobehaviour<PageVersusLobby>
     }
 
 
+    // 코루틴일 필요가 없네..
 
+    void LoadGame()
+    {
+        objStartPanel.SetActive(true);
+
+        StartCoroutine(StartGame());
+
+    }
 
     IEnumerator StartGame()
     {
-        objStartPanel.SetActive(true);
+        //카운트다운 스탑
+        //versus.StopAllCoroutines();
+
         yield return new WaitForSeconds(2f);
+
         if(GameName == "가위바위보")
         {
-            //SceneChanger.LoadScene("LoadingRPS", objBoard);
-            Debug.Log("가위바위보로 씬이동");
+            SceneChanger.LoadScene("LoadingRPS", objBoard);
+            Debug.Log("씬이동 왜 안함?");
 
         }
 
@@ -109,6 +123,7 @@ public class PageVersusLobby : SingletonMonobehaviour<PageVersusLobby>
             //SceneChanger.LoadScene("LoadingRPS", objBoard);
             Debug.Log("아직안되용");
         }
+
     }
 
     //Start 누르면 판정에서 마지막으로 갯수판정하고, --Count 할것.
