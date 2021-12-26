@@ -80,13 +80,14 @@ public class PageVersusLobby : SingletonMonobehaviour<PageVersusLobby>
     }
 
 
-    public void OnReady_2Player()
+    public void OnReady_2Player(int tableNo)
     {
-        byte tableNum = 0;
-
-
-        objReady2P.SetActive(true);
-        needStartNum++;
+        if(tableNo == tableNum) //조건 이상한데... 내가 준비를 완료 했어 REQ 날리거든, 그럼 나한텐 난 준비완료 뜨고 ++ 되고 상대방에게 NOT가 가는데 상대방에게도 되네
+        {
+            objReady2P.SetActive(true);
+            needStartNum++;
+            Debug.Log("상대방 준비완료 뜸?");
+        }
     }
 
 
@@ -98,7 +99,9 @@ public class PageVersusLobby : SingletonMonobehaviour<PageVersusLobby>
         yield return new WaitForSeconds(2f);
         if(GameName == "가위바위보")
         {
-            SceneChanger.LoadScene("LoadingRPS", objBoard);
+            //SceneChanger.LoadScene("LoadingRPS", objBoard);
+            Debug.Log("가위바위보로 씬이동");
+
         }
 
         else if(GameName == "악어룰렛")

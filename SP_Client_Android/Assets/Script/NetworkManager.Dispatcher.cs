@@ -861,14 +861,24 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
         PageVersusLobby.Instance.needStartNum++;
 
-
+        Debug.Log(PageVersusLobby.Instance.needStartNum);
     }
 
     void GameReadyNOT(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
 
-        PageVersusLobby.Instance.OnReady_2Player();
+        /*
+        UserOnReadyInfo readyInfo = new UserOnReadyInfo();
+
+        readyInfo.tableNo = tableNo;
+        Info.myInfo.listReadyAddInfo.Add(readyInfo);
+
+        */
+        //null 뜰거같은데..?
+
+        PageVersusLobby.Instance.OnReady_2Player(tableNo);
+
     }
 
 

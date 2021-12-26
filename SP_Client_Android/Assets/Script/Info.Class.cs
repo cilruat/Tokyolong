@@ -18,6 +18,7 @@ public class UserInfo
     public List<UserRefuseInfo> listRefuseInfo = new List<UserRefuseInfo>();
     public List<UserGameAcceptInfo> listGameAcceptInfo = new List<UserGameAcceptInfo>();
     public List<UserCancelInfo> listCanCelInfo = new List<UserCancelInfo>();
+    public List<UserOnReadyInfo> listReadyAddInfo = new List<UserOnReadyInfo>();
 
 
 
@@ -112,6 +113,15 @@ public class UserCancelInfo
 {
     public byte tableNo = 0;
 }
+
+
+public class UserOnReadyInfo
+{
+    public byte tableNo = 0;
+}
+
+
+
 
 
 
