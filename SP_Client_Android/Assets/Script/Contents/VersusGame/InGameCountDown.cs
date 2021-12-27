@@ -4,12 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class VersusCountDown : MonoBehaviour {
+public class InGameCountDown : MonoBehaviour {
 
     public int countdownTime;
     public Text countdownDisplay;
     public GameObject objDisplay;
-    public GameObject objBoard;
 
     private void Start()
     {
@@ -26,17 +25,18 @@ public class VersusCountDown : MonoBehaviour {
 
             yield return new WaitForSeconds(1f);
             UITweenAlpha.Start(objDisplay, 1f, 0f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
-            UITweenScale.Start(objDisplay.gameObject, 1f, 2f, TWParam.New(.3f).Curve(TWCurve.Bounce));
+            UITweenScale.Start(objDisplay.gameObject, 1f, 1.3f, TWParam.New(.3f).Curve(TWCurve.Bounce));
 
 
             countdownTime--;
         }
 
-        countdownDisplay.text = "TIMEOUT!";
+        countdownDisplay.text = "랜덤으로 선택합니다";
+
+
 
         yield return new WaitForSeconds(1f);
 
-        SceneChanger.LoadScene("Main", objBoard);
         UIManager.Instance.isGameRoom = false;
 
         countdownDisplay.gameObject.SetActive(false);

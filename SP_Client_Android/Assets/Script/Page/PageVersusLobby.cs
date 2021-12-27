@@ -105,6 +105,7 @@ public class PageVersusLobby : SingletonMonobehaviour<PageVersusLobby>
 
     IEnumerator StartGame()
     {
+        //1227 시간 멈추는거 한번 체크 할것 여기서
 
         yield return new WaitForSeconds(2f);
 
