@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class VersusManager : SingletonMonobehaviour<VersusManager> {
 
+    public int needStartNum = 0;
 
 
     public void LoadPage()

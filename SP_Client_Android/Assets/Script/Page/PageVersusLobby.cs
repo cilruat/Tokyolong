@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class PageVersusLobby : SingletonMonobehaviour<PageVersusLobby>
@@ -99,22 +100,17 @@ public class PageVersusLobby : SingletonMonobehaviour<PageVersusLobby>
     void LoadGame()
     {
         objStartPanel.SetActive(true);
-
         StartCoroutine(StartGame());
-
     }
 
     IEnumerator StartGame()
     {
-        //카운트다운 스탑
-        //versus.StopAllCoroutines();
 
         yield return new WaitForSeconds(2f);
 
         if(GameName == "가위바위보")
         {
-            SceneChanger.LoadScene("LoadingRPS", objBoard);
-            Debug.Log("씬이동 왜 안함?");
+            SceneManager.LoadScene("LoadingRPS");
 
         }
 
