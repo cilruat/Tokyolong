@@ -64,13 +64,16 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
     public GameObject objYourAnimation;
 
     public Animator animMy;
-
     public Animator animOpponent;
-
-
 
     // win lose  win1,2 lose 1,2 두개씩 해야겟네 ㅋㅋ
 
+    public GameObject WinPanel;
+    public GameObject LosePanel;
+    public GameObject DrawPanel;
+
+
+    Coroutine countDownStart;
 
 
 
@@ -88,6 +91,12 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
         DownPanel.SetActive(true);
         AnimationPanel.SetActive(false);
         BlindPanel.SetActive(true);
+        WinPanel.SetActive(false);
+        LosePanel.SetActive(false);
+        DrawPanel.SetActive(false);
+
+
+
         //Round Coroutine
         StartCoroutine(RoundStart());
 
@@ -120,32 +129,6 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
 
             StartCoroutine(myRspAnimation());
             StartCoroutine(ShowOppoRspAnim());
-
-
-
-            //1. 먼저 각각의 애니메이션을 스타트 한다.
-
-            //각각의 애니 다음에 If 하위로 넣어야함
-
-            //2. 결과를 보여준다
-            //3. 승리 패배 패널 넣기
-            //4. 빅토리 게임오버 패널넣기
-            //5. 게임카운트 및 퇴장
-
-
-            ///여기서 어케해야되노 이제 애니메이션 집어넣어야하거든
-            /// 애니메이션 넣을때 내꺼 상대꺼 따로할거고
-            /// 스타트 코루틴 먼저해야겟지?
-            /// 
-            /// 애니메이션이 끝나거든 Win Lose 를 넣어야하네
-
-            ///손가락 이 있으니깐 그게 나오면서..! Set Active 하면 애니는 시작되니깐
-            ///Play 를 하면 되겟구만
-            ///
-            /// 여기서 경우의 수를 조져야되나?
-
-
-
         }
     }
 
@@ -205,7 +188,13 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
     public void ShowResult()
     {
         CheckReset();
-        Debug.Log(Check);
+
+        //Draw
+        if(myRsp == yourRsp)
+        {
+            StartCoroutine(Draw());
+        }
+
 
         //승리 패배 계산해서 넣고
 
@@ -222,11 +211,52 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
 
 
 
-    void RSPWin()
+    void Win()
     {
 
 
     }
+
+    void Lose()
+    {
+
+    }
+
+
+
+    IEnumerator Draw()
+    {
+        // 결과값 없이 다시 시작하기만 하면 되는거자나... REQ 보낼 필요가 없네?
+        DrawPanel.SetActive(true);
+        yield return new WaitForSeconds(3f);
+
+        Base();
+    }
+
+    void Base()
+    {
+        UITweenScale.Start(objRock.gameObject, 1f, 1f, TWParam.New(.3f).Curve(TWCurve.Bounce));
+        UITweenScale.Start(objScissor.gameObject, 1f, 1f, TWParam.New(.3f).Curve(TWCurve.Bounce));
+        UITweenScale.Start(objPaper.gameObject, 1f, 1f, TWParam.New(.3f).Curve(TWCurve.Bounce));
+
+        DrawPanel.SetActive(false);
+        DownPanel.SetActive(true);
+        AnimationPanel.SetActive(false);
+        subRoundPanel.SetActive(true);
+        ChoicePanel.SetActive(true);
+        countdownDisplay.gameObject.SetActive(true);
+        BlindPanel.SetActive(false);
+
+
+
+        countDownStart = StartCoroutine(CountdownToStart());
+
+        StartCoroutine(CountdownToStart());
+    }
+
+
+
+
 
 
     IEnumerator RoundStart()
@@ -244,6 +274,7 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
         ChoicePanel.SetActive(true);
         countdownDisplay.gameObject.SetActive(true);
         BlindPanel.SetActive(false);
+
 
         StartCoroutine(CountdownToStart());
     }
@@ -291,7 +322,10 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
         ChoicePanel.SetActive(false);
         waitOherPanel.SetActive(true);
 
-        StopAllCoroutines(); // ROund 동기화 되는지 볼것
+
+        //새로 할당해서 카운트다운 하는것
+        Coroutine startCount = StartCoroutine(CountdownToStart());
+        StopCoroutine(startCount);
 
         NetworkManager.Instance.Versus_Rock_REQ(tableNum);
 
@@ -306,7 +340,8 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
         ChoicePanel.SetActive(false);
         waitOherPanel.SetActive(true);
 
-        StopAllCoroutines(); //
+        Coroutine startCount = StartCoroutine(CountdownToStart());
+        StopCoroutine(startCount);
 
         NetworkManager.Instance.Versus_Paper_REQ(tableNum);
 
@@ -319,7 +354,8 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
         ChoicePanel.SetActive(false);
         waitOherPanel.SetActive(true);
 
-        StopAllCoroutines(); //
+        Coroutine startCount = StartCoroutine(CountdownToStart());
+        StopCoroutine(startCount);
 
         NetworkManager.Instance.Versus_Scissor_REQ(tableNum);
 
