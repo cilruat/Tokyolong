@@ -116,14 +116,12 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
             waitOherPanel.SetActive(false);
             DownPanel.SetActive(false);
 
-            //StartCoroutine(myRPS());
-
-
             AnimationPanel.SetActive(true);
 
             StartCoroutine(myRspAnimation());
-
             StartCoroutine(ShowOppoRspAnim());
+
+
 
             //1. 먼저 각각의 애니메이션을 스타트 한다.
 
@@ -163,6 +161,16 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
             animMy.Play("Rock");
         }
 
+        if (myRsp == 1)
+        {
+            animMy.Play("Scissor");
+        }
+
+        if (myRsp == 2)
+        {
+            animMy.Play("Paper");
+        }
+
 
         yield return new WaitForSeconds(3f); // 애니메이션 몇초 뒤 꺼지니
 
@@ -178,6 +186,16 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
             animOpponent.Play("Rock");
         }
 
+        else if (yourRsp == 1)
+        {
+            animOpponent.Play("Scissor");
+        }
+
+        else if (yourRsp == 2)
+        {
+            animOpponent.Play("Paper");
+        }
+
 
         yield return new WaitForSeconds(3f); // 애니메이션 몇초 뒤 꺼지니
 
@@ -186,6 +204,9 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
 
     public void ShowResult()
     {
+        CheckReset();
+        Debug.Log(Check);
+
         //승리 패배 계산해서 넣고
 
         //승리면 REQ
@@ -270,10 +291,7 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
         ChoicePanel.SetActive(false);
         waitOherPanel.SetActive(true);
 
-
-
         StopAllCoroutines(); // ROund 동기화 되는지 볼것
-
 
         NetworkManager.Instance.Versus_Rock_REQ(tableNum);
 
@@ -285,7 +303,12 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
     {
         UITweenScale.Start(objPaper.gameObject, 1f, 1.5f, TWParam.New(.3f).Curve(TWCurve.Bounce));
         BlindPanel.SetActive(true);
+        ChoicePanel.SetActive(false);
+        waitOherPanel.SetActive(true);
 
+        StopAllCoroutines(); //
+
+        NetworkManager.Instance.Versus_Paper_REQ(tableNum);
 
     }
 
@@ -293,12 +316,20 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
     {
         UITweenScale.Start(objScissor.gameObject, 1f, 1.5f, TWParam.New(.3f).Curve(TWCurve.Bounce));
         BlindPanel.SetActive(true);
+        ChoicePanel.SetActive(false);
+        waitOherPanel.SetActive(true);
 
+        StopAllCoroutines(); //
+
+        NetworkManager.Instance.Versus_Scissor_REQ(tableNum);
 
     }
 
 
-
+    public void CheckReset()
+    {
+        Check = 0;
+    }
 
     public void ImRock(int tableNo)
     {
@@ -306,10 +337,26 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
         {
             yourRsp = 0;
             Check++;
-            Debug.Log(Check);
         }
     }
 
+    public void ImScissor(int tableNo)
+    {
+        if (tableNo == tableNum)
+        {
+            yourRsp = 1;
+            Check++;
+        }
+    }
+
+    public void ImPaper(int tableNo)
+    {
+        if (tableNo == tableNum)
+        {
+            yourRsp = 2;
+            Check++;
+        }
+    }
 
 
 

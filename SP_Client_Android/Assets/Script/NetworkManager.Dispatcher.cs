@@ -923,11 +923,19 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     {
         byte tableNo = msg.pop_byte();
 
+        SystemMessage.Instance.Add(tableNo.ToString() + "번의 응답을 기다립니다");
+
+        PageRPS.Instance.myRsp = 2;
+        PageRPS.Instance.Check++;
+
     }
 
     void VersusPaperNOT(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
+
+        PageRPS.Instance.ImPaper(tableNo);
+
     }
 
     //Scissor
@@ -935,11 +943,20 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     {
         byte tableNo = msg.pop_byte();
 
+        SystemMessage.Instance.Add(tableNo.ToString() + "번의 응답을 기다립니다");
+
+        PageRPS.Instance.myRsp = 1;
+        PageRPS.Instance.Check++;
+
+
     }
 
     void VersusScissorNOT(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
+
+        PageRPS.Instance.ImScissor(tableNo);
+
     }
 
     //======Game Common=====//
