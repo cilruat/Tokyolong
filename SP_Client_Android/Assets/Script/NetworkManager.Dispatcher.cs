@@ -79,6 +79,22 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         case PROTOCOL.GAME_CANCEL_NOT:              GameCanCelNOT(msg);             break;
         case PROTOCOL.GAME_READY_ACK:               GameReadyACK(msg);              break;
         case PROTOCOL.GAME_READY_NOT:               GameReadyNOT(msg);              break;
+        case PROTOCOL.VERSUS_ROCK_ACK:              VersusRockACK(msg);             break;
+        case PROTOCOL.VERSUS_ROCK_NOT:              VersusRockNOT(msg);             break;
+        case PROTOCOL.VERSUS_PAPER_ACK:             VersusPaperACK(msg);            break;
+        case PROTOCOL.VERSUS_PAPER_NOT:             VersusPaperNOT(msg);            break;
+        case PROTOCOL.VERSUS_SCISSOR_ACK:           VersusScissorACK(msg);          break;
+        case PROTOCOL.VERSUS_SCISSOR_NOT:           VersusScissorNOT(msg);          break;
+        case PROTOCOL.VERSUS_WIN_ACK:               VersusWinACK(msg);              break;
+        case PROTOCOL.VERSUS_WIN_NOT:               VersusWinNOT(msg);              break;
+        case PROTOCOL.VERSUS_LOSE_ACK:              VersusLoseACK(msg);             break;
+        case PROTOCOL.VERSUS_LOSE_NOT:              VersusLoseNOT(msg);             break;
+        case PROTOCOL.VERSUS_DRAW_ACK:              VersusDrawACK(msg);             break;
+        case PROTOCOL.VERSUS_DRAW_NOT:              VersusDrawNOT(msg);             break;
+        case PROTOCOL.VERSUS_VICTORY_ACK:           VersusVictoryACK(msg);          break;
+        case PROTOCOL.VERSUS_VICTORY_NOT:           VersusVictoryNOT(msg);          break;
+        case PROTOCOL.VERSUS_GAMEOVER_ACK:          VersusGameOverACK(msg);         break;
+        case PROTOCOL.VERSUS_GAMEOVER_NOT:          VersusGameOverNOT(msg);         break;
         }
 
         isSending = false;
@@ -881,6 +897,113 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
     }
 
+
+    //Rock
+    void VersusRockACK(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+
+        SystemMessage.Instance.Add(tableNo.ToString() + "번의 응답을 기다립니다");
+
+        PageRPS.Instance.myRsp = 0;
+        PageRPS.Instance.Check++;
+
+    }
+
+    void VersusRockNOT(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+
+        PageRPS.Instance.ImRock(tableNo);
+
+    }
+
+    //Paper
+    void VersusPaperACK(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+
+    }
+
+    void VersusPaperNOT(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+    }
+
+    //Scissor
+    void VersusScissorACK(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+
+    }
+
+    void VersusScissorNOT(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+    }
+
+    //======Game Common=====//
+
+
+    void VersusWinACK(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+
+    }
+
+    void VersusWinNOT(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+    }
+
+
+    void VersusLoseACK(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+
+    }
+
+    void VersusLoseNOT(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+    }
+
+
+    void VersusDrawACK(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+
+    }
+
+    void VersusDrawNOT(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+    }
+
+
+
+    void VersusVictoryACK(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+
+    }
+
+    void VersusVictoryNOT(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+    }
+
+
+    void VersusGameOverACK(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+
+    }
+
+    void VersusGameOverNOT(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+    }
 
 
 

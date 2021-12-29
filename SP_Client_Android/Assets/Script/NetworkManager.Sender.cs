@@ -306,5 +306,101 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     }
 
 
+    public void Versus_Rock_REQ(byte targetTableNo)
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.VERSUS_ROCK_REQ);
+        msg.push(Info.TableNum);
+        msg.push(targetTableNo);
+        send(msg);
+
+    }
+
+    public void Versus_Paper_REQ(byte targetTableNo)
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.VERSUS_PAPER_REQ);
+        msg.push(Info.TableNum);
+        msg.push(targetTableNo);
+        send(msg);
+
+    }
+
+    public void Versus_Scissor_REQ(byte targetTableNo)
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.VERSUS_SCISSOR_REQ);
+        msg.push(Info.TableNum);
+        msg.push(targetTableNo);
+        send(msg);
+
+    }
+
+    public void Versus_Win_REQ(byte targetTableNo)
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.VERSUS_WIN_REQ);
+        msg.push(Info.TableNum);
+        msg.push(targetTableNo);
+        send(msg);
+
+    }
+
+    public void Versus_Lose_REQ(byte targetTableNo)
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.VERSUS_LOSE_REQ);
+        msg.push(Info.TableNum);
+        msg.push(targetTableNo);
+        send(msg);
+
+    }
+
+
+    public void Versus_Draw_REQ(byte targetTableNo)
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.VERSUS_DRAW_REQ);
+        msg.push(Info.TableNum);
+        msg.push(targetTableNo);
+        send(msg);
+
+    }
+
+
+    // need GameCnt
+    public void Versus_Victory_REQ(byte targetTableNo)
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.VERSUS_VICTORY_REQ);
+        msg.push(Info.TableNum);
+        msg.push(targetTableNo);
+        send(msg);
+
+    }
+
+    public void Versus_GameOver_REQ(byte targetTableNo)
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.VERSUS_GAMEOVER_REQ);
+        msg.push(Info.TableNum);
+        msg.push(targetTableNo);
+        send(msg);
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

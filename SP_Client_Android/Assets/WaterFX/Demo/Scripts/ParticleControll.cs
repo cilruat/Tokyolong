@@ -8,11 +8,22 @@ public class ParticleControll : MonoBehaviour {
     public ParticleSystem objFireWork;
 
 
+    private void Start()
+    {
+
+        InvokeRepeating("objFireWorkTest", 0, 2f);
+
+
+    }
 
 
     public void objFireWorkTest()
     {
         objFireWork.Play(true);
-
     }
+
+
+
+
+
 }

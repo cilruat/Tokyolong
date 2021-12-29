@@ -31,11 +31,12 @@ public class InGameCountDown : MonoBehaviour {
             countdownTime--;
         }
 
-        countdownDisplay.text = "랜덤으로 선택합니다";
-
+        countdownDisplay.text = "시간만료";
 
 
         yield return new WaitForSeconds(1f);
+
+        // 자동패 올라가게 REQ 보낼것
 
         UIManager.Instance.isGameRoom = false;
 

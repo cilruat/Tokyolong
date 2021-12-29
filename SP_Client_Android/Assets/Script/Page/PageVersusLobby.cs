@@ -61,8 +61,6 @@ public class PageVersusLobby : SingletonMonobehaviour<PageVersusLobby>
 
     private void Update()
     {
-        Debug.Log(needStartNum);
-
         if (needStartNum == 2)
         {
             LoadGame();

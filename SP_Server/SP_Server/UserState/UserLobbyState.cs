@@ -899,6 +899,213 @@ namespace SP_Server.UserState
 
 
 
+                    //// Versus  RPS Protocoll
+
+
+                    case PROTOCOL.VERSUS_ROCK_REQ:
+
+                        tableNo = msg.pop_byte();
+                        targetTableNo = msg.pop_byte();
+
+
+                        for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
+                        {
+                            User inputTargetUser = owner.mainFrm.ListUser[i];
+                            if (inputTargetUser.tableNum != (int)targetTableNo)
+                                continue;
+
+                            other_msg = CPacket.create((short)PROTOCOL.VERSUS_ROCK_NOT);
+                            other_msg.push(tableNo);
+                            inputTargetUser.send(other_msg);
+                            break;
+                        }
+
+
+                        send_msg = CPacket.create((short)PROTOCOL.VERSUS_ROCK_ACK);
+                        send_msg.push(targetTableNo);
+                        break;
+
+
+                    case PROTOCOL.VERSUS_PAPER_REQ:
+
+                        tableNo = msg.pop_byte();
+                        targetTableNo = msg.pop_byte();
+
+
+                        for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
+                        {
+                            User inputTargetUser = owner.mainFrm.ListUser[i];
+                            if (inputTargetUser.tableNum != (int)targetTableNo)
+                                continue;
+
+                            other_msg = CPacket.create((short)PROTOCOL.VERSUS_PAPER_NOT);
+                            other_msg.push(tableNo);
+                            inputTargetUser.send(other_msg);
+                            break;
+                        }
+
+
+                        send_msg = CPacket.create((short)PROTOCOL.VERSUS_PAPER_ACK);
+                        send_msg.push(targetTableNo);
+                        break;
+
+
+                    case PROTOCOL.VERSUS_SCISSOR_REQ:
+
+                        tableNo = msg.pop_byte();
+                        targetTableNo = msg.pop_byte();
+
+
+                        for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
+                        {
+                            User inputTargetUser = owner.mainFrm.ListUser[i];
+                            if (inputTargetUser.tableNum != (int)targetTableNo)
+                                continue;
+
+                            other_msg = CPacket.create((short)PROTOCOL.VERSUS_SCISSOR_NOT);
+                            other_msg.push(tableNo);
+                            inputTargetUser.send(other_msg);
+                            break;
+                        }
+
+
+                        send_msg = CPacket.create((short)PROTOCOL.VERSUS_SCISSOR_ACK);
+                        send_msg.push(targetTableNo);
+                        break;
+
+
+
+                    //// Versus Common Protocoll
+
+                    case PROTOCOL.VERSUS_WIN_REQ:
+
+                        tableNo = msg.pop_byte();
+                        targetTableNo = msg.pop_byte();
+
+
+                        for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
+                        {
+                            User inputTargetUser = owner.mainFrm.ListUser[i];
+                            if (inputTargetUser.tableNum != (int)targetTableNo)
+                                continue;
+
+                            other_msg = CPacket.create((short)PROTOCOL.VERSUS_WIN_NOT);
+                            other_msg.push(tableNo);
+                            inputTargetUser.send(other_msg);
+                            break;
+                        }
+
+
+                        send_msg = CPacket.create((short)PROTOCOL.VERSUS_WIN_ACK);
+                        send_msg.push(targetTableNo);
+                        break;
+
+
+
+                    case PROTOCOL.VERSUS_LOSE_REQ:
+
+                        tableNo = msg.pop_byte();
+                        targetTableNo = msg.pop_byte();
+
+
+                        for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
+                        {
+                            User inputTargetUser = owner.mainFrm.ListUser[i];
+                            if (inputTargetUser.tableNum != (int)targetTableNo)
+                                continue;
+
+                            other_msg = CPacket.create((short)PROTOCOL.VERSUS_LOSE_NOT);
+                            other_msg.push(tableNo);
+                            inputTargetUser.send(other_msg);
+                            break;
+                        }
+
+
+                        send_msg = CPacket.create((short)PROTOCOL.VERSUS_LOSE_ACK);
+                        send_msg.push(targetTableNo);
+                        break;
+
+
+
+                    case PROTOCOL.VERSUS_DRAW_REQ:
+
+                        tableNo = msg.pop_byte();
+                        targetTableNo = msg.pop_byte();
+
+
+                        for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
+                        {
+                            User inputTargetUser = owner.mainFrm.ListUser[i];
+                            if (inputTargetUser.tableNum != (int)targetTableNo)
+                                continue;
+
+                            other_msg = CPacket.create((short)PROTOCOL.VERSUS_DRAW_NOT);
+                            other_msg.push(tableNo);
+                            inputTargetUser.send(other_msg);
+                            break;
+                        }
+
+
+                        send_msg = CPacket.create((short)PROTOCOL.VERSUS_DRAW_ACK);
+                        send_msg.push(targetTableNo);
+                        break;
+
+
+
+
+                    // GAME CNT 넣어야한다 == // 일단 여기까지 1228
+
+                    case PROTOCOL.VERSUS_VICTORY_REQ:
+
+                        tableNo = msg.pop_byte();
+                        targetTableNo = msg.pop_byte();
+
+
+                        for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
+                        {
+                            User inputTargetUser = owner.mainFrm.ListUser[i];
+                            if (inputTargetUser.tableNum != (int)targetTableNo)
+                                continue;
+
+                            other_msg = CPacket.create((short)PROTOCOL.VERSUS_VICTORY_NOT);
+                            other_msg.push(tableNo);
+                            inputTargetUser.send(other_msg);
+                            break;
+                        }
+
+
+                        send_msg = CPacket.create((short)PROTOCOL.VERSUS_VICTORY_ACK);
+                        send_msg.push(targetTableNo);
+                        break;
+
+
+                    case PROTOCOL.VERSUS_GAMEOVER_REQ:
+
+                        tableNo = msg.pop_byte();
+                        targetTableNo = msg.pop_byte();
+
+
+                        for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
+                        {
+                            User inputTargetUser = owner.mainFrm.ListUser[i];
+                            if (inputTargetUser.tableNum != (int)targetTableNo)
+                                continue;
+
+                            other_msg = CPacket.create((short)PROTOCOL.VERSUS_GAMEOVER_NOT);
+                            other_msg.push(tableNo);
+                            inputTargetUser.send(other_msg);
+                            break;
+                        }
+
+
+                        send_msg = CPacket.create((short)PROTOCOL.VERSUS_GAMEOVER_ACK);
+                        send_msg.push(targetTableNo);
+                        break;
+
+
+
+
+
                     default:
                         break;
                 }

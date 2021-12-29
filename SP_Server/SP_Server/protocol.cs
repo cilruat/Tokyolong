@@ -109,7 +109,7 @@ namespace SP_Server
 
 
         //-------------------------------------
-        // 게임 프로토콜.
+        // 게임 로비 프로토콜.
         //------------------------------------- 
         
         GAME_VERSUS_INVITE_REQ,
@@ -131,6 +131,47 @@ namespace SP_Server
         GAME_READY_REQ,
         GAME_READY_ACK,
         GAME_READY_NOT,
+
+
+        //-------------------------------------
+        // 인게임(가위바위보) 프로토콜.
+        //------------------------------------- 
+        VERSUS_ROCK_REQ,
+        VERSUS_ROCK_ACK,
+        VERSUS_ROCK_NOT,
+
+        VERSUS_PAPER_REQ,
+        VERSUS_PAPER_ACK,
+        VERSUS_PAPER_NOT,
+
+        VERSUS_SCISSOR_REQ,
+        VERSUS_SCISSOR_ACK,
+        VERSUS_SCISSOR_NOT,
+
+
+        //-------------------------------------
+        // 게임 공통 프로토콜.
+        //------------------------------------- 
+        VERSUS_WIN_REQ,
+        VERSUS_WIN_ACK,
+        VERSUS_WIN_NOT,
+
+        VERSUS_LOSE_REQ,
+        VERSUS_LOSE_ACK,
+        VERSUS_LOSE_NOT,
+
+        VERSUS_DRAW_REQ,
+        VERSUS_DRAW_ACK,
+        VERSUS_DRAW_NOT,
+
+        VERSUS_VICTORY_REQ,
+        VERSUS_VICTORY_ACK,
+        VERSUS_VICTORY_NOT,
+
+        VERSUS_GAMEOVER_REQ,
+        VERSUS_GAMEOVER_ACK,
+        VERSUS_GAMEOVER_NOT,
+
 
 
         ROOM_REMOVED,
