@@ -18,6 +18,9 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
     int GameCnt = 0;
     string GameName = "";
 
+    int winscore = 0;
+    int losescore = 0;
+
 
     public int myRsp = -1; //0 바위, 1가위, 2보
 
@@ -72,8 +75,13 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
     public GameObject LosePanel;
     public GameObject DrawPanel;
 
+    public GameObject objwinscore_1;
+    public GameObject objlosescore_1;
 
-    Coroutine countDownStart;
+    public GameObject objwinscore_2;
+    public GameObject objlosescore_2;
+
+    IEnumerator countdown;
 
 
 
@@ -83,6 +91,9 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
         yourRsp = -1;
         Round = 1;
         Check = 0;
+        winscore = 0;
+        losescore = 0;
+
         //기본 SetActive 설정
         mainRoundPanel.SetActive(true);
         subRoundPanel.SetActive(false);
@@ -95,7 +106,10 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
         LosePanel.SetActive(false);
         DrawPanel.SetActive(false);
 
-
+        objwinscore_1.SetActive(false);
+        objwinscore_2.SetActive(false);
+        objlosescore_1.SetActive(false);
+        objlosescore_2.SetActive(false);
 
         //Round Coroutine
         StartCoroutine(RoundStart());
@@ -129,6 +143,7 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
 
             StartCoroutine(myRspAnimation());
             StartCoroutine(ShowOppoRspAnim());
+
         }
     }
 
@@ -154,8 +169,8 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
             animMy.Play("Paper");
         }
 
-
-        yield return new WaitForSeconds(3f); // 애니메이션 몇초 뒤 꺼지니
+        // 애니메이션 3초뒤에 함수 실행
+        yield return new WaitForSeconds(3f); 
 
         ShowResult();
 
@@ -187,48 +202,71 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
 
     public void ShowResult()
     {
-        CheckReset();
+        StopAllCoroutines();
 
         //Draw
-        if(myRsp == yourRsp)
+        if (myRsp == yourRsp)
         {
             StartCoroutine(Draw());
         }
 
+        //Lose
+        else if ((myRsp == 0 && yourRsp == 2) || (myRsp == 1 && yourRsp == 0) || (myRsp == 2 && yourRsp == 1))
+        {
+            StartCoroutine(Lose());
+        }
 
-        //승리 패배 계산해서 넣고
-
-        //승리면 REQ
-
-        //패배면 REQ
-
-        // REQ에서 승,패 애니메이션을 활성화
-
-        Debug.Log("결과창 일단 되나 테스트");
-
+        else // 짐
+        {
+            StartCoroutine(Win());
+        }
     }
 
 
 
 
-    void Win()
+    IEnumerator Win()
     {
+        CheckReset();
+        winscore = 1;
+        WinPanel.SetActive(true);
+        yield return new WaitForSeconds(3f);
+
+        NetworkManager.Instance.Versus_Win_REQ(tableNum);
+
+
+        // Round 판정
+        if(winscore == 1)
+        {
+            objwinscore_1.SetActive(true);
+            Base();
+        }
+
+        // else if win ==2 빅토리 화면
 
 
     }
 
-    void Lose()
+    IEnumerator Lose()
     {
+        CheckReset();
+
+        LosePanel.SetActive(true);
+        yield return new WaitForSeconds(3f);
+
+
+        Base();
 
     }
-
 
 
     IEnumerator Draw()
     {
-        // 결과값 없이 다시 시작하기만 하면 되는거자나... REQ 보낼 필요가 없네?
+        CheckReset();
+
         DrawPanel.SetActive(true);
         yield return new WaitForSeconds(3f);
+
 
         Base();
     }
@@ -239,22 +277,40 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
         UITweenScale.Start(objScissor.gameObject, 1f, 1f, TWParam.New(.3f).Curve(TWCurve.Bounce));
         UITweenScale.Start(objPaper.gameObject, 1f, 1f, TWParam.New(.3f).Curve(TWCurve.Bounce));
 
+        WinPanel.SetActive(false);
+        LosePanel.SetActive(false);
         DrawPanel.SetActive(false);
+
         DownPanel.SetActive(true);
         AnimationPanel.SetActive(false);
-        subRoundPanel.SetActive(true);
-        ChoicePanel.SetActive(true);
-        countdownDisplay.gameObject.SetActive(true);
-        BlindPanel.SetActive(false);
 
-
-
-        countDownStart = StartCoroutine(CountdownToStart());
-
-        StartCoroutine(CountdownToStart());
+        RoundCheck();
+        StartCoroutine(RoundStart());
     }
 
 
+    void RoundCheck()
+    {
+        int sumscore = winscore + losescore;
+
+        if(sumscore == 0)
+        {
+            Round = 1;
+        }
+        else if(sumscore == 1)
+        {
+            Round = 2;
+        }
+
+        else if(sumscore == 2)
+        {
+            Round = 3;
+        }
+        else
+        {
+            Debug.Log("라운드 안들어오나 else 로 빠짐" + Round);
+        }
+    }
 
 
 
@@ -270,18 +326,39 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
 
         yield return new WaitForSeconds(3f);
         mainRoundPanel.SetActive(false);
+
         subRoundPanel.SetActive(true);
         ChoicePanel.SetActive(true);
         countdownDisplay.gameObject.SetActive(true);
         BlindPanel.SetActive(false);
 
+        StartCountdown();
+    }
 
-        StartCoroutine(CountdownToStart());
+
+    void StartCountdown()
+    {
+        countdown = CountdownToStart();
+        StartCoroutine(countdown);
+    }
+
+    void StopCountdown()
+    {
+        if (countdown != null)
+        {
+            StopCoroutine(countdown);
+        }
     }
 
 
     IEnumerator CountdownToStart()
     {
+        yield return null;
+
+        countdownTime = 20;
+        //countdownDisplay.gameObject.SetActive(true);
+
+
         while (countdownTime > 0)
         {
             countdownDisplay.text = countdownTime.ToString();
@@ -301,9 +378,9 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
 
         // 자동패 올라가게 REQ 보낼것
         //UI 작업
-        Debug.Log("패작업");
+        Debug.Log("카운트 다운 종료 UI 작업");
 
-        countdownDisplay.gameObject.SetActive(false);
+        //countdownDisplay.gameObject.SetActive(false);
     }
 
 
@@ -323,10 +400,9 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
         waitOherPanel.SetActive(true);
 
 
-        //새로 할당해서 카운트다운 하는것
-        Coroutine startCount = StartCoroutine(CountdownToStart());
-        StopCoroutine(startCount);
+        StopCountdown();
 
+        Debug.Log(countdownTime + "카운트다운 남은거 체크 디버그");
         NetworkManager.Instance.Versus_Rock_REQ(tableNum);
 
 
@@ -340,9 +416,7 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
         ChoicePanel.SetActive(false);
         waitOherPanel.SetActive(true);
 
-        Coroutine startCount = StartCoroutine(CountdownToStart());
-        StopCoroutine(startCount);
-
+        StopCountdown();
         NetworkManager.Instance.Versus_Paper_REQ(tableNum);
 
     }
@@ -354,9 +428,7 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
         ChoicePanel.SetActive(false);
         waitOherPanel.SetActive(true);
 
-        Coroutine startCount = StartCoroutine(CountdownToStart());
-        StopCoroutine(startCount);
-
+        StopCountdown();
         NetworkManager.Instance.Versus_Scissor_REQ(tableNum);
 
     }
