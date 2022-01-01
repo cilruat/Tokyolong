@@ -967,15 +967,14 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         byte tableNo = msg.pop_byte();
 
         SystemMessage.Instance.Add(tableNo.ToString() + "번에게 이겼습니다");
-        PageRPS.Instance.myRsp = -1;
+        PageRPS.Instance.WinResult();
 
     }
 
     void VersusWinNOT(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
-        // 여기서 상대에게 Lose 판정을 날려야하네
-        // 함수 한개씩 복사해서 tableNo 만들어서 날려야할듯
+        PageRPS.Instance.WinResult_Oppo(tableNo);
 
     }
 
@@ -983,12 +982,15 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     void VersusLoseACK(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
+        SystemMessage.Instance.Add(tableNo.ToString() + "번에게 졌습니다");
+        PageRPS.Instance.LoseResult();
 
     }
 
     void VersusLoseNOT(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
+        PageRPS.Instance.LoseResult_Oppo(tableNo);
     }
 
 
@@ -1008,6 +1010,11 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     void VersusVictoryACK(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
+        SystemMessage.Instance.Add(tableNo.ToString() + "번에게 승리했습니다!");
+        SceneChanger.LoadScene("Main", PageBase.Instance.curBoardObj());
+
+
+        //게임 코인 rEQ 날리고
 
     }
 
@@ -1020,6 +1027,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     void VersusGameOverACK(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
+        SystemMessage.Instance.Add(tableNo.ToString() + "번에게 패배했습니다ㅠㅠ");
+        SceneChanger.LoadScene("Main", PageBase.Instance.curBoardObj());
+
 
     }
 

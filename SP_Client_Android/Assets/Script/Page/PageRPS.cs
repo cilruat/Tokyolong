@@ -81,6 +81,10 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
     public GameObject objwinscore_2;
     public GameObject objlosescore_2;
 
+    public GameObject VictoryPanel;
+    public GameObject GameOverPanel;
+
+
     IEnumerator countdown;
 
 
@@ -110,6 +114,9 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
         objwinscore_2.SetActive(false);
         objlosescore_1.SetActive(false);
         objlosescore_2.SetActive(false);
+
+        VictoryPanel.SetActive(false);
+        GameOverPanel.SetActive(false);
 
         //Round Coroutine
         StartCoroutine(RoundStart());
@@ -228,36 +235,133 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
     IEnumerator Win()
     {
         CheckReset();
-        winscore = 1;
+        winscore++;
         WinPanel.SetActive(true);
         yield return new WaitForSeconds(3f);
-
         NetworkManager.Instance.Versus_Win_REQ(tableNum);
+    }
 
+    public void WinResult()
+    {
 
         // Round 판정
-        if(winscore == 1)
+        if (winscore == 1)
         {
             objwinscore_1.SetActive(true);
             Base();
         }
 
+        else if (winscore == 2)
+        {
+            objwinscore_2.SetActive(true);
+            StartCoroutine(Victory());
+        }
         // else if win ==2 빅토리 화면
 
+        else
+        {
+            Debug.Log(winscore + "윈스코어 0이거나 그 이상일때 else뜹니다");
+        }
 
     }
+
+
+    // 내가 이기면 상대에게 보내줘야하는 함수
+    public void WinResult_Oppo(int tableNo)
+    {
+        if(tableNo == tableNum)
+        {
+            losescore++;
+
+            //내가 이겼으므로 나에게 올라가야하겠지 상대는?
+            // Round 판정
+            if (losescore == 1)
+            {
+                objlosescore_1.SetActive(true);
+                Base();
+            }
+
+            else if (losescore == 2)
+            {
+                objlosescore_2.SetActive(true);
+                StartCoroutine(GameOver());
+            }
+            // else if win ==2 빅토리 화면
+
+            else
+            {
+                Debug.Log(losescore + "스코어 0이거나 그 이상일때 else뜹니다");
+            }
+        }
+    }
+
+
+
+
 
     IEnumerator Lose()
     {
         CheckReset();
-
+        losescore++;
         LosePanel.SetActive(true);
         yield return new WaitForSeconds(3f);
-
-
-        Base();
-
+        NetworkManager.Instance.Versus_Lose_REQ(tableNum);
     }
+
+    public void LoseResult()
+    {
+
+        // Round 판정
+        if (losescore == 1)
+        {
+            objlosescore_1.SetActive(true);
+            Base();
+        }
+
+        else if (losescore == 2)
+        {
+            objlosescore_2.SetActive(true);
+            StartCoroutine(GameOver());
+        }
+        // else if win ==2 빅토리 화면
+
+        else
+        {
+            Debug.Log(losescore + "로즈스코어 0이거나 그 이상일때 else뜹니다");
+        }
+    }
+
+    public void LoseResult_Oppo(int tableNo)
+    {
+        if (tableNo == tableNum)
+        {
+            winscore++;
+
+            //내가 이겼으므로 나에게 올라가야하겠지 상대는?
+            // Round 판정
+            if (winscore == 1)
+            {
+                objwinscore_1.SetActive(true);
+                Base();
+            }
+
+            else if (winscore == 2)
+            {
+                objwinscore_2.SetActive(true);
+                StartCoroutine(Victory());
+            }
+            // else if win ==2 빅토리 화면
+
+            else
+            {
+                Debug.Log(winscore + "스코어 0이거나 그 이상일때 else뜹니다");
+            }
+        }
+    }
+
+
+
+
 
 
     IEnumerator Draw()
@@ -270,6 +374,46 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
 
         Base();
     }
+
+    IEnumerator Victory()
+    {
+
+        //2승 채우는거 보여주고
+        yield return new WaitForSeconds(1f);
+        WinPanel.SetActive(false);
+
+        VictoryPanel.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+
+        NetworkManager.Instance.Versus_Victory_REQ(tableNum);
+
+        //초기화 여기서 해야할건 뭘까? 어차피 근데 씬이동 하자나
+        // 코인이 자동으로 정산되는것까지만 좀 하자
+        // 아근데 그럼 victroy는 gamecnt 받아와야되네 ㅋ
+    }
+
+
+
+    IEnumerator GameOver()
+    {
+
+        yield return new WaitForSeconds(1f);
+        LosePanel.SetActive(false);
+
+        GameOverPanel.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+
+        NetworkManager.Instance.Versus_GameOver_REQ(tableNum);
+
+        //초기화 여기서 해야할건 뭘까? 어차피 근데 씬이동 하자나
+        // 코인이 자동으로 정산되는것까지만 좀 하자
+        // 아근데 그럼 victroy는 gamecnt 받아와야되네 ㅋ
+    }
+
+
+
 
     void Base()
     {
@@ -384,14 +528,6 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
     }
 
 
-    
-    // 작업환경 확실하게 구분할것 왜 싱글톤으로 받는가? 아니면 바로 해도 되는가? 이런것들 ACK는 바로하고, NOT 는 싱글톤으로 작업하고 OK?
-
-    // Win or Lose 뒤에 ROUND 바꾸어야하는 NOT 작업 넣기
-
-
-   
-
     public void OnClickRock()
     {
         UITweenScale.Start(objRock.gameObject, 1f, 1.5f, TWParam.New(.3f).Curve(TWCurve.Bounce));
@@ -399,14 +535,10 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
         ChoicePanel.SetActive(false);
         waitOherPanel.SetActive(true);
 
-
         StopCountdown();
 
         Debug.Log(countdownTime + "카운트다운 남은거 체크 디버그");
         NetworkManager.Instance.Versus_Rock_REQ(tableNum);
-
-
-
     }
 
     public void OnClickPaper()
@@ -418,7 +550,6 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
 
         StopCountdown();
         NetworkManager.Instance.Versus_Paper_REQ(tableNum);
-
     }
 
     public void OnClickScissor()
@@ -430,7 +561,6 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
 
         StopCountdown();
         NetworkManager.Instance.Versus_Scissor_REQ(tableNum);
-
     }
 
 
@@ -467,22 +597,12 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
     }
 
 
-
-
-
-
-
-
-
-
-
     public void ReturnHome()
     {
         SceneChanger.LoadScene("Mail", PageBase.Instance.curBoardObj());
-
-
     }
 
+    // 강제 종료된건 isCheckScene 이면? 아니면 어떻게 하라는거에서 힌트를 얻기
 
 
 
