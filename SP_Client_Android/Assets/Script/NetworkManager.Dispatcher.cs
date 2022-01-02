@@ -994,6 +994,9 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     }
 
 
+
+
+    // 강제 종료되는 코드 or 꺼지거나 하면 이 코드를 적용한다
     void VersusDrawACK(CPacket msg)
     {
         byte tableNo = msg.pop_byte();

@@ -271,8 +271,6 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
     {
         if(tableNo == tableNum)
         {
-            losescore++;
-
             //내가 이겼으므로 나에게 올라가야하겠지 상대는?
             // Round 판정
             if (losescore == 1)
@@ -335,8 +333,6 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
     {
         if (tableNo == tableNum)
         {
-            winscore++;
-
             //내가 이겼으므로 나에게 올라가야하겠지 상대는?
             // Round 판정
             if (winscore == 1)
