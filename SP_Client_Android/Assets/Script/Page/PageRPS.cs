@@ -401,7 +401,7 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
 
         yield return new WaitForSeconds(3f);
 
-        NetworkManager.Instance.Versus_GameOver_REQ(tableNum);
+        NetworkManager.Instance.Versus_GameOver_REQ(tableNum, GameCnt);
 
         //초기화 여기서 해야할건 뭘까? 어차피 근데 씬이동 하자나
         // 코인이 자동으로 정산되는것까지만 좀 하자
