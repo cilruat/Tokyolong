@@ -12,44 +12,9 @@ public class coTest : MonoBehaviour {
     public GameObject objDisplay;
 
 
-    // GoldFish
-    public GameObject objFish;
-
-    public float xMinBoundary;
-    public float yMinBoundary;
-    public float xMaxBoundary;
-    public float yMaxBoundary;
-
-    RectTransform fish;
-
 
     IEnumerator coroutine;
-    public void MoveSpaceShip()
-    {
 
-        float randX = Random.Range(xMinBoundary, xMaxBoundary);
-
-        float randY = Random.Range(yMinBoundary, yMaxBoundary);
-
-        Vector2 target = new Vector2(randX, randY);
-
-        target = this.gameObject.transform.position;
-
-        //Option 1
-
-        //small_star.transform.Translate(target * 2);
-
-        //Option 2
-
-
-        fish = objFish.GetComponent<RectTransform>();
-
-
-
-        
-        }
-
-​
 
     public void StartCountdown()
     {

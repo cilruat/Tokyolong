@@ -1059,6 +1059,7 @@ namespace SP_Server.UserState
 
                         tableNo = msg.pop_byte();
                         targetTableNo = msg.pop_byte();
+                        gameCount = msg.pop_int32();
 
 
                         for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
@@ -1083,6 +1084,11 @@ namespace SP_Server.UserState
 
                         tableNo = msg.pop_byte();
                         targetTableNo = msg.pop_byte();
+                        gameCount = msg.pop_int32();
+
+
+                        owner.mainFrm.AddGameCount((int)tableNo, -gameCount);
+                        remain_game_cnt = owner.mainFrm.GetGameCount((int)tableNo);
 
 
                         for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
@@ -1091,8 +1097,12 @@ namespace SP_Server.UserState
                             if (inputTargetUser.tableNum != (int)targetTableNo)
                                 continue;
 
+
+                            inputTargetUser.info.AddGameCount(gameCount);
+
                             other_msg = CPacket.create((short)PROTOCOL.VERSUS_GAMEOVER_NOT);
                             other_msg.push(tableNo);
+                            other_msg.push(gameCount);
                             inputTargetUser.send(other_msg);
                             break;
                         }
@@ -1100,6 +1110,7 @@ namespace SP_Server.UserState
 
                         send_msg = CPacket.create((short)PROTOCOL.VERSUS_GAMEOVER_ACK);
                         send_msg.push(targetTableNo);
+                        send_msg.push(remain_game_cnt);
                         break;
 
 
