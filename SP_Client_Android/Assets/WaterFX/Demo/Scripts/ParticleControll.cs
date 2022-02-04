@@ -7,12 +7,16 @@ public class ParticleControll : MonoBehaviour {
 
     public ParticleSystem objFireWork;
 
+    public ParticleSystem objFireWork1;
 
+
+    // 뒷자리가 후딜
     private void Start()
     {
 
-        InvokeRepeating("objFireWorkTest", 0, 2f);
+        InvokeRepeating("objFireWorkTest", 1f, 2f);
 
+        InvokeRepeating("objFireWorkTest2", 5, 20f);
 
     }
 
@@ -22,6 +26,10 @@ public class ParticleControll : MonoBehaviour {
         objFireWork.Play(true);
     }
 
+    public void objFireWorkTest2()
+    {
+        objFireWork1.Play(true);
+    }
 
 
 

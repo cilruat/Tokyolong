@@ -997,6 +997,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
 
     // 강제 종료되는 코드 or 꺼지거나 하면 이 코드를 적용한다
+
     void VersusDrawACK(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
@@ -1014,6 +1015,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     {
         byte tableNo = msg.pop_byte();
         SystemMessage.Instance.Add(tableNo.ToString() + "번에게 승리했습니다!");
+
         SceneChanger.LoadScene("Main", PageBase.Instance.curBoardObj());
 
 
@@ -1037,9 +1039,6 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         SystemMessage.Instance.Add(tableNo.ToString() + "번에게 패배했습니다ㅠㅠ");
         SceneChanger.LoadScene("Main", PageBase.Instance.curBoardObj());
 
-
-
-
     }
 
     void VersusGameOverNOT(CPacket msg)
@@ -1050,9 +1049,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         UserGameAcceptInfo acceptInfo = new UserGameAcceptInfo();
 
         acceptInfo.reqGameCnt = gameCnt;
-        Info.AddGameCount(gameCnt);
 
-
+        SceneChanger.LoadScene("Main", PageBase.Instance.curBoardObj());
     }
 
 

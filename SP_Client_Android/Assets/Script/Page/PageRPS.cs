@@ -223,7 +223,7 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
             StartCoroutine(Lose());
         }
 
-        else // 짐
+        else 
         {
             StartCoroutine(Win());
         }
@@ -282,7 +282,7 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
             else if (losescore == 2)
             {
                 objlosescore_2.SetActive(true);
-                StartCoroutine(GameOver());
+                //StartCoroutine(GameOver());
             }
             // else if win ==2 빅토리 화면
 
@@ -344,7 +344,7 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
             else if (winscore == 2)
             {
                 objwinscore_2.SetActive(true);
-                StartCoroutine(Victory());
+                //StartCoroutine(Victory());
             }
             // else if win ==2 빅토리 화면
 
