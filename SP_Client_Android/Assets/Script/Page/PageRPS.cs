@@ -344,7 +344,7 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
             else if (winscore == 2)
             {
                 objwinscore_2.SetActive(true);
-                //StartCoroutine(Victory());
+                StartCoroutine(Victory());
             }
             // else if win ==2 빅토리 화면
 

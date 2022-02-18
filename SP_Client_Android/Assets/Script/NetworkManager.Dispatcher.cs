@@ -1044,15 +1044,10 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     void VersusGameOverNOT(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
-
-        /*
         int gameCnt = msg.pop_int32();
-
         UserGameAcceptInfo acceptInfo = new UserGameAcceptInfo();
-
         acceptInfo.reqGameCnt = gameCnt;
-        */
-
+        
         SceneChanger.LoadScene("Main", PageBase.Instance.curBoardObj());
     }
 
