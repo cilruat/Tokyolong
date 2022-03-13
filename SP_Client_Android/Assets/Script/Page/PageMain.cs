@@ -30,6 +30,7 @@ public class PageMain : PageBase {
         eCashShop = 20,
         eWebView,
         eLuckGame,
+        eMBTI,
     }
 
     public CanvasGroup[] cgBoard;
@@ -112,6 +113,8 @@ public class PageMain : PageBase {
         case EMenu.eCashShop:       SceneChanger.LoadScene("CashShop", curBoardObj());          break;
         case EMenu.eWebView:        SceneChanger.LoadScene("WebView", curBoardObj());           break;
         case EMenu.eLuckGame:       SceneChanger.LoadScene("LuckGame", curBoardObj());          break;
+        case EMenu.eMBTI:       SceneChanger.LoadScene("Mbti", curBoardObj());          break;
+
 
         }
     }
