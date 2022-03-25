@@ -30,7 +30,7 @@ public class Npc_7 : MonoBehaviour {
             StartCoroutine(Wait());
         }
 
-        if (waypointIndex == 5)
+        if (waypointIndex == 6)
         {
             StartCoroutine(Flip());
         }

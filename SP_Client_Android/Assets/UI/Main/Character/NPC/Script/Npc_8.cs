@@ -23,20 +23,20 @@ public class Npc_8 : MonoBehaviour {
 
     void WPCallback(int waypointIndex)
     {
-        if (waypointIndex == 4)
+        if (waypointIndex == 5)
         {
             myPathTween.Pause();
             StartCoroutine(Wait());
         }
 
-        if (waypointIndex == 5)
+        if (waypointIndex == 6)
         {
             StartCoroutine(Flip());
         }
 
-        if (waypointIndex == 8)
+        if (waypointIndex == 7)
         {
-            StartCoroutine(Flip());
+            sprite.flipX = true;
         }
 
     }
