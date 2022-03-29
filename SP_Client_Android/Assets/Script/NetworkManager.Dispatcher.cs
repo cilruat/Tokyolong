@@ -1017,6 +1017,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         SystemMessage.Instance.Add(tableNo.ToString() + "번에게 승리했습니다!");
 
         SceneChanger.LoadScene("Main", PageBase.Instance.curBoardObj());
+        if (Info.isCheckScene("Main"))
+            ((PageMain)PageBase.Instance).RefreshGamePlay();
 
 
         //게임 코인 rEQ 날리고

@@ -371,6 +371,8 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
         Base();
     }
 
+    
+
     IEnumerator Victory()
     {
 
@@ -383,10 +385,6 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
         yield return new WaitForSeconds(3f);
 
         NetworkManager.Instance.Versus_Victory_REQ(tableNum);
-
-        //초기화 여기서 해야할건 뭘까? 어차피 근데 씬이동 하자나
-        // 코인이 자동으로 정산되는것까지만 좀 하자
-        // 아근데 그럼 victroy는 gamecnt 받아와야되네 ㅋ
     }
 
 
@@ -402,10 +400,6 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
         yield return new WaitForSeconds(3f);
 
         NetworkManager.Instance.Versus_GameOver_REQ(tableNum, GameCnt);
-
-        //초기화 여기서 해야할건 뭘까? 어차피 근데 씬이동 하자나
-        // 코인이 자동으로 정산되는것까지만 좀 하자
-        // 아근데 그럼 victroy는 gamecnt 받아와야되네 ㅋ
     }
 
 
