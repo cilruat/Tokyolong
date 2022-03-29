@@ -363,11 +363,12 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
 
     // need GameCnt
-    public void Versus_Victory_REQ(byte targetTableNo)
+    public void Versus_Victory_REQ(byte targetTableNo, int gameCnt)
     {
         CPacket msg = CPacket.create((short)PROTOCOL.VERSUS_VICTORY_REQ);
         msg.push(Info.TableNum);
         msg.push(targetTableNo);
+        msg.push(gameCnt);
         send(msg);
 
     }

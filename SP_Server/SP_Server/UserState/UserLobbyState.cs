@@ -1052,16 +1052,12 @@ namespace SP_Server.UserState
 
 
 
-
-                    // GAME CNT 넣어야한다 == // 일단 여기까지 1228
-
                     case PROTOCOL.VERSUS_VICTORY_REQ:
 
                         tableNo = msg.pop_byte();
                         targetTableNo = msg.pop_byte();
                         gameCount = msg.pop_int32();
 
-                        //추가 0329
                         owner.mainFrm.AddGameCount((int)tableNo, gameCount);
                         remain_game_cnt = owner.mainFrm.GetGameCount((int)tableNo);
 

@@ -1021,9 +1021,10 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
         SystemMessage.Instance.Add(tableNo.ToString() + "번에게 승리했습니다!");
 
-        SceneChanger.LoadScene("Main", PageBase.Instance.curBoardObj());
-        //게임 코인 rEQ 날리고
+        if (Info.isCheckScene("RPS"))
+                ((PageMain)PageBase.Instance).RefreshGamePlay();
 
+        SceneChanger.LoadScene("Main", PageBase.Instance.curBoardObj());
     }
 
     void VersusVictoryNOT(CPacket msg)

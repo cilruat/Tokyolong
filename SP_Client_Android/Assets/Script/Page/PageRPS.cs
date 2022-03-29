@@ -344,7 +344,7 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
             else if (winscore == 2)
             {
                 objwinscore_2.SetActive(true);
-                StartCoroutine(Victory());
+                //StartCoroutine(Victory());
             }
             // else if win ==2 빅토리 화면
 
@@ -376,7 +376,6 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
     IEnumerator Victory()
     {
 
-        //2승 채우는거 보여주고
         yield return new WaitForSeconds(1f);
         WinPanel.SetActive(false);
 
@@ -384,7 +383,7 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
 
         yield return new WaitForSeconds(3f);
 
-        NetworkManager.Instance.Versus_Victory_REQ(tableNum);
+        NetworkManager.Instance.Versus_Victory_REQ(tableNum, GameCnt);
     }
 
 
