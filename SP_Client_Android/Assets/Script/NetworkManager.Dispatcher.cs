@@ -1014,13 +1014,14 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     void VersusVictoryACK(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
+
+
+        int game_cnt = msg.pop_int32();
+        Info.AddGameCount(game_cnt, true);
+
         SystemMessage.Instance.Add(tableNo.ToString() + "번에게 승리했습니다!");
 
         SceneChanger.LoadScene("Main", PageBase.Instance.curBoardObj());
-        if (Info.isCheckScene("Main"))
-            ((PageMain)PageBase.Instance).RefreshGamePlay();
-
-
         //게임 코인 rEQ 날리고
 
     }
@@ -1028,6 +1029,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     void VersusVictoryNOT(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
+
     }
 
 
@@ -1046,11 +1048,14 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     void VersusGameOverNOT(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
+
+        /*
         int gameCnt = msg.pop_int32();
         UserGameAcceptInfo acceptInfo = new UserGameAcceptInfo();
         acceptInfo.reqGameCnt = gameCnt;
         
         SceneChanger.LoadScene("Main", PageBase.Instance.curBoardObj());
+        */
     }
 
 
