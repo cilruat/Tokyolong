@@ -1061,6 +1061,10 @@ namespace SP_Server.UserState
                         targetTableNo = msg.pop_byte();
                         gameCount = msg.pop_int32();
 
+                        //추가 0329
+                        owner.mainFrm.AddGameCount((int)tableNo, gameCount);
+                        remain_game_cnt = owner.mainFrm.GetGameCount((int)tableNo);
+
 
                         for (int i = 0; i < owner.mainFrm.ListUser.Count; i++)
                         {
@@ -1070,6 +1074,7 @@ namespace SP_Server.UserState
 
                             other_msg = CPacket.create((short)PROTOCOL.VERSUS_VICTORY_NOT);
                             other_msg.push(tableNo);
+                            other_msg.push(gameCount);
                             inputTargetUser.send(other_msg);
                             break;
                         }
@@ -1077,6 +1082,7 @@ namespace SP_Server.UserState
 
                         send_msg = CPacket.create((short)PROTOCOL.VERSUS_VICTORY_ACK);
                         send_msg.push(targetTableNo);
+                        send_msg.push(remain_game_cnt);
                         break;
 
 
