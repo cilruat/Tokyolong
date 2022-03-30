@@ -383,7 +383,7 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
 
         yield return new WaitForSeconds(3f);
 
-        //NetworkManager.Instance.Versus_Victory_REQ(tableNum, GameCnt);
+        NetworkManager.Instance.Versus_Victory_REQ(tableNum, GameCnt);
     }
 
 

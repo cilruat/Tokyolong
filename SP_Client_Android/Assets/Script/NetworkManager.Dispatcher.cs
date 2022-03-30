@@ -1066,7 +1066,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
         UIManager.Instance.isGameRoom = false;
 
-        UIManager.Instance.SendVictoryREQ(tableNo, gameCnt);
+        //UIManager.Instance.SendVictoryREQ(tableNo, gameCnt);
 
         SceneChanger.LoadScene("Main", PageBase.Instance.curBoardObj());
         
