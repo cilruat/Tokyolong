@@ -383,7 +383,7 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
 
         yield return new WaitForSeconds(3f);
 
-        NetworkManager.Instance.Versus_Victory_REQ(tableNum, GameCnt);
+        //NetworkManager.Instance.Versus_Victory_REQ(tableNum, GameCnt);
     }
 
 
@@ -509,11 +509,16 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
 
         yield return new WaitForSeconds(1f);
 
-        // 자동패 올라가게 REQ 보낼것
-        //UI 작업
-        Debug.Log("카운트 다운 종료 UI 작업");
 
-        //countdownDisplay.gameObject.SetActive(false);
+        GameOverPanel.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+
+        NetworkManager.Instance.Versus_GameOver_REQ(tableNum, GameCnt);
+        UIManager.Instance.isGameRoom = false; // ACK 에 넣는것과 같은역할
+
+        // 버그 = 두명 다 시간만료일때 먼저 시간만료된애가 패배임 ㅋㅋ 빠른애가 진다..미안
+
     }
 
 

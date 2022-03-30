@@ -1021,6 +1021,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
         SystemMessage.Instance.Add(tableNo.ToString() + "번에게 승리했습니다!");
 
+
+
         if (Info.isCheckScene("RPS"))
                 ((PageMain)PageBase.Instance).RefreshGamePlay();
 
@@ -1033,6 +1035,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         int gameCnt = msg.pop_int32();
         UserGameAcceptInfo acceptInfo = new UserGameAcceptInfo();
         acceptInfo.reqGameCnt = gameCnt;
+
+        UIManager.Instance.isGameRoom = false;
 
         SceneChanger.LoadScene("Main", PageBase.Instance.curBoardObj());
 
@@ -1047,6 +1051,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         Info.AddGameCount(game_cnt, true);
 
         SystemMessage.Instance.Add(tableNo.ToString() + "번에게 패배했습니다ㅠㅠ");
+
+
         SceneChanger.LoadScene("Main", PageBase.Instance.curBoardObj());
 
     }
@@ -1059,13 +1065,14 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         int gameCnt = msg.pop_int32();
         UserGameAcceptInfo acceptInfo = new UserGameAcceptInfo();
         acceptInfo.reqGameCnt = gameCnt;
-        
+
+        UIManager.Instance.isGameRoom = false;
+
+        UIManager.Instance.SendVictoryREQ(tableNo, gameCnt);
+
         SceneChanger.LoadScene("Main", PageBase.Instance.curBoardObj());
         
     }
-
-
-
 
 
 }
