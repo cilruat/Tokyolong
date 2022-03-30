@@ -365,7 +365,7 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
 
     public void SendVictoryREQ(byte targetTableNo, int gameCnt)
     {
-        NetworkManager.Instance.Versus_Victory_REQ(targetTableNo, gameCnt);
+        NetworkManager.Instance.Versus_Victory_REQ(Info.TableNum, gameCnt);
     }
 
 

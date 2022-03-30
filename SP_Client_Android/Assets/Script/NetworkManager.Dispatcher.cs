@@ -1021,8 +1021,6 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
         SystemMessage.Instance.Add(tableNo.ToString() + "번에게 승리했습니다!");
 
-
-
         if (Info.isCheckScene("RPS"))
                 ((PageMain)PageBase.Instance).RefreshGamePlay();
 
