@@ -362,12 +362,14 @@ public class UIManager : SingletonMonobehaviour<UIManager> {
         isGameRoom = false;
     }
 
-    /*
+    
     public void SendVictoryREQ(byte targetTableNo, int gameCnt)
     {
         NetworkManager.Instance.Versus_Victory_REQ(targetTableNo, gameCnt);
+
+        Debug.Log(targetTableNo + "타겟테이블번호");
     }
-    */
+    
 
     void _ShowBillDetail()
     {

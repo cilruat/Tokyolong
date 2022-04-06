@@ -383,7 +383,9 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
 
         yield return new WaitForSeconds(3f);
 
-        NetworkManager.Instance.Versus_Victory_REQ(tableNum, GameCnt);
+
+        // 0406 1.GameOver 선수행 Victory 연동작업
+        //NetworkManager.Instance.Versus_Victory_REQ(tableNum, GameCnt);
     }
 
 

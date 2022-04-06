@@ -300,12 +300,18 @@ public partial class Info : MonoBehaviour {
     {
         int cnt = 0;
         switch (eType) {
+
+            /*
             case EMenuType.eTop:
             case EMenuType.eSide:
             case EMenuType.eSigniture:
             case EMenuType.eStick:
             case EMenuType.eSoup:
             case EMenuType.eGrill: cnt = 2; break;
+            */
+
+            // 주류 시키면 +1 로 수정
+            case EMenuType.eSozu: cnt = 1; break;
         }
 
         return cnt;
