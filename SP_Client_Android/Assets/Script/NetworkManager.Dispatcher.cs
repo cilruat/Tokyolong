@@ -1014,17 +1014,10 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     void VersusVictoryACK(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
-
-
         int game_cnt = msg.pop_int32();
         Info.AddGameCount(game_cnt, true);
 
         SystemMessage.Instance.Add(tableNo.ToString() + "번에게 승리했습니다!");
-
-        if (Info.isCheckScene("RPS"))
-                ((PageMain)PageBase.Instance).RefreshGamePlay();
-
-        SceneChanger.LoadScene("Main", PageBase.Instance.curBoardObj());
     }
 
     void VersusVictoryNOT(CPacket msg)
