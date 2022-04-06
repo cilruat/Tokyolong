@@ -1058,7 +1058,7 @@ namespace SP_Server.UserState
                         targetTableNo = msg.pop_byte();
                         gameCount = msg.pop_int32();
 
-                        owner.mainFrm.AddGameCount((int)tableNo, gameCount);
+                        //owner.mainFrm.AddGameCount((int)tableNo, gameCount);
                         remain_game_cnt = owner.mainFrm.GetGameCount((int)tableNo);
 
 

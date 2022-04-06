@@ -1002,12 +1002,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         byte tableNo = msg.pop_byte();
         int game_cnt = msg.pop_int32();
 
-        UserGameAcceptInfo acceptInfo = new UserGameAcceptInfo();
-        acceptInfo.reqGameCnt = game_cnt;
-
         Info.AddGameCount(game_cnt, true);
-
-        Debug.Log(game_cnt + "코인숫자");
         SystemMessage.Instance.Add(tableNo.ToString() + "번에게 승리했습니다!");
     }
 
@@ -1016,15 +1011,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         byte tableNo = msg.pop_byte();
         int gameCnt = msg.pop_int32();
 
-        /*
-        UserGameAcceptInfo acceptInfo = new UserGameAcceptInfo();
-        acceptInfo.reqGameCnt = gameCnt;
-        */
-
         UIManager.Instance.isGameRoom = false;
-
         SceneChanger.LoadScene("Main", PageBase.Instance.curBoardObj());
-
     }
 
 
@@ -1034,10 +1022,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         int game_cnt = msg.pop_int32();
 
         Info.AddGameCount(game_cnt, true);
-
         SystemMessage.Instance.Add(tableNo.ToString() + "번에게 패배했습니다ㅠㅠ");
-
-
         SceneChanger.LoadScene("Main", PageBase.Instance.curBoardObj());
 
     }
@@ -1047,15 +1032,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         byte tableNo = msg.pop_byte();
         int gameCnt = msg.pop_int32();
 
-        /*
-        UserGameAcceptInfo acceptInfo = new UserGameAcceptInfo();
-        acceptInfo.reqGameCnt = gameCnt;
-        */
-
         UIManager.Instance.isGameRoom = false;
-
         UIManager.Instance.SendVictoryREQ(tableNo, gameCnt);
-
         SceneChanger.LoadScene("Main", PageBase.Instance.curBoardObj());
         
     }
