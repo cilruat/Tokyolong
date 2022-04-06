@@ -883,16 +883,6 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     void GameReadyNOT(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
-
-        /*
-        UserOnReadyInfo readyInfo = new UserOnReadyInfo();
-
-        readyInfo.tableNo = tableNo;
-        Info.myInfo.listReadyAddInfo.Add(readyInfo);
-
-        */
-        //null 뜰거같은데..?
-
         PageVersusLobby.Instance.OnReady_2Player(tableNo);
 
     }
@@ -994,10 +984,6 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     }
 
 
-
-
-    // 강제 종료되는 코드 or 꺼지거나 하면 이 코드를 적용한다
-
     void VersusDrawACK(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
@@ -1039,7 +1025,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         byte tableNo = msg.pop_byte();
         int game_cnt = msg.pop_int32();
 
-        Info.AddGameCount(game_cnt, true);
+        //Info.AddGameCount(game_cnt, true);
 
         SystemMessage.Instance.Add(tableNo.ToString() + "번에게 패배했습니다ㅠㅠ");
 
