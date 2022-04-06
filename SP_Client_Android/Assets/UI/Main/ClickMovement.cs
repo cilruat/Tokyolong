@@ -78,7 +78,7 @@ public class ClickMovement : MonoBehaviour {
                 }
             }
 
-            if (Vector3.Distance(transform.position, destination) <= 0.1f)
+            if (Vector3.Distance(transform.position, destination) <= 0.3f)
             {
                 isMove = false;
                 animator.SetBool("isMove", false);

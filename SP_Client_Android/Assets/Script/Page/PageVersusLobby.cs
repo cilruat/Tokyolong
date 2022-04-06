@@ -113,10 +113,18 @@ public class PageVersusLobby : SingletonMonobehaviour<PageVersusLobby>
 
         }
 
-        else if(GameName == "악어룰렛")
+        if (GameName == "악어룰렛")
         {
-            //SceneChanger.LoadScene("LoadingRPS", objBoard);
-            Debug.Log("아직안되용");
+            SceneManager.LoadScene("LoadingBullDog");
+
+        }
+
+
+
+        else if (GameName == "병뚜껑돌리기")
+        {
+            //SceneChanger.LoadScene("LoadingBullDog", objBoard);
+            Debug.Log("아직안돼용");
         }
 
     }
