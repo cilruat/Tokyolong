@@ -1001,6 +1001,10 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     {
         byte tableNo = msg.pop_byte();
         int game_cnt = msg.pop_int32();
+
+        UserGameAcceptInfo acceptInfo = new UserGameAcceptInfo();
+        acceptInfo.reqGameCnt = game_cnt;
+
         Info.AddGameCount(game_cnt, true);
 
         Debug.Log(game_cnt + "코인숫자");
@@ -1011,8 +1015,11 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     {
         byte tableNo = msg.pop_byte();
         int gameCnt = msg.pop_int32();
+
+        /*
         UserGameAcceptInfo acceptInfo = new UserGameAcceptInfo();
         acceptInfo.reqGameCnt = gameCnt;
+        */
 
         UIManager.Instance.isGameRoom = false;
 
