@@ -1003,6 +1003,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         int game_cnt = msg.pop_int32();
         Info.AddGameCount(game_cnt, true);
 
+        Debug.Log(game_cnt + "코인숫자");
         SystemMessage.Instance.Add(tableNo.ToString() + "번에게 승리했습니다!");
     }
 
@@ -1025,7 +1026,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         byte tableNo = msg.pop_byte();
         int game_cnt = msg.pop_int32();
 
-        //Info.AddGameCount(game_cnt, true);
+        Info.AddGameCount(game_cnt, true);
 
         SystemMessage.Instance.Add(tableNo.ToString() + "번에게 패배했습니다ㅠㅠ");
 
@@ -1037,11 +1038,12 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     void VersusGameOverNOT(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
-
-        
         int gameCnt = msg.pop_int32();
+
+        /*
         UserGameAcceptInfo acceptInfo = new UserGameAcceptInfo();
         acceptInfo.reqGameCnt = gameCnt;
+        */
 
         UIManager.Instance.isGameRoom = false;
 

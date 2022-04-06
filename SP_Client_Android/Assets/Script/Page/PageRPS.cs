@@ -592,6 +592,7 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
         }
     }
 
+    // 강제종료 되는거 따윈 없다! 이거때문에 연계해서 만들었구낭!
 
     public void ReturnHome()
     {
