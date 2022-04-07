@@ -333,6 +333,50 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 
     }
 
+
+
+
+    public void Versus_First_REQ(byte targetTableNo, int firstPostvalue)
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.VERSUS_FIRST_REQ);
+        msg.push(Info.TableNum);
+        msg.push(targetTableNo);
+        msg.push(firstPostvalue);
+        send(msg);
+    }
+
+
+    public void VERSUS_RANDOM_REQ(byte targetTableNo, int winningNum)
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.VERSUS_FIRST_REQ);
+        msg.push(Info.TableNum);
+        msg.push(targetTableNo);
+        msg.push(winningNum);
+        send(msg);
+    }
+
+
+    public void VERSUS_CHOICE_REQ(byte targetTableNo, int choiceNum)
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.VERSUS_FIRST_REQ);
+        msg.push(Info.TableNum);
+        msg.push(targetTableNo);
+        msg.push(choiceNum);
+        send(msg);
+    }
+
+    public void VERSUS_ELECT_REQ(byte targetTableNo)
+    {
+        CPacket msg = CPacket.create((short)PROTOCOL.VERSUS_FIRST_REQ);
+        msg.push(Info.TableNum);
+        msg.push(targetTableNo);
+        send(msg);
+    }
+
+
+
+
+
     public void Versus_Win_REQ(byte targetTableNo)
     {
         CPacket msg = CPacket.create((short)PROTOCOL.VERSUS_WIN_REQ);

@@ -95,6 +95,21 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         case PROTOCOL.VERSUS_VICTORY_NOT:           VersusVictoryNOT(msg);          break;
         case PROTOCOL.VERSUS_GAMEOVER_ACK:          VersusGameOverACK(msg);         break;
         case PROTOCOL.VERSUS_GAMEOVER_NOT:          VersusGameOverNOT(msg);         break;
+
+
+            case PROTOCOL.VERSUS_FIRST_ACK: VersusFirstACK(msg); break;
+            case PROTOCOL.VERSUS_FIRST_NOT: VersusFirstNOT(msg); break;
+            case PROTOCOL.VERSUS_RANDOM_ACK: VersusRandomACK(msg); break;
+            case PROTOCOL.VERSUS_RANDOM_NOT: VersusRandomNOT(msg); break;
+            case PROTOCOL.VERSUS_CHOICE_ACK: VersusChoiceACK(msg); break;
+            case PROTOCOL.VERSUS_CHOICE_NOT: VersusChoiceNOT(msg); break;
+            case PROTOCOL.VERSUS_ELECT_ACK: VersusElectACK(msg); break;
+            case PROTOCOL.VERSUS_ELECT_NOT: VersusElectNOT(msg); break;
+
+
+
+
+
         }
 
         isSending = false;
@@ -948,6 +963,66 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         PageRPS.Instance.ImScissor(tableNo);
 
     }
+
+
+
+    //======BullDog======//
+
+    void VersusFirstACK(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+        int firstPostvalue = msg.pop_int32();
+
+    }
+
+    void VersusFirstNOT(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+        int firstPostvalue = msg.pop_int32();
+
+    }
+
+    void VersusRandomACK(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+        int winningNum = msg.pop_int32();
+
+    }
+
+    void VersusRandomNOT(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+        int winningNum = msg.pop_int32();
+
+    }
+
+    void VersusChoiceACK(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+        int choiceNum = msg.pop_int32();
+
+    }
+
+    void VersusChoiceNOT(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+        int choiceNum = msg.pop_int32();
+
+    }
+
+    void VersusElectACK(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+
+    }
+
+    void VersusElectNOT(CPacket msg)
+    {
+        byte tableNo = msg.pop_byte();
+
+    }
+
+
 
     //======Game Common=====//
 

@@ -84,7 +84,7 @@ public class PageVersusLobby : SingletonMonobehaviour<PageVersusLobby>
 
     public void OnReady_2Player(int tableNo)
     {
-        if(tableNo == tableNum) //조건 이상한데... 내가 준비를 완료 했어 REQ 날리거든, 그럼 나한텐 난 준비완료 뜨고 ++ 되고 상대방에게 NOT가 가는데 상대방에게도 되네
+        if(tableNo == tableNum) 
         {
             objReady2P.SetActive(true);
             needStartNum++;
@@ -92,8 +92,6 @@ public class PageVersusLobby : SingletonMonobehaviour<PageVersusLobby>
         }
     }
 
-
-    // 코루틴일 필요가 없네..
 
     void LoadGame()
     {
@@ -103,7 +101,6 @@ public class PageVersusLobby : SingletonMonobehaviour<PageVersusLobby>
 
     IEnumerator StartGame()
     {
-        //1227 시간 멈추는거 한번 체크 할것 여기서
 
         yield return new WaitForSeconds(2f);
 
@@ -113,7 +110,7 @@ public class PageVersusLobby : SingletonMonobehaviour<PageVersusLobby>
 
         }
 
-        if (GameName == "악어룰렛")
+        if (GameName == "불독룰렛")
         {
             SceneManager.LoadScene("LoadingBullDog");
 
@@ -128,7 +125,4 @@ public class PageVersusLobby : SingletonMonobehaviour<PageVersusLobby>
         }
 
     }
-
-    //Start 누르면 판정에서 마지막으로 갯수판정하고, --Count 할것.
-    // 자동으로 튕기니깐.. 숫자없으면. 괜히 넣을 필요없겠다요!
 }

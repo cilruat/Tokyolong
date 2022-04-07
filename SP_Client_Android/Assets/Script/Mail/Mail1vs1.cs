@@ -17,7 +17,7 @@ public class Mail1vs1 : SingletonMonobehaviour<Mail1vs1>
 
     public GameObject[] objGame; // 게임을 이미지로 나타내기
 
-    int maxgameCoin = 5;  // 최대 5코인까지만 걸수있게 제한을둔다
+    int maxgameCoin = 10;  // 최대 10코인까지만 걸수있게 제한을둔다
     int mingameCoin = 1;
     public GameObject btnPlus;
     public GameObject btnMinus;
@@ -90,22 +90,12 @@ public class Mail1vs1 : SingletonMonobehaviour<Mail1vs1>
         switch (state)
         {
             case 0:
-                // 가위바위보를 신설해서 거기에 정보를 넣는작업
-                /*MailMsgWrite write = objGame[state].GetComponent<MailMsgWrite>();
-                if (write)
-                    write.SetInfo(tableNo);
-                    */
-                Debug.Log("가위");
                 game.text = "가위바위보";
                 gameName = game.text;
                 break;
 
-                // 불복복불복 정보를 만들어서 거기다가 정보를 넣는 작업
             case 1:
-                /*MailLike like = objGame[state].GetComponent<MailLike>();
-                if (like)
-                    like.SetInfo(tableNo);*/
-                game.text = "복불복룰렛";
+                game.text = "불독룰렛";
                 gameName = game.text;
                 break;
         }

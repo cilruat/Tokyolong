@@ -150,6 +150,27 @@ namespace SP_Server
 
 
         //-------------------------------------
+        // 인게임(불독룰렛) 프로토콜.
+        //------------------------------------- 
+        VERSUS_FIRST_REQ,
+        VERSUS_FIRST_ACK,
+        VERSUS_FIRST_NOT,
+
+        VERSUS_RANDOM_REQ,
+        VERSUS_RANDOM_ACK,
+        VERSUS_RANDOM_NOT,
+
+        VERSUS_CHOICE_REQ,
+        VERSUS_CHOICE_ACK,
+        VERSUS_CHOICE_NOT,
+
+        VERSUS_ELECT_REQ,
+        VERSUS_ELECT_ACK,
+        VERSUS_ELECT_NOT,
+
+
+
+        //-------------------------------------
         // 게임 공통 프로토콜.
         //------------------------------------- 
         VERSUS_WIN_REQ,
