@@ -20,6 +20,7 @@ public class UserInfo
     public List<UserCancelInfo> listCanCelInfo = new List<UserCancelInfo>();
     public List<UserOnReadyInfo> listReadyAddInfo = new List<UserOnReadyInfo>();
 
+    public List<UserBullDogFirstInfo> listBullDogFirstInfo = new List<UserBullDogFirstInfo>();
 
 
 
@@ -118,6 +119,11 @@ public class UserCancelInfo
 public class UserOnReadyInfo
 {
     public byte tableNo = 0;
+}
+
+public class UserBullDogFirstInfo
+{
+    public int firstValue = 0;
 }
 
 
