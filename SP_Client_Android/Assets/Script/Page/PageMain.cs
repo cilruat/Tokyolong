@@ -43,9 +43,11 @@ public class PageMain : PageBase {
     public FlyChance flyChance;
 
     public GameObject objSubScroll;
-
+    public GameObject objMatsuriScroll;
 
     bool Direct;
+    bool MatsuriDirect;
+
 
 	protected override void Awake ()
 	{
@@ -61,7 +63,7 @@ public class PageMain : PageBase {
     void Start()
     {
         objSubScroll.SetActive(false);
-
+        objMatsuriScroll.SetActive(false);
 
         StartFlyChance();
 
@@ -173,4 +175,24 @@ public class PageMain : PageBase {
         objSubScroll.SetActive(false);
         Direct = false;
     }
+
+    public void ShowMatsuriSubScroll()
+    {
+        if (MatsuriDirect == false)
+        {
+            objMatsuriScroll.SetActive(true);
+            MatsuriDirect = true;
+        }
+        else if (MatsuriDirect == true)
+        {
+            HideMatsuriSubScroll();
+        }
+    }
+
+    public void HideMatsuriSubScroll()
+    {
+        objMatsuriScroll.SetActive(false);
+        MatsuriDirect = false;
+    }
+
 }
