@@ -992,6 +992,8 @@ namespace SP_Server.UserState
 
                         send_msg = CPacket.create((short)PROTOCOL.VERSUS_FIRST_ACK);
                         send_msg.push(targetTableNo);
+                        send_msg.push(firstPostvalue);
+
                         break;
 
                     case PROTOCOL.VERSUS_RANDOM_REQ:
