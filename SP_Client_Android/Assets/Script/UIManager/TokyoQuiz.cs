@@ -61,7 +61,8 @@ public class TokyoQuiz : MonoBehaviour {
 		Debug.Log ("Data Count: " + data.Count);
 	}
 
-	void Update()
+
+    void Update()
 	{		
 		if (showTime == false)
 			return;

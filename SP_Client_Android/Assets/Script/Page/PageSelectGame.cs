@@ -12,6 +12,7 @@ public class PageSelectGame : PageBase  {
     public Text txtTableNo;
 
 
+
     protected override void Awake()
     {
         base.Awake();
@@ -32,17 +33,40 @@ public class PageSelectGame : PageBase  {
 
     public void OnGoSingle()
     {
-        SceneChanger.LoadScene("Game", objBoard);
+        if (Info.isSlot == false)
+        {
+            SceneChanger.LoadScene("Game", objBoard);
+            Info.isSlot = true;
+
+        }
+        else
+            SystemMessage.Instance.Add("슬롯머신 게임을 이미 참여하셨습니다");
     }
 
     public void OnGoLobby()
     {
-        SceneChanger.LoadScene("Lobby", objBoard);
+        if (Info.isYabawi == false)
+        {
+            SceneChanger.LoadScene("Trickery", objBoard);
+            Info.isYabawi = true;
+        }
+        else
+            SystemMessage.Instance.Add("야바위 게임을 이미 참여하셨습니다");
     }
 
     public void OnGoLuck()
     {
-        SceneChanger.LoadScene("LuckGame", objBoard);
+        if (Info.isYabawi == false)
+        {
+            SceneChanger.LoadScene("LuckGame", objBoard);
+            Info.isQuiz = true;
+
+            GameObject obj = UIManager.Instance.Show(eUI.eTokyoQuiz);
+            TokyoQuiz quiz = obj.GetComponent<TokyoQuiz>();
+            quiz.OnStart();
+        }
+        else
+            SystemMessage.Instance.Add("퀴즈 게임을 이미 참여하셨습니다");
     }
 
     public void OnGoCash()

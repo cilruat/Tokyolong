@@ -257,6 +257,10 @@ public partial class Info : MonoBehaviour {
     public static bool firstOrder = false;
 
 
+    public static bool isSlot = false;
+    public static bool isYabawi = false;
+    public static bool isQuiz = false;
+
     public static bool RunInGameScene = false;
 
     public static bool InVersusGameRoom = false;

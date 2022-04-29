@@ -70,9 +70,15 @@ public class gamemanager : MonoBehaviour {
 
 	public void test()
 	{
-		StartCoroutine(move4time());
-		readygo.SetActive (false);
-	}
+        if (Info.GamePlayCnt >= 1)
+        {
+            StartCoroutine(move4time());
+            readygo.SetActive(false);
+        }
+
+        else
+            SystemMessage.Instance.Add("코인이 부족합니다 1개라도 있어야해요");
+    }
 
 	public void Retry(){
 		SceneChanger.LoadScene ("Main", objCanvas);
@@ -217,19 +223,19 @@ public class gamemanager : MonoBehaviour {
 
 		yield return new WaitForSeconds (1f);
 		objSendServer.SetActive (false);
+        NetworkManager.Instance.GameCountInput_REQ(Info.TableNum, +3);
 
-		if (Info.TableNum == 0)
-			ReturnHome ();
-		else
-			Info.ShowResult ();
+        yield return new WaitForSeconds(0.3f);
+        ReturnHome();
 	}
 
 	public void GameOver()
 	{
 		isgameover=true;
 		gameover.SetActive(true);
+        NetworkManager.Instance.GameCountInput_REQ(Info.TableNum, -1);
 
-		StartCoroutine (_GameOver ());
+        StartCoroutine(_GameOver ());
 	}
 
 	IEnumerator _GameOver()

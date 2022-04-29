@@ -151,6 +151,11 @@ public partial class Info : MonoBehaviour
         GamePlayCnt = 0;
         GameDiscountWon = -1;
 		firstOrder = false;
+        isQuiz = false;
+        isSlot = false;
+        isYabawi = false;
+
+
 
         myInfo = null;
         dictUserInfo.Clear();
