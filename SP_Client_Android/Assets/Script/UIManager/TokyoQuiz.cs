@@ -104,8 +104,8 @@ public class TokyoQuiz : MonoBehaviour {
 
 	public void OnStart()
 	{
-		UITweenAlpha.Start (gameObject, 0f, 1f, TWParam.New (1f).Curve (TWCurve.CurveLevel2).Speed (TWSpeed.Slower));
-		UIManager.Instance.PlayMusic (UIManager.Instance.clipTokyoLive, 1f);
+		//UITweenAlpha.Start (gameObject, 0f, 1f, TWParam.New (1f).Curve (TWCurve.CurveLevel2).Speed (TWSpeed.Slower));
+		//UIManager.Instance.PlayMusic (UIManager.Instance.clipTokyoLive, 1f);
 
 		nextQuestion = false;
 		curStage = 1;
@@ -220,7 +220,7 @@ public class TokyoQuiz : MonoBehaviour {
 		objSuccess1.SetActive (false);
 		objSuccess2.SetActive (false);
 
-		UIManager.Instance.MuteMusic ();
+		//UIManager.Instance.MuteMusic ();
 
 		if (curStage == 2 && right) {
 			UITweenAlpha.Start (objSuccess2, 0f, 1f, TWParam.New (1f).Curve (TWCurve.CurveLevel2));
@@ -254,7 +254,7 @@ public class TokyoQuiz : MonoBehaviour {
 		UITweenAlpha.Start (gameObject, 1f, 0f, TWParam.New (1f).Curve (TWCurve.CurveLevel2).Speed (TWSpeed.Slower));
 		yield return new WaitForSeconds (.8f);
 
-		UIManager.Instance.Hide (eUI.eTokyoQuiz);
+		//UIManager.Instance.Hide (eUI.eTokyoQuiz);
 	}
 
 	public void OnSelect(int answer)
@@ -274,7 +274,7 @@ public class TokyoQuiz : MonoBehaviour {
 
 	public void OnCloseGame()
 	{
-		UIManager.Instance.MuteMusic ();
+		//UIManager.Instance.MuteMusic ();
 
 		_Init ();
 		OnClose ();

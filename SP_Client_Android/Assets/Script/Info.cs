@@ -261,6 +261,17 @@ public partial class Info : MonoBehaviour {
     public static bool isYabawi = false;
     public static bool isQuiz = false;
 
+    public static bool SlotWin = false;
+    public static bool YabawiWin = false;
+    public static bool QuizWin = false;
+
+    public static bool SlotLose = false;
+    public static bool YabawiLose = false;
+    public static bool QuizLose = false;
+
+
+
+
     public static bool RunInGameScene = false;
 
     public static bool InVersusGameRoom = false;

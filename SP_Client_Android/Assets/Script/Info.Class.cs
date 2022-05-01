@@ -155,6 +155,13 @@ public partial class Info : MonoBehaviour
         isSlot = false;
         isYabawi = false;
 
+        SlotWin = false;
+        YabawiWin = false;
+        QuizWin = false;
+
+        SlotLose = false;
+        YabawiLose = false;
+        QuizLose = false;
 
 
         myInfo = null;

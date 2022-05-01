@@ -11,6 +11,8 @@ public class PageSelectGame : PageBase  {
     public Text txtPlayCnt;
     public Text txtTableNo;
 
+    public GameObject objYabawiWin;
+    public GameObject objYabawiLose;
 
 
     protected override void Awake()
@@ -19,6 +21,15 @@ public class PageSelectGame : PageBase  {
 
         txtPlayCnt.text = Info.GamePlayCnt.ToString();
         txtTableNo.text = Info.TableNum.ToString();
+
+        if(Info.YabawiWin ==true)
+        {
+            objYabawiWin.SetActive(true);
+        }
+        else if(Info.YabawiLose == true)
+        {
+            objYabawiLose.SetActive(true);
+        }
     }
 
     public void RefreshGamePlayChance()
@@ -41,6 +52,7 @@ public class PageSelectGame : PageBase  {
         }
         else
             SystemMessage.Instance.Add("슬롯머신 게임을 이미 참여하셨습니다");
+
     }
 
     public void OnGoLobby()
@@ -58,7 +70,7 @@ public class PageSelectGame : PageBase  {
     {
         if (Info.isYabawi == false)
         {
-            SceneChanger.LoadScene("LuckGame", objBoard);
+            SceneChanger.LoadScene("QuizShow", objBoard);
             Info.isQuiz = true;
 
             GameObject obj = UIManager.Instance.Show(eUI.eTokyoQuiz);

@@ -223,6 +223,7 @@ public class gamemanager : MonoBehaviour {
 
 		yield return new WaitForSeconds (1f);
 		objSendServer.SetActive (false);
+        Info.YabawiWin = true;
         NetworkManager.Instance.GameCountInput_REQ(Info.TableNum, +3);
 
         yield return new WaitForSeconds(0.3f);
@@ -233,6 +234,8 @@ public class gamemanager : MonoBehaviour {
 	{
 		isgameover=true;
 		gameover.SetActive(true);
+        Info.YabawiLose = true;
+
         NetworkManager.Instance.GameCountInput_REQ(Info.TableNum, -1);
 
         StartCoroutine(_GameOver ());
