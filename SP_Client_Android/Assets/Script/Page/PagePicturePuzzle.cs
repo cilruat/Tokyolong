@@ -352,7 +352,7 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 			ReturnPractiveGame ();
 		else {
 			objSendServer.SetActive (true);
-			yield return new WaitForSeconds (1f);
+			yield return new WaitForSeconds (3f);
 			objSendServer.SetActive (false);
 
 			if (Info.TableNum == 0)
@@ -374,6 +374,6 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 
 	public void ReturnHome()
 	{
-		SceneChanger.LoadScene ("Main", objBoard);
+		SceneChanger.LoadScene ("SelectGame", objBoard);
 	}		
 }

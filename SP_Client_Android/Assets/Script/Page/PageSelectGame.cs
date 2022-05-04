@@ -11,8 +11,16 @@ public class PageSelectGame : PageBase  {
     public Text txtPlayCnt;
     public Text txtTableNo;
 
+
+    public GameObject objSlotWin;
+    public GameObject objSlotLose;
+
+
     public GameObject objYabawiWin;
     public GameObject objYabawiLose;
+
+    public GameObject objQuizWin;
+    public GameObject objQuizLose;
 
 
     protected override void Awake()
@@ -22,7 +30,17 @@ public class PageSelectGame : PageBase  {
         txtPlayCnt.text = Info.GamePlayCnt.ToString();
         txtTableNo.text = Info.TableNum.ToString();
 
-        if(Info.YabawiWin ==true)
+        if (Info.SlotWin == true)
+        {
+            objSlotWin.SetActive(true);
+        }
+        else if (Info.SlotLose == true)
+        {
+            objSlotLose.SetActive(true);
+        }
+
+
+        if (Info.YabawiWin ==true)
         {
             objYabawiWin.SetActive(true);
         }
@@ -30,6 +48,17 @@ public class PageSelectGame : PageBase  {
         {
             objYabawiLose.SetActive(true);
         }
+
+
+        if (Info.QuizWin == true)
+        {
+            objQuizWin.SetActive(true);
+        }
+        else if (Info.QuizLose == true)
+        {
+            objQuizLose.SetActive(true);
+        }
+
     }
 
     public void RefreshGamePlayChance()
@@ -44,7 +73,12 @@ public class PageSelectGame : PageBase  {
 
     public void OnGoSingle()
     {
-        if (Info.isSlot == false)
+        if (Info.GamePlayCnt < 1)
+        {
+            SystemMessage.Instance.Add("최소한 코인 1개는 있어야지 참여할 수 있습니다");
+        }
+
+        else if (Info.isSlot == false)
         {
             SceneChanger.LoadScene("Game", objBoard);
             Info.isSlot = true;
@@ -57,25 +91,32 @@ public class PageSelectGame : PageBase  {
 
     public void OnGoLobby()
     {
-        if (Info.isYabawi == false)
+        if (Info.GamePlayCnt < 1)
+        {
+            SystemMessage.Instance.Add("최소한 코인 1개는 있어야지 참여할 수 있습니다");
+        }
+
+        else if (Info.isYabawi == false)
         {
             SceneChanger.LoadScene("Trickery", objBoard);
             Info.isYabawi = true;
         }
         else
             SystemMessage.Instance.Add("야바위 게임을 이미 참여하셨습니다");
+
     }
 
     public void OnGoLuck()
     {
-        if (Info.isYabawi == false)
+        if (Info.GamePlayCnt < 1)
+        {
+            SystemMessage.Instance.Add("최소한 코인 1개는 있어야지 참여할 수 있습니다");
+        }
+
+        else if (Info.isQuiz == false)
         {
             SceneChanger.LoadScene("QuizShow", objBoard);
             Info.isQuiz = true;
-
-            GameObject obj = UIManager.Instance.Show(eUI.eTokyoQuiz);
-            TokyoQuiz quiz = obj.GetComponent<TokyoQuiz>();
-            quiz.OnStart();
         }
         else
             SystemMessage.Instance.Add("퀴즈 게임을 이미 참여하셨습니다");

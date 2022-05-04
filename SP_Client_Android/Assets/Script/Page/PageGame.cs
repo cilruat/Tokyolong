@@ -33,17 +33,22 @@ public class PageGame : PageBase {
 	int curGameType = -1;
 	int curGame = -1;
 
+    
 	[Header("Test Run In Info")]
 	public EDiscount runInGameDiscount = EDiscount.e1000won;
 	public EGameType runInGameType = EGameType.eTabletGame;
+
+
 	public int runInGame = 0;
+    
 
 	protected override void Awake ()
 	{
 		base.boards = cgBoards;
 		base.Awake ();
 
-		Info.GameDiscountWon = -1;
+        //Info.GameDiscountWon = -1;
+        Info.GameCoinNum = -1;
 	}
 
 	void Start()
@@ -66,7 +71,7 @@ public class PageGame : PageBase {
 			int stopIdx = -1;
 			switch (i) {
                 case 0:					
-                Info.GameDiscountWon = discountType;
+                Info.GameCoinNum = discountType;
                 stopIdx = (short)discountType;
 				break;
 			case 1:
@@ -162,9 +167,9 @@ public class PageGame : PageBase {
 		int randRange = 0;
 		RectTransform[] rtElts = null;
 
-		switch (Info.GameDiscountWon) {
-		case (short)EDiscount.e500won:
-		case (short)EDiscount.e1000won:
+		switch (Info.GameCoinNum) {
+		case (short)ECoinNum.e2coin:
+		case (short)ECoinNum.e3coin:
 			if (curGameType == (int)EGameType.eWinWaiter) {
 				randRange = Enum.GetValues (typeof(EWinWaiter)).Length;
 				rtElts = rtWinWaiter;
@@ -176,9 +181,9 @@ public class PageGame : PageBase {
 				rtElts = rtTabletGame;
 			}
 			break;
-		case (short)EDiscount.e2000won:
-		case (short)EDiscount.e5000won:
-		case (short)EDiscount.eAll:
+		case (short)ECoinNum.e4coin:
+		case (short)ECoinNum.e5coin:
+		case (short)ECoinNum.e6coin:
 			if (curGameType == (int)EGameType.ePuzzleGame) {
 				randRange = Enum.GetValues (typeof(EPuzzleGame)).Length;
 				rtElts = rtPuzzleGame;
@@ -318,7 +323,7 @@ public class PageGame : PageBase {
             objGameLoading.SetActive (false);
             _SetActiveAllRtElts (false);
 
-            Info.GameDiscountWon = -1;            
+            Info.GameCoinNum = -1;            
 		} else {            
             if (curGameType == (int)EGameType.ePuzzleGame)
             {

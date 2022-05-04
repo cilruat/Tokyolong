@@ -81,7 +81,7 @@ public class gamemanager : MonoBehaviour {
     }
 
 	public void Retry(){
-		SceneChanger.LoadScene ("Main", objCanvas);
+		SceneChanger.LoadScene ("SelectGame", objCanvas);
 	}
 
 	public void GoOnPlay(){
@@ -221,12 +221,12 @@ public class gamemanager : MonoBehaviour {
 		yield return new WaitForSeconds (1f);
 		objSendServer.SetActive (true);
 
-		yield return new WaitForSeconds (1f);
+		yield return new WaitForSeconds (3f);
 		objSendServer.SetActive (false);
         Info.YabawiWin = true;
         NetworkManager.Instance.GameCountInput_REQ(Info.TableNum, +3);
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(1f);
         ReturnHome();
 	}
 
@@ -245,10 +245,12 @@ public class gamemanager : MonoBehaviour {
 	{
 		yield return new WaitForSeconds (1f);
 		objGameover.SetActive (true);
-	}
+        yield return new WaitForSeconds(1f);
+        SceneChanger.LoadScene("SelectGame", objCanvas);
+    }
 
-	public void ReturnHome()
+    public void ReturnHome()
 	{
-		SceneChanger.LoadScene ("Main", objCanvas);
+		SceneChanger.LoadScene ("SelectGame", objCanvas);
 	}
 }

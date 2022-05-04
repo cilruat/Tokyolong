@@ -131,6 +131,20 @@ public enum EDiscount
     eDirect = 5,
 }
 
+
+public enum ECoinNum
+{
+    e2coin = 0,        // 코인 2개
+    e3coin,           // 코인 3
+    e4coin,           // 코인 4
+    e5coin,           // 코인 4
+    e6coin,
+    e10coin,
+}
+
+
+
+
 public enum EGameType
 {
 	eWinWaiter,

@@ -233,7 +233,7 @@ public class PagePairCards : SingletonMonobehaviour<PagePairCards> {
 			ReturnPractiveGame ();
 		else {
 			objSendServer.SetActive (true);
-			yield return new WaitForSeconds (1f);
+			yield return new WaitForSeconds (3f);
 			objSendServer.SetActive (true);
 
 			if (Info.TableNum == 0)

@@ -42,7 +42,7 @@ public class PageQuizShow : PageBase {
 
     IEnumerator GoSecond()
     {
-        yield return new WaitForSeconds(8f);
+        yield return new WaitForSeconds(10f);
         OnGoSecond();
     }
 

@@ -19,10 +19,13 @@ public class TokyoQuiz : MonoBehaviour {
 	public GameObject objSuccess2;
 	public GameObject objFail;
 
+    public GameObject objCanvas;
+
+
     List<Dictionary<string, object>> data = new List<Dictionary<string, object>>();
 
-    const int LIMIT_TIME = 5;
-	const int LIMIT_TIME_SELECT = 2;
+    const int LIMIT_TIME = 8;
+	const int LIMIT_TIME_SELECT = 4;
 	
     string[] question1 = { "", "", "", "" };
     string[] question2 = { "", "", "", "" };
@@ -220,25 +223,27 @@ public class TokyoQuiz : MonoBehaviour {
 		objSuccess1.SetActive (false);
 		objSuccess2.SetActive (false);
 
-		//UIManager.Instance.MuteMusic ();
 
 		if (curStage == 2 && right) {
 			UITweenAlpha.Start (objSuccess2, 0f, 1f, TWParam.New (1f).Curve (TWCurve.CurveLevel2));
 			yield return new WaitForSeconds (2f);
 
 			objSendServer.SetActive (true);
-			yield return new WaitForSeconds (1f);
+			yield return new WaitForSeconds (3f);
+            NetworkManager.Instance.GameCountInput_REQ(Info.TableNum, +2);
+            Info.QuizWin = true;
 
-			if (Info.TableNum == 0)
-				OnClose ();
-			else {
-				OnClose ();
-				Info.ShowResult ();
-			}
-		} else {
+            OnClose();
+
+		}
+        else
+        {
 			UITweenAlpha.Start (objFail, 0f, 1f, TWParam.New (1f).Curve (TWCurve.CurveLevel2));
-			yield return new WaitForSeconds (2f);
-			OnClose ();
+			yield return new WaitForSeconds (3f);
+            NetworkManager.Instance.GameCountInput_REQ(Info.TableNum, -1);
+            Info.QuizLose = true;
+
+            OnClose();
 		}
 
 		yield break;
@@ -253,8 +258,7 @@ public class TokyoQuiz : MonoBehaviour {
 	{
 		UITweenAlpha.Start (gameObject, 1f, 0f, TWParam.New (1f).Curve (TWCurve.CurveLevel2).Speed (TWSpeed.Slower));
 		yield return new WaitForSeconds (.8f);
-
-		//UIManager.Instance.Hide (eUI.eTokyoQuiz);
+        SceneChanger.LoadScene("SelectGame", objCanvas);
 	}
 
 	public void OnSelect(int answer)
@@ -274,7 +278,6 @@ public class TokyoQuiz : MonoBehaviour {
 
 	public void OnCloseGame()
 	{
-		//UIManager.Instance.MuteMusic ();
 
 		_Init ();
 		OnClose ();

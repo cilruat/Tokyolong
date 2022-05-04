@@ -158,7 +158,6 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 
 	public void OnStart()
 	{
-		UIManager.Instance.MuteMusic ();
 		StartCoroutine (_Start ());
 	}
 
@@ -231,7 +230,7 @@ public class PageTokyoLive : SingletonMonobehaviour<PageTokyoLive> {
 		}
 
 		objTime.SetActive(true);
-		//UITweenScale.Start(objTime, 1f, 1.1f, TWParam.New(.5f, .7f).Curve(TWCurve.CurveLevel2).Loop(TWLoop.PingPong));
+		UITweenScale.Start(objTime, 1f, 1.1f, TWParam.New(.5f, .7f).Curve(TWCurve.CurveLevel2).Loop(TWLoop.PingPong));
 		countDown.Set (LIMIT_TIME, () => _ShowAnswer ());
 
 		showTime = true;

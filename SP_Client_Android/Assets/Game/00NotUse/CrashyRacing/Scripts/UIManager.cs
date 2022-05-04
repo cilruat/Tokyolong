@@ -243,12 +243,13 @@ namespace CrashRacing
 			if (Info.TableNum == 0)
 				ReturnHome ();
 			else
-				NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+				//NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+                NetworkManager.Instance.GameCountInput_REQ(Info.TableNum, Info.GameCoinNum);
 		}
 
 		public void ReturnHome()
 		{
-			SceneChanger.LoadScene ("Main", mainCanvas);
+			SceneChanger.LoadScene ("SelectGame", mainCanvas);
 		}
 
 

@@ -27,13 +27,13 @@ public partial class Info : MonoBehaviour {
     {
         get
         {
-            switch ((EDiscount)GameDiscountWon)
+            switch ((ECoinNum)GameCoinNum)
             {
-                case EDiscount.e500won:
-                case EDiscount.e1000won: return 30;
-                case EDiscount.e2000won: return 40;
-                case EDiscount.e5000won: return 50;
-                case EDiscount.eAll: return 60;
+                case ECoinNum.e2coin:
+                case ECoinNum.e3coin: return 20;
+                case ECoinNum.e4coin: return 25;
+                case ECoinNum.e5coin: return 30;
+                case ECoinNum.e6coin: return 35;
                 default: return 30;
             }
         }
@@ -43,14 +43,14 @@ public partial class Info : MonoBehaviour {
     {
         get
         {
-            switch ((EDiscount)GameDiscountWon)
+            switch ((ECoinNum)GameCoinNum)
             {
-                case EDiscount.e500won:
-                case EDiscount.e1000won: return 25;
-                case EDiscount.e2000won: return 30;
-                case EDiscount.e5000won: return 40;
-                case EDiscount.eAll: return 50;
-                default: return 20;
+                case ECoinNum.e2coin:
+                case ECoinNum.e3coin: return 20;
+                case ECoinNum.e4coin: return 25;
+                case ECoinNum.e5coin: return 30;
+                case ECoinNum.e6coin: return 35;
+                default: return 30;
             }
         }
     }
@@ -59,14 +59,14 @@ public partial class Info : MonoBehaviour {
     {
         get
         {
-            switch ((EDiscount)GameDiscountWon)
+            switch ((ECoinNum)GameCoinNum)
             {
-                case EDiscount.e500won:
-                case EDiscount.e1000won: return 25;
-                case EDiscount.e2000won: return 30;
-                case EDiscount.e5000won: return 40;
-                case EDiscount.eAll: return 50;
-                default: return 20;
+                case ECoinNum.e2coin:
+                case ECoinNum.e3coin: return 20;
+                case ECoinNum.e4coin: return 25;
+                case ECoinNum.e5coin: return 30;
+                case ECoinNum.e6coin: return 35;
+                default: return 30;
             }
         }
     }
@@ -75,14 +75,14 @@ public partial class Info : MonoBehaviour {
     {
         get
         {
-            switch ((EDiscount)GameDiscountWon)
+            switch ((ECoinNum)GameCoinNum)
             {
-                case EDiscount.e500won:
-                case EDiscount.e1000won: return 25;
-                case EDiscount.e2000won: return 30;
-                case EDiscount.e5000won: return 40;
-                case EDiscount.eAll: return 50;
-                default: return 20;
+                case ECoinNum.e2coin:
+                case ECoinNum.e3coin: return 20;
+                case ECoinNum.e4coin: return 25;
+                case ECoinNum.e5coin: return 30;
+                case ECoinNum.e6coin: return 35;
+                default: return 30;
             }
         }
     }
@@ -91,14 +91,14 @@ public partial class Info : MonoBehaviour {
     {
         get
         {
-            switch ((EDiscount)GameDiscountWon)
+            switch ((ECoinNum)GameCoinNum)
             {
-                case EDiscount.e500won:
-                case EDiscount.e1000won: return 30;
-                case EDiscount.e2000won: return 40;
-                case EDiscount.e5000won: return 50;
-                case EDiscount.eAll: return 60;
-                default: return 20;
+                case ECoinNum.e2coin:
+                case ECoinNum.e3coin: return 20;
+                case ECoinNum.e4coin: return 25;
+                case ECoinNum.e5coin: return 30;
+                case ECoinNum.e6coin: return 35;
+                default: return 30;
             }
         }
     }
@@ -107,14 +107,14 @@ public partial class Info : MonoBehaviour {
     {
         get
         {
-            switch ((EDiscount)GameDiscountWon)
+            switch ((ECoinNum)GameCoinNum)
             {
-                case EDiscount.e500won:
-                case EDiscount.e1000won: return 30;
-                case EDiscount.e2000won: return 40;
-                case EDiscount.e5000won: return 50;
-                case EDiscount.eAll: return 60;
-                default: return 20;
+                case ECoinNum.e2coin:
+                case ECoinNum.e3coin: return 20;
+                case ECoinNum.e4coin: return 25;
+                case ECoinNum.e5coin: return 30;
+                case ECoinNum.e6coin: return 35;
+                default: return 30;
             }
         }
     }
@@ -123,50 +123,54 @@ public partial class Info : MonoBehaviour {
     // ------------------Set Difficulty------------------
     public static int CRASH_CAT_LIMIT_TIME {
         get {
-            switch ((EDiscount)GameDiscountWon) {
-                case EDiscount.e500won:
-                case EDiscount.e1000won: return 20;
-                case EDiscount.e2000won: return 30;
-                case EDiscount.e5000won: return 40;
-                case EDiscount.eAll: return 50;
-                default: return 50;
+            switch ((ECoinNum)GameCoinNum)
+            {
+                case ECoinNum.e2coin:
+                case ECoinNum.e3coin: return 20;
+                case ECoinNum.e4coin: return 25;
+                case ECoinNum.e5coin: return 30;
+                case ECoinNum.e6coin: return 35;
+                default: return 30;
             }
         }
     }
 
     public static int FLAPPY_BIRD_LIMIT_TIME {
         get {
-            switch ((EDiscount)GameDiscountWon) {
-                case EDiscount.e500won:
-                case EDiscount.e1000won: return 25;
-                case EDiscount.e2000won: return 40;
-                case EDiscount.e5000won: return 50;
-                case EDiscount.eAll: return 60;
-                default: return 55;
+            switch ((ECoinNum)GameCoinNum)
+            {
+                case ECoinNum.e2coin:
+                case ECoinNum.e3coin: return 20;
+                case ECoinNum.e4coin: return 25;
+                case ECoinNum.e5coin: return 30;
+                case ECoinNum.e6coin: return 35;
+                default: return 30;
             }
         }
     }
 
     public static int PICTURE_PUZZLE_MODE {
         get {
-            switch ((EDiscount)GameDiscountWon) {
-                case EDiscount.e500won:
-                case EDiscount.e1000won: return 3;
-                case EDiscount.e2000won:
-                case EDiscount.e5000won: return 4;
-                case EDiscount.eAll: return 5;
+            switch ((ECoinNum)GameCoinNum)
+            {
+                case ECoinNum.e2coin: return 2;
+                case ECoinNum.e3coin: return 3;
+                case ECoinNum.e4coin: return 3;
+                case ECoinNum.e5coin: return 4;
+                case ECoinNum.e6coin: return 5;
                 default: return 5;
             }
         }
     }
     public static int PICTURE_PUZZLE_LIMIT_TIME {
         get {
-            switch ((EDiscount)GameDiscountWon) {
-                case EDiscount.e500won:
-                case EDiscount.e1000won:
-                case EDiscount.e2000won: return 20;
-                case EDiscount.e5000won: return 15;
-                case EDiscount.eAll: return 10;
+            switch ((ECoinNum)GameCoinNum)
+            {
+                case ECoinNum.e2coin: return 30;
+                case ECoinNum.e3coin: return 25;
+                case ECoinNum.e4coin: return 20;
+                case ECoinNum.e5coin: return 15;
+                case ECoinNum.e6coin: return 10;
                 default: return 10;
             }
         }
@@ -174,63 +178,68 @@ public partial class Info : MonoBehaviour {
 
     public static int PAIR_CARD_MODE {
         get {
-            switch ((EDiscount)GameDiscountWon) {
-                case EDiscount.e500won:
-                case EDiscount.e1000won:
-                case EDiscount.e2000won: return 30;
-                case EDiscount.e5000won: return 36;
-                case EDiscount.eAll: return 36;
+            switch ((ECoinNum)GameCoinNum)
+            {
+                case ECoinNum.e2coin: return 20;
+                case ECoinNum.e3coin: return 24;
+                case ECoinNum.e4coin: return 28;
+                case ECoinNum.e5coin: return 32;
+                case ECoinNum.e6coin: return 36;
                 default: return 30;
             }
         }
     }
     public static int PAIR_CARD_LIMIT_TIME {
         get {
-            switch ((EDiscount)GameDiscountWon) {
-                case EDiscount.e500won:
-                case EDiscount.e1000won: return 20;
-                case EDiscount.e2000won:
-                case EDiscount.e5000won: return 15;
-                case EDiscount.eAll: return 10;
-                default: return 15;
+            switch ((ECoinNum)GameCoinNum)
+            { 
+                case ECoinNum.e2coin: return 20;
+                case ECoinNum.e3coin: return 20;
+                case ECoinNum.e4coin: return 16;
+                case ECoinNum.e5coin: return 14;
+                case ECoinNum.e6coin: return 12;
+                default: return 14;
             }
         }
     }
 
     public static int TOUCH_NUMBER_LIMIT_TIME {
         get {
-            switch ((EDiscount)GameDiscountWon) {
-                case EDiscount.e500won:
-                case EDiscount.e1000won: return 8;
-                case EDiscount.e2000won:
-                case EDiscount.e5000won: return 5;
-                case EDiscount.eAll: return 3;
+            switch ((ECoinNum)GameCoinNum)
+            {
+                case ECoinNum.e2coin: return 20;
+                case ECoinNum.e3coin: return 16;
+                case ECoinNum.e4coin: return 12;
+                case ECoinNum.e5coin: return 10;
+                case ECoinNum.e6coin: return 8;
                 default: return 10;
             }
         }
     }
     public static int TOUCH_NUMBER_MAX_COUNT {
         get {
-            switch ((EDiscount)GameDiscountWon) {
-                case EDiscount.e500won:
-                case EDiscount.e1000won:
-                case EDiscount.e2000won: return 15;
-                case EDiscount.e5000won: return 20;
-                case EDiscount.eAll: return 25;
-                default: return 25;
+            switch ((ECoinNum)GameCoinNum)
+            {
+                case ECoinNum.e2coin: return 16;
+                case ECoinNum.e3coin: return 18;
+                case ECoinNum.e4coin: return 20;
+                case ECoinNum.e5coin: return 22;
+                case ECoinNum.e6coin: return 25;
+                default: return 20;
             }
         }
     }
 
     public static int FIND_DIFF_PICTURE_LIMIT_TIME {
         get {
-            switch ((EDiscount)GameDiscountWon) {
-                case EDiscount.e500won:
-                case EDiscount.e1000won: return 25;
-                case EDiscount.e2000won:
-                case EDiscount.e5000won: return 18;
-                case EDiscount.eAll: return 15;
-                default: return 15;
+            switch ((ECoinNum)GameCoinNum)
+            {
+                case ECoinNum.e2coin: return 25;
+                case ECoinNum.e3coin: return 22;
+                case ECoinNum.e4coin: return 20;
+                case ECoinNum.e5coin: return 18;
+                case ECoinNum.e6coin: return 16;
+                default: return 20;
             }
         }
     }
@@ -238,6 +247,9 @@ public partial class Info : MonoBehaviour {
 
     public static int GamePlayCnt = 0;
     public static short GameDiscountWon = -1;
+
+    public static short GameCoinNum = -1;
+
     public static int GAMEPLAY_MIN_COUNT = 0;
     public static int GAMEPLAY_MAX_COUNT = 50;
 
@@ -506,10 +518,14 @@ public partial class Info : MonoBehaviour {
 
 	public static void ShowResult()
 	{
-		NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
-	}
+        //NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+        NetworkManager.Instance.GameCountInput_REQ(Info.TableNum, Info.GameCoinNum);
+        Debug.Log(Info.GameCoinNum);
+        Info.AfterDiscountBehavior();
+    }
 
-	public static void SendEventMenu()
+
+    public static void SendEventMenu()
 	{
 		int menu = (int)EMenuDetail.eSozuFreeEvent;
 		int cnt = 1;
