@@ -267,15 +267,16 @@ public class PageFindDiffPicture : SingletonMonobehaviour<PageFindDiffPicture> {
 	void _FailEndGame()
 	{
 		objGameOver.SetActive (true);
-	}
+        Info.SlotLose = true;
+    }
 
-	public void ReturnPractiveGame()
+    public void ReturnPractiveGame()
 	{
 		SceneChanger.LoadScene ("PracticeGame", objBoard);
 	}
 
 	public void ReturnHome()
 	{		
-		SceneChanger.LoadScene ("Main", objBoard);
+		SceneChanger.LoadScene ("SelectGame", objBoard);
 	}
 }

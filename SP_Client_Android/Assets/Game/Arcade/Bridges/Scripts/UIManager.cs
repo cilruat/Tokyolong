@@ -218,10 +218,12 @@ namespace Bridges
 			if (Info.TableNum == 0)
 				ReturnHome ();
 			else
-				NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
-		}
+                NetworkManager.Instance.GameCountInput_REQ(Info.TableNum, Info.GameCoinNum + 2);
+                Info.AfterDiscountBehavior();
+                Info.SlotWin = true;
+        }
 
-		public void ReturnHome()
+        public void ReturnHome()
 		{
 			SceneChanger.LoadScene ("Main", mainCanvas);
 		}
@@ -404,9 +406,11 @@ namespace Bridges
 	    public void EndGame()
 	    {
 	        gameManager.GameOver();
-	    }
+            Info.SlotLose = true;
 
-	    public void RestartGame()
+        }
+
+        public void RestartGame()
 	    {
 	        gameManager.RestartGame(0.2f);
 	    }

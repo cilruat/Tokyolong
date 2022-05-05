@@ -161,10 +161,12 @@ namespace OnefallGames
 			if (Info.TableNum == 0)
 				ReturnHome ();
 			else
-				NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
-		}
+                NetworkManager.Instance.GameCountInput_REQ(Info.TableNum, Info.GameCoinNum + 2);
+                Info.AfterDiscountBehavior();
+                Info.SlotWin = true;
+        }
 
-		public void ReturnHome()
+        public void ReturnHome()
 		{
 			SceneChanger.LoadScene ("Main", objBoard);
 		}
@@ -330,9 +332,12 @@ namespace OnefallGames
 	        }
 	        reviveUI.SetActive(false);
 	        GameManager.Instance.GameOver();
-	    }
 
-	    private IEnumerator HandlePlayBtn()
+            Info.SlotLose = true;
+
+        }
+
+        private IEnumerator HandlePlayBtn()
 	    {
 	        servicesAnim.Play(servicesBtns_Hide.name);
 	        yield return new WaitForSeconds(servicesBtns_Hide.length);

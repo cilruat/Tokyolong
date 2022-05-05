@@ -365,9 +365,11 @@ public class PagePicturePuzzle : SingletonMonobehaviour<PagePicturePuzzle> {
 	void _FailEndGame()
 	{
 		objGameOver.SetActive (true);
-	}
+        Info.SlotLose = true;
 
-	public void ReturnPractiveGame()
+    }
+
+    public void ReturnPractiveGame()
 	{
 		SceneChanger.LoadScene ("PracticeGame", objBoard);
 	}

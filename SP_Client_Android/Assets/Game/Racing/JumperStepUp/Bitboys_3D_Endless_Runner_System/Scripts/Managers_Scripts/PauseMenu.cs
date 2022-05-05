@@ -362,10 +362,12 @@ public class PauseMenu : MonoBehaviour {
 		if (Info.TableNum == 0)
 			ReturnHome ();
 		else
-			NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
-	}
+            NetworkManager.Instance.GameCountInput_REQ(Info.TableNum, Info.GameCoinNum + 2);
+            Info.AfterDiscountBehavior();
+            Info.SlotWin = true;
+        }
 
-	public void ReturnHome()
+        public void ReturnHome()
 	{
 		SceneChanger.LoadScene ("Main", objBoard);
 	}
@@ -379,6 +381,8 @@ public class PauseMenu : MonoBehaviour {
 	IEnumerator _GameOver(){
 		yield return new WaitForSeconds (1f);
 		objGameOver.SetActive (true);
-	}
-}
+        Info.SlotLose = true;
+
+        }
+    }
 }

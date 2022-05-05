@@ -224,7 +224,7 @@ public class gamemanager : MonoBehaviour {
 		yield return new WaitForSeconds (3f);
 		objSendServer.SetActive (false);
         Info.YabawiWin = true;
-        NetworkManager.Instance.GameCountInput_REQ(Info.TableNum, +3);
+        NetworkManager.Instance.GameCountInput_REQ(Info.TableNum, +2);
 
         yield return new WaitForSeconds(1f);
         ReturnHome();

@@ -111,7 +111,7 @@ namespace FlappyBirdStyle
 
 		public void ReturnHome()
 		{
-			SceneChanger.LoadScene ("Main", objBoard);
+			SceneChanger.LoadScene ("SelectGame", objBoard);
 		}
 
 	    FlappyYAxisTravelState flappyYAxisTravelState;
@@ -289,7 +289,8 @@ namespace FlappyBirdStyle
 	    {
 	        GameStateManager.GameState = GameState.Dead;
 	        DeathGUI.SetActive(true);
-			limitTime.Stop ();
+            Info.SlotLose = true;
+            limitTime.Stop ();
 	        GetComponent<AudioSource>().PlayOneShot(DeathAudioClip);
 	    }
 

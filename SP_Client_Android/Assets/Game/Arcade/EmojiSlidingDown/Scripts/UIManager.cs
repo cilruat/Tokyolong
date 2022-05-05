@@ -134,8 +134,11 @@ namespace Emoji
 			if (Info.TableNum == 0)
 				GameManager.Instance.ReturnHome ();
 			else
-				NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
-		}
+                //NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
+                NetworkManager.Instance.GameCountInput_REQ(Info.TableNum, Info.GameCoinNum + 2);
+                Info.AfterDiscountBehavior();
+                Info.SlotWin = true;
+        }
 
         void Reset()
         {
@@ -192,6 +195,8 @@ namespace Emoji
         public void EndGame()
         {
             GameManager.Instance.GameOver();
+            Info.SlotLose = true;
+
         }
 
         public void RestartGame()

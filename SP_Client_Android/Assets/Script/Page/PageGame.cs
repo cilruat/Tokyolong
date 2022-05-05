@@ -12,6 +12,8 @@ public enum ESlotType
 	eGame,
 }
 
+
+
 public class PageGame : PageBase {
 		
 	public CanvasGroup[] cgBoards;
@@ -33,6 +35,9 @@ public class PageGame : PageBase {
 	int curGameType = -1;
 	int curGame = -1;
 
+
+
+    
     
 	[Header("Test Run In Info")]
 	public EDiscount runInGameDiscount = EDiscount.e1000won;
@@ -66,6 +71,8 @@ public class PageGame : PageBase {
     IEnumerator _StartSlot(short discountType)
 	{
 		isStopEnable = false;
+
+
 
 		for (int i = 0; i < listSlotMachine.Count; i++) {
 			int stopIdx = -1;

@@ -518,10 +518,9 @@ public partial class Info : MonoBehaviour {
 
 	public static void ShowResult()
 	{
-        //NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
-        NetworkManager.Instance.GameCountInput_REQ(Info.TableNum, Info.GameCoinNum);
-        Debug.Log(Info.GameCoinNum);
+        NetworkManager.Instance.GameCountInput_REQ(Info.TableNum, Info.GameCoinNum + 2);
         Info.AfterDiscountBehavior();
+        Info.SlotWin = true;
     }
 
 

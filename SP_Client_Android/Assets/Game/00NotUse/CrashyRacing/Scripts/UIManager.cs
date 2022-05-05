@@ -243,11 +243,12 @@ namespace CrashRacing
 			if (Info.TableNum == 0)
 				ReturnHome ();
 			else
-				//NetworkManager.Instance.Game_Discount_REQ (Info.GameDiscountWon);
-                NetworkManager.Instance.GameCountInput_REQ(Info.TableNum, Info.GameCoinNum);
-		}
+                NetworkManager.Instance.GameCountInput_REQ(Info.TableNum, Info.GameCoinNum + 2);
+                Info.AfterDiscountBehavior();
+                Info.SlotWin = true;
+        }
 
-		public void ReturnHome()
+        public void ReturnHome()
 		{
 			SceneChanger.LoadScene ("SelectGame", mainCanvas);
 		}
@@ -292,9 +293,11 @@ namespace CrashRacing
 	    public void EndGame()
 	    {
 	        GameManager.Instance.GameOver();
-	    }
+            Info.SlotLose = true;
 
-	    public void RestartGame()
+        }
+
+        public void RestartGame()
 	    {
 	        GameManager.Instance.RestartGame(0.2f);
 	    }
@@ -339,7 +342,8 @@ namespace CrashRacing
 	    public void ShowGameOverUI()
 	    {			
 			objGameOver.SetActive (true);
-			return;
+
+            return;
 			
 	        /*header.SetActive(true);
 	        title.SetActive(false);
