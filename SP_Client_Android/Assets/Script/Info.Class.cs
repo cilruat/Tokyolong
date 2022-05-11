@@ -150,6 +150,8 @@ public partial class Info : MonoBehaviour
         ECustomer = ECustomerType.MAN;
         GamePlayCnt = 0;
         GameDiscountWon = -1;
+        GameCoinNum = -1;
+
 		firstOrder = false;
         isQuiz = false;
         isSlot = false;

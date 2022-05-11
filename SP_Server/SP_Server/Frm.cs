@@ -56,6 +56,7 @@ namespace SP_Server
 
         Random random;
         
+
         public List<float> listDiscountProb = new List<float>() { 0.2f, 0.2f, 0.2f, 0.2f, 0.2f };
         float Discount4Prob { get { return listDiscountProb[4]; } }
         float Discount3Prob { get { return (Discount4Prob + listDiscountProb[3]); } }
@@ -682,11 +683,15 @@ namespace SP_Server
             listDiscountProb = BinarySave.Deserialize<List<float>>("Data\\DiscountProb.bin");
         }
 
+
+        //0510 서버수정
         public short GetRandomDiscountIndex()
         {
             short discountIdx = 0;
 
             float prob = (float)random.NextDouble();
+
+
             if (prob < Discount4Prob)       discountIdx = (short)4;
             else if (prob < Discount3Prob)  discountIdx = (short)3;
             else if (prob < Discount2Prob)  discountIdx = (short)2;

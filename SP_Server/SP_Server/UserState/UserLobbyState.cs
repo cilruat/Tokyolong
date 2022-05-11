@@ -298,6 +298,7 @@ namespace SP_Server.UserState
                         owner.info.firstOrder = true;
 
                         break;
+
                     case PROTOCOL.CHAT_REQ:
                         tableNo = msg.pop_byte();
                         byte otherTableNo = msg.pop_byte();
@@ -329,6 +330,7 @@ namespace SP_Server.UserState
                         send_msg.push(chat);
 
                         break;
+
                     case PROTOCOL.ORDER_DETAIL_REQ:
                         tableNo = msg.pop_byte();
 
@@ -339,6 +341,7 @@ namespace SP_Server.UserState
                         send_msg.push(listSendMenuJson.ToString());
                         send_msg.push(owner.mainFrm.GetDiscount((int)tableNo));
                         break;
+
                     case PROTOCOL.GAME_DISCOUNT_REQ:
 
                         tableNo = msg.pop_byte();
@@ -360,6 +363,7 @@ namespace SP_Server.UserState
                         send_msg = CPacket.create((short)PROTOCOL.GAME_DISCOUNT_ACK);
 
                         break;
+
                     case PROTOCOL.REQUEST_MUSIC_LIST_REQ:
 
                         JsonData listRequestMusicJson = JsonMapper.ToJson(owner.mainFrm.listReqMusicInfo);
@@ -367,6 +371,7 @@ namespace SP_Server.UserState
                         send_msg = CPacket.create((short)PROTOCOL.REQUEST_MUSIC_LIST_ACK);
                         send_msg.push(listRequestMusicJson.ToString());
                         break;
+
                     case PROTOCOL.REQUEST_MUSIC_REQ:
 
                         byte reqTableNo = msg.pop_byte();
@@ -394,6 +399,7 @@ namespace SP_Server.UserState
                         }
 
                         break;
+
                     case PROTOCOL.REQUEST_MUSIC_REMOVE_REQ:
 
                         int removeReqMusicID = msg.pop_int32();
@@ -415,6 +421,7 @@ namespace SP_Server.UserState
                         send_msg.push(removeReqMusicID);
 
                         break;
+
                     case PROTOCOL.ORDER_CONFIRM_REQ:
                         byte reqType = msg.pop_byte();
                         int reqOrderId = msg.pop_int32();
@@ -443,6 +450,7 @@ namespace SP_Server.UserState
                         send_msg = CPacket.create((short)PROTOCOL.ORDER_CONFIRM_ACK);
                         send_msg.push(reqOrderId);
                         break;
+
                     case PROTOCOL.TABLE_ORDER_CONFIRM_REQ:
                         tableNo = msg.pop_byte();
                         List<SendMenu> listTableOrder = owner.mainFrm.GetOrder((int)tableNo);
@@ -454,6 +462,7 @@ namespace SP_Server.UserState
                         send_msg.push(owner.mainFrm.GetDiscount((int)tableNo));
                         send_msg.push(owner.mainFrm.GetGameCount((int)tableNo));
                         break;
+
                     case PROTOCOL.TABLE_ORDER_INPUT_REQ:
                         tableNo = msg.pop_byte();
                         string inputTableOrderPacking = msg.pop_string();
@@ -485,6 +494,7 @@ namespace SP_Server.UserState
 
                         send_msg = CPacket.create((short)PROTOCOL.TABLE_ORDER_INPUT_ACK);
                         break;
+
                     case PROTOCOL.SLOT_START_REQ:
                         tableNo = msg.pop_byte();
                         owner.info.AddGameCount(-1);
@@ -496,6 +506,7 @@ namespace SP_Server.UserState
                         send_msg.push(owner.info.GetGameCount());
                         send_msg.push(ranDiscountIdx);
                         break;                    
+
                     case PROTOCOL.TABLE_DISCOUNT_INPUT_REQ:
                         tableNo = msg.pop_byte();
                         int inputDiscount = msg.pop_int32();
@@ -521,6 +532,7 @@ namespace SP_Server.UserState
                         send_msg.push(Convert.ToByte(isSend));
 
                         break;
+
                     case PROTOCOL.GET_RANDOM_DISCOUNT_PROB_REQ:
 
                         send_msg = CPacket.create((short)PROTOCOL.GET_RANDOM_DISCOUNT_PROB_ACK);

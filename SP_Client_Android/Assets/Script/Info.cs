@@ -246,8 +246,8 @@ public partial class Info : MonoBehaviour {
     // ------------------Set Difficulty------------------
 
     public static int GamePlayCnt = 0;
-    public static short GameDiscountWon = -1;
 
+    public static short GameDiscountWon = -1;
     public static short GameCoinNum = -1;
 
     public static int GAMEPLAY_MIN_COUNT = 0;
