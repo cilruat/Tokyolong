@@ -54,9 +54,9 @@ namespace SP_Server
         public List<RequestMusicInfo> listReqMusicInfo = new List<RequestMusicInfo>();
         public List<RequestCashInfo> listReqCashInfo = new List<RequestCashInfo>();
 
+
         Random random;
         
-
         public List<float> listDiscountProb = new List<float>() { 0.2f, 0.2f, 0.2f, 0.2f, 0.2f };
         float Discount4Prob { get { return listDiscountProb[4]; } }
         float Discount3Prob { get { return (Discount4Prob + listDiscountProb[3]); } }
@@ -550,21 +550,6 @@ namespace SP_Server
             return dictUserInfo[tableNo].GetGameCount();
         }
 
-
-        /*
-        public RequestCashInfo AddRequestCash(int tableNo, string title)
-        {
-            ++cashID;
-            RequestCashInfo reqCash = new RequestCashInfo(musicID, tableNo, title);
-            listReqCashInfo.Add(reqCash);
-            DataRequestSave(false);
-
-            return reqCash;
-        }
-        */
-
-
-
         public void RemoveUserData(int tableNo)
         {
             if (dictUserInfo.ContainsKey(tableNo))
@@ -683,15 +668,11 @@ namespace SP_Server
             listDiscountProb = BinarySave.Deserialize<List<float>>("Data\\DiscountProb.bin");
         }
 
-
-        //0510 서버수정
         public short GetRandomDiscountIndex()
         {
             short discountIdx = 0;
 
             float prob = (float)random.NextDouble();
-
-
             if (prob < Discount4Prob)       discountIdx = (short)4;
             else if (prob < Discount3Prob)  discountIdx = (short)3;
             else if (prob < Discount2Prob)  discountIdx = (short)2;

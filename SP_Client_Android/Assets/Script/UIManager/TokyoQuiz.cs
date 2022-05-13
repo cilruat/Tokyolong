@@ -257,7 +257,7 @@ public class TokyoQuiz : MonoBehaviour {
 	IEnumerator _OnClose()
 	{
 		UITweenAlpha.Start (gameObject, 1f, 0f, TWParam.New (1f).Curve (TWCurve.CurveLevel2).Speed (TWSpeed.Slower));
-		yield return new WaitForSeconds (.8f);
+		yield return new WaitForSeconds (2f);
         SceneChanger.LoadScene("SelectGame", objCanvas);
 	}
 

@@ -139,7 +139,7 @@ public enum ECoinNum
     e4coin,           // 코인 4
     e5coin,           // 코인 4
     e6coin,
-    e10coin,
+    e10coin = 5,
 }
 
 

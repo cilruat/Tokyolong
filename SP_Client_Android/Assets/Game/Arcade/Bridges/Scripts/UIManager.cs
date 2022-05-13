@@ -225,7 +225,7 @@ namespace Bridges
 
         public void ReturnHome()
 		{
-			SceneChanger.LoadScene ("Main", mainCanvas);
+			SceneChanger.LoadScene ("SelectGame", mainCanvas);
 		}
 
 	    void Reset()

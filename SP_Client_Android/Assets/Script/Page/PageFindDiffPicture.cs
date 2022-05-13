@@ -46,10 +46,12 @@ public class PageFindDiffPicture : SingletonMonobehaviour<PageFindDiffPicture> {
 		finishLimitTime = Info.FIND_DIFF_PICTURE_LIMIT_TIME;
 		txtTime.text = Info.practiceGame ? "∞" : finishLimitTime.ToString ();
 
-		if (Info.GameDiscountWon == -1) {
-			Info.GameDiscountWon = 2;
+		if (Info.GameCoinNum == -1)
+        {
+			Info.GameCoinNum = 2;
 
-			if (objStart.activeSelf == false) {
+			if (objStart.activeSelf == false)
+            {
 				tapToStart = true;
 				isStart = true;
 
@@ -65,16 +67,16 @@ public class PageFindDiffPicture : SingletonMonobehaviour<PageFindDiffPicture> {
 		timeSize = rtImgTime.rect.width;
 
 		Transform tr = null;
-		switch (Info.GameDiscountWon) {
-		case (short)EDiscount.e500won:		tr = trThree;	finish = 3;		break;
-		case (short)EDiscount.e1000won:		tr = trFive;	finish = 5;		break;
-		case (short)EDiscount.e2000won:		tr = trSix;		finish = 6;		break;
-		case (short)EDiscount.e5000won:
+		switch (Info.GameCoinNum) {
+		case (short)ECoinNum.e2coin:		tr = trThree;	finish = 3;		break;
+		case (short)ECoinNum.e3coin:		tr = trFive;	finish = 5;		break;
+		case (short)ECoinNum.e4coin:		tr = trSix;		finish = 6;		break;
+		case (short)ECoinNum.e5coin:
 			int rand = Random.Range (0, 2);
 			tr = rand == 0 ? trSeven : trEight;
 			finish = rand == 0 ? 7 : 8;
 			break;
-		case (short)EDiscount.eAll:			tr = trTen;		finish = 10;	break;
+		case (short)ECoinNum.e6coin:			tr = trTen;		finish = 10;	break;
 		}
 
 		int randPic = Random.Range (0, tr.childCount);
