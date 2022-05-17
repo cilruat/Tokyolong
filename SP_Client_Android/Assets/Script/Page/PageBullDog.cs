@@ -22,19 +22,35 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
     int FirstPostValue = -1;
     int OpFirstPostValue = -1;
 
+    bool First = false;
+
+    public int needBullDogStartNum = 0;
 
 
+    public GameObject objGamePanel;
+    public GameObject objFirstMainPanel;
+    public GameObject objBlindPanel;
+    public GameObject objImFirstPanel;
+    public GameObject objImSecondPanel;
 
+    public Text txt1PlayerFirstVal, txt2PlayerFirstVal;
 
-
-
+    public GameObject btnFirstValue;
 
     private void Start ()
     {
 
-        FirstPostValue = Random.Range(1, 100);
-        OpFirstPost();
+        needBullDogStartNum = 0;
+        objGamePanel.SetActive(false);
+        objFirstMainPanel.SetActive(true);
+        objBlindPanel.SetActive(true);
+        objImFirstPanel.SetActive(false);
+        objImSecondPanel.SetActive(false);
 
+        txt1PlayerFirstVal.text = "";
+        txt2PlayerFirstVal.text = "";
+
+        First = false;
 
 
         if (Info.myInfo.listGameAcceptInfo.Count > 0)
@@ -46,6 +62,9 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
 
         }
 
+        // Null 일걸? 스타트 했는데 ..?
+
+        /*
         if(Info.myInfo.listBullDogFirstInfo.Count > 0)
         {
             UserBullDogFirstInfo info = Info.myInfo.listBullDogFirstInfo[Info.myInfo.listBullDogFirstInfo.Count - 1];
@@ -53,6 +72,7 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
 
             Debug.Log(OpFirstPostValue);
         }
+        */
 
         txtMyTableNum.text = Info.TableNum.ToString();
 
@@ -60,30 +80,73 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         txtReqGameCnt.text = GameCnt.ToString();
         txtGameName.text = GameName.ToString();
 
-        if (OpFirstPostValue >= 0)
-        {
-            CheckFirst();
-        }
-
-
-
     }
 
+        // 첫시작하면 선턴이 누구부터인지 확인시켜주는 작업부터 하자
+     
 
-    //상대방의 숫자를 받아오는 걸 만들어야겠네
-
-    //업데이트에서 FirstPost 를 체크해서 값의 수에 따라 둘이 맞으면 선픽 다르면 후픽으로 결정
-    // 숫자가 같으면 숫자가 다르면!
 
     void Update () {
 
-
+        if(needBullDogStartNum == 2)
+        {
+            StartCoroutine(CalculateFirstVal());
+        }
 
     }
 
-    //상대편이 무조건 해주니깐!
-    // 리스트 만들어야겟다..ㅎㅎ
-    public void OpFirstPost()
+    IEnumerator CalculateFirstVal()
+    {
+        yield return new WaitForSeconds(1f);
+
+        if(FirstPostValue > OpFirstPostValue)
+        {
+            objImFirstPanel.SetActive(true);
+            First = true;
+            // 코루틴 실행해서 턴에 맞게 블라인드 시킬것
+
+        }
+
+        if (FirstPostValue < OpFirstPostValue)
+        {
+            objImSecondPanel.SetActive(true);
+            // 코루틴 실행해서 턴에 맞게 블라인드 시킬것
+        }
+
+        if (FirstPostValue == OpFirstPostValue)
+        {
+            needBullDogStartNum = 0;
+            btnFirstValue.SetActive(true);
+        }
+    }
+
+    //카운트 다운 넣어서 번호만들기 할까? 그게 제일 합리적이다..20초안에 번호를 말해주라!
+
+    public void FirstValue_1Player()
+    {
+        FirstPostValue = Random.Range(1, 100);
+
+        txt1PlayerFirstVal.text = FirstPostValue.ToString();
+
+        SendMyFirstValue();
+        btnFirstValue.SetActive(false);
+    }
+
+    public void FirstValue_2Player(int tableNo, int firstcnt)
+    {
+
+        firstcnt = OpFirstPostValue;
+
+        if (tableNo == tableNum)
+        {
+            txt2PlayerFirstVal.text = OpFirstPostValue.ToString();
+            needBullDogStartNum++;
+        }
+
+    }
+
+
+    public void SendMyFirstValue()
     {
 
         NetworkManager.Instance.Versus_First_REQ(tableNum, FirstPostValue);
@@ -92,9 +155,5 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
     }
 
 
-    public void CheckFirst()
-    {
-        
-    }
 
 }

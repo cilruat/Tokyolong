@@ -513,6 +513,7 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
 
         countdownDisplay.text = "시간만료";
 
+        DownPanel.SetActive(false);
 
         yield return new WaitForSeconds(1f);
 

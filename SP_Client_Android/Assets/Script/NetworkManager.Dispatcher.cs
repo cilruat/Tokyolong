@@ -971,7 +971,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     void VersusFirstACK(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
-        int firstPostvalue = msg.pop_int32();
+
+        PageBullDog.Instance.needBullDogStartNum++;
 
     }
 
@@ -983,6 +984,8 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         UserBullDogFirstInfo firstInfo = new UserBullDogFirstInfo();
         firstInfo.firstValue = firstPostvalue;
         Info.myInfo.listBullDogFirstInfo.Add(firstInfo);
+
+        PageBullDog.Instance.FirstValue_2Player(tableNo, firstPostvalue);
 
     }
 
