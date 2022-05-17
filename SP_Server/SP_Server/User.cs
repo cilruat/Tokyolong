@@ -31,7 +31,7 @@ namespace SP_Server
             this.gameCnt = 0;
             this.menus = new List<SendMenu>();
             this.discount = 0;            
-            this.surpriseCnt = 3;
+            this.surpriseCnt = 0;
             this.firstOrder = false;
             this.sendLikes = new List<int>();
         }
@@ -44,7 +44,7 @@ namespace SP_Server
             this.gameCnt = 0;
             this.menus = new List<SendMenu>();
             this.discount = 0;            
-            this.surpriseCnt = 3;
+            this.surpriseCnt = 0;
             this.firstOrder = false;
             this.sendLikes = new List<int>();
         }
@@ -57,7 +57,7 @@ namespace SP_Server
             this.gameCnt = 0;
             this.menus = new List<SendMenu>();
             this.discount = 0;            
-            this.surpriseCnt = 3;
+            this.surpriseCnt = 0;
             this.firstOrder = false;
             this.sendLikes = new List<int>();
         }

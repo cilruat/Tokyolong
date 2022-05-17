@@ -59,6 +59,10 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
     public GameObject waitOherPanel;
     public GameObject DownPanel;
 
+    public int AfterCountdownTime;
+    public Text AfterCountdownTiemTxt;
+    public GameObject objAfterCountDisplay;
+
     // animation 0 = 바위, 1 가위 , 2 보
 
     public GameObject AnimationPanel;
@@ -86,7 +90,7 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
 
 
     IEnumerator countdown;
-
+    IEnumerator aftercountdown;
 
 
     private void Start()
@@ -151,6 +155,7 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
             StartCoroutine(myRspAnimation());
             StartCoroutine(ShowOppoRspAnim());
 
+            StopAfterCountdown();
         }
     }
 
@@ -392,7 +397,7 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
 
     IEnumerator GameOver()
     {
-
+        DownPanel.SetActive(false);
         yield return new WaitForSeconds(1f);
         LosePanel.SetActive(false);
 
@@ -523,6 +528,55 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
 
     }
 
+    //카운트다운 새로운거 만들어서 버튼을 클릭하고 20초동안 상대가 아무 반응이 없다면? 상대의 연결이 끊어졋습니다 승리하셧습니다 로 종료합니다.
+    // 게임오버 되면 카운트를 빼기때문에 선차감 하는게 아니라서 악용하는 사람은 없겟지 설마?
+
+    void StartAfterCountdown()
+    {
+        aftercountdown = AfterSelectCountdown();
+        StartCoroutine(aftercountdown);
+    }
+
+    void StopAfterCountdown()
+    {
+        if (aftercountdown != null)
+        {
+            StopCoroutine(aftercountdown);
+        }
+    }
+
+
+    IEnumerator AfterSelectCountdown()
+    {
+
+        yield return null;
+
+        AfterCountdownTime = 30;
+
+        while(AfterCountdownTime > 0)
+        {
+            AfterCountdownTiemTxt.text = AfterCountdownTime.ToString();
+
+            yield return new WaitForSeconds(1f);
+            UITweenAlpha.Start(objAfterCountDisplay, 1f, 0f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+            UITweenScale.Start(objAfterCountDisplay.gameObject, 1f, 1.3f, TWParam.New(.3f).Curve(TWCurve.Bounce));
+
+
+            AfterCountdownTime--;
+
+        }
+
+        AfterCountdownTiemTxt.text = "상대가 연결이 원활하지 않습니다.";
+
+        yield return new WaitForSeconds(2f);
+
+        SystemMessage.Instance.Add("상대가 연결이 끊어져서 승리했습니다");
+        NetworkManager.Instance.Versus_Victory_REQ(tableNum, GameCnt);
+
+        UIManager.Instance.isGameRoom = false; // ACK 에 넣는것과 같은역할
+
+    }
+
 
     public void OnClickRock()
     {
@@ -530,6 +584,8 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
         BlindPanel.SetActive(true);
         ChoicePanel.SetActive(false);
         waitOherPanel.SetActive(true);
+
+        StartAfterCountdown();
 
         StopCountdown();
 
@@ -544,6 +600,8 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
         ChoicePanel.SetActive(false);
         waitOherPanel.SetActive(true);
 
+        StartAfterCountdown();
+
         StopCountdown();
         NetworkManager.Instance.Versus_Paper_REQ(tableNum);
     }
@@ -554,6 +612,8 @@ public class PageRPS : SingletonMonobehaviour<PageRPS>  {
         BlindPanel.SetActive(true);
         ChoicePanel.SetActive(false);
         waitOherPanel.SetActive(true);
+
+        StartAfterCountdown();
 
         StopCountdown();
         NetworkManager.Instance.Versus_Scissor_REQ(tableNum);
