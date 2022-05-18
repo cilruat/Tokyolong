@@ -109,6 +109,7 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
 
         if (FirstPostValue == OpFirstPostValue)
         {
+            needBullDogStartNum = 0;
             StartCoroutine(FirstValueDraw());
         }
     }
@@ -192,8 +193,10 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
 
     IEnumerator FirstValueDraw()
     {
-        needBullDogStartNum = 0;
+        yield return new WaitForSeconds(2f);
         SystemMessage.Instance.Add("숫자가 같아 다시한번 할께요!");
+        StartCoroutine(FirstValueDraw());
+
         txt1PlayerFirstVal.text = "";
         txt2PlayerFirstVal.text = "";
 
