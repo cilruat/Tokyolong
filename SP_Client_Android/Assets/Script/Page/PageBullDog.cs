@@ -109,15 +109,13 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
 
         if (FirstPostValue == OpFirstPostValue)
         {
-            needBullDogStartNum = 0;
-            btnFirstValue.SetActive(true);
-            // 코루틴 실행해서 시스템 메세지 추가하고 다시한다고 할것 시간딜레이 넣고
+            StartCoroutine(FirstValueDraw());
         }
     }
 
     public void FirstValue_1Player()
     {
-        FirstPostValue = Random.Range(1, 100); // 1~3까지 수정하고 나서 비기는거 확인하면 될것!
+        FirstPostValue = Random.Range(1, 3); // 1~3까지 수정하고 나서 비기는거 확인하면 될것!
         txt1PlayerFirstVal.text = FirstPostValue.ToString();
         SendMyFirstValue();
         btnFirstValue.SetActive(false);
@@ -161,7 +159,6 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         }
     }
 
-
     IEnumerator CountdownToStart()
     {
         yield return null;
@@ -192,6 +189,21 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         NetworkManager.Instance.Versus_GameOver_REQ(tableNum, GameCnt);
         UIManager.Instance.isGameRoom = false;
     }
+
+    IEnumerator FirstValueDraw()
+    {
+        needBullDogStartNum = 0;
+        SystemMessage.Instance.Add("숫자가 같아 다시한번 할께요!");
+        txt1PlayerFirstVal.text = "";
+        txt2PlayerFirstVal.text = "";
+
+        yield return new WaitForSeconds(0.5f);
+        btnFirstValue.SetActive(true);
+        StartCountdown();
+
+
+    }
+
 
 
     IEnumerator Victory()

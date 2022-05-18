@@ -988,8 +988,6 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         
 
         PageBullDog.Instance.FirstValue_2Player(tableNo, firstPostvalue);
-        Debug.Log(firstPostvalue + "2p가 보낸 값");
-
     }
 
     void VersusRandomACK(CPacket msg)
