@@ -110,7 +110,6 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         if (FirstPostValue == OpFirstPostValue)
         {
             needBullDogStartNum = 0;
-            SystemMessage.Instance.Add("숫자가 같아 다시한번 할께요!");
             StartCoroutine(FirstValueDraw());
         }
     }
@@ -194,13 +193,15 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
 
     IEnumerator FirstValueDraw()
     {
-        yield return new WaitForSeconds(0.5f);
+        Debug.Log(needBullDogStartNum);
+        yield return new WaitForSeconds(1.5f);
         txt1PlayerFirstVal.text = "";
         txt2PlayerFirstVal.text = "";
 
         yield return new WaitForSeconds(0.5f);
         btnFirstValue.SetActive(true);
-        StartCountdown();
+
+        SystemMessage.Instance.Add("숫자가 같아 다시한번 할께요!");
 
 
     }
