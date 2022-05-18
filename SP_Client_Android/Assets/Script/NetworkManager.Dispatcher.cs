@@ -981,11 +981,14 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         byte tableNo = msg.pop_byte();
         int firstPostvalue = msg.pop_int32();
 
+        
         UserBullDogFirstInfo firstInfo = new UserBullDogFirstInfo();
         firstInfo.firstValue = firstPostvalue;
         Info.myInfo.listBullDogFirstInfo.Add(firstInfo);
+        
 
         PageBullDog.Instance.FirstValue_2Player(tableNo, firstPostvalue);
+        Debug.Log(firstPostvalue + "2p가 보낸 값");
 
     }
 

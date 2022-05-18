@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class PageBullDog : SingletonMonobehaviour<PageBullDog>
 {
 
+    // Base Info
     public GameObject objBoard;
     public Text[] txtTableNum;
     public Text txtReqGameCnt;
@@ -17,25 +18,28 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
     int GameCnt = 0;
     string GameName = "";
 
-    IEnumerator countdown;
-
+    // First Check
     int FirstPostValue = -1;
     int OpFirstPostValue = -1;
-
     bool First = false;
-
     public int needBullDogStartNum = 0;
-
-
     public GameObject objGamePanel;
     public GameObject objFirstMainPanel;
     public GameObject objBlindPanel;
     public GameObject objImFirstPanel;
     public GameObject objImSecondPanel;
-
     public Text txt1PlayerFirstVal, txt2PlayerFirstVal;
-
     public GameObject btnFirstValue;
+
+    IEnumerator countdownfirstval;
+    public int countdownfirstTime;
+    public Text txtcountdownFirst;
+    public GameObject objcntFirstDisplay;
+
+    //
+    public GameObject GameOverPanel;
+    public GameObject VictoryPanel;
+
 
     private void Start ()
     {
@@ -52,6 +56,9 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
 
         First = false;
 
+        GameOverPanel.SetActive(false);
+        VictoryPanel.SetActive(false);
+
 
         if (Info.myInfo.listGameAcceptInfo.Count > 0)
         {
@@ -62,28 +69,15 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
 
         }
 
-        // Null 일걸? 스타트 했는데 ..?
-
-        /*
-        if(Info.myInfo.listBullDogFirstInfo.Count > 0)
-        {
-            UserBullDogFirstInfo info = Info.myInfo.listBullDogFirstInfo[Info.myInfo.listBullDogFirstInfo.Count - 1];
-            OpFirstPostValue = info.firstValue;
-
-            Debug.Log(OpFirstPostValue);
-        }
-        */
-
         txtMyTableNum.text = Info.TableNum.ToString();
 
         txtTableNum[0].text = tableNum.ToString();
         txtReqGameCnt.text = GameCnt.ToString();
         txtGameName.text = GameName.ToString();
 
-    }
+        StartCountdown();
 
-        // 첫시작하면 선턴이 누구부터인지 확인시켜주는 작업부터 하자
-     
+    }
 
 
     void Update () {
@@ -117,23 +111,26 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         {
             needBullDogStartNum = 0;
             btnFirstValue.SetActive(true);
+            // 코루틴 실행해서 시스템 메세지 추가하고 다시한다고 할것 시간딜레이 넣고
         }
     }
 
-    //카운트 다운 넣어서 번호만들기 할까? 그게 제일 합리적이다..20초안에 번호를 말해주라!
-
     public void FirstValue_1Player()
     {
-        FirstPostValue = Random.Range(1, 100);
-
+        FirstPostValue = Random.Range(1, 100); // 1~3까지 수정하고 나서 비기는거 확인하면 될것!
         txt1PlayerFirstVal.text = FirstPostValue.ToString();
-
         SendMyFirstValue();
         btnFirstValue.SetActive(false);
+        StopCountdown();
     }
 
     public void FirstValue_2Player(int tableNo, int firstcnt)
     {
+        if (Info.myInfo.listBullDogFirstInfo.Count > 0)
+        {
+            UserBullDogFirstInfo info = Info.myInfo.listBullDogFirstInfo[Info.myInfo.listBullDogFirstInfo.Count - 1];
+            OpFirstPostValue = info.firstValue;
+        }
 
         firstcnt = OpFirstPostValue;
 
@@ -145,15 +142,78 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
 
     }
 
-
     public void SendMyFirstValue()
     {
-
         NetworkManager.Instance.Versus_First_REQ(tableNum, FirstPostValue);
-        Debug.Log(FirstPostValue);
+    }
+
+    void StartCountdown()
+    {
+        countdownfirstval = CountdownToStart();
+        StartCoroutine(countdownfirstval);
+    }
+
+    void StopCountdown()
+    {
+        if (countdownfirstval != null)
+        {
+            StopCoroutine(countdownfirstval);
+        }
+    }
+
+
+    IEnumerator CountdownToStart()
+    {
+        yield return null;
+
+        countdownfirstTime = 20;
+
+        while (countdownfirstTime > 0)
+        {
+            txtcountdownFirst.text = countdownfirstTime.ToString();
+
+            yield return new WaitForSeconds(1f);
+            UITweenAlpha.Start(objcntFirstDisplay, 1f, 0f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+            UITweenScale.Start(objcntFirstDisplay.gameObject, 1f, 1.3f, TWParam.New(.3f).Curve(TWCurve.Bounce));
+
+
+            countdownfirstTime--;
+        }
+
+        txtcountdownFirst.text = "시간만료";
+
+        yield return new WaitForSeconds(1f);
+
+
+        GameOverPanel.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+
+        NetworkManager.Instance.Versus_GameOver_REQ(tableNum, GameCnt);
+        UIManager.Instance.isGameRoom = false;
+    }
+
+
+    IEnumerator Victory()
+    {
+
+        yield return new WaitForSeconds(1f);
+        VictoryPanel.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
 
     }
 
+
+
+    IEnumerator GameOver()
+    {
+        yield return new WaitForSeconds(1f);
+        GameOverPanel.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+        NetworkManager.Instance.Versus_GameOver_REQ(tableNum, GameCnt);
+    }
 
 
 }
