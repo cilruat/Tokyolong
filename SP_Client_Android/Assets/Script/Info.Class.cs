@@ -21,6 +21,7 @@ public class UserInfo
     public List<UserOnReadyInfo> listReadyAddInfo = new List<UserOnReadyInfo>();
 
     public List<UserBullDogFirstInfo> listBullDogFirstInfo = new List<UserBullDogFirstInfo>();
+    public List<UserBullDogValueInfo> listBullDogValueInfo = new List<UserBullDogValueInfo>();
 
 
 
@@ -127,6 +128,10 @@ public class UserBullDogFirstInfo
 }
 
 
+public class UserBullDogValueInfo
+{
+    public int Randomvalue = 0;
+}
 
 
 

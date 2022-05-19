@@ -95,16 +95,14 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         case PROTOCOL.VERSUS_VICTORY_NOT:           VersusVictoryNOT(msg);          break;
         case PROTOCOL.VERSUS_GAMEOVER_ACK:          VersusGameOverACK(msg);         break;
         case PROTOCOL.VERSUS_GAMEOVER_NOT:          VersusGameOverNOT(msg);         break;
-
-
-            case PROTOCOL.VERSUS_FIRST_ACK: VersusFirstACK(msg); break;
-            case PROTOCOL.VERSUS_FIRST_NOT: VersusFirstNOT(msg); break;
-            case PROTOCOL.VERSUS_RANDOM_ACK: VersusRandomACK(msg); break;
-            case PROTOCOL.VERSUS_RANDOM_NOT: VersusRandomNOT(msg); break;
-            case PROTOCOL.VERSUS_CHOICE_ACK: VersusChoiceACK(msg); break;
-            case PROTOCOL.VERSUS_CHOICE_NOT: VersusChoiceNOT(msg); break;
-            case PROTOCOL.VERSUS_ELECT_ACK: VersusElectACK(msg); break;
-            case PROTOCOL.VERSUS_ELECT_NOT: VersusElectNOT(msg); break;
+        case PROTOCOL.VERSUS_FIRST_ACK:             VersusFirstACK(msg);            break;
+        case PROTOCOL.VERSUS_FIRST_NOT:             VersusFirstNOT(msg);            break;
+        case PROTOCOL.VERSUS_RANDOM_ACK:            VersusRandomACK(msg);           break;
+        case PROTOCOL.VERSUS_RANDOM_NOT:            VersusRandomNOT(msg);           break;
+        case PROTOCOL.VERSUS_CHOICE_ACK:            VersusChoiceACK(msg);           break;
+        case PROTOCOL.VERSUS_CHOICE_NOT:            VersusChoiceNOT(msg);           break;
+        case PROTOCOL.VERSUS_ELECT_ACK:             VersusElectACK(msg);            break;
+        case PROTOCOL.VERSUS_ELECT_NOT:             VersusElectNOT(msg);            break;
 
 
 
@@ -993,7 +991,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     void VersusRandomACK(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
-        int winningNum = msg.pop_int32();
+
 
     }
 
@@ -1001,6 +999,14 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
     {
         byte tableNo = msg.pop_byte();
         int winningNum = msg.pop_int32();
+
+        UserBullDogValueInfo valueinfo = new UserBullDogValueInfo();
+        valueinfo.Randomvalue = winningNum;
+        Info.myInfo.listBullDogValueInfo.Add(valueinfo);
+
+        PageBullDog.Instance.ResultValue(tableNo, winningNum);
+
+        Debug.Log(winningNum + "Not에서 나오는 WinningNum");
 
     }
 

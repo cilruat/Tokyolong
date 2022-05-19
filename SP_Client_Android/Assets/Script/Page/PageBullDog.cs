@@ -18,14 +18,23 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
     int GameCnt = 0;
     string GameName = "";
 
+
+    public GameObject objGamePanel;
+    public GameObject GameBlinder;
+
     // First Check
     int FirstPostValue = -1;
     int OpFirstPostValue = -1;
     bool First = false;
     public int needBullDogStartNum = 0;
-    public GameObject objGamePanel;
+
+    // result value
+    int Result = -1;
+
+    // first post Object
     public GameObject objFirstMainPanel;
     public GameObject objBlindPanel;
+    public GameObject objActivePanel;
     public GameObject objImFirstPanel;
     public GameObject objImSecondPanel;
     public Text txt1PlayerFirstVal, txt2PlayerFirstVal;
@@ -46,10 +55,12 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
 
         needBullDogStartNum = 0;
         objGamePanel.SetActive(false);
-        objFirstMainPanel.SetActive(true);
-        objBlindPanel.SetActive(true);
+        objFirstMainPanel.SetActive(false);
+        objBlindPanel.SetActive(false);
+        objActivePanel.SetActive(false);
         objImFirstPanel.SetActive(false);
         objImSecondPanel.SetActive(false);
+        GameBlinder.SetActive(false);
 
         txt1PlayerFirstVal.text = "";
         txt2PlayerFirstVal.text = "";
@@ -75,8 +86,7 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         txtReqGameCnt.text = GameCnt.ToString();
         txtGameName.text = GameName.ToString();
 
-        StartCountdown();
-
+        StartActive();
     }
 
 
@@ -89,6 +99,25 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
 
     }
 
+
+    public void StartActive()
+    {
+        StartCoroutine(StartFirstValue());
+    }
+
+    IEnumerator StartFirstValue()
+    {
+        objFirstMainPanel.SetActive(true);
+        objBlindPanel.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+        objActivePanel.SetActive(true);
+        StartCountdown();
+
+    }
+
+
+
     IEnumerator CalculateFirstVal()
     {
         yield return new WaitForSeconds(1f);
@@ -97,14 +126,14 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         {
             objImFirstPanel.SetActive(true);
             First = true;
-            // 코루틴 실행해서 턴에 맞게 블라인드 시킬것
 
+            StartCoroutine(firstAttack());
         }
 
         if (FirstPostValue < OpFirstPostValue)
         {
             objImSecondPanel.SetActive(true);
-            // 코루틴 실행해서 턴에 맞게 블라인드 시킬것
+            StartCoroutine(postDefend());
         }
 
         if (FirstPostValue == OpFirstPostValue)
@@ -114,9 +143,11 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         }
     }
 
+    #region first / post 
+
     public void FirstValue_1Player()
     {
-        FirstPostValue = Random.Range(1, 3); // 1~3까지 수정하고 나서 비기는거 확인하면 될것!
+        FirstPostValue = Random.Range(1, 100);
         txt1PlayerFirstVal.text = FirstPostValue.ToString();
         SendMyFirstValue();
         btnFirstValue.SetActive(false);
@@ -145,6 +176,7 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
     {
         NetworkManager.Instance.Versus_First_REQ(tableNum, FirstPostValue);
     }
+
 
     void StartCountdown()
     {
@@ -191,6 +223,7 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         UIManager.Instance.isGameRoom = false;
     }
 
+    //여기 좀있다 수정한번 할것 이게 수행된 만큼 Instance.ADD 되는구나 ㅎㅎ;; 문제가 된다면 
     IEnumerator FirstValueDraw()
     {
         Debug.Log(needBullDogStartNum);
@@ -198,13 +231,69 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         txt1PlayerFirstVal.text = "";
         txt2PlayerFirstVal.text = "";
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         btnFirstValue.SetActive(true);
 
         SystemMessage.Instance.Add("숫자가 같아 다시한번 할께요!");
 
 
     }
+
+    #endregion
+
+
+    // 리스트 저장하고 인트값 받아오기 해야겟다 작업. firstattack 가 보내면 되자나 일단 처음 하는애가..이건무조건 실행이니깐.
+
+    IEnumerator firstAttack()
+    {
+        yield return new WaitForSeconds(1f);
+        objImFirstPanel.SetActive(false);
+        objFirstMainPanel.SetActive(false);
+        objGamePanel.SetActive(true);
+
+        if(First == true)
+        {
+            Result = Random.Range(1, 10);
+            Debug.Log(Result);
+            NetworkManager.Instance.VERSUS_Random_REQ(tableNum, Result);
+        }
+
+        //애니메이션도 삽입해야되네 시발!
+    }
+
+    IEnumerator postDefend()
+    {
+        yield return new WaitForSeconds(1f);
+        objImFirstPanel.SetActive(false);
+        objFirstMainPanel.SetActive(false);
+        objGamePanel.SetActive(true);
+        // 작업추가 후턴은 블라인드를 켜놓는다.
+        GameBlinder.SetActive(true);
+
+
+    }
+
+
+    public void ResultValue(int tableNo, int winningnum)
+    {
+        if(Info.myInfo.listBullDogValueInfo.Count > 0)
+        {
+            UserBullDogValueInfo info = Info.myInfo.listBullDogValueInfo[Info.myInfo.listBullDogValueInfo.Count - 1];
+
+            Result = info.Randomvalue;
+        }
+
+        winningnum = Result;
+
+        Debug.Log(Result);
+
+    }
+
+    // 일단 패널 열리는거까지만 한번 보자
+
+
+
+
 
 
 
