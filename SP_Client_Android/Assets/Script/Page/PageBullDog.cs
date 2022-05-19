@@ -126,14 +126,17 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         {
             objImFirstPanel.SetActive(true);
             First = true;
+            needBullDogStartNum = 0;
 
-            firstAttack();
+            StartCoroutine(firstAttack());
         }
 
         if (FirstPostValue < OpFirstPostValue)
         {
             objImSecondPanel.SetActive(true);
-            postDefend();
+            needBullDogStartNum = 0;
+
+            StartCoroutine(postDefend());
         }
 
         if (FirstPostValue == OpFirstPostValue)
@@ -244,27 +247,32 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
 
     // 리스트 저장하고 인트값 받아오기 해야겟다 작업. firstattack 가 보내면 되자나 일단 처음 하는애가..이건무조건 실행이니깐.
 
-    //코루틴 말고!
-
-
-    public void firstAttack()
+    IEnumerator firstAttack()
     {
+        yield return new WaitForSeconds(3f);
         objImFirstPanel.SetActive(false);
         objFirstMainPanel.SetActive(false);
         objGamePanel.SetActive(true);
-        Result = Random.Range(1, 10);
-        Debug.Log(Result);
-        NetworkManager.Instance.VERSUS_Random_REQ(tableNum, Result);
 
+        if(First == true)
+        {
+            Result = Random.Range(1, 10);
+            Debug.Log(Result);
+            NetworkManager.Instance.VERSUS_Random_REQ(tableNum, Result);
+        }
+
+        //애니메이션도 삽입해야되네 시발!
     }
 
-    public void postDefend()
+    IEnumerator postDefend()
     {
+        yield return new WaitForSeconds(3f);
         objImFirstPanel.SetActive(false);
         objFirstMainPanel.SetActive(false);
         objGamePanel.SetActive(true);
-
+        // 작업추가 후턴은 블라인드를 켜놓는다.
         GameBlinder.SetActive(true);
+
 
     }
 
