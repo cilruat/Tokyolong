@@ -40,6 +40,11 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
     public Text txt1PlayerFirstVal, txt2PlayerFirstVal;
     public GameObject btnFirstValue;
 
+    // choice object
+
+    public GameObject objFirstTurnArrow, objPostTurnArrow;
+    public GameObject objFirstTurnScale, objPostTurnScale;
+
     IEnumerator countdownfirstval;
     public int countdownfirstTime;
     public Text txtcountdownFirst;
@@ -61,6 +66,10 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         objImFirstPanel.SetActive(false);
         objImSecondPanel.SetActive(false);
         GameBlinder.SetActive(false);
+        objFirstTurnArrow.SetActive(false);
+        objPostTurnArrow.SetActive(false);
+
+
 
         txt1PlayerFirstVal.text = "";
         txt2PlayerFirstVal.text = "";
@@ -92,9 +101,11 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
 
     void Update () {
 
-        if(needBullDogStartNum == 2)
+        if(needBullDogStartNum == 2 && !First)
         {
             StartCoroutine(CalculateFirstVal());
+            First = true;
+
         }
 
     }
@@ -125,7 +136,6 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         if(FirstPostValue > OpFirstPostValue)
         {
             objImFirstPanel.SetActive(true);
-            First = true;
             needBullDogStartNum = 0;
 
             StartCoroutine(firstAttack());
@@ -244,9 +254,6 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
 
     #endregion
 
-
-    // 리스트 저장하고 인트값 받아오기 해야겟다 작업. firstattack 가 보내면 되자나 일단 처음 하는애가..이건무조건 실행이니깐.
-
     IEnumerator firstAttack()
     {
         yield return new WaitForSeconds(3f);
@@ -254,14 +261,14 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         objFirstMainPanel.SetActive(false);
         objGamePanel.SetActive(true);
 
-        if(First == true)
-        {
-            Result = Random.Range(1, 10);
-            Debug.Log(Result);
-            NetworkManager.Instance.VERSUS_Random_REQ(tableNum, Result);
-        }
-
+        Result = Random.Range(1, 10);
+        Debug.Log(Result);
+        NetworkManager.Instance.VERSUS_Random_REQ(tableNum, Result);
         //애니메이션도 삽입해야되네 시발!
+
+        objFirstTurnArrow.SetActive(true);
+        UITweenScale.Start(objFirstTurnScale.gameObject, 1f, 1.3f, TWParam.New(.3f).Curve(TWCurve.Bounce));
+        objPostTurnArrow.SetActive(false);
     }
 
     IEnumerator postDefend()
@@ -272,6 +279,10 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         objGamePanel.SetActive(true);
         // 작업추가 후턴은 블라인드를 켜놓는다.
         GameBlinder.SetActive(true);
+
+        objFirstTurnArrow.SetActive(false);
+        objPostTurnArrow.SetActive(true);
+        UITweenScale.Start(objPostTurnScale.gameObject, 1f, 1.3f, TWParam.New(.3f).Curve(TWCurve.Bounce));
 
 
     }
