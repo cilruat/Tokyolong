@@ -1005,9 +1005,6 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         Info.myInfo.listBullDogValueInfo.Add(valueinfo);
 
         PageBullDog.Instance.ResultValue(tableNo, winningNum);
-
-        Debug.Log(winningNum + "Not에서 나오는 WinningNum");
-
     }
 
     void VersusChoiceACK(CPacket msg)
@@ -1015,12 +1012,17 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         byte tableNo = msg.pop_byte();
         int choiceNum = msg.pop_int32();
 
+        PageBullDog.Instance.teethState(choiceNum);
+        Debug.Log(choiceNum + "이빨선택된거");
     }
 
     void VersusChoiceNOT(CPacket msg)
     {
         byte tableNo = msg.pop_byte();
         int choiceNum = msg.pop_int32();
+
+        PageBullDog.Instance.teethState(choiceNum);
+        Debug.Log(choiceNum + "이빨선택된거Not 에서는 어떻게 들어오는가");
 
     }
 

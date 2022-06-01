@@ -54,6 +54,12 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
     public GameObject GameOverPanel;
     public GameObject VictoryPanel;
 
+    // Teeth Panel
+
+    public List<GameObject> normalTeeth = new List<GameObject>();
+    public List<GameObject> openTeeth = new List<GameObject>();
+
+
 
     private void Start ()
     {
@@ -303,10 +309,19 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
 
     }
 
-    // 일단 패널 열리는거까지만 한번 보자
+    public void OnclickTeeth(int teeth)
+    {
+        NetworkManager.Instance.VERSUS_Choice_REQ(tableNum, teeth);
+        Debug.Log(teeth);
+    }
 
 
 
+    public void teethState(int teeth)
+    {
+        normalTeeth[teeth].SetActive(false);
+        openTeeth[teeth].SetActive(true);
+    }
 
 
 
