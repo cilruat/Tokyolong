@@ -1013,7 +1013,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         int choiceNum = msg.pop_int32();
 
         PageBullDog.Instance.teethState(choiceNum);
-        Debug.Log(choiceNum + "이빨선택된거");
+        PageBullDog.Instance.FirstTurn();
     }
 
     void VersusChoiceNOT(CPacket msg)
@@ -1022,7 +1022,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
         int choiceNum = msg.pop_int32();
 
         PageBullDog.Instance.teethState(choiceNum);
-        Debug.Log(choiceNum + "이빨선택된거Not 에서는 어떻게 들어오는가");
+        PageBullDog.Instance.SecondTurn();
 
     }
 

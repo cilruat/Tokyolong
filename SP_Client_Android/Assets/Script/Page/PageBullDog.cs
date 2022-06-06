@@ -59,7 +59,12 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
     public List<GameObject> normalTeeth = new List<GameObject>();
     public List<GameObject> openTeeth = new List<GameObject>();
 
+    //
 
+    public GameObject objTrunPanel;
+    public Text TurnText;
+    public Animator MoveToPanel;
+    public bool ImFirst, ImSecond;
 
     private void Start ()
     {
@@ -74,7 +79,7 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         GameBlinder.SetActive(false);
         objFirstTurnArrow.SetActive(false);
         objPostTurnArrow.SetActive(false);
-
+        objTrunPanel.SetActive(false);
 
 
         txt1PlayerFirstVal.text = "";
@@ -309,10 +314,39 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
 
     }
 
+
+
     public void OnclickTeeth(int teeth)
     {
         NetworkManager.Instance.VERSUS_Choice_REQ(tableNum, teeth);
         Debug.Log(teeth);
+
+    }
+
+
+
+    public void FirstTurn()
+    {
+        // 선턴이고 이제 턴을 넘긴다
+        StartCoroutine(postDefend());
+
+        objTrunPanel.SetActive(true);
+        MoveToPanel.Play("MoveTurnPanel");
+        TurnText.text = "상대";
+
+    }
+
+
+    public void SecondTurn()
+    {
+        // 후턴에서 턴을 받는다
+
+        StartCoroutine(firstAttack());
+
+        objTrunPanel.SetActive(true);
+        MoveToPanel.Play("MoveTurnPanel");
+        TurnText.text = "나의";
+
     }
 
 
