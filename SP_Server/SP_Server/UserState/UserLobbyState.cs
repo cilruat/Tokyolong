@@ -1049,6 +1049,7 @@ namespace SP_Server.UserState
 
                         send_msg = CPacket.create((short)PROTOCOL.VERSUS_CHOICE_ACK);
                         send_msg.push(targetTableNo);
+                        send_msg.push(choiceNum);
                         break;
 
                     case PROTOCOL.VERSUS_ELECT_REQ:
