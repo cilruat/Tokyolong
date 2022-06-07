@@ -65,10 +65,12 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
     public Text TurnText;
     public Animator MoveToPanel;
 
+    public bool ImTurn;
+
     // Reuslt
 
     public Animator DogBark;
-
+    public bool Elect;
 
     private void Start ()
     {
@@ -278,7 +280,7 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         objFirstMainPanel.SetActive(false);
         objGamePanel.SetActive(true);
 
-        Result = Random.Range(1, 10);
+        Result = Random.Range(0, 9);
         Debug.Log(Result);
         NetworkManager.Instance.VERSUS_Random_REQ(tableNum, Result);
         //애니메이션도 삽입해야되네 시발!
@@ -286,6 +288,8 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         objFirstTurnArrow.SetActive(true);
         UITweenScale.Start(objFirstTurnScale.gameObject, 1f, 1.3f, TWParam.New(.3f).Curve(TWCurve.Bounce));
         objPostTurnArrow.SetActive(false);
+
+        ImTurn = true;
     }
 
     IEnumerator postDefend()
@@ -337,7 +341,18 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
 
         if(teeth == Result)
         {
-            DogBark.Play("Dog_Bark");
+            DogBark.Play("Dog_Bark_Versus");
+            Elect = true;
+
+            if(ImTurn == true)
+            {
+                StartCoroutine(GameOver());
+            }
+
+            if(ImTurn == false)
+            {
+                StartCoroutine(Victory());
+            }
         }
 
     }
@@ -352,6 +367,7 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         MoveToPanel.Play("MoveTurnPanel");
         TurnText.text = "상대";
 
+        ImTurn = false;
     }
 
 
@@ -365,6 +381,7 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         MoveToPanel.Play("MoveTurnPanel");
         TurnText.text = "나의";
 
+        ImTurn = true;
     }
 
 
