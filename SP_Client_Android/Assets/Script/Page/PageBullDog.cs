@@ -64,7 +64,11 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
     public GameObject objTrunPanel;
     public Text TurnText;
     public Animator MoveToPanel;
-    public bool ImFirst, ImSecond;
+
+    // Reuslt
+
+    public Animator DogBark;
+
 
     private void Start ()
     {
@@ -329,6 +333,13 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
     {
         normalTeeth[teeth].SetActive(false);
         openTeeth[teeth].SetActive(true);
+
+
+        if(teeth == Result)
+        {
+            DogBark.Play("Dog_Bark");
+        }
+
     }
 
 
