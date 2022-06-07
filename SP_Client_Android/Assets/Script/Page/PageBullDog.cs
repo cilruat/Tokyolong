@@ -359,7 +359,7 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
 
     IEnumerator AfterfirstTurn()
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.01f);
         objImFirstPanel.SetActive(false);
         objFirstMainPanel.SetActive(false);
         objGamePanel.SetActive(true);
@@ -369,11 +369,15 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         objFirstTurnArrow.SetActive(false);
         objPostTurnArrow.SetActive(true);
         UITweenScale.Start(objPostTurnScale.gameObject, 1f, 1.3f, TWParam.New(.3f).Curve(TWCurve.Bounce));
+
+        yield return new WaitForSeconds(0.5f);
+        objTrunPanel.SetActive(false);
+
     }
 
     IEnumerator AfterpostTurn()
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.01f);
         objImFirstPanel.SetActive(false);
         objFirstMainPanel.SetActive(false);
         objGamePanel.SetActive(true);
@@ -385,6 +389,8 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         objPostTurnArrow.SetActive(false);
         UITweenScale.Start(objFirstTurnScale.gameObject, 1f, 1.3f, TWParam.New(.3f).Curve(TWCurve.Bounce));
 
+        yield return new WaitForSeconds(0.5f);
+        objTrunPanel.SetActive(false);
 
 
     }
