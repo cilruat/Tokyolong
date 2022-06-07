@@ -265,6 +265,8 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
 
     #endregion
 
+    //처음 한번만 수행하는 코루틴입니다.
+
     IEnumerator firstAttack()
     {
         yield return new WaitForSeconds(3f);
@@ -323,12 +325,17 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
 
     }
 
+    public void teethState(int teeth)
+    {
+        normalTeeth[teeth].SetActive(false);
+        openTeeth[teeth].SetActive(true);
+    }
 
 
     public void FirstTurn()
     {
         // 선턴이고 이제 턴을 넘긴다
-        StartCoroutine(postDefend());
+        StartCoroutine(AfterfirstTurn());
 
         objTrunPanel.SetActive(true);
         MoveToPanel.Play("MoveTurnPanel");
@@ -341,7 +348,7 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
     {
         // 후턴에서 턴을 받는다
 
-        StartCoroutine(firstAttack());
+        StartCoroutine(AfterpostTurn());
 
         objTrunPanel.SetActive(true);
         MoveToPanel.Play("MoveTurnPanel");
@@ -350,12 +357,38 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
     }
 
 
-
-    public void teethState(int teeth)
+    IEnumerator AfterfirstTurn()
     {
-        normalTeeth[teeth].SetActive(false);
-        openTeeth[teeth].SetActive(true);
+        yield return new WaitForSeconds(.5f);
+        objImFirstPanel.SetActive(false);
+        objFirstMainPanel.SetActive(false);
+        objGamePanel.SetActive(true);
+
+        GameBlinder.SetActive(true);
+
+        objFirstTurnArrow.SetActive(false);
+        objPostTurnArrow.SetActive(true);
+        UITweenScale.Start(objPostTurnScale.gameObject, 1f, 1.3f, TWParam.New(.3f).Curve(TWCurve.Bounce));
     }
+
+    IEnumerator AfterpostTurn()
+    {
+        yield return new WaitForSeconds(.5f);
+        objImFirstPanel.SetActive(false);
+        objFirstMainPanel.SetActive(false);
+        objGamePanel.SetActive(true);
+
+        GameBlinder.SetActive(false);
+
+
+        objFirstTurnArrow.SetActive(true);
+        objPostTurnArrow.SetActive(false);
+        UITweenScale.Start(objFirstTurnScale.gameObject, 1f, 1.3f, TWParam.New(.3f).Curve(TWCurve.Bounce));
+
+
+
+    }
+
 
 
 
