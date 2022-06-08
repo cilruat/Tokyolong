@@ -299,6 +299,8 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         objPostTurnArrow.SetActive(false);
 
         ImTurn = true;
+        OnCountDown();
+
     }
 
     IEnumerator postDefend()
@@ -354,6 +356,8 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
             DogBark.Play("Dog_Bark_Versus");
             Elect = true;
             objTrunPanel.SetActive(false);
+            objWaiting.SetActive(false);
+
 
             if(ImTurn == true)
             {
@@ -475,11 +479,11 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
 
             turncount--;
         }
-        turncountText.text = "시간안에 선택하지 않아 패배합니다";
+        turncountText.text = "시간만료";
 
         yield return new WaitForSeconds(2f);
 
-        SystemMessage.Instance.Add("로비로 돌아갑니다.");
+        SystemMessage.Instance.Add("시간안에 선택을 못해서 패배합니다");
         NetworkManager.Instance.Versus_GameOver_REQ(tableNum, GameCnt);
 
         UIManager.Instance.isGameRoom = false;
@@ -508,7 +512,7 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
 
     IEnumerator GameOver()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
         GameOverPanel.SetActive(true);
 
         yield return new WaitForSeconds(3f);
