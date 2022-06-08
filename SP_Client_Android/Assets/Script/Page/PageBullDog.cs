@@ -77,6 +77,7 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
     public Text turncountText;
     public GameObject objTurncount;
 
+    public GameObject objWaiting;
 
     private void Start ()
     {
@@ -92,7 +93,7 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         objFirstTurnArrow.SetActive(false);
         objPostTurnArrow.SetActive(false);
         objTrunPanel.SetActive(false);
-
+        objWaiting.SetActive(false);
 
         txt1PlayerFirstVal.text = "";
         txt2PlayerFirstVal.text = "";
@@ -286,6 +287,8 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         objFirstMainPanel.SetActive(false);
         objGamePanel.SetActive(true);
 
+        objWaiting.SetActive(false);
+
         Result = Random.Range(0, 9);
         Debug.Log(Result);
         NetworkManager.Instance.VERSUS_Random_REQ(tableNum, Result);
@@ -306,6 +309,7 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         objGamePanel.SetActive(true);
         // 작업추가 후턴은 블라인드를 켜놓는다.
         GameBlinder.SetActive(true);
+        objWaiting.SetActive(true);
 
         objFirstTurnArrow.SetActive(false);
         objPostTurnArrow.SetActive(true);
@@ -374,6 +378,8 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         MoveToPanel.Play("MoveTurnPanel");
         TurnText.text = "상대";
 
+        OffCountDown();
+
         ImTurn = false;
     }
 
@@ -388,6 +394,8 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         MoveToPanel.Play("MoveTurnPanel");
         TurnText.text = "나의";
 
+        OnCountDown();
+
         ImTurn = true;
     }
 
@@ -400,6 +408,7 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         objGamePanel.SetActive(true);
 
         GameBlinder.SetActive(true);
+        objWaiting.SetActive(true);
 
         objFirstTurnArrow.SetActive(false);
         objPostTurnArrow.SetActive(true);
@@ -418,11 +427,12 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         objGamePanel.SetActive(true);
 
         GameBlinder.SetActive(false);
-
+        objWaiting.SetActive(false);
 
         objFirstTurnArrow.SetActive(true);
         objPostTurnArrow.SetActive(false);
         UITweenScale.Start(objFirstTurnScale.gameObject, 1f, 1.3f, TWParam.New(.3f).Curve(TWCurve.Bounce));
+
 
         yield return new WaitForSeconds(1.5f);
         objTrunPanel.SetActive(false);
@@ -465,16 +475,22 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
 
             turncount--;
         }
-        turncountText.text = "상대가 선택을 하지 않네요";
+        turncountText.text = "시간안에 선택하지 않아 패배합니다";
 
         yield return new WaitForSeconds(2f);
 
-        SystemMessage.Instance.Add("상대가 연결이 끊어져서 승리했습니다");
-        NetworkManager.Instance.Versus_Victory_REQ(tableNum, GameCnt);
+        SystemMessage.Instance.Add("로비로 돌아갑니다.");
+        NetworkManager.Instance.Versus_GameOver_REQ(tableNum, GameCnt);
 
         UIManager.Instance.isGameRoom = false;
 
 
+    }
+
+    public void ExitGame()
+    {
+        SystemMessage.Instance.Add("패배를 선언하고 로비로 나갑니다");
+        StartCoroutine(GameOver());
     }
 
 
