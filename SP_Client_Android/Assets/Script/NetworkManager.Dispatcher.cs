@@ -542,7 +542,7 @@ public partial class NetworkManager : SingletonMonobehaviour<NetworkManager>
 		}
 
 		Info.OwnerUI = ownerUI;
-		Info.CheckOwnerEvt = true;
+		Info.CheckOwnerEvt = false;
 	}
 
     void MsgSendACK(CPacket msg)

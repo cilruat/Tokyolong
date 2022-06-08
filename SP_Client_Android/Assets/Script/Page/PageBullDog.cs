@@ -72,6 +72,12 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
     public Animator DogBark;
     public bool Elect;
 
+    IEnumerator onturncountdown;
+    public int turncount;
+    public Text turncountText;
+    public GameObject objTurncount;
+
+
     private void Start ()
     {
 
@@ -343,6 +349,7 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         {
             DogBark.Play("Dog_Bark_Versus");
             Elect = true;
+            objTrunPanel.SetActive(false);
 
             if(ImTurn == true)
             {
@@ -398,7 +405,7 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         objPostTurnArrow.SetActive(true);
         UITweenScale.Start(objPostTurnScale.gameObject, 1f, 1.3f, TWParam.New(.3f).Curve(TWCurve.Bounce));
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.5f);
         objTrunPanel.SetActive(false);
 
     }
@@ -417,14 +424,58 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         objPostTurnArrow.SetActive(false);
         UITweenScale.Start(objFirstTurnScale.gameObject, 1f, 1.3f, TWParam.New(.3f).Curve(TWCurve.Bounce));
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.5f);
         objTrunPanel.SetActive(false);
 
 
     }
 
+    // 턴이 종료될때 마다 카운트다운을 초기화하고 카운트다운이 만료가 되면 자동으로 게임오버
+    // 이건 내가 턴이 종료되도 마찬가지 아니야? 상대 턴 종료랑 내 턴 종료 둘다 해야지..ㅋㅋ 
+
+    void OnCountDown()
+    {
+        onturncountdown = OnTurnCountDown();
+        StartCoroutine(onturncountdown);
+    }
+
+    void OffCountDown()
+    {
+        if(onturncountdown != null)
+        {
+            StopCoroutine(onturncountdown);
+        }
+    }
 
 
+    IEnumerator OnTurnCountDown()
+    {
+        yield return null;
+
+        turncount = 15;
+
+        while(turncount > 0)
+        {
+            turncountText.text = turncount.ToString();
+
+            yield return new WaitForSeconds(1f);
+            UITweenAlpha.Start(objTurncount, 1f, 0f, TWParam.New(.5f).Curve(TWCurve.CurveLevel2));
+            UITweenScale.Start(objTurncount.gameObject, 1f, 1.3f, TWParam.New(.3f).Curve(TWCurve.Bounce));
+
+
+            turncount--;
+        }
+        turncountText.text = "상대가 선택을 하지 않네요";
+
+        yield return new WaitForSeconds(2f);
+
+        SystemMessage.Instance.Add("상대가 연결이 끊어져서 승리했습니다");
+        NetworkManager.Instance.Versus_Victory_REQ(tableNum, GameCnt);
+
+        UIManager.Instance.isGameRoom = false;
+
+
+    }
 
 
     IEnumerator Victory()
