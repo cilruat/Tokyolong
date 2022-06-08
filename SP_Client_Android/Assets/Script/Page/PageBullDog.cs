@@ -355,8 +355,6 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         {
             DogBark.Play("Dog_Bark_Versus");
             Elect = true;
-            objTrunPanel.SetActive(false);
-            objWaiting.SetActive(false);
 
 
             if(ImTurn == true)
@@ -500,8 +498,10 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
 
     IEnumerator Victory()
     {
+        objTrunPanel.SetActive(false);
+        objWaiting.SetActive(false);
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         VictoryPanel.SetActive(true);
 
         yield return new WaitForSeconds(3f);
@@ -512,7 +512,10 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
 
     IEnumerator GameOver()
     {
-        yield return new WaitForSeconds(3f);
+        objTrunPanel.SetActive(false);
+        objWaiting.SetActive(false);
+
+        yield return new WaitForSeconds(2f);
         GameOverPanel.SetActive(true);
 
         yield return new WaitForSeconds(3f);
