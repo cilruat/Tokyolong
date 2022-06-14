@@ -503,6 +503,7 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
 
         yield return new WaitForSeconds(2f);
         VictoryPanel.SetActive(true);
+        objWaiting.SetActive(false);
 
         yield return new WaitForSeconds(3f);
 
@@ -517,6 +518,7 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
 
         yield return new WaitForSeconds(2f);
         GameOverPanel.SetActive(true);
+        objWaiting.SetActive(false);
 
         yield return new WaitForSeconds(3f);
         NetworkManager.Instance.Versus_GameOver_REQ(tableNum, GameCnt);
