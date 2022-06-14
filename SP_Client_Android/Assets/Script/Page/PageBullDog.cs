@@ -70,7 +70,6 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
     // Reuslt
 
     public Animator DogBark;
-    public bool Elect;
 
     IEnumerator onturncountdown;
     public int turncount;
@@ -78,6 +77,9 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
     public GameObject objTurncount;
 
     public GameObject objWaiting;
+    public GameObject objElect;
+
+
 
     private void Start ()
     {
@@ -94,6 +96,8 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         objPostTurnArrow.SetActive(false);
         objTrunPanel.SetActive(false);
         objWaiting.SetActive(false);
+        objElect.SetActive(false);
+
 
         txt1PlayerFirstVal.text = "";
         txt2PlayerFirstVal.text = "";
@@ -354,10 +358,12 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         if(teeth == Result)
         {
             DogBark.Play("Dog_Bark_Versus");
-            Elect = true;
+            objWaiting.SetActive(false);
+            objElect.SetActive(true);
 
 
-            if(ImTurn == true)
+
+            if (ImTurn == true)
             {
                 StartCoroutine(GameOver());
             }
