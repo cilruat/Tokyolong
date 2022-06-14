@@ -22,6 +22,9 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
     public GameObject objGamePanel;
     public GameObject GameBlinder;
 
+    public GameObject objConnectDesc;
+
+
     // First Check
     int FirstPostValue = -1;
     int OpFirstPostValue = -1;
@@ -87,6 +90,7 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         needBullDogStartNum = 0;
         objGamePanel.SetActive(false);
         objFirstMainPanel.SetActive(false);
+        objConnectDesc.SetActive(true);
         objBlindPanel.SetActive(false);
         objActivePanel.SetActive(false);
         objImFirstPanel.SetActive(false);
@@ -149,7 +153,8 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
         objFirstMainPanel.SetActive(true);
         objBlindPanel.SetActive(true);
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(3.5f);
+        objConnectDesc.SetActive(false);
         objActivePanel.SetActive(true);
         StartCountdown();
 
@@ -360,6 +365,7 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
             DogBark.Play("Dog_Bark_Versus");
             objWaiting.SetActive(false);
             objElect.SetActive(true);
+            objTrunPanel.SetActive(false);
 
 
 
