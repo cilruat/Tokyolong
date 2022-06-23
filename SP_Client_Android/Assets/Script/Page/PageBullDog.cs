@@ -365,7 +365,6 @@ public class PageBullDog : SingletonMonobehaviour<PageBullDog>
             DogBark.Play("Dog_Bark_Versus");
             objWaiting.SetActive(false);
             objElect.SetActive(true);
-            objTrunPanel.SetActive(false);
 
 
 
