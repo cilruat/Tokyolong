@@ -232,6 +232,7 @@ namespace SP_Server.UserState
 
                         send_msg = CPacket.create((short)PROTOCOL.WAITER_CALL_ACK);                        
                         break;
+
                     case PROTOCOL.ORDER_REQ:
                         tableNo = msg.pop_byte();
                         string order = msg.pop_string();
@@ -259,6 +260,8 @@ namespace SP_Server.UserState
 
                         bool firstOrder = false;
                         if (owner.info.firstOrder == false)
+
+                        /* 첫주문시 소주 지급, 더이상 사용하지 않음
                         {
                             bool orderMenu = false;
                             bool orderDrink = false;
@@ -290,7 +293,7 @@ namespace SP_Server.UserState
                             if (orderMenu && orderDrink)
                                 firstOrder = true;
                         }
-
+                        */
                         send_msg = CPacket.create((short)PROTOCOL.ORDER_ACK);
                         send_msg.push(orderCnt);
                         send_msg.push(Convert.ToByte(firstOrder));
