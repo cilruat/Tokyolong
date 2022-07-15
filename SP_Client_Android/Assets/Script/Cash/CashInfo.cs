@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class CashInfo : MonoBehaviour
 {
 
-    public int cashmenu;
+    //public int cashmenu;
     public string title;
     public int cashPrice;
 
