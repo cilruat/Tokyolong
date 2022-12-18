@@ -119,7 +119,7 @@ namespace Emoji2
 
 		public void ReturnHome()
 		{
-			SceneChanger.LoadScene ("Main", objBoard);
+			SceneChanger.LoadScene ("SelectGame", objBoard);
 		}
     }
 }

@@ -21,11 +21,16 @@ public class CSVReader
 		while(!www.isDone)
 			continue;
 
-		string text = www.text.Trim();
-		#else
+        string move_path = Application.persistentDataPath + "/menu";
+        File.WriteAllBytes(move_path, www.bytes);
+
+        //string text = www.text.Trim();
+        string text = File.ReadAllText(move_path);
+
+#else
         StreamReader sr = new StreamReader(path, Encoding.Default);
         string text = sr.ReadToEnd();
-		#endif
+#endif
 
         string[] lines = Regex.Split(text, LINE_SPLIT_RE);
         if (lines.Length <= 1)

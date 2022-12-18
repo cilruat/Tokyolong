@@ -29,29 +29,54 @@ public class MenuData
         if (loaded)
             return;
 
-		#if UNITY_ANDROID
-		string path = Application.streamingAssetsPath + "/Menu.csv";
-		#else
+#if UNITY_ANDROID
+        string path = Application.streamingAssetsPath + "/Menu.csv";
+
+#else
         string path = Application.dataPath;
         int lastIdx = path.LastIndexOf(@"/");
         path = path.Substring(0, lastIdx) + @"\Info\Menu.csv";
-		#endif
+#endif
 
         List<Dictionary<string, object>> data = new List<Dictionary<string, object>>();
         data = CSVReader.Read(path);
 
         for (int i = 0; i < data.Count; i++)
         {
-            int menuID = int.Parse(data[i]["Menu"].ToString());
-            int category = int.Parse(data[i]["Category"].ToString());
-            string menuName = data[i]["MenuName"].ToString();
-            int price = int.Parse(data[i]["Price"].ToString());
+            int menuID = -1;
+            int category = -1;
+            string menuName = string.Empty;
+            int price = -1;
+            bool show = true;
 
-			bool show = true;
-			if (string.IsNullOrEmpty (data [i] ["Show"].ToString ()) == false)
-				show = bool.Parse (data [i] ["Show"].ToString ());
+            Dictionary<string, object> _child = data[i];
+            foreach(KeyValuePair<string, object> dic in _child)
+            {
+                object _value = dic.Value;
+                switch (dic.Key)
+                {
+                    case "Menu":
+                        menuID = int.Parse(_value.ToString());
+                        break;
+                    case "Category":
+                        category = int.Parse(_value.ToString());
+                        break;
+                    case "MenuName":
+                        menuName = _value.ToString();
+                        break;
+                    case "Price":
+                        price = int.Parse(_value.ToString());
+                        break;
+                    case "Show":
+                        if (string.IsNullOrEmpty(_value.ToString()) == false)
+                            show = bool.Parse(_value.ToString());
+                        break;
+                }
+            }
 
 			MenuData menuData = new MenuData(menuID, category, menuName, price, show);
+
+            Debug.Log("menuID: " + menuID);
 
             dictMenu.Add(menuID, menuData);
 
